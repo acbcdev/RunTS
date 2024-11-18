@@ -10,7 +10,7 @@ import {
   ResizablePanel,
   ResizableHandle,
 } from "@/components/ui/resizable";
-import { TerminalExperimental } from "./experimetal-terminal";
+import { Terminal } from "./terminal";
 
 export function CodeEditor() {
   const {
@@ -49,8 +49,7 @@ export function CodeEditor() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={40} minSize={20}>
-          {/* <Terminal /> */}
-          <TerminalExperimental />
+          <Terminal />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
