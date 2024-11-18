@@ -1,7 +1,7 @@
 import { Play, Plus, Minus, RotateCcw, Download, Copy, Trash2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
 import { useEditorStore } from '@/store/editor'
 import { EditorSettingsDialog } from './editor-setting-dialog'
 
