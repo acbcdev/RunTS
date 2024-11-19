@@ -19,6 +19,7 @@ export function CodeEditor() {
     refreshTime,
     getCurrentTheme,
     runCode,
+    layout,
   } = useEditorStore();
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
   const debouncedCode = useDebounce(
@@ -43,7 +44,7 @@ export function CodeEditor() {
     >
       <EditorTopBar />
       <EditorTabs />
-      <ResizablePanelGroup direction="horizontal" className="flex-1">
+      <ResizablePanelGroup direction={layout} className="flex-1">
         <ResizablePanel defaultSize={60} minSize={30}>
           <EditorMain />
         </ResizablePanel>

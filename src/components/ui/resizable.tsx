@@ -21,13 +21,13 @@ const ResizableHandle = ({
   className,
   ...props
 }: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle>) => {
-  const { getCurrentTheme } = useEditorStore()
+  const { getCurrentTheme, layout } = useEditorStore()
   const theme = getCurrentTheme()
 
   return (
     <ResizablePrimitive.PanelResizeHandle
       className={cn(
-        `relative flex w-[4px] transition-all hover:w-2 active:w-1 hover:bg-[${theme.ui.accent}] cursor-col-resize`,
+        `relative flex w-[4px] ${layout === "horizontal" ? "h-full" : "w-full h-[4px]"} cursor-col-resize`,
         className
       )}
       style={{

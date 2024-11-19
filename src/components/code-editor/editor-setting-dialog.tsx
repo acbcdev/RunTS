@@ -14,7 +14,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26]
+const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
 
 const refreshTimes = [{ value: null, time: 'Off' }, { value: 500, time: '500ms' }, { value: 700, time: '700ms' }, { value: 1000, time: '1s' }, { value: 2000, time: '2s' }, { value: 3000, time: '3s' },]
 const fontFamilies = [
@@ -22,9 +22,10 @@ const fontFamilies = [
   { name: 'Fira Code', value: '"Fira Code"' },
   { name: 'Monocraft', value: 'Monocraft' }
 ]
-
+type TLayout = "vertical" | "horizontal";
+const layouts: TLayout[] = ["vertical", "horizontal"]
 export function EditorSettingsDialog() {
-  const { getCurrentTheme, theme, setRefreshTime, refreshTime, setFontFamily, fontFamily, setWordWrap, setLineNumbers, lineNumbers, wordWrap, fontSize, setTheme, setFontSize } = useEditorStore()
+  const { getCurrentTheme, theme, setRefreshTime, refreshTime, setFontFamily, fontFamily, setWordWrap, setLineNumbers, lineNumbers, wordWrap, fontSize, setTheme, setFontSize, layout, setLayout } = useEditorStore()
   const currentTheme = getCurrentTheme()
 
   return (
@@ -46,7 +47,7 @@ export function EditorSettingsDialog() {
         </DialogTrigger>
       </Tooltip>
       <DialogContent
-        className="max-w-3xl p-0"
+        className="p-0 lg:max-w-3xl"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border
@@ -137,7 +138,28 @@ export function EditorSettingsDialog() {
                     ))}
                   </div>
                 </section>
+                <section>
+                  <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
+                    EditLayout
+                  </h3>
+                  <div className="grid grid-cols-7 gap-2">
+                    {layouts.map((direction) => (
+                      <Button
+                        key={direction}
+                        className="p-2 text-center transition-all duration-200 border rounded"
+                        onClick={() => setLayout(direction)}
+                        style={{
+                          borderColor: direction === layout ? currentTheme.ui.accent : currentTheme.ui.border,
+                          backgroundColor: direction === layout ? currentTheme.ui.hover : 'transparent',
+                          color: currentTheme.ui.foreground
+                        }}
+                      >
+                        {direction}
+                      </Button>
+                    ))}
 
+                  </div>
+                </section>
                 <section>
                   <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
                     Font Settings

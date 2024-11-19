@@ -13,9 +13,10 @@ interface Tab {
 	language: string;
 	code: string;
 }
-
+type TLayout = "vertical" | "horizontal";
 interface EditorState {
 	monaco: Monaco | null;
+	layout: TLayout;
 	editorRef: editor.IStandaloneCodeEditor | null;
 	tabs: Tab[];
 	activeTabId: string;
@@ -28,6 +29,7 @@ interface EditorState {
 	lineNumbers: boolean;
 	fontFamily: string;
 	minimap: boolean;
+	setLayout: (layout: TLayout) => void;
 	setMinimap: (minimap: boolean) => void;
 	setLineNumbers: (size: boolean) => void;
 	setFontFamily: (fontFamily: string) => void;
@@ -102,6 +104,7 @@ export const useEditorStore = create<EditorState>()(
 	persist(
 		(set, get) => ({
 			monaco: null,
+			layout: "horizontal",
 			editorRef: null,
 			tabs: initialTabs,
 			activeTabId: "1",
@@ -114,6 +117,7 @@ export const useEditorStore = create<EditorState>()(
 			fontFamily: '"Cascadia Code", monospace',
 			lineNumbers: true,
 			minimap: true,
+			setLayout: (layout) => set({ layout }),
 			setMinimap: (minimap) => set({ minimap }),
 			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
 			setRefreshTime: (time) => set({ refreshTime: time }),
