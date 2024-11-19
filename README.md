@@ -67,34 +67,13 @@ Testing functionality will be added in future updates. Stay tuned! 🚧
 
 ## 🤝 Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
-
+[guía de contribución](https://github.com/ACBC-DEV/RunTS/blob/master/CONTRIBUTING.md)
 If you have a suggestion that would make this project better, please fork the repository and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 Here's a quick guide:
 
-1. Fork the Project  [Fork](https://github.com/ACBC-DEV/RunTS/fork)
-2. Clone your fork: 
-   ```bash
-   git clone <URL of your fork>
-   ```
-3. Add the original repository as a remote:
-   ```bash
-   git remote add upstream https://github.com/ACBC-DEV/RunTS.git
-   ```
-4. Create your Feature Branch:
-   ```bash
-   git switch -c feature/AmazingFeature
-   ```
-5. Make your Changes:
-   ```bash
-   git commit -m 'Add: some AmazingFeature'
-   ```
-6. Push to the Branch:
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-7. Open a Pull Request
 
-Please check our contribution guide for more details on how to get started and follow best practices.
+
+Please check our [contribution guide](https://github.com/ACBC-DEV/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
 
 Happy coding! 🚀
