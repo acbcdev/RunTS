@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Monaco } from "@monaco-editor/react";
 import { themes } from "@/themes";
-// import worker from "@/workers/runCode?worker";
 import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
@@ -48,48 +47,11 @@ interface EditorState {
 	getCurrentTheme: () => Theme;
 	setRefreshTime: (time: number | null) => void;
 	changeNameTab: (id: string, name: string) => void;
+	setOutput: (output: ConsoleOutput[]) => void;
 }
 
 const DEFAULT_CODE = `// Welcome to the TypeScript Code Editor!
-// Try running this sample code or write your own
-
-// Type annotations
-let greeting: string = "Hello, World!";
-console.log(greeting);
-
-// Interface definition
-interface Point {
-  x: number;
-  y: number;
-}
-
-// Function with types
-function calculateDistance(p1: Point, p2: Point): number {
-  const dx = p2.x - p1.x;
-  const dy = p2.y - p1.y;
-  return Math.sqrt(dx * dx + dy * dy);
-}
-
-// Using the interface and function
-const point1: Point = { x: 0, y: 0 };
-const point2: Point = { x: 3, y: 4 };
-const distance = calculateDistance(point1, point2);
-console.log(\`Distance between points: \${distance}\`);
-
-// Generic function
-function firstElement<T>(arr: T[]): T | undefined {
-  return arr[0];
-}
-
-// Using the generic function
-const numbers = [1, 2, 3, 4, 5];
-const first = firstElement(numbers);
-console.log("First number:", first);
-
-// Union types
-type Status = "pending" | "completed" | "failed";
-let currentStatus: Status = "pending";
-console.log("Current status:", currentStatus);`;
+// Try running this sample code or write your own`;
 
 const initialTabs: Tab[] = [
 	{
@@ -117,6 +79,7 @@ export const useEditorStore = create<EditorState>()(
 			lineNumbers: true,
 			layout: "horizontal",
 			minimap: true,
+			setOutput: (output) => set({ output }),
 			setLayout: (layout) => set({ layout }),
 			setMinimap: (minimap) => set({ minimap }),
 			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
@@ -165,12 +128,21 @@ export const useEditorStore = create<EditorState>()(
 					code: state.activeTabId === id ? code : state.code,
 				}));
 			},
+
 			runCode: () => {
 				const state = get();
 				const activeTab = state.tabs.find(
 					(tab) => tab.id === state.activeTabId,
 				);
-
+				get().setOutput([
+					{
+						type: "info",
+						content: "Running...",
+						column: 0,
+						line: 0,
+						timestamp: Date.now(),
+					},
+				]);
 				const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
 					const worker = new Worker(
 						new URL("/src/workers/runCode.ts", import.meta.url),
