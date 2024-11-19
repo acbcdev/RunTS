@@ -29,6 +29,7 @@
 		"lucide-react": "0.294.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-helmet-async": "^2.0.5",
 		"react-resizable-panels": "1.0.5",
 		"tailwind-merge": "2.1.0",
 		"tailwindcss-animate": "1.0.7",

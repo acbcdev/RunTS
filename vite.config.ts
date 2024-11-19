@@ -1,19 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
-
 const host = process.env.TAURI_DEV_HOST;
-//  target: 'esnext',
-//     rollupOptions: {
-//       output: {
-//         format: 'es',  // Use ES modules
-//         inlineDynamicImports: true, // This might help with worker imports
-//       }
-//     },
-//     worker: {
-//       format: 'es',  // Ensure workers also use ES modules
-//     }
-// https://vitejs.dev/config/
+
 export default defineConfig({
 	plugins: [react()],
 	resolve: {
@@ -22,30 +11,30 @@ export default defineConfig({
 		},
 	},
 
- build: {
-    target: 'esnext',
-    rollupOptions: {
-      output: {
-        format: 'es',
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name]-[hash].js',
-        assetFileNames: '[name]-[hash][extname]'
-      }
-    },
-    sourcemap: true,
-    minify: 'esbuild'
-  },
+	build: {
+		target: "esnext",
+		rollupOptions: {
+			output: {
+				format: "es",
+				entryFileNames: "[name].js",
+				chunkFileNames: "[name]-[hash].js",
+				assetFileNames: "[name]-[hash][extname]",
+			},
+		},
+		sourcemap: true,
+		minify: "esbuild",
+	},
 
-  // Worker options should be at the root level, not in build
-  worker: {
-    format: 'es',
-    rollupOptions: {
-      output: {
-        format: 'es',
-        entryFileNames: 'workers/[name].js'
-      }
-    }
-  },
+	// Worker options should be at the root level, not in build
+	worker: {
+		format: "es",
+		rollupOptions: {
+			output: {
+				format: "es",
+				entryFileNames: "workers/[name].js",
+			},
+		},
+	},
 	// Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
 	//
 	// 1. prevent vite from obscuring rust errors
