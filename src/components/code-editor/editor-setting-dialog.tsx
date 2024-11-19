@@ -47,7 +47,7 @@ export function EditorSettingsDialog() {
         </DialogTrigger>
       </Tooltip>
       <DialogContent
-        className="p-0 lg:max-w-3xl"
+        className="p-0 lg:max-w-3xl max-h-[85vh]"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border
@@ -89,7 +89,7 @@ export function EditorSettingsDialog() {
             </TabsTrigger>
 
           </TabsList>
-          <ScrollArea className="h-[600px]">
+          <ScrollArea className="max-h-[90vh] h-[60vh] lg:h-[600px]">
             <TabsContent value="appearance" className="p-6 m-0">
               <div className="space-y-8">
                 <section>
@@ -142,7 +142,7 @@ export function EditorSettingsDialog() {
                   <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
                     EditLayout
                   </h3>
-                  <div className="grid grid-cols-7 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {layouts.map((direction) => (
                       <Button
                         key={direction}
@@ -172,7 +172,7 @@ export function EditorSettingsDialog() {
                       >
                         Font Size
                       </Button>
-                      <div className="grid grid-cols-7 gap-2">
+                      <div className="grid grid-cols-5 gap-2 md:grid-cols-7">
                         {fontSizes.map((size) => (
                           <Button
                             key={size}

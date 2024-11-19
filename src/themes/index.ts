@@ -583,9 +583,9 @@ export const themes: Record<string, Theme> = {
 		},
 	},
 
-	darkTheme: {
-		name: "Custom Dark Theme",
-		value: "custom-dark",
+	midudev: {
+		name: "Midudev",
+		value: "midudev",
 		ui: {
 			background: "#0b1422", // Fondo oscuro para el editor
 			foreground: "#D4D4D4", // Color principal del texto
@@ -604,19 +604,19 @@ export const themes: Record<string, Theme> = {
 			base: "vs-dark",
 			inherit: true,
 			rules: [
-				{ token: "comment", foreground: "#98afbc" }, // Color para comentarios
-				{ token: "keyword", foreground: "#42a9ee" }, // Palabras clave como `let`, `const`
-				{ token: "string", foreground: "#fff3ff" }, // Color para cadenas de texto
+				{ token: "comment", foreground: "#96adba", fontStyle: "italic" }, // Color para comentarios
+				{ token: "keyword", foreground: "#3fa2e5" }, // Palabras clave como `let`, `const`
+				{ token: "string", foreground: "#d6e6e0" }, // Color para cadenas de texto
 				{ token: "number", foreground: "#43aef5" }, // Color para números
-				{ token: "variable", foreground: "#3691d0" }, // Color para variables
+				{ token: "variable", foreground: "#aec8dd" }, // Color para variables
 				{ token: "type", foreground: "#42b3ff" }, // Tipos de datos
-				{ token: "function", foreground: "#3ca0e5" }, // Color para funciones
-				{ token: "constant", foreground: "#42b3ff" }, // Constantes
+				{ token: "function", foreground: "#aec8dd" }, // Color para funciones
+				{ token: "constant", foreground: "#aec8dd" }, // Constantes
 				{ token: "operator", foreground: "#8dc6e6" }, // Operadores como `??`, `=`
 			],
 			colors: {
 				"editor.background": "#0b1422", // Fondo del editor
-				"editor.foreground": "#D4D4D4", // Color principal del texto en el editor
+				"editor.foreground": "#cbe9ff", // Color principal del texto en el editor
 				"editorCursor.foreground": "#FFFFFF", // Color del cursor
 				"editorLineNumber.foreground": "#858585", // Color de los números de línea
 				"editor.selectionBackground": "#264F78", // Fondo para el texto seleccionado
