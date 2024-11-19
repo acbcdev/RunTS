@@ -104,7 +104,6 @@ export const useEditorStore = create<EditorState>()(
 	persist(
 		(set, get) => ({
 			monaco: null,
-			layout: "horizontal",
 			editorRef: null,
 			tabs: initialTabs,
 			activeTabId: "1",
@@ -116,6 +115,7 @@ export const useEditorStore = create<EditorState>()(
 			code: initialTabs[0].code,
 			fontFamily: '"Cascadia Code", monospace',
 			lineNumbers: true,
+			layout: "horizontal",
 			minimap: true,
 			setLayout: (layout) => set({ layout }),
 			setMinimap: (minimap) => set({ minimap }),
@@ -401,6 +401,7 @@ export const useEditorStore = create<EditorState>()(
 				fontFamily: state.fontFamily,
 				lineNumbers: state.lineNumbers,
 				minimap: state.minimap,
+				layout: state.layout,
 			}),
 		},
 	),
