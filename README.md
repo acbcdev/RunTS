@@ -28,7 +28,7 @@ To get started with this project, follow these steps:
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ACBC-DEV/RunTS.git
+   git clone https://github.com/acbcdev/RunTS.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -67,13 +67,13 @@ Testing functionality will be added in future updates. Stay tuned! 🚧
 
 ## 🤝 Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
-[guía de contribución](https://github.com/ACBC-DEV/RunTS/blob/master/CONTRIBUTING.md)
+[guía de contribución](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md)
 If you have a suggestion that would make this project better, please fork the repository and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 Here's a quick guide:
 
 
 
-Please check our [contribution guide](https://github.com/ACBC-DEV/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
+Please check our [contribution guide](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
 
 Happy coding! 🚀

@@ -36,25 +36,25 @@ Here is an overview of the project folder structure:
 
 ### Found a Bug?
 
-- **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/ACBC-DEV/RunTS/issues).
+- **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/acbcdev/RunTS/issues).
 - If you do find an open issue addressing the problem, **add additional context** or a thumbs-up to show that you have encountered the same issue.
 - If a bug has not been reported, **open a new issue**. Provide detailed information including steps to reproduce the issue, expected behavior, and screenshots if possible.
 
 ### Suggesting Enhancements
 
-- **Check if the enhancement suggestion was already made** by searching the [Issues](https://github.com/ACBC-DEV/RunTS/issues).
+- **Check if the enhancement suggestion was already made** by searching the [Issues](https://github.com/acbcdev/RunTS/issues).
 - **Open an issue** with the tag "enhancement" and explain why this feature is beneficial, how it should work, and any technical details you have thought through.
 
 ### Code Contribution Process
 
-1. Fork the Project  [Fork](https://github.com/ACBC-DEV/RunTS/fork)
+1. Fork the Project  [Fork](https://github.com/acbcdev/RunTS/fork)
 2. Clone your fork: 
    ```bash
    git clone <URL of your fork>
    ```
 3. Add the original repository as a remote:
    ```bash
-   git remote add upstream https://github.com/ACBC-DEV/RunTS.git
+   git remote add upstream https://github.com/acbcdev/RunTS.git
    ```
 4. Create your Feature Branch:
    ```bash
