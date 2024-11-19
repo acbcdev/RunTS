@@ -89,7 +89,7 @@ export function EditorSettingsDialog() {
             </TabsTrigger>
 
           </TabsList>
-          <ScrollArea className="max-h-[90vh] h-[60vh] lg:h-[600px]">
+          <ScrollArea className="max-h-[90vh] h-[60vh] xl:h-[600px]">
             <TabsContent value="appearance" className="p-6 m-0">
               <div className="space-y-8">
                 <section>
@@ -282,7 +282,6 @@ export function EditorSettingsDialog() {
                 </section>
               </div>
             </TabsContent>
-
 
           </ScrollArea>
         </Tabs>
