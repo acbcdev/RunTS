@@ -1,5 +1,3 @@
-
-import { describe } from 'node:test';
 import { Helmet } from 'react-helmet-async';
 
 interface SEOProps {
