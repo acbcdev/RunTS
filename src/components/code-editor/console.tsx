@@ -4,7 +4,7 @@ import { lazy, Suspense, } from "react";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
-export function Terminal() {
+export function Console() {
   const { getCurrentTheme, output, theme, fontSize, fontFamily } = useEditorStore()
   const currentTheme = getCurrentTheme()
   return (
