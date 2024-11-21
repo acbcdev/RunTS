@@ -17,7 +17,7 @@ const defaultProps = {
   keywords: 'typescript,playground,editor,code,javascript,ts,js,themes',
   author: 'acbc.dev',
   url: 'https://runts.acbc.app',
-  image: '/runts.webp',
+  image: '/og.jpg',
   type: 'website',
   locale: 'en_US',
   siteName: 'RunTS',
