@@ -7,7 +7,7 @@ import { EditorSettingsDialog } from '@/components/code-editor/editor-setting-di
 
 export function EditorTopBar() {
   const { toast } = useToast()
-  const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, setFontSize, setLayout, layout } = useEditorStore()
+  const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, setFontSize, setLayout, layout, activeTabId } = useEditorStore()
   const currentTheme = getCurrentTheme()
   const handleReset = () => {
     resetCode()
@@ -21,7 +21,7 @@ export function EditorTopBar() {
     setLayout(layout === "horizontal" ? "vertical" : "horizontal")
   }
   const handleClear = () => {
-    clearConsole()
+    clearConsole(activeTabId)
     toast({
       title: "Console cleared",
       description: "The console output has been cleared.",

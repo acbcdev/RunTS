@@ -5,12 +5,14 @@ import { themes } from "@/themes";
 import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
+import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 
 interface Tab {
 	id: string;
 	name: string;
 	language: string;
 	code: string;
+	logs: ConsoleOutput[];
 }
 type TLayout = "vertical" | "horizontal";
 interface EditorState {
@@ -19,7 +21,6 @@ interface EditorState {
 	editorRef: editor.IStandaloneCodeEditor | null;
 	tabs: Tab[];
 	activeTabId: string;
-	output: ConsoleOutput[];
 	theme: keyof typeof themes;
 	fontSize: number;
 	wordWrap: boolean;
@@ -28,6 +29,7 @@ interface EditorState {
 	lineNumbers: boolean;
 	fontFamily: string;
 	minimap: boolean;
+	currentTab: (id: Tab["id"]) => Tab | undefined;
 	setLayout: (layout: TLayout) => void;
 	setMinimap: (minimap: boolean) => void;
 	setLineNumbers: (size: boolean) => void;
@@ -40,14 +42,14 @@ interface EditorState {
 	updateTabCode: (id: string, code: string) => void;
 	runCode: () => void;
 	resetCode: () => void;
-	clearConsole: () => void;
+	clearConsole: (id: Tab["id"]) => void;
 	setTheme: (theme: keyof typeof themes) => void;
 	setFontSize: (size: number) => void;
 	setWordWrap: (enabled: boolean) => void;
 	getCurrentTheme: () => Theme;
 	setRefreshTime: (time: number | null) => void;
 	changeNameTab: (id: string, name: string) => void;
-	setOutput: (output: ConsoleOutput[]) => void;
+	updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
 }
 
 const DEFAULT_CODE = `// Welcome to the TypeScript Code Editor!
@@ -59,6 +61,7 @@ const initialTabs: Tab[] = [
 		name: "main.ts",
 		language: "typescript",
 		code: DEFAULT_CODE,
+		logs: [],
 	},
 ];
 
@@ -69,7 +72,6 @@ export const useEditorStore = create<EditorState>()(
 			editorRef: null,
 			tabs: initialTabs,
 			activeTabId: "1",
-			output: [],
 			theme: "oneDark",
 			fontSize: 14,
 			wordWrap: true,
@@ -79,7 +81,7 @@ export const useEditorStore = create<EditorState>()(
 			lineNumbers: true,
 			layout: "horizontal",
 			minimap: true,
-			setOutput: (output) => set({ output }),
+			currentTab: (id) => get().tabs.find((tab) => tab.id === id),
 			setLayout: (layout) => set({ layout }),
 			setMinimap: (minimap) => set({ minimap }),
 			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
@@ -128,13 +130,20 @@ export const useEditorStore = create<EditorState>()(
 					code: state.activeTabId === id ? code : state.code,
 				}));
 			},
-
+			updateTabLog: (id, logs) => {
+				set((state) => ({
+					tabs: state.tabs.map((tab) =>
+						tab.id === id ? { ...tab, logs } : tab,
+					),
+				}));
+			},
 			runCode: () => {
 				const state = get();
 				const activeTab = state.tabs.find(
 					(tab) => tab.id === state.activeTabId,
 				);
-				get().setOutput([
+				if (!activeTab?.code) return;
+				get().updateTabLog(state.activeTabId, [
 					{
 						type: "info",
 						content: "Running...",
@@ -143,6 +152,7 @@ export const useEditorStore = create<EditorState>()(
 						timestamp: Date.now(),
 					},
 				]);
+				const code = injectLogsIntoCode(activeTab?.code);
 				const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
 					const worker = new Worker(
 						new URL("/src/workers/runCode.ts", import.meta.url),
@@ -154,7 +164,7 @@ export const useEditorStore = create<EditorState>()(
 						reject(new Error("Worker timed out"));
 						worker.terminate();
 					}, 10000);
-					worker.postMessage({ activeTabCode: activeTab?.code });
+					worker.postMessage({ activeTabCode: code });
 
 					worker.onmessage = (event: MessageEvent) => {
 						clearTimeout(timeout);
@@ -170,20 +180,18 @@ export const useEditorStore = create<EditorState>()(
 				});
 				runWorker
 					.then((output) => {
-						set({ output });
+						get().updateTabLog(state.activeTabId, output);
 					})
 					.catch((error) => {
-						set({
-							output: [
-								{
-									type: "error",
-									content: error.message,
-									line: 0,
-									column: 0,
-									timestamp: Date.now(),
-								},
-							],
-						});
+						get().updateTabLog(state.activeTabId, [
+							{
+								type: "error",
+								content: error,
+								line: 0,
+								column: 0,
+								timestamp: Date.now(),
+							},
+						]);
 					});
 			},
 
@@ -208,7 +216,12 @@ export const useEditorStore = create<EditorState>()(
 				}
 			},
 
-			clearConsole: () => set({ output: [] }),
+			clearConsole: (id) =>
+				set((state) => ({
+					tabs: state.tabs.map((tab) =>
+						tab.id === id ? { ...tab, logs: [] } : tab,
+					),
+				})),
 
 			setTheme: (theme) => {
 				set({ theme });
@@ -233,7 +246,6 @@ export const useEditorStore = create<EditorState>()(
 				fontSize: state.fontSize,
 				wordWrap: state.wordWrap,
 				code: state.code,
-				output: state.output,
 				refreshTime: state.refreshTime,
 				fontFamily: state.fontFamily,
 				lineNumbers: state.lineNumbers,

@@ -5,7 +5,7 @@ import { lazy, Suspense, } from "react";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function Console() {
-  const { getCurrentTheme, output, theme, fontSize, fontFamily } = useEditorStore()
+  const { getCurrentTheme, currentTab, activeTabId, theme, fontSize, fontFamily } = useEditorStore()
   const currentTheme = getCurrentTheme()
   return (
     <div
@@ -27,7 +27,7 @@ export function Console() {
       }>
 
         <MonacoEditor
-          value={output.length === 0 ? '"Console output will appear here..."' : output.map(item => item.content).join('\n')}
+          value={currentTab(activeTabId)?.logs.map((log) => log.content).join('\n') || ''}
           language='typescript'
           theme={theme}
           beforeMount={(monaco) => {

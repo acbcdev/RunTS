@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { EditorTopBar } from "./editor-top-bar";
 import { EditorTabs } from "./editor-tabs";
 import { EditorMain } from "./editor-main";
-
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEditorStore } from "@/store/editor";
 import {
@@ -24,8 +23,7 @@ export function CodeEditor() {
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
   const debouncedCode = useDebounce(
     activeTab?.code || "",
-    refreshTime ?? 100000,
-  );
+    refreshTime || 60000 * 10);
   const currentTheme = getCurrentTheme();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

@@ -9,7 +9,7 @@ import type { editor } from 'monaco-editor';
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function EditorMain() {
-  const { getCurrentTheme, fontFamily, lineNumbers, output, code, theme, fontSize, wordWrap, setMonaco, setEditorRef, updateTabCode, activeTabId } = useEditorStore()
+  const { getCurrentTheme, fontFamily, lineNumbers, code, theme, fontSize, wordWrap, setMonaco, setEditorRef, updateTabCode, activeTabId } = useEditorStore()
   const currentTheme = getCurrentTheme()
 
 
@@ -32,17 +32,17 @@ export function EditorMain() {
 
 
     // Add decorations for console outputs
-    if (editor && output.length > 0) {
-      const decorations: editor.IModelDeltaDecoration[] = output.map(item => ({
-        range: new monacoInstance.Range(item.line, 1, item.line, 1),
-        options: {
-          isWholeLine: true,
-          className: 'console-output-line',
-          marginClassName: 'console-output-margin'
-        }
-      }))
-      editor.createDecorationsCollection(decorations)
-    }
+    // if (editor && currentTab(activeTabId)?.logs.length > 0) {
+    //   const decorations: editor.IModelDeltaDecoration[] = currentTab(activeTabId)?.logs.map(item => ({
+    //     range: new monacoInstance.Range(item.line, 1, item.line, 1),
+    //     options: {
+    //       isWholeLine: true,
+    //       className: 'console-output-line',
+    //       marginClassName: 'console-output-margin'
+    //     }
+    //   }))
+    //   editor.createDecorationsCollection(decorations)
+    // }
   }
 
 
@@ -87,7 +87,6 @@ export function EditorMain() {
               showConstructors: true,
               showDeprecated: true
             },
-
             trimAutoWhitespace: true,
             fontFamily,
             fontLigatures: true,
