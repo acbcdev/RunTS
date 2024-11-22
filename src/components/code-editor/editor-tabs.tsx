@@ -9,14 +9,22 @@ export function EditorTabs() {
   const {
     tabs,
     activeTabId,
+    editorRef,
     addTab,
+    updateTabCode,
     removeTab,
     setActiveTab,
+    runCode,
     getCurrentTheme
   } = useEditorStore()
 
   const currentTheme = getCurrentTheme()
-
+  const handleActiveTabChange = (tabId: string) => {
+    setActiveTab(tabId)
+    updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || '')
+    runCode()
+    editorRef?.focus()
+  }
   const handleAddTab = () => {
     addTab({
       name: `untitled-${tabs.length + 1}.ts`,
@@ -49,7 +57,7 @@ export function EditorTabs() {
                 '--tab-active': currentTheme.ui.background,
                 '--tab-hover': currentTheme.ui.hover
               } as React.CSSProperties}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleActiveTabChange(tab.id)}
               onMouseEnter={(e) => {
                 if (activeTabId !== tab.id) {
                   e.currentTarget.style.backgroundColor = currentTheme.ui.hover
