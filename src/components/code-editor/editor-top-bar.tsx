@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { useToast } from "@/hooks/use-toast"
 import { useEditorStore } from '@/store/editor'
-import { EditorSettingsDialog } from './editor-setting-dialog'
+import { EditorSettingsDialog } from '@/components/code-editor/editor-setting-dialog'
 
 export function EditorTopBar() {
   const { toast } = useToast()

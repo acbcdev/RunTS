@@ -2,6 +2,7 @@ import type { ConsoleOutput } from "@/types/worker";
 import ts from "typescript";
 
 function Formatter<T>(item: T) {
+	if (Array.isArray(item)) return `[ ${item.join(", ")} ]`;
 	if (item !== null && typeof item === "object" && !Array.isArray(item)) {
 		return Object.entries(item).reduce(
 			(acc, [key, value]) =>
@@ -10,6 +11,7 @@ function Formatter<T>(item: T) {
 		);
 	}
 	if (typeof item === "string") return `"${item}"`;
+
 	return item;
 }
 
@@ -28,11 +30,12 @@ self.onmessage = async (event: MessageEvent) => {
 	};
 
 	const checkOutputLimit = () => {
-		if (output.length >= 3000) {
+		if (output.length >= 4000) {
 			if (!outputLimitReached) {
 				output.push({
 					type: "warn",
-					content: "Output limit reached: No more logs will be recorded.",
+					content:
+						"Output limit reached: No more logs will be recorded. max 4000",
 					line: 0,
 					column: 0,
 					timestamp: Date.now(),
@@ -132,7 +135,7 @@ self.onmessage = async (event: MessageEvent) => {
 
 		const result = ts.transpileModule(activeTabCode, {
 			compilerOptions: {
-				target: ts.ScriptTarget.ES2020,
+				target: ts.ScriptTarget.ES2023,
 				module: ts.ModuleKind.ESNext,
 				strict: true,
 			},
