@@ -13,7 +13,7 @@ Here is an overview of the project folder structure:
 ├── .vscode            # VSCode configuration files
 ├── dist               # Compiled output files
 ├── node_modules       # Dependencies installed by PNPM
-├── public             # Static assets like images and 
+├── public             # Static assets like images and
 ├── src                # Source code for the project
 │   ├── components     # Reusable React components
 │   │   ├── code-editor # Code editor components
@@ -22,10 +22,11 @@ Here is an overview of the project folder structure:
 │   ├── hooks          # Custom React hooks
 │   │   └── use-toast # Example: hook for toast notifications
 │   ├── lib            # Utility functions and helper libraries
-│   │   └── utils.ts   # General utility functions
-│   ├── store          # Zustand state management setup
+│   │   ├── utils.ts   # General utility functions
+|   ├   └── InjectLogs # is a function that injects logs into the code like fast log
+│   ├── store          # Zustand state management setup { editor , config }
 │   ├── themes         # Theme-related files for UI customization
-│   │   └── index.ts   # code Editor Themes configurations 
+│   │   └── index.ts   # code Editor Themes configurations
 │   ├── types          # TypeScript type definitions
 │   │   ├── editor.ts  # Type definitions related to the code editor
 │   │   └── worker.ts  # Type definitions for web workers
