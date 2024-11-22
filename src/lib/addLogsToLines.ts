@@ -8,14 +8,20 @@ export function injectLogsIntoCode(code: string): string {
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
 		const trimmedLine = line.trim();
+		const nextLine = lines[i + 1]?.trim();
 
 		// Ajustar el contexto al detectar apertura/cierre de llaves
 		if (trimmedLine.includes("{")) contextDepth++;
-
 		if (trimmedLine.includes("}")) contextDepth--;
 
 		// Manejar líneas vacías o caracteres sueltos
 		if (unwantedRegex.test(trimmedLine)) {
+			rta.push(line);
+			continue;
+		}
+
+		// Evitar inyección si la siguiente línea comienza con un punto (expresión encadenada)
+		if (nextLine?.startsWith(".")) {
 			rta.push(line);
 			continue;
 		}

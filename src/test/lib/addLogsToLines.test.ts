@@ -644,5 +644,39 @@ console.log(a + b);`);
 });
 
 describe("JavaSript API", () => {
-	test("Array", () => {});
+	test("Array", () => {
+		expect(injectLogsIntoCode("const a = [1, 2, 3];")).toBe(
+			"const a = [1, 2, 3];",
+		);
+
+		expect(
+			injectLogsIntoCode("const a = Array(100);\na[0] = 10;"),
+		).toBe(`const a = Array(100);
+a[0] = 10;
+console.log(a[0] = 10);`);
+
+		expect(
+			injectLogsIntoCode(`
+const limit = 15;
+let count = 1;
+Array(limit)
+	.fill(0)
+	.reduce((acc, _, index) => {
+		const spaces = " ".repeat(Math.abs(limit - count) / 2);
+		const stars = "*".repeat(count) + "\n";
+		index >= Math.floor(limit / 2) ? (count -= 2) : (count += 2);
+		return acc + spaces + stars;
+	}, "");
+`),
+		).toBe(`const limit = 15;
+let count = 1;
+Array(limit)
+	.fill(0)
+	.reduce((acc, _, index) => {
+		const spaces = " ".repeat(Math.abs(limit - count) / 2);
+		const stars = "*".repeat(count) + "\n";
+		index >= Math.floor(limit / 2) ? (count -= 2) : (count += 2);
+		return acc + spaces + stars;
+	}, "");`);
+	});
 });
