@@ -1,6 +1,8 @@
 import * as ResizablePrimitive from "react-resizable-panels"
 import { cn } from "@/lib/utils"
 import { useEditorStore } from '@/store/editor'
+import { useConfigStore } from '@/store/config'
+
 
 const ResizablePanelGroup = ({
   className,
@@ -21,7 +23,8 @@ const ResizableHandle = ({
   className,
   ...props
 }: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle>) => {
-  const { getCurrentTheme, layout } = useEditorStore()
+  const { getCurrentTheme } = useEditorStore()
+  const { layout } = useConfigStore()
   const theme = getCurrentTheme()
 
   return (

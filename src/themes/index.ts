@@ -365,7 +365,7 @@ export const themes: Record<string, Theme> = {
 			accent: "#0070f3",
 			selection: "#333333",
 			header: "#000000",
-			hover: "#1a1a1a",
+			hover: "#1f1f1f",
 			muted: "#828282",
 			success: "#27c93f",
 			warning: "#f7b500",

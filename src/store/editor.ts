@@ -14,26 +14,15 @@ interface Tab {
 	code: string;
 	logs: ConsoleOutput[];
 }
-type TLayout = "vertical" | "horizontal";
+
 interface EditorState {
 	monaco: Monaco | null;
-	layout: TLayout;
 	editorRef: editor.IStandaloneCodeEditor | null;
 	tabs: Tab[];
 	activeTabId: string;
 	theme: keyof typeof themes;
-	fontSize: number;
-	wordWrap: boolean;
-	refreshTime: number | null;
 	code: string;
-	lineNumbers: boolean;
-	fontFamily: string;
-	minimap: boolean;
 	currentTab: (id: Tab["id"]) => Tab | undefined;
-	setLayout: (layout: TLayout) => void;
-	setMinimap: (minimap: boolean) => void;
-	setLineNumbers: (size: boolean) => void;
-	setFontFamily: (fontFamily: string) => void;
 	setMonaco: (monaco: Monaco) => void;
 	setEditorRef: (editor: editor.IStandaloneCodeEditor) => void;
 	addTab: (tab: Omit<Tab, "id">) => void;
@@ -44,10 +33,7 @@ interface EditorState {
 	resetCode: () => void;
 	clearConsole: (id: Tab["id"]) => void;
 	setTheme: (theme: keyof typeof themes) => void;
-	setFontSize: (size: number) => void;
-	setWordWrap: (enabled: boolean) => void;
 	getCurrentTheme: () => Theme;
-	setRefreshTime: (time: number | null) => void;
 	changeNameTab: (id: string, name: string) => void;
 	updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
 }
@@ -82,12 +68,7 @@ export const useEditorStore = create<EditorState>()(
 			layout: "horizontal",
 			minimap: true,
 			currentTab: (id) => get().tabs.find((tab) => tab.id === id),
-			setLayout: (layout) => set({ layout }),
-			setMinimap: (minimap) => set({ minimap }),
-			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
-			setRefreshTime: (time) => set({ refreshTime: time }),
 			setMonaco: (monaco) => set({ monaco }),
-			setFontFamily: (fontFamily) => set({ fontFamily }),
 			setEditorRef: (editor) => set({ editorRef: editor ?? null }),
 
 			addTab: (tab) => {
@@ -231,26 +212,16 @@ export const useEditorStore = create<EditorState>()(
 					get().monaco?.editor.setTheme(theme);
 				}
 			},
-			setFontSize: (fontSize) => set({ fontSize }),
-
-			setWordWrap: (wordWrap) => set({ wordWrap }),
 
 			getCurrentTheme: () => themes[get().theme],
 		}),
 		{
-			name: "editorConfig",
+			name: "editor",
 			partialize: (state) => ({
 				tabs: state.tabs,
 				activeTabId: state.activeTabId,
 				theme: state.theme,
-				fontSize: state.fontSize,
-				wordWrap: state.wordWrap,
 				code: state.code,
-				refreshTime: state.refreshTime,
-				fontFamily: state.fontFamily,
-				lineNumbers: state.lineNumbers,
-				minimap: state.minimap,
-				layout: state.layout,
 			}),
 		},
 	),

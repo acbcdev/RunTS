@@ -68,7 +68,7 @@ export function EditorTabs() {
                 }
               }}
             >
-              <span style={{ color: currentTheme.ui.foreground }}>{tab.name}</span>
+              <span className={`${tab.id === activeTabId ? 'underline' : ''}`} style={{ color: currentTheme.ui.foreground }}>{tab.name}</span>
               {tabs.length > 1 && (
                 <Button
                   variant="ghost"
@@ -89,7 +89,7 @@ export function EditorTabs() {
             </div>
           ))}
         </div>
-      </ScrollArea>
+      </ScrollArea >
       <Tooltip content="New tab">
         <Button
           variant="ghost"
@@ -105,6 +105,6 @@ export function EditorTabs() {
           <Plus className="w-4 h-4" />
         </Button>
       </Tooltip>
-    </div>
+    </div >
   )
 }

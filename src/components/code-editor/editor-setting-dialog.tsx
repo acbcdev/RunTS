@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useConfigStore } from '@/store/config'
 
 const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
 
@@ -24,8 +25,16 @@ const fontFamilies = [
 ]
 type TLayout = "vertical" | "horizontal";
 const layouts: TLayout[] = ["vertical", "horizontal"]
+
 export function EditorSettingsDialog() {
-  const { getCurrentTheme, theme, setRefreshTime, refreshTime, setFontFamily, fontFamily, setWordWrap, setLineNumbers, lineNumbers, wordWrap, fontSize, setTheme, setFontSize, layout, setLayout } = useEditorStore()
+  const { getCurrentTheme, theme, setTheme } = useEditorStore()
+  const { fontSize, wordWrap, lineNumbers, fontFamily, refreshTime, minimap, layout, whiteSpace, setMinimap, setFontSize, setWordWrap, setWhiteSpace, setLineNumbers, setFontFamily, setRefreshTime, setLayout } = useConfigStore()
+  const editorBehaviors = [
+    { id: 'wordWrap', callback: setWordWrap, value: wordWrap, label: 'Word Wrap', description: 'Wrap long lines of code' },
+    { id: 'lineNumbers', callback: setLineNumbers, value: lineNumbers, label: 'Line Numbers', description: 'Show line numbers in the editor' },
+    { id: 'minimap', callback: setMinimap, value: minimap, label: 'Minimap', description: 'Show minimap in the editor' },
+    { id: 'whiteSpace', callback: setWhiteSpace, value: whiteSpace, label: 'White Space', description: 'Show white space in the editor' },
+  ]
   const currentTheme = getCurrentTheme()
 
   return (
@@ -227,10 +236,7 @@ export function EditorSettingsDialog() {
                     Editor Behavior
                   </h3>
                   <div className="space-y-4">
-                    {[
-                      { id: 'wordWrap', callback: setWordWrap, value: wordWrap, label: 'Word Wrap', description: 'Wrap long lines of code' },
-                      { id: 'lineNumbers', callback: setLineNumbers, value: lineNumbers, label: 'Line Numbers', description: 'Show line numbers in the editor' },
-                    ].map(({ id, callback, value, label, description }) => (
+                    {editorBehaviors.map(({ id, callback, value, label, description }) => (
                       <div
                         key={id}
                         className="flex items-center justify-between p-3 rounded"

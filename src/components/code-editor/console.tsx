@@ -1,3 +1,4 @@
+import { useConfigStore } from '@/store/config';
 import { useEditorStore } from '@/store/editor'
 
 import { lazy, Suspense, } from "react";
@@ -5,7 +6,8 @@ import { lazy, Suspense, } from "react";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function Console() {
-  const { getCurrentTheme, currentTab, activeTabId, theme, fontSize, fontFamily } = useEditorStore()
+  const { getCurrentTheme, currentTab, activeTabId, theme, } = useEditorStore()
+  const { fontSize, fontFamily } = useConfigStore()
   const currentTheme = getCurrentTheme()
   return (
     <div
@@ -50,14 +52,17 @@ export function Console() {
             scrollBeyondLastLine: false,
             folding: true,
             bracketPairColorization: {
-              enabled: true
+              enabled: false
             },
+            cursorStyle: 'block',
+            cursorBlinking: 'expand',
             codeLens: false,
             multiCursorLimit: 0,
             lineDecorationsWidth: 0,
             lineNumbersMinChars: 0,
-            renderWhitespace: 'none',
-            renderLineHighlight: 'all',
+            renderWhitespace: 'selection',
+
+            renderLineHighlight: 'none',
             selectionHighlight: false,
           }}
         />

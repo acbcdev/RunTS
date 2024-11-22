@@ -4,10 +4,12 @@ import { Tooltip } from "@/components/ui/tooltip"
 import { useToast } from "@/hooks/use-toast"
 import { useEditorStore } from '@/store/editor'
 import { EditorSettingsDialog } from '@/components/code-editor/editor-setting-dialog'
+import { useConfigStore } from '@/store/config'
 
 export function EditorTopBar() {
   const { toast } = useToast()
-  const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, setFontSize, setLayout, layout, activeTabId } = useEditorStore()
+  const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, activeTabId } = useEditorStore()
+  const { layout, setLayout, setFontSize } = useConfigStore()
   const currentTheme = getCurrentTheme()
   const handleReset = () => {
     resetCode()
@@ -72,7 +74,7 @@ export function EditorTopBar() {
 
   return (
     <div
-      className="flex items-center justify-between p-2 border-b"
+      className={"flex items-center justify-between p-2 border-b "}
       style={{
         borderColor: currentTheme.ui.border,
         backgroundColor: currentTheme.ui.header

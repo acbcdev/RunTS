@@ -3,13 +3,15 @@ import type { Monaco } from '@monaco-editor/react';
 import { useEditorStore } from '@/store/editor';
 import { themes } from '@/themes';
 import type { editor } from 'monaco-editor';
+import { useConfigStore } from '@/store/config';
 
 
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function EditorMain() {
-  const { getCurrentTheme, fontFamily, lineNumbers, code, theme, fontSize, wordWrap, setMonaco, setEditorRef, updateTabCode, activeTabId } = useEditorStore()
+  const { code, setMonaco, setEditorRef, updateTabCode, activeTabId, getCurrentTheme, theme } = useEditorStore()
+  const { fontSize, wordWrap, lineNumbers, fontFamily, minimap, whiteSpace } = useConfigStore()
   const currentTheme = getCurrentTheme()
 
 
@@ -29,20 +31,6 @@ export function EditorMain() {
     setEditorRef(editor);
     onEditorReady(editor, monacoInstance)
 
-
-
-    // Add decorations for console outputs
-    // if (editor && currentTab(activeTabId)?.logs.length > 0) {
-    //   const decorations: editor.IModelDeltaDecoration[] = currentTab(activeTabId)?.logs.map(item => ({
-    //     range: new monacoInstance.Range(item.line, 1, item.line, 1),
-    //     options: {
-    //       isWholeLine: true,
-    //       className: 'console-output-line',
-    //       marginClassName: 'console-output-margin'
-    //     }
-    //   }))
-    //   editor.createDecorationsCollection(decorations)
-    // }
   }
 
 
@@ -93,7 +81,7 @@ export function EditorMain() {
             fontSize,
             tabSize: 2,
             wordWrap: wordWrap ? 'on' : 'off',
-            minimap: { enabled: true, scale: 0.4, },
+            minimap: { enabled: minimap, scale: 0.4, },
             lineNumbers: lineNumbers ? 'on' : 'off',
             glyphMargin: true,
             scrollBeyondLastLine: false,
@@ -121,7 +109,7 @@ export function EditorMain() {
             smoothScrolling: true,
             mouseWheelZoom: true,
             renderLineHighlight: 'all',
-            renderWhitespace: 'selection',
+            renderWhitespace: whiteSpace ? 'all' : 'selection',
             guides: {
               bracketPairs: true,
               indentation: true

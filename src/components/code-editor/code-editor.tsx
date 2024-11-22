@@ -4,6 +4,8 @@ import { EditorTabs } from "./editor-tabs";
 import { EditorMain } from "./editor-main";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEditorStore } from "@/store/editor";
+import { useConfigStore } from "@/store/config";
+
 import {
   ResizablePanelGroup,
   ResizablePanel,
@@ -15,11 +17,10 @@ export function CodeEditor() {
   const {
     tabs,
     activeTabId,
-    refreshTime,
     getCurrentTheme,
     runCode,
-    layout,
   } = useEditorStore();
+  const { layout, refreshTime } = useConfigStore();
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
   const debouncedCode = useDebounce(
     activeTab?.code || "",
