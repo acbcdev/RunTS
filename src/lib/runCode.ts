@@ -1,17 +1,17 @@
-import type { ConsoleOutput } from "@/types/worker";
-import { Formatter } from "./formatter";
+// import type { ConsoleOutput } from "@/types/worker";
+// import { Formatter } from "./formatter";
 
-const addLoopProtection = `
-let __loopCounter = 0;
-const __maxIterations = 1000;
+// const addLoopProtection = `
+// let __loopCounter = 0;
+// const __maxIterations = 1000;
 
-function checkInfiniteLoop() {
-  __loopCounter++;
-  if (__loopCounter > __maxIterations) {
-    throw new Error("Infinite loop detected.");
-  }
-}
-`;
+// function checkInfiniteLoop() {
+//   __loopCounter++;
+//   if (__loopCounter > __maxIterations) {
+//     throw new Error("Infinite loop detected.");
+//   }
+// }
+// `;
 
 // Escuchar mensajes en el worker
 // export async function runCode(code: string): Promise<ConsoleOutput[]> {
