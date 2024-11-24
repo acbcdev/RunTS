@@ -17,7 +17,7 @@ import { useConfigStore } from '@/store/config'
 
 const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
 
-const refreshTimes = [{ value: null, time: 'Off' }, { value: 500, time: '500ms' }, { value: 700, time: '700ms' }, { value: 1000, time: '1s' }, { value: 2000, time: '2s' }, { value: 3000, time: '3s' },]
+const refreshTimes = [{ value: null, time: 'Off' }, { value: 100, time: '100ms' }, { value: 400, time: '400ms' }, { value: 500, time: '500ms' }, { value: 700, time: '700ms' }, { value: 1000, time: '1s' }, { value: 2000, time: '2s' }, { value: 3000, time: '3s' },]
 const fontFamilies = [
   { name: 'Cascadia Code', value: '"Cascadia Code"' },
   { name: 'Fira Code', value: '"Fira Code"' },

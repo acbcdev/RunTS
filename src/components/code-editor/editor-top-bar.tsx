@@ -5,8 +5,9 @@ import { useToast } from "@/hooks/use-toast"
 import { useEditorStore } from '@/store/editor'
 import { EditorSettingsDialog } from '@/components/code-editor/editor-setting-dialog'
 import { useConfigStore } from '@/store/config'
+import { memo } from 'react'
 
-export function EditorTopBar() {
+export const EditorTopBar = memo(function EditorTopBar() {
   const { toast } = useToast()
   const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, activeTabId } = useEditorStore()
   const { layout, setLayout, setFontSize } = useConfigStore()
@@ -205,4 +206,4 @@ export function EditorTopBar() {
       </div>
     </div>
   )
-}
+})
