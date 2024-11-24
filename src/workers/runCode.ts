@@ -1,20 +1,6 @@
+import { Formatter } from "@/lib/formatter";
 import type { ConsoleOutput } from "@/types/worker";
-import ts from "typescript";
-
-function Formatter<T>(item: T) {
-	if (Array.isArray(item)) return `[ ${item.join(", ")} ]`;
-	if (item !== null && typeof item === "object" && !Array.isArray(item)) {
-		return Object.entries(item).reduce(
-			(acc, [key, value]) =>
-				`${acc}  ${key}: ${JSON.stringify(value, null, 2)}\n`,
-			"",
-		);
-	}
-	if (typeof item === "string") return `"${item}"`;
-
-	return item;
-}
-
+import * as Babel from "@babel/standalone";
 self.onmessage = async (event: MessageEvent) => {
 	const { activeTabCode } = event.data;
 	const output: ConsoleOutput[] = [];
@@ -49,34 +35,38 @@ self.onmessage = async (event: MessageEvent) => {
 	};
 
 	try {
-		const ts = await import("typescript");
-
 		// Create source map for console calls
-		const sourceFile = ts.createSourceFile(
-			"code.ts",
-			activeTabCode,
-			ts.ScriptTarget.Latest,
-			true,
-		);
+		// const sourceFile = ts.createSourceFile(
+		// 	"code.ts",
+		// 	activeTabCode,
+		// 	ts.ScriptTarget.Latest,
+		// 	true,
+		// );
 
-		const visitor = (node: ts.Node) => {
-			if (
-				ts.isCallExpression(node) &&
-				ts.isPropertyAccessExpression(node.expression) &&
-				ts.isIdentifier(node.expression.expression) &&
-				node.expression.expression.text === "console"
-			) {
-				const { line, character } = sourceFile.getLineAndCharacterOfPosition(
-					node.getStart(),
-				);
-				sourceMap.set(currentPosition++, {
-					line: line + 1,
-					column: character,
-				});
+		activeTabCode.split("\n").forEach((line: string, index: number) => {
+			if (line.includes("console.")) {
+				sourceMap.set(currentPosition++, { line: index + 1, column: 0 });
 			}
-			ts.forEachChild(node, visitor);
-		};
-		ts.forEachChild(sourceFile, visitor);
+		});
+
+		// const visitor = (node: ts.Node) => {
+		// 	if (
+		// 		ts.isCallExpression(node) &&
+		// 		ts.isPropertyAccessExpression(node.expression) &&
+		// 		ts.isIdentifier(node.expression.expression) &&
+		// 		node.expression.expression.text === "console"
+		// 	) {
+		// 		const { line, character } = sourceFile.getLineAndCharacterOfPosition(
+		// 			node.getStart(),
+		// 		);
+		// 		sourceMap.set(currentPosition++, {
+		// 			line: line + 1,
+		// 			column: character,
+		// 		});
+		// 	}
+		// 	ts.forEachChild(node, visitor);
+		// };
+		// ts.forEachChild(sourceFile, visitor);
 
 		// Override console methods with output limit
 		let consolePosition = 0;
@@ -133,16 +123,14 @@ self.onmessage = async (event: MessageEvent) => {
 			}
 		};
 
-		const result = ts.transpileModule(activeTabCode, {
-			compilerOptions: {
-				target: ts.ScriptTarget.ES2023,
-				module: ts.ModuleKind.ESNext,
-				strict: true,
-			},
-		});
+		const transpiledCode = Babel.transform(activeTabCode, {
+			presets: ["typescript"],
+			filename: "code.ts",
+			sourceMaps: false,
+		}).code;
 
 		if (!outputLimitReached) {
-			new Function(result.outputText)();
+			new Function(transpiledCode)();
 		}
 	} catch (error) {
 		if (!outputLimitReached) {
