@@ -118,7 +118,7 @@ export const useEditorStore = create<EditorState>()(
 					),
 				}));
 			},
-			runCode: () => {
+			runCode: async () => {
 				const state = get();
 				const activeTab = state.tabs.find(
 					(tab) => tab.id === state.activeTabId,
@@ -134,6 +134,7 @@ export const useEditorStore = create<EditorState>()(
 					},
 				]);
 				const code = injectLogsIntoCode(activeTab?.code);
+
 				const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
 					const worker = new Worker(
 						new URL("/src/workers/runCode.ts", import.meta.url),
@@ -142,7 +143,7 @@ export const useEditorStore = create<EditorState>()(
 						},
 					);
 					const timeout = setTimeout(() => {
-						reject(new Error("Worker timed out"));
+						reject(new Error("a worker timed out :("));
 						worker.terminate();
 					}, 10000);
 					worker.postMessage({ activeTabCode: code });
@@ -161,6 +162,7 @@ export const useEditorStore = create<EditorState>()(
 				});
 				runWorker
 					.then((output) => {
+						console.log(output);
 						get().updateTabLog(state.activeTabId, output);
 					})
 					.catch((error) => {
