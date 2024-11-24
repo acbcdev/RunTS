@@ -130,7 +130,7 @@ self.onmessage = async (event: MessageEvent) => {
 		}).code;
 
 		if (!outputLimitReached) {
-			new Function(transpiledCode)();
+			new Function(transpiledCode ?? "")();
 		}
 	} catch (error) {
 		if (!outputLimitReached) {
