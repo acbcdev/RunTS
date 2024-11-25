@@ -1,0 +1,50 @@
+import type { ManifestOptions } from "vite-plugin-pwa";
+
+export const manifest: ManifestOptions = {
+	name: "Runts - TypeScript Playground",
+	short_name: "Runts",
+	theme_color: "#000000",
+	background_color: "#ffffff",
+	display: "standalone",
+	start_url: "/",
+	description: "TypeScript Playground",
+	icons: [
+		{
+			src: "./assets/icons/icon-192x192.png",
+			sizes: "192x192",
+			type: "image/png",
+		},
+		{
+			src: "./assets/icons/icon-512x512.png",
+			sizes: "512x512",
+			type: "image/png",
+		},
+	],
+	file_handlers: [],
+	scope: "",
+	id: "",
+	orientation: "any",
+	display_override: [],
+	dir: "ltr",
+	lang: "",
+	publicPath: "",
+	related_applications: [],
+	prefer_related_applications: false,
+	protocol_handlers: [],
+	shortcuts: [],
+	screenshots: [],
+	categories: [],
+	iarc_rating_id: "",
+	share_target: {
+		action: "",
+		method: undefined,
+		enctype: undefined,
+		params: {
+			title: undefined,
+			text: undefined,
+			url: undefined,
+			files: undefined,
+		},
+	},
+	scope_extensions: [],
+};

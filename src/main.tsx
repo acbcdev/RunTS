@@ -12,7 +12,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <HelmetProvider>
         <App />
       </HelmetProvider>
-
     </AptabaseProvider>
   </React.StrictMode>,
 )

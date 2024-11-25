@@ -4,13 +4,14 @@ import { useEditorStore } from '@/store/editor';
 import { themes } from '@/themes';
 import type { editor } from 'monaco-editor';
 import { useConfigStore } from '@/store/config';
+import { Loader2Icon } from 'lucide-react';
 
 
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function EditorMain() {
-  const { code, setMonaco, setEditorRef, updateTabCode, activeTabId, getCurrentTheme, theme } = useEditorStore()
+  const { code, setMonaco, setEditorRef, updateTabCode, activeTabId, getCurrentTheme, theme, running } = useEditorStore()
   const { fontSize, wordWrap, lineNumbers, fontFamily, minimap, whiteSpace } = useConfigStore()
   const currentTheme = getCurrentTheme()
 
@@ -49,6 +50,7 @@ export function EditorMain() {
           </div>
         </div>
       }>
+        {running && <Loader2Icon className='absolute z-10 text-white animate-spin right-6 top-2 size-10' />}
         <MonacoEditor
           height="100%"
           defaultLanguage={'typescript'}
