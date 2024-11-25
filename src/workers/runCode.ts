@@ -106,7 +106,8 @@ self.onmessage = async (event: MessageEvent) => {
     const transpiledCode = Babel.transform(activeTabCode, {
       presets: ["typescript"],
       filename: name,
-      sourceMaps: false,
+      sourceType: "module",
+      // sourceMaps: false,
     }).code;
 
     if (!outputLimitReached) {
