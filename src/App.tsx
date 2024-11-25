@@ -5,11 +5,13 @@ import SEO from './components/SEO'
 
 function App() {
   return (
-    <TooltipProvider>
+    <>
       <SEO title='RunTS - TypeScript Playground' />
-      <CodeEditor />
-      <Toaster />
-    </TooltipProvider>
+      <TooltipProvider>
+        <CodeEditor />
+        <Toaster />
+      </TooltipProvider>
+    </>
   )
 }
 

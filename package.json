@@ -11,6 +11,7 @@
 		"tauri": "tauri"
 	},
 	"dependencies": {
+		"@aptabase/react": "^0.3.5",
 		"@babel/standalone": "7.26.2",
 		"@monaco-editor/react": "4.6.0",
 		"@radix-ui/react-dialog": "1.1.2",
