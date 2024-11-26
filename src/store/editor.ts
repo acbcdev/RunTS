@@ -40,8 +40,10 @@ interface EditorState {
   updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
 }
 
-const DEFAULT_CODE = `// Welcome to the TypeScript Code Editor!
-// Try running this sample code or write your own`;
+const DEFAULT_CODE = `
+  const add = (a: number, b: number) => a + b
+  add(1, 2)
+`;
 
 const initialTabs: Tab[] = [
   {
@@ -83,6 +85,7 @@ export const useEditorStore = create<EditorState>()(
         set((state) => ({
           tabs: [...state.tabs, newTab],
           activeTabId: newTab.id,
+          code: newTab.code,
         }));
       },
       changeNameTab: (id, name) => {
