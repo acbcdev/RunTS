@@ -25,7 +25,7 @@ export function EditorTabs() {
   }
   const handleAddTab = () => {
     addTab({
-      name: `untitled-${tabs.length + 1}.ts`,
+      name: `untitled-${Date.now().toString().slice(-4)}.ts`,
       language: 'typescript',
       code: '// Start coding here\n',
       logs: [],
@@ -43,6 +43,7 @@ export function EditorTabs() {
       <ScrollArea className="max-w-[calc(100%-32px)]">
         <div className="flex">
           {tabs.map((tab) => (
+
             // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
             <div
               key={tab.id}

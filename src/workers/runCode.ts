@@ -3,7 +3,7 @@ import type { ConsoleOutput } from "@/types/worker";
 import * as Babel from "@babel/standalone";
 self.onmessage = async (event: MessageEvent) => {
   const { activeTabCode, name } = event.data;
-  const output: ConsoleOutput[] = [];
+  let output: ConsoleOutput[] = [];
   let outputLimitReached = false; // Bandera para limitar el output
 
   const sourceMap = new Map<number, { line: number; column: number }>();
@@ -51,6 +51,9 @@ self.onmessage = async (event: MessageEvent) => {
 
     let consolePosition = 0;
 
+    self.console.clear = () => {
+      output = [];
+    };
     self.console.log = (...args) => {
       if (!checkOutputLimit()) {
         const position = sourceMap.get(consolePosition++);
@@ -63,7 +66,6 @@ self.onmessage = async (event: MessageEvent) => {
         });
       }
     };
-
     self.console.error = (...args) => {
       if (!checkOutputLimit()) {
         const position = sourceMap.get(consolePosition++);
@@ -107,7 +109,6 @@ self.onmessage = async (event: MessageEvent) => {
       presets: ["typescript"],
       filename: name,
       sourceType: "module",
-      // sourceMaps: false,
     }).code;
 
     if (!outputLimitReached) {

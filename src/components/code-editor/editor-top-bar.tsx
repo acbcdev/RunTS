@@ -114,6 +114,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
         </Tooltip>
         <Tooltip content="Run code (Ctrl+Enter)">
           <Button
+            onKeyDown={(e) => e.key === 'Enter' && e.ctrlKey && runCode()}
             variant="ghost"
             size="icon"
             className="w-8 h-8"
