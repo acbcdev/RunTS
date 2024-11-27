@@ -89,12 +89,15 @@ export const useEditorStore = create<EditorState>()(
         }));
       },
       changeNameTab: (id, name) => {
-        set((state) => ({
-          tabs: state.tabs.map((tab) =>
-            tab.id === id ? { ...tab, name } : tab,
-          ),
-        }));
+        set((state) => {
+          const index = state.tabs.findIndex((tab) => tab.id === id);
+          if (index === -1) return state; // Si no encuentra el tab, no se realiza ningún cambio
+          return {
+            tabs: state.tabs.with(index, { ...state.tabs[index], name }),
+          };
+        });
       },
+
       removeTab: (id) => {
         set((state) => {
           const newTabs = state.tabs.filter((tab) => tab.id !== id);
@@ -111,21 +114,27 @@ export const useEditorStore = create<EditorState>()(
       setActiveTab: (id) => set({ activeTabId: id }),
 
       updateTabCode: (id, code) => {
-        set((state) => ({
-          tabs: state.tabs.map((tab) =>
-            tab.id === id ? { ...tab, code } : tab,
-          ),
-          code: state.activeTabId === id ? code : state.code,
-        }));
+        set((state) => {
+          const index = state.tabs.findIndex((tab) => tab.id === id);
+          if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
+          return {
+            tabs: state.tabs.with(index, { ...state.tabs[index], code }),
+            code: state.activeTabId === id ? code : state.code,
+          };
+        });
       },
+
       updateTabLog: (id, logs) => {
-        set((state) => ({
-          tabs: state.tabs.map((tab) =>
-            tab.id === id ? { ...tab, logs } : tab,
-          ),
-        }));
+        set((state) => {
+          const index = state.tabs.findIndex((tab) => tab.id === id);
+          if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
+          return {
+            tabs: state.tabs.with(index, { ...state.tabs[index], logs }),
+          };
+        });
       },
-      runCode: async () => {
+
+      runCode: () => {
         const state = get();
         const activeTab = state.tabs.find(
           (tab) => tab.id === state.activeTabId,
@@ -186,12 +195,14 @@ export const useEditorStore = create<EditorState>()(
           (tab) => tab.id === state.activeTabId,
         );
         if (activeTab) {
+          const index = state.tabs.findIndex((tab) => tab.id === activeTab.id);
+          if (index === -1) return;
+
           set((state) => ({
-            tabs: state.tabs.map((tab) =>
-              tab.id === activeTab.id
-                ? { ...tab, code: initialTabs[0].code }
-                : tab,
-            ),
+            tabs: state.tabs.with(index, {
+              ...state.tabs[index],
+              code: initialTabs[0].code,
+            }),
             code:
               state.activeTabId === activeTab.id
                 ? initialTabs[0].code
@@ -201,12 +212,15 @@ export const useEditorStore = create<EditorState>()(
         }
       },
 
-      clearConsole: (id) =>
-        set((state) => ({
-          tabs: state.tabs.map((tab) =>
-            tab.id === id ? { ...tab, logs: [] } : tab,
-          ),
-        })),
+      clearConsole: (id) => {
+        set((state) => {
+          const index = state.tabs.findIndex((tab) => tab.id === id);
+          if (index === -1) return state; // Si no encuentra la pestaña, no realiza cambios
+          return {
+            tabs: state.tabs.with(index, { ...state.tabs[index], logs: [] }),
+          };
+        });
+      },
 
       setTheme: (theme) => {
         set({ theme });
