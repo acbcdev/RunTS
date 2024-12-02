@@ -17,6 +17,7 @@ export function CodeEditor() {
   const {
     tabs,
     activeTabId,
+    theme,
     getCurrentTheme,
     runCode,
   } = useEditorStore();
@@ -26,7 +27,11 @@ export function CodeEditor() {
     activeTab?.code || "",
     refreshTime || 60000 * 10);
   const currentTheme = getCurrentTheme();
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    metaThemeColor?.setAttribute('content', currentTheme.ui.header);
+  }, [theme])
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     runCode();

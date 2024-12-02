@@ -3,6 +3,7 @@ export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
 export const refreshTimes = [
   { value: null, time: "Off" },
   { value: 100, time: "100ms" },
+  { value: 200, time: "200ms" },
   { value: 400, time: "400ms" },
   { value: 500, time: "500ms" },
   { value: 700, time: "700ms" },
