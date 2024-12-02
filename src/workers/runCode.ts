@@ -35,13 +35,6 @@ self.onmessage = async (event: MessageEvent) => {
   };
 
   try {
-    // Create source map for console calls
-    // const sourceFile = ts.createSourceFile(
-    // 	"code.ts",
-    // 	activeTabCode,
-    // 	ts.ScriptTarget.Latest,
-    // 	true,
-    // );
 
     activeTabCode.split("\n").forEach((line: string, index: number) => {
       if (line.includes("console.")) {
