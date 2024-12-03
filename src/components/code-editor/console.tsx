@@ -11,6 +11,7 @@ export function Console() {
   return (
     <div
       className="relative h-full"
+      translate='no'
       style={{ backgroundColor: currentTheme.ui.background }}>
       <Suspense fallback={
         <div

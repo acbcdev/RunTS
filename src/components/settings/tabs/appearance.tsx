@@ -14,13 +14,14 @@ export function Appearance() {
     <TabsContent value="appearance" className="p-6 m-0">
       <div className="space-y-8">
         <section>
-          <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
+          <h3 translate="no" className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
             Color Theme
           </h3>
           <div className="grid grid-cols-2 gap-3 cursor-pointer">
             {Object.entries(themes).map(([key, value]) => (
               // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
               <div
+                translate="no"
                 key={key}
                 className="relative p-4 transition-all duration-200 border rounded-lg"
                 style={{
@@ -60,13 +61,14 @@ export function Appearance() {
           </div>
         </section>
         <section>
-          <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
+          <h3 translate="no" className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
             EditLayout
           </h3>
           <div className="grid grid-cols-2 gap-2">
             {layouts.map((direction) => (
               <Button
                 key={direction}
+                translate="no"
                 className="p-2 text-center transition-all duration-200 border rounded"
                 onClick={() => setLayout(direction)}
                 style={{
@@ -82,12 +84,13 @@ export function Appearance() {
           </div>
         </section>
         <section>
-          <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
+          <h3 translate="no" className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
             Font Settings
           </h3>
           <div className="space-y-6">
             <div>
               <Button
+                translate="no"
                 className="block mb-2 text-sm"
                 style={{ color: currentTheme.ui.muted }}
               >
@@ -96,6 +99,7 @@ export function Appearance() {
               <div className="grid grid-cols-5 gap-2 md:grid-cols-7">
                 {fontSizes.map((size) => (
                   <Button
+                    translate="no"
                     key={size}
                     className="p-2 text-center transition-all duration-200 border rounded"
                     style={{
@@ -113,6 +117,7 @@ export function Appearance() {
 
             <div>
               <p
+                translate="no"
                 className="block mb-2 text-sm"
                 style={{ color: currentTheme.ui.muted }}
               >
@@ -122,6 +127,7 @@ export function Appearance() {
                 {fontFamilies.map((font) => (
                   <Button
                     key={font.name}
+                    translate="no"
                     className="p-3 text-left transition-all duration-200 border rounded"
                     style={{
                       fontFamily: font.value,

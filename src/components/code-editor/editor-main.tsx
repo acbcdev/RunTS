@@ -36,7 +36,7 @@ export function EditorMain() {
 
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full" translate='no'>
       <Suspense fallback={
         <div
           className="flex items-center justify-center h-full"

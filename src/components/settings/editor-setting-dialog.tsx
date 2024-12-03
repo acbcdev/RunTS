@@ -27,6 +27,7 @@ export function EditorSettingsDialog() {
             variant="ghost"
             size="icon"
             className="w-8 h-8"
+            translate='no'
             style={{
               color: currentTheme.ui.foreground,
               '--hover-color': currentTheme.ui.warning,

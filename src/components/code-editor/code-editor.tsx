@@ -45,6 +45,7 @@ export function CodeEditor() {
         backgroundColor: currentTheme.ui.background,
         color: currentTheme.ui.foreground,
       }}
+      translate="no"
     >
       <EditorTopBar />
       <EditorTabs />

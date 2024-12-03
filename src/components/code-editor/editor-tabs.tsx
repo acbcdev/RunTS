@@ -74,6 +74,7 @@ export function EditorTabs() {
                 <Button
                   variant="ghost"
                   size="icon"
+                  translate='no'
                   className="w-4 h-4 p-0 opacity-0 group-hover:opacity-100"
                   style={{
                     '--hover-bg': currentTheme.ui.hover,
