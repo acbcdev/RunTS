@@ -12,6 +12,8 @@
 	"app": {
 		"windows": [
 			{
+				"decorations": true,
+				"fullscreen": false,
 				"title": "runts",
 				"width": 800,
 				"height": 600

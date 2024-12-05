@@ -26,6 +26,8 @@
 		"@tauri-apps/plugin-shell": "2",
 		"@uidotdev/usehooks": "2.4.1",
 		"@vitejs/plugin-react-swc": "3.7.1",
+		"acorn": "^8.14.0",
+		"acorn-walk": "^8.3.4",
 		"class-variance-authority": "0.7.0",
 		"clsx": "2.1.0",
 		"lucide-react": "0.294.0",
