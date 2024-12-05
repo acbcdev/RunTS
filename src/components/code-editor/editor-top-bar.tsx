@@ -112,9 +112,15 @@ export const EditorTopBar = memo(function EditorTopBar() {
             <Plus className="w-4 h-4" />
           </Button>
         </Tooltip>
-        <Tooltip content="Run code (Ctrl+Enter)">
+        <Tooltip content="Run code (Ctrl+Q)">
           <Button
-            onKeyDown={(e) => e.key === 'Enter' && e.ctrlKey && runCode()}
+            onKeyDown={(e) => {
+              console.log(e)
+              if (e.key === 'q' && e.ctrlKey) {
+                alert('run code')
+                runCode()
+              }
+            }}
             variant="ghost"
             size="icon"
             className="w-8 h-8"

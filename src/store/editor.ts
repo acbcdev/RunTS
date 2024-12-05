@@ -16,6 +16,8 @@ interface Tab {
 }
 
 interface EditorState {
+  experimetalConsole: boolean;
+  setExperimental: (value: boolean) => void;
   monaco: Monaco | null;
   editorRef: editor.IStandaloneCodeEditor | null;
   tabs: Tab[];
@@ -58,13 +60,14 @@ const initialTabs: Tab[] = [
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
+      experimetalConsole: false,
       monaco: null,
       running: false,
       editorRef: null,
       tabs: initialTabs,
       activeTabId: "1",
       theme: "oneDark",
-      fontSize: 14,
+      fontSize: 20,
       wordWrap: true,
       refreshTime: 1000,
       code: initialTabs[0].code,
@@ -72,6 +75,7 @@ export const useEditorStore = create<EditorState>()(
       lineNumbers: true,
       layout: "horizontal",
       minimap: true,
+      setExperimental: (experimetalConsole) => set({ experimetalConsole }),
       setRunning: (running) => set({ running }),
       currentTab: (id) => get().tabs.find((tab) => tab.id === id),
       setMonaco: (monaco) => set({ monaco }),
@@ -141,7 +145,10 @@ export const useEditorStore = create<EditorState>()(
         );
         if (!activeTab?.code) return;
         get().setRunning(true);
-        const code = injectLogsIntoCode(activeTab?.code);
+
+        const code = get().experimetalConsole
+          ? injectLogsIntoCode(activeTab?.code)
+          : activeTab?.code;
         const name = activeTab?.name;
         const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
           const worker = new Worker(
@@ -240,6 +247,7 @@ export const useEditorStore = create<EditorState>()(
         activeTabId: state.activeTabId,
         theme: state.theme,
         code: state.code,
+        experimetalConsole: state.experimetalConsole,
       }),
     },
   ),

@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 
 export function Editor() {
   const { wordWrap, lineNumbers, refreshTime, minimap, whiteSpace, setMinimap, setWordWrap, setWhiteSpace, setLineNumbers, setRefreshTime } = useConfigStore()
-  const { getCurrentTheme, } = useEditorStore()
+  const { getCurrentTheme, setExperimental, experimetalConsole } = useEditorStore()
   const currentTheme = getCurrentTheme()
   const editorBehaviors = [
     { id: 'wordWrap', callback: setWordWrap, value: wordWrap, label: 'Word Wrap', description: 'Wrap long lines of code' },
@@ -70,6 +70,33 @@ export function Editor() {
                 {time}
               </Button>
             ))}
+          </div>
+        </section>
+        <section>
+          <h3 className="mb-4 text-base font-medium" style={{ color: currentTheme.ui.foreground }}>
+            Experimetal
+          </h3>
+          <div className="space-y-4">
+            <div
+              className="flex items-center justify-between p-3 rounded"
+              style={{ backgroundColor: currentTheme.ui.hover }}
+            >
+              <div>
+                <div style={{ color: currentTheme.ui.foreground }}>Direct Console.log</div>
+                <div
+                  className="text-sm"
+                  style={{ color: currentTheme.ui.muted }}
+                >
+                  show the Console.log without need to use the console.log(variable)
+                </div>
+              </div>
+              <Switch
+                checked={experimetalConsole}
+                onCheckedChange={
+                  () => setExperimental(!experimetalConsole)
+                }
+              />
+            </div>
           </div>
         </section>
       </div>

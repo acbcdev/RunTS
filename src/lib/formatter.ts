@@ -24,7 +24,7 @@ export function Formatter<T>(item: T, depth = 2, currentDepth = 0): string {
     const entries = Object.entries(item)
       .map(
         ([key, value]) =>
-          `${key}: ${Formatter(value, depth, currentDepth + 1)}`,
+          `  ${key}: ${Formatter(value, depth, currentDepth + 1)}`,
       )
       .join(",\n");
     return `{\n${entries}\n}`;
