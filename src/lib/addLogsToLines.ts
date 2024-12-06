@@ -30,7 +30,7 @@ export function injectLogsIntoCode(code: string): string {
     simple(ast, {
       ExpressionStatement(node) {
         if (!node.loc) return;
-        console.log(node.loc.start.line);
+        if (node.expression.type === "UpdateExpression") return;
         const lineNum = node.loc.end.line;
         const lineRaw = lines[lineNum - 1];
 
