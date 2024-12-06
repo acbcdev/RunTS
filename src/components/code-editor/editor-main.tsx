@@ -10,7 +10,7 @@ import { Loader2Icon } from 'lucide-react';
 const MonacoEditor = lazy(() => import("@monaco-editor/react"))
 
 export function EditorMain() {
-  const { code, setMonaco, setEditorRef, updateTabCode, activeTabId, getCurrentTheme, theme, running, runCode } = useEditorStore()
+  const { code, setMonaco, setEditorRef, updateTabCode, activeTabId, getCurrentTheme, theme, running } = useEditorStore()
   const { fontSize, wordWrap, lineNumbers, fontFamily, minimap, whiteSpace } = useConfigStore()
   const currentTheme = getCurrentTheme()
 
