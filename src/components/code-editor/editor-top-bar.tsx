@@ -12,6 +12,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
   const { code, editorRef, monaco, getCurrentTheme, resetCode, clearConsole, runCode, activeTabId } = useEditorStore()
   const { layout, setLayout, setFontSize } = useConfigStore()
   const currentTheme = getCurrentTheme()
+
   const handleReset = () => {
     resetCode()
     toast({
@@ -114,13 +115,6 @@ export const EditorTopBar = memo(function EditorTopBar() {
         </Tooltip>
         <Tooltip content="Run code (Ctrl+Q)">
           <Button
-            onKeyDown={(e) => {
-              console.log(e)
-              if (e.key === 'q' && e.ctrlKey) {
-                alert('run code')
-                runCode()
-              }
-            }}
             variant="ghost"
             size="icon"
             className="w-8 h-8"

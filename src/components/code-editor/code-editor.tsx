@@ -5,7 +5,7 @@ import { EditorMain } from "./editor-main";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEditorStore } from "@/store/editor";
 import { useConfigStore } from "@/store/config";
-
+import { useHotkeys } from "react-hotkeys-hook";
 import {
   ResizablePanelGroup,
   ResizablePanel,
@@ -26,6 +26,9 @@ export function CodeEditor() {
   const debouncedCode = useDebounce(
     activeTab?.code || "",
     refreshTime || 60000 * 10);
+  useHotkeys('ctrl+q', () => {
+    runCode()
+  })
   const currentTheme = getCurrentTheme();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
