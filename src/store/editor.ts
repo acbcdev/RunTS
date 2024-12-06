@@ -177,7 +177,6 @@ export const useEditorStore = create<EditorState>()(
         });
         runWorker
           .then((output) => {
-            console.log(output);
             get().updateTabLog(state.activeTabId, output);
           })
           .catch((error) => {
