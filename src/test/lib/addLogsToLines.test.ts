@@ -73,7 +73,6 @@ a
 `),
     ).toBe(`let a = 1;
 a = 54
-console.log(a = 54);
 a
 console.log(a);`);
   });
@@ -85,7 +84,6 @@ a = 54;
 a`),
     ).toBe(`let a = 1;
 a = 54;
-console.log(a = 54);
 a
 console.log(a);`);
   });
@@ -412,7 +410,6 @@ describe("for tests", () => {
 `),
     ).toBe(`for (let i = 0; i < 10; i++) {
 	i
-console.log(i);
 }	// comentario`);
   });
 });
@@ -492,7 +489,6 @@ describe("try-catch tests", () => {
     ).toBe(`try {
 	let a = 5;
 	a + 10;
-console.log(a + 10);
 } catch (e) {
 	console.log("error");
 }`);
@@ -634,8 +630,7 @@ describe("JavaSript API", () => {
 
     expect(injectLogsIntoCode("const a = Array(100);\na[0] = 10;"))
       .toBe(`const a = Array(100);
-a[0] = 10;
-console.log(a[0] = 10);`);
+a[0] = 10;`);
 
     expect(
       injectLogsIntoCode(`const limit = 15;

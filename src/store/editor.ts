@@ -6,6 +6,7 @@ import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
+import { inject } from "vitest";
 
 interface Tab {
   id: string;
@@ -146,9 +147,6 @@ export const useEditorStore = create<EditorState>()(
         if (!activeTab?.code) return;
         get().setRunning(true);
 
-        const code = get().experimetalConsole
-          ? injectLogsIntoCode(activeTab?.code)
-          : activeTab?.code;
         const name = activeTab?.name;
         const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
           const worker = new Worker(
@@ -161,7 +159,11 @@ export const useEditorStore = create<EditorState>()(
             reject(new Error("a worker timed out :("));
             worker.terminate();
           }, 10000);
-          worker.postMessage({ activeTabCode: code, name });
+          worker.postMessage({
+            activeTabCode: activeTab?.code,
+            name,
+            injectLogs: get().experimetalConsole,
+          });
 
           worker.onmessage = (event: MessageEvent) => {
             clearTimeout(timeout);

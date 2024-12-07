@@ -1,8 +1,9 @@
+import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { Formatter } from "@/lib/formatter";
 import type { ConsoleOutput } from "@/types/worker";
 import * as Babel from "@babel/standalone";
 self.onmessage = async (event: MessageEvent) => {
-  const { activeTabCode, name } = event.data;
+  const { activeTabCode, name, injectLogs } = event.data;
   let output: ConsoleOutput[] = [];
   let outputLimitReached = false; // Bandera para limitar el output
 
@@ -35,7 +36,6 @@ self.onmessage = async (event: MessageEvent) => {
   };
 
   try {
-
     activeTabCode.split("\n").forEach((line: string, index: number) => {
       if (line.includes("console.")) {
         sourceMap.set(currentPosition++, { line: index + 1, column: 0 });
@@ -103,9 +103,11 @@ self.onmessage = async (event: MessageEvent) => {
       filename: name,
       sourceType: "module",
     }).code;
-
+    const code = injectLogs
+      ? injectLogsIntoCode(transpiledCode ?? "")
+      : transpiledCode;
     if (!outputLimitReached) {
-      new Function(transpiledCode ?? "")();
+      new Function(code ?? "")();
     }
   } catch (error) {
     if (!outputLimitReached) {

@@ -1,21 +1,16 @@
-import { parse } from "acorn";
-import { simple } from "acorn-walk";
+import { type ExpressionStatement, type Node, parse } from "acorn";
+import { ancestor, simple } from "acorn-walk";
 
 /**
- * Agrega logs a un código JavaScript para facilitar la depuración.
- *
- * El algoritmo funciona de la siguiente manera:
- * 1. Parsea el código en un AST (Abstract Syntax Tree) usando acorn.
- * 2. Itera sobre el AST y encuentra las declaraciones de variables y llamadas a funciones.
- * 3. Por cada una de ellas, extrae la expresión principal y la inyecta como parámetro de console.log().
- * 4. Inserta la nueva línea en el lugar correspondiente en el código original.
- * 5. Si hubo un error de parseo, se devuelve el código original.
+ * Agrega logs a un código JavaScript para facilitar la depuración,
+ * evitando insertar logs dentro de bloques `{}`, corchetes `[]` u objetos `{}`.
+ * Además, evita inyectar logs en expresiones que tienen efectos secundarios,
+ * como asignaciones o actualizaciones.
  *
  * @param {string} code Código JavaScript a procesar.
  * @returns {string} Código JavaScript con los logs adicionales.
  */
 export function injectLogsIntoCode(code: string): string {
-  // Preprocesar líneas para remover el prefijo &&&
   const lines = code.split("\n");
 
   try {
@@ -24,30 +19,64 @@ export function injectLogsIntoCode(code: string): string {
       ecmaVersion: "latest",
       sourceType: "module",
       locations: true,
+      ranges: true,
+      onComment: () => {}, // Evitar la recolección de comentarios si no se necesita
     });
+
+    // Array para almacenar los puntos de inserción
     const insertPoints: { line: number; expr: string }[] = [];
 
-    simple(ast, {
-      ExpressionStatement(node) {
+    // Recorrer el AST con acceso a los ancestros
+    ancestor(ast, {
+      // Manejar únicamente ExpressionStatement
+      ExpressionStatement(node, ancestors) {
         if (!node.loc) return;
-        if (node.expression.type === "UpdateExpression") return;
+
+        // Evitar tipos de expresiones no deseadas al nivel superior
+        const excludedTypes = ["UpdateExpression", "AssignmentExpression"];
+        const expressionType = node.expression.type;
+        if (excludedTypes.includes(expressionType)) return;
+
+        // Verificar si el nodo está dentro de un BlockStatement, ArrayExpression u ObjectExpression
+        const isInsideExcludedContext =
+          Array.isArray(ancestors) &&
+          ancestors.some((ancestor) => {
+            return (
+              ancestor.type === "BlockStatement" ||
+              ancestor.type === "ArrayExpression" ||
+              ancestor.type === "ObjectExpression"
+            );
+          });
+
+        if (isInsideExcludedContext) return;
+
+        // Verificar si la expresión contiene AssignmentExpression o UpdateExpression en cualquier nivel
+        if (containsAssignmentOrUpdate(node.expression)) return;
+
+        // Verificar si la expresión contiene una llamada a console.log para evitar duplicados
+        if (containsConsoleLog(node.expression)) return;
+
         const lineNum = node.loc.end.line;
         const lineRaw = lines[lineNum - 1];
 
-        const mainPart = lineRaw.split("//")[0].trim().replace(/;$/, "");
-        if (!mainPart || mainPart.startsWith("console.")) return;
+        // Evitar insertar logs en líneas que ya contienen console.log
+        if (lineRaw.includes("console.log")) return;
+
+        // Extraer la parte principal de la expresión
+        const mainPart = extractMainExpression(code, node);
+        if (!mainPart) return;
 
         insertPoints.push({ line: lineNum - 1, expr: mainPart });
       },
     });
 
-    // Insertar console.log() con límite maxLogs
-    let offset = 0;
-    let logsInserted = 0;
+    // Ordenar los puntos de inserción de forma descendente para evitar problemas con los índices
+    insertPoints.sort((a, b) => b.line - a.line);
+
+    // Insertar console.log() en los puntos identificados
     for (const p of insertPoints) {
-      lines.splice(p.line + 1 + offset, 0, `console.log(${p.expr});`);
-      offset++;
-      logsInserted++;
+      const logStatement = `console.log(${p.expr});`;
+      lines.splice(p.line + 1, 0, logStatement);
     }
 
     return lines.join("\n").trim();
@@ -55,4 +84,74 @@ export function injectLogsIntoCode(code: string): string {
     console.error("Error al parsear el código:", error);
     return code; // Retorna el código original si hay un error de parseo
   }
+}
+
+/**
+ * Extrae la expresión principal del nodo, manejando casos de expresiones multilínea y comentarios.
+ *
+ * @param {string} code Código JavaScript original.
+ * @param {ExpressionStatement} node Nodo del AST.
+ * @returns {string} Expresión extraída.
+ */
+function extractMainExpression(
+  code: string,
+  node: ExpressionStatement,
+): string {
+  // Usar los rangos start y end para extraer la expresión completa
+  const expression = code.slice(node.start, node.end).trim();
+
+  // Eliminar comentarios de línea si existen
+  const expressionWithoutComments = expression.split("//")[0].trim();
+
+  // Eliminar el punto y coma al final si existe
+  const cleanExpression = expressionWithoutComments.replace(/;$/, "");
+
+  return cleanExpression;
+}
+
+/**
+ * Verifica si una expresión contiene AssignmentExpression o UpdateExpression en cualquier nivel.
+ *
+ * @param {Node} expression Nodo de expresión a verificar.
+ * @returns {boolean} Verdadero si contiene AssignmentExpression o UpdateExpression, falso en caso contrario.
+ */
+function containsAssignmentOrUpdate(expression: Node): boolean {
+  let hasAssignmentOrUpdate = false;
+
+  simple(expression, {
+    AssignmentExpression(node) {
+      hasAssignmentOrUpdate = true;
+    },
+    UpdateExpression(node) {
+      hasAssignmentOrUpdate = true;
+    },
+  });
+
+  return hasAssignmentOrUpdate;
+}
+
+/**
+ * Verifica si una expresión contiene una llamada a console.log.
+ *
+ * @param {Node} expression Nodo de expresión a verificar.
+ * @returns {boolean} Verdadero si contiene una llamada a console.log, falso en caso contrario.
+ */
+function containsConsoleLog(expression: Node): boolean {
+  let hasConsoleLog = false;
+
+  simple(expression, {
+    CallExpression(node) {
+      if (
+        node.callee.type === "MemberExpression" &&
+        node.callee.object.type === "Identifier" &&
+        node.callee.object.name === "console" &&
+        node.callee.property.type === "Identifier" &&
+        node.callee.property.name === "log"
+      ) {
+        hasConsoleLog = true;
+      }
+    },
+  });
+
+  return hasConsoleLog;
 }
