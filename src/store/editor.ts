@@ -12,7 +12,6 @@ interface Tab {
   name: string;
   language: string;
   code: string;
-  logsCode: string;
   logs: ConsoleOutput[];
 }
 
@@ -40,11 +39,7 @@ interface EditorState {
   setTheme: (theme: keyof typeof themes) => void;
   getCurrentTheme: () => Theme;
   changeNameTab: (id: string, name: string) => void;
-  updateTabLog: (
-    id: Tab["id"],
-    logs: Tab["logs"],
-    codeLogs: Tab["logsCode"],
-  ) => void;
+  updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
 }
 
 const DEFAULT_CODE = `
@@ -59,7 +54,6 @@ const initialTabs: Tab[] = [
     language: "typescript",
     code: DEFAULT_CODE,
     logs: [],
-    logsCode: "",
   },
 ];
 
@@ -134,7 +128,7 @@ export const useEditorStore = create<EditorState>()(
         });
       },
 
-      updateTabLog: (id, logs, codeLogs) => {
+      updateTabLog: (id, logs) => {
         set((state) => {
           const index = state.tabs.findIndex((tab) => tab.id === id);
           if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
@@ -142,7 +136,6 @@ export const useEditorStore = create<EditorState>()(
             tabs: state.tabs.with(index, {
               ...state.tabs[index],
               logs,
-              logsCode: codeLogs,
             }),
           };
         });
@@ -201,22 +194,18 @@ export const useEditorStore = create<EditorState>()(
           // Mostrar la salida formateada
 
           // Actualizar el log de la pestaña activa
-          get().updateTabLog(state.activeTabId, output, "");
+          get().updateTabLog(state.activeTabId, output);
         } catch (error) {
           // Manejar errores y actualizar el log con el error
-          get().updateTabLog(
-            state.activeTabId,
-            [
-              {
-                type: "error",
-                content: error instanceof Error ? error.message : String(error),
-                line: 0,
-                column: 0,
-                timestamp: Date.now(),
-              },
-            ],
-            "Error al ejecutar el código",
-          );
+          get().updateTabLog(state.activeTabId, [
+            {
+              type: "error",
+              content: error instanceof Error ? error.message : String(error),
+              line: 0,
+              column: 0,
+              timestamp: Date.now(),
+            },
+          ]);
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
           get().setRunning(false);
