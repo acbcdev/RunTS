@@ -6,11 +6,13 @@ import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
 
+// import parserBabel from "@babel/parser";
 interface Tab {
   id: string;
   name: string;
   language: string;
   code: string;
+  logsCode: string;
   logs: ConsoleOutput[];
 }
 
@@ -38,7 +40,11 @@ interface EditorState {
   setTheme: (theme: keyof typeof themes) => void;
   getCurrentTheme: () => Theme;
   changeNameTab: (id: string, name: string) => void;
-  updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
+  updateTabLog: (
+    id: Tab["id"],
+    logs: Tab["logs"],
+    codeLogs: Tab["logsCode"],
+  ) => void;
 }
 
 const DEFAULT_CODE = `
@@ -53,6 +59,7 @@ const initialTabs: Tab[] = [
     language: "typescript",
     code: DEFAULT_CODE,
     logs: [],
+    logsCode: "",
   },
 ];
 
@@ -127,72 +134,93 @@ export const useEditorStore = create<EditorState>()(
         });
       },
 
-      updateTabLog: (id, logs) => {
+      updateTabLog: (id, logs, codeLogs) => {
         set((state) => {
           const index = state.tabs.findIndex((tab) => tab.id === id);
           if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
           return {
-            tabs: state.tabs.with(index, { ...state.tabs[index], logs }),
+            tabs: state.tabs.with(index, {
+              ...state.tabs[index],
+              logs,
+              logsCode: codeLogs,
+            }),
           };
         });
       },
 
-      runCode: () => {
+      runCode: async () => {
         const state = get();
         const activeTab = state.tabs.find(
           (tab) => tab.id === state.activeTabId,
         );
+
         if (!activeTab?.code) return;
+
         get().setRunning(true);
 
-        const name = activeTab?.name;
-        const runWorker = new Promise<ConsoleOutput[]>((resolve, reject) => {
-          const worker = new Worker(
-            new URL("/src/workers/runCode.ts", import.meta.url),
-            {
-              type: "module",
+        try {
+          const name = activeTab.name;
+
+          // Crear una promesa para manejar el Worker
+          const output: ConsoleOutput[] = await new Promise<ConsoleOutput[]>(
+            (resolve, reject) => {
+              const worker = new Worker(
+                new URL("/src/workers/runCode.ts", import.meta.url),
+                { type: "module" },
+              );
+
+              // Configurar un timeout de 10 segundos
+              const timeout = setTimeout(() => {
+                reject(new Error("El Worker excedió el tiempo de espera."));
+                worker.terminate();
+              }, 10000);
+
+              // Enviar mensaje al Worker
+              worker.postMessage({
+                activeTabCode: activeTab.code,
+                name,
+                injectLogs: get().experimetalConsole,
+              });
+
+              // Manejar mensajes del Worker
+              worker.onmessage = (event: MessageEvent) => {
+                clearTimeout(timeout);
+                resolve(event.data);
+                worker.terminate();
+              };
+
+              // Manejar errores del Worker
+              worker.onerror = (error) => {
+                clearTimeout(timeout);
+                reject(error);
+                worker.terminate();
+              };
             },
           );
-          const timeout = setTimeout(() => {
-            reject(new Error("a worker timed out :("));
-            worker.terminate();
-          }, 10000);
-          worker.postMessage({
-            activeTabCode: activeTab?.code,
-            name,
-            injectLogs: get().experimetalConsole,
-          });
 
-          worker.onmessage = (event: MessageEvent) => {
-            clearTimeout(timeout);
-            resolve(event.data);
-            worker.terminate();
-          };
+          // Mostrar la salida formateada
 
-          worker.onerror = (error) => {
-            clearTimeout(timeout);
-            reject(error);
-            worker.terminate();
-          };
-        });
-        runWorker
-          .then((output) => {
-            get().updateTabLog(state.activeTabId, output);
-          })
-          .catch((error) => {
-            get().updateTabLog(state.activeTabId, [
+          // Actualizar el log de la pestaña activa
+          get().updateTabLog(state.activeTabId, output, "");
+        } catch (error) {
+          // Manejar errores y actualizar el log con el error
+          get().updateTabLog(
+            state.activeTabId,
+            [
               {
                 type: "error",
-                content: error,
+                content: error instanceof Error ? error.message : String(error),
                 line: 0,
                 column: 0,
                 timestamp: Date.now(),
               },
-            ]);
-          })
-          .finally(() => {
-            get().setRunning(false);
-          });
+            ],
+            "Error al ejecutar el código",
+          );
+        } finally {
+          // Asegurarse de que el estado de 'running' se actualice
+          get().setRunning(false);
+        }
       },
 
       resetCode: () => {

@@ -40,6 +40,7 @@
 		"zustand": "4.4.7"
 	},
 	"devDependencies": {
+		"@babel/parser": "^7.26.3",
 		"@babel/preset-typescript": "^7.26.0",
 		"@biomejs/biome": "1.9.4",
 		"@tauri-apps/cli": "^2.1.0",

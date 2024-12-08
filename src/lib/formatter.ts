@@ -1,4 +1,4 @@
-export function Formatter<T>(item: T, depth = 2, currentDepth = 0): string {
+export function Formatter<T>(item: T, depth = 5, currentDepth = 0): string {
   if (currentDepth > depth) return "...";
 
   if (Array.isArray(item)) {
@@ -33,6 +33,7 @@ export function Formatter<T>(item: T, depth = 2, currentDepth = 0): string {
   if (typeof item === "string") return `"${item}"`;
   if (typeof item === "number" || typeof item === "boolean")
     return String(item);
+  if (typeof item === "bigint") return `${item}n`;
   if (item === null) return "null";
   if (item === undefined) return "undefined";
 

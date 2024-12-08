@@ -28,7 +28,7 @@ export function Console() {
       }>
 
         <MonacoEditor
-          value={currentTab(activeTabId)?.logs.map((log) => log.content).join('\n') || ''}
+          value={currentTab(activeTabId)?.logs.map(({ content }) => content).join('\n') || ''}
           language='typescript'
           theme={theme}
           beforeMount={(monaco) => {
@@ -40,6 +40,12 @@ export function Console() {
           }}
           options={{
             lineNumbers: 'off',
+            language: 'javascript',
+            scrollbar: {
+              horizontal: 'auto',
+              vertical: 'auto',
+
+            },
             minimap: { enabled: false },
             readOnly: true,
             wordWrap: 'on',
