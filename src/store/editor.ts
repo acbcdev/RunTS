@@ -5,8 +5,6 @@ import { themes } from "@/themes";
 import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
-import { injectLogsIntoCode } from "@/lib/addLogsToLines";
-import { inject } from "vitest";
 
 interface Tab {
   id: string;

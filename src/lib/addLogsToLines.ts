@@ -119,10 +119,10 @@ function containsAssignmentOrUpdate(expression: Node): boolean {
   let hasAssignmentOrUpdate = false;
 
   simple(expression, {
-    AssignmentExpression(node) {
+    AssignmentExpression() {
       hasAssignmentOrUpdate = true;
     },
-    UpdateExpression(node) {
+    UpdateExpression() {
       hasAssignmentOrUpdate = true;
     },
   });
