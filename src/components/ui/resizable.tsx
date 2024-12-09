@@ -30,7 +30,7 @@ const ResizableHandle = ({
   return (
     <ResizablePrimitive.PanelResizeHandle
       className={cn(
-        `relative flex w-[4px] ${layout === "horizontal" ? "h-full" : "w-full h-[4px]"} cursor-col-resize`,
+        `relative flex   ${layout === "horizontal" ? "h-full w-[4px] hover:scale-x-[2]" : "w-full h-[4px] hover:scale-y-[2]"} cursor-col-resize`,
         className
       )}
       style={{

@@ -29,6 +29,7 @@ export function EditorTabs() {
       language: 'typescript',
       code: '// Start coding here\n',
       logs: [],
+      logFormated: ''
     })
   }
 

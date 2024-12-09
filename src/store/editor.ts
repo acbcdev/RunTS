@@ -5,7 +5,8 @@ import { themes } from "@/themes";
 import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@/types/worker";
-
+// import * as prettier from "prettier/standalone";
+// import parserBabel from "prettier/parser-babel";
 // import parserBabel from "@babel/parser";
 interface Tab {
   id: string;
@@ -13,6 +14,7 @@ interface Tab {
   language: string;
   code: string;
   logs: ConsoleOutput[];
+  logFormated: string;
 }
 
 interface EditorState {
@@ -39,7 +41,11 @@ interface EditorState {
   setTheme: (theme: keyof typeof themes) => void;
   getCurrentTheme: () => Theme;
   changeNameTab: (id: string, name: string) => void;
-  updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
+  updateTabLog: (
+    id: Tab["id"],
+    logs: Tab["logs"],
+    logFormated: Tab["logFormated"],
+  ) => void;
 }
 
 const DEFAULT_CODE = `
@@ -54,6 +60,7 @@ const initialTabs: Tab[] = [
     language: "typescript",
     code: DEFAULT_CODE,
     logs: [],
+    logFormated: "",
   },
 ];
 
@@ -192,20 +199,32 @@ export const useEditorStore = create<EditorState>()(
           );
 
           // Mostrar la salida formateada
-
+          // prettier
+          //   .format(output.map((log) => log.content).join("\n"), {
+          //     parser: "babel",
+          //     plugins: [parserBabel],
+          //     printWidth: 80,
+          //     singleQuote: true,
+          //   })
+          // .then((formatted) => {
+          // });
           // Actualizar el log de la pestaña activa
-          get().updateTabLog(state.activeTabId, output);
+          get().updateTabLog(state.activeTabId, output, "");
         } catch (error) {
           // Manejar errores y actualizar el log con el error
-          get().updateTabLog(state.activeTabId, [
-            {
-              type: "error",
-              content: error instanceof Error ? error.message : String(error),
-              line: 0,
-              column: 0,
-              timestamp: Date.now(),
-            },
-          ]);
+          get().updateTabLog(
+            state.activeTabId,
+            [
+              {
+                type: "error",
+                content: error instanceof Error ? error.message : String(error),
+                line: 0,
+                column: 0,
+                timestamp: Date.now(),
+              },
+            ],
+            "",
+          );
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
           get().setRunning(false);

@@ -8,6 +8,7 @@ export function Console() {
   const { getCurrentTheme, currentTab, activeTabId, theme } = useEditorStore()
   const { fontSize, fontFamily } = useConfigStore()
   const currentTheme = getCurrentTheme()
+
   return (
     <div
       className="relative h-full"
@@ -28,7 +29,7 @@ export function Console() {
       }>
 
         <MonacoEditor
-          value={currentTab(activeTabId)?.logs.map(({ content }) => content).join('\n') || ''}
+          value={currentTab(activeTabId)?.logFormated ?? currentTab(activeTabId)?.logs.map(({ content }) => content).join('\n')}
           language='typescript'
           theme={theme}
           beforeMount={(monaco) => {
