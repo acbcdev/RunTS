@@ -29,7 +29,7 @@ export function Console() {
       }>
 
         <MonacoEditor
-          value={currentTab(activeTabId)?.logFormated ?? currentTab(activeTabId)?.logs.map(({ content }) => content).join('\n')}
+          value={currentTab(activeTabId)?.logs.map(({ content }) => content).join('\n')}
           language='typescript'
           theme={theme}
           beforeMount={(monaco) => {
