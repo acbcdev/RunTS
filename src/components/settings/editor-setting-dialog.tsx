@@ -49,6 +49,7 @@ export function EditorSettingsDialog() {
           <DialogTitle style={{ color: currentTheme.ui.foreground }}>
             Editor Settings
           </DialogTitle>
+          <a href="https://www.buymeacoffee.com/runts" target='_blank' rel="noreferrer" ><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" className='my-2 h-14' /></a>
         </DialogHeader>
         <Tabs defaultValue="appearance" className="flex-1">
           <TabsList
