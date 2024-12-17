@@ -39,7 +39,7 @@ export function EditorSettingsDialog() {
         </DialogTrigger>
       </Tooltip>
       <DialogContent
-        className="p-0 lg:max-w-3xl max-h-[85vh]"
+        className="p-0 overflow-hidden lg:max-w-3xl"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border
