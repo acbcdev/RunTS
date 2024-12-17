@@ -1,0 +1,15 @@
+{
+  "name": "runts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tauri": "pnpm --filter  tauri",
+    "web": "pnpm --filter web",
+    "core": "pnpm --filter core"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
