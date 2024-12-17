@@ -49,7 +49,12 @@ export function EditorSettingsDialog() {
           <DialogTitle style={{ color: currentTheme.ui.foreground }}>
             Editor Settings
           </DialogTitle>
-          <a href="https://www.buymeacoffee.com/runts" target='_blank' rel="noreferrer" ><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" className='my-2 h-14' /></a>
+          <div className='flex items-center gap-2 mt-2 '>
+            <a href="https://www.buymeacoffee.com/runts" target='_blank' rel="noreferrer" ><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" className='h-10 my-2' /></a>
+            <a href="https://github.com/acbcdev/runts" target='_blank' rel="noreferrer" ><img src="https://img.shields.io/github/stars/acbcdev/runts?style=flat&logo=github
+" alt="Stars" className='h-10 my-2' /></a>
+          </div>
+
         </DialogHeader>
         <Tabs defaultValue="appearance" className="flex-1">
           <TabsList
