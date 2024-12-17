@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Monaco } from "@monaco-editor/react";
-import { themes } from "@/themes";
-import type { Theme } from "@/types/editor";
+import { themes } from "@core/themes";
+import type { Theme } from "@core/types/editor";
 import type { editor } from "monaco-editor";
-import type { ConsoleOutput } from "@/types/worker";
+import type { ConsoleOutput } from "@core/types/worker";
 // import * as prettier from "prettier/standalone";
 // import parserBabel from "prettier/parser-babel";
 // import parserBabel from "@babel/parser";
@@ -44,7 +44,7 @@ interface EditorState {
   updateTabLog: (
     id: Tab["id"],
     logs: Tab["logs"],
-    logFormated: Tab["logFormated"],
+    logFormated: Tab["logFormated"]
   ) => void;
 }
 
@@ -151,7 +151,7 @@ export const useEditorStore = create<EditorState>()(
       runCode: async () => {
         const state = get();
         const activeTab = state.tabs.find(
-          (tab) => tab.id === state.activeTabId,
+          (tab) => tab.id === state.activeTabId
         );
 
         if (!activeTab?.code) return;
@@ -166,7 +166,7 @@ export const useEditorStore = create<EditorState>()(
             (resolve, reject) => {
               const worker = new Worker(
                 new URL("/src/workers/runCode.ts", import.meta.url),
-                { type: "module" },
+                { type: "module" }
               );
 
               // Configurar un timeout de 10 segundos
@@ -195,7 +195,7 @@ export const useEditorStore = create<EditorState>()(
                 reject(error);
                 worker.terminate();
               };
-            },
+            }
           );
 
           // Mostrar la salida formateada
@@ -223,7 +223,7 @@ export const useEditorStore = create<EditorState>()(
                 timestamp: Date.now(),
               },
             ],
-            "",
+            ""
           );
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
@@ -234,7 +234,7 @@ export const useEditorStore = create<EditorState>()(
       resetCode: () => {
         const state = get();
         const activeTab = state.tabs.find(
-          (tab) => tab.id === state.activeTabId,
+          (tab) => tab.id === state.activeTabId
         );
         if (activeTab) {
           const index = state.tabs.findIndex((tab) => tab.id === activeTab.id);
@@ -284,6 +284,6 @@ export const useEditorStore = create<EditorState>()(
         code: state.code,
         experimetalConsole: state.experimetalConsole,
       }),
-    },
-  ),
+    }
+  )
 );

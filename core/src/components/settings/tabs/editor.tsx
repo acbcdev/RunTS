@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { TabsContent } from "@/components/ui/tabs";
-import { refreshTimes } from "@/consts";
-import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
-import { Switch } from "@/components/ui/switch";
+import { Button } from "@core/components/ui/button";
+import { TabsContent } from "@core/components/ui/tabs";
+import { refreshTimes } from "@core/consts";
+import { useConfigStore } from "@core/store/config";
+import { useEditorStore } from "@core/store/editor";
+import { Switch } from "@core/components/ui/switch";
 
 export function Editor() {
   const {

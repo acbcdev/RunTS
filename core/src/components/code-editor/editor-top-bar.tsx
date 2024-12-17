@@ -9,12 +9,12 @@ import {
   Columns,
   Rows,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tooltip } from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
-import { useEditorStore } from "@/store/editor";
-import { EditorSettingsDialog } from "@/components/settings/editor-setting-dialog";
-import { useConfigStore } from "@/store/config";
+import { Button } from "@core/components/ui/button";
+import { Tooltip } from "@core/components/ui/tooltip";
+import { useToast } from "@core/hooks/use-toast";
+import { useEditorStore } from "@core/store/editor";
+import { EditorSettingsDialog } from "@core/components/settings/editor-setting-dialog";
+import { useConfigStore } from "@core/store/config";
 import { memo } from "react";
 
 export const EditorTopBar = memo(function EditorTopBar() {

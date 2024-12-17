@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import type { Monaco } from "@monaco-editor/react";
-import { useEditorStore } from "@/store/editor";
-import { themes } from "@/themes";
+import { useEditorStore } from "@core/store/editor";
+import { themes } from "@core/themes";
 import type { editor } from "monaco-editor";
-import { useConfigStore } from "@/store/config";
+import { useConfigStore } from "@core/store/config";
 import { Loader2Icon } from "lucide-react";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));

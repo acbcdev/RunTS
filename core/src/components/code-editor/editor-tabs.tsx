@@ -1,9 +1,9 @@
 import { Plus, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tooltip } from "@/components/ui/tooltip";
-import { useEditorStore } from "@/store/editor";
-import { cn } from "@/lib/utils";
+import { Button } from "@core/components/ui/button";
+import { ScrollArea } from "@core/components/ui/scroll-area";
+import { Tooltip } from "@core/components/ui/tooltip";
+import { useEditorStore } from "@core/store/editor";
+import { cn } from "@core/lib/utils";
 
 export function EditorTabs() {
   const {

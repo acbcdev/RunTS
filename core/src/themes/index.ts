@@ -1,4 +1,4 @@
-import type { Theme } from "@/types/editor";
+import type { Theme } from "@core/types/editor";
 
 export const themes: Record<string, Theme> = {
   oneDark: {

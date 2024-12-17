@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { TabsContent } from "@/components/ui/tabs";
-import { fontFamilies, fontSizes, layouts } from "@/consts";
-import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
-import { themes } from "@/themes";
+import { Button } from "@core/components/ui/button";
+import { TabsContent } from "@core/components/ui/tabs";
+import { fontFamilies, fontSizes, layouts } from "@core/consts";
+import { useConfigStore } from "@core/store/config";
+import { useEditorStore } from "@core/store/editor";
+import { themes } from "@core/themes";
 
 export function Appearance() {
   const {

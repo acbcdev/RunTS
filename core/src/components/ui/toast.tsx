@@ -2,8 +2,8 @@ import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/editor";
+import { cn } from "@core/lib/utils";
+import { useEditorStore } from "@core/store/editor";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -40,7 +40,7 @@ const toastVariants = cva(
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-    VariantProps<typeof toastVariants>
+  VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
   const { getCurrentTheme } = useEditorStore();
   const theme = getCurrentTheme();

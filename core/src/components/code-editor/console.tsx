@@ -1,5 +1,5 @@
-import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
+import { useConfigStore } from "@core/store/config";
+import { useEditorStore } from "@core/store/editor";
 import { lazy, Suspense } from "react";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
