@@ -766,4 +766,49 @@ export const themes: Record<string, Theme> = {
       },
     },
   },
+  adventjs: {
+    name: "adventjs",
+    value: "dark",
+    ui: {
+      background: "#071e22", // Fondo oscuro profundo
+      foreground: "#e0e5e8", // Texto principal ligeramente más claro
+      border: "#2a3d40", // Bordes oscuros más suaves y sutiles
+      accent: "#5e8b7e", // Verde apagado para un mejor contraste en énfasis
+      selection: "#1c3b44", // Selección en un azul-verdoso sutil
+      header: "#0b2d35", // Encabezados ligeramente diferenciados del fondo
+      hover: "#17845416", // Hover en verde más vibrante pero no saturado
+      muted: "#bfc5c2", // Comentarios en gris-verde apagado
+      success: "#66cc33", // Verde brillante para "success" (sin cambios)
+      warning: "#e3c947", // Amarillo dorado más suave para advertencias
+      error: "#d65a58", // Rojo coral más balanceado para errores
+      info: "#47a2b6", // Azul cian más suave para "info"
+    },
+    monaco: {
+      base: "vs-dark", // Hereda el tema oscuro
+      inherit: true,
+      rules: [
+        { token: "type", foreground: "a7c957" },
+        { foreground: "ffffff", background: "434242", token: "text" },
+        { foreground: "ffffff", background: "000000", token: "source" },
+        { foreground: "#858779", token: "comment" },
+        { foreground: "#f2e8cf", token: "constant" },
+        { foreground: "#6a994e", token: "keyword" },
+        { foreground: "#66cc33", token: "string" },
+        { foreground: "#aaaaaa", token: "string constant.character.escape" },
+        { fontStyle: "italic", token: "variable.parameter" },
+        { fontStyle: "underline", token: "entity.name.type" },
+        { foreground: "#6a994e", token: "support.function" },
+      ],
+      colors: {
+        "editor.foreground": "#fffaca", // Color principal del texto
+        "editor.background": "#071e22", // Fondo del editor
+        "editor.selectionBackground": "#F8B22940", // Selección de texto
+        "editor.lineHighlightBackground": "#fafafa10", // Línea activa
+        "editorCursor.foreground": "#FFFFFF", // Cursor blanco
+        "editorWhitespace.foreground": "#fafafa60", // Espacios vacíos
+        "editorIndentGuide.activeBackground": "#6a994e", // Guía de indentación activa
+        "editorIndentGuide.background": "#434242", // Guía de indentación
+      },
+    },
+  },
 };
