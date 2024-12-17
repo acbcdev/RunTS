@@ -23,7 +23,7 @@ type ConfigEditor = {
 export const useConfigStore = create<ConfigEditor>()(
   persist(
     (set) => ({
-      fontSize: 14,
+      fontSize: 18,
       wordWrap: true,
       lineNumbers: true,
       whiteSpace: true,

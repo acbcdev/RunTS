@@ -67,7 +67,7 @@ const initialTabs: Tab[] = [
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
-      experimetalConsole: false,
+      experimetalConsole: true,
       monaco: null,
       running: false,
       editorRef: null,
