@@ -1,6 +1,12 @@
 ---
 import App from "@runts/core";
-export const prerender = false;
+const code = Astro.url.searchParams.get("code");
 ---
 
-<App client:only="react" />
+<script>
+  const url = new URL(location.href);
+  url.searchParams.delete("code");
+  console.log(url);
+  window.history.replaceState({}, document.title, url);
+</script>
+<App client:only="react" code={code} />
