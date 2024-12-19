@@ -10,29 +10,55 @@ The following is a set of guidelines to help you contribute to this project. The
 Here is an overview of the project folder structure:
 
 ```
-├── .vscode            # VSCode configuration files
-├── dist               # Compiled output files
-├── node_modules       # Dependencies installed by PNPM
-├── public             # Static assets like images and
-├── src                # Source code for the project
-│   ├── components     # Reusable React components
-│   │   ├── code-editor # Code editor components
-│   │   └── ui          # UI-specific components like buttons, modals, etc.
-│   ├── fonts          # Custom fonts used in the application
-│   ├── hooks          # Custom React hooks
-│   │   └── use-toast # Example: hook for toast notifications
-│   ├── lib            # Utility functions and helper libraries
-│   │   ├── utils.ts   # General utility functions
-|   ├   └── InjectLogs # is a function that injects logs into the code like fast log
-│   ├── store          # Zustand state management setup { editor , config }
-│   ├── themes         # Theme-related files for UI customization
-│   │   └── index.ts   # code Editor Themes configurations
-│   ├── types          # TypeScript type definitions
-│   │   ├── editor.ts  # Type definitions related to the code editor
-│   │   └── worker.ts  # Type definitions for web workers
-│   └── workers        # Web worker scripts
-│       └── runCode.ts # Worker for running code in the background
-├── src-tauri          # Tauri-specific files and configuration
+└── 📁core --- Main Editor ---
+        └── components.json
+        └── package.json
+        └── 📁src
+            └── App.tsx ---- Editor APP
+            └── 📁components
+                └── 📁AI ---- PENDING
+                └── 📁code-editor
+                    └── code-editor.tsx
+                    └── console.tsx
+                    └── editor-main.tsx
+                    └── editor-tabs.tsx
+                    └── editor-top-bar.tsx
+                └── 📁settings
+                    └── editor-setting-dialog.tsx
+                    └── 📁tabs 
+                └── 📁ui
+            └── 📁consts
+            └── 📁fonts
+            └── 📁hooks
+            └── index.css
+            └── 📁lib
+                └── addLogsToLines.ts --- Añadir logs
+                └── formatter.ts --- Formatear
+                └── runCode.ts --- PENDING Run Code on WASM compilet with swc
+            └── 📁store --- zustand
+            └── 📁test
+            └── 📁themes --- themas ui
+            └── 📁types
+            └── 📁workers
+        └── tsconfig.json
+    └── 📁tauri --- PENDING APP ---
+        └── 📁src
+        └── 📁src-tauri
+    └── 📁web --- Web ASTRO PENDING LANDING PAGE
+        └── astro.config.mjs
+        └── package.json
+        └── 📁public
+            └── 📁icons
+        └── 📁src
+            └── 📁assets
+            └── 📁components
+            └── 📁layouts
+            └── 📁pages
+        └── tailwind.config.mjs
+        └── tsconfig.json
+    └── CONTRIBUTING.md
+    └── README.md
+```
 
 
 ### Found a Bug?
