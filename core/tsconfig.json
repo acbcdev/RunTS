@@ -1,14 +1,19 @@
 {
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"composite": true,
-		"skipLibCheck": true,
+		"target": "ESNext",
 		"module": "ESNext",
-		"jsx": "react-jsx",
 		"moduleResolution": "bundler",
-		"allowSyntheticDefaultImports": true,
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
-			"@core/*": ["./src/*"]
+			"@core/*": ["./src/*"],
+			"@web/*": ["../web/src/*"]
 		}
 	}
 }

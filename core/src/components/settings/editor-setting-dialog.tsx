@@ -20,7 +20,7 @@ export function EditorSettingsDialog() {
   const currentTheme = getCurrentTheme();
 
   return (
-    <Dialog>
+    <Dialog >
       <Tooltip content="Editor settings">
         <DialogTrigger asChild>
           <Button
@@ -41,7 +41,7 @@ export function EditorSettingsDialog() {
         </DialogTrigger>
       </Tooltip>
       <DialogContent
-        className="p-0 overflow-hidden lg:max-w-3xl"
+        className="p-0 overflow-hidden  xl:max-w-5xl lg:max-w-3xl"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border,
@@ -106,7 +106,7 @@ export function EditorSettingsDialog() {
               Editor
             </TabsTrigger>
           </TabsList>
-          <ScrollArea className="max-h-[90vh] h-[60vh] xl:h-[600px]">
+          <ScrollArea className="max-h-[85vh] h-[60vh] ">
             <Appearance />
             <Editor />
           </ScrollArea>

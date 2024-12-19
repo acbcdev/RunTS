@@ -165,8 +165,10 @@ export const useEditorStore = create<EditorState>()(
           const output: ConsoleOutput[] = await new Promise<ConsoleOutput[]>(
             (resolve, reject) => {
               const worker = new Worker(
-                new URL("/src/workers/runCode.ts", import.meta.url),
-                { type: "module" }
+                new URL("../workers/runCode.ts?worker", import.meta.url),
+                {
+                  type: "module",
+                }
               );
 
               // Configurar un timeout de 10 segundos

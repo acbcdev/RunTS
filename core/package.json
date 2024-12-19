@@ -2,10 +2,9 @@
   "name": "@runts/core",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "./src/App.txs",
-  "exports":{
-    ".": "./src/App.txs"
+  "main": "./src/App.tsx",
+  "exports": {
+    ".": "./src/App.tsx"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,8 +30,8 @@
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
     "lucide-react": "0.294.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-hotkeys-hook": "^4.6.1",
     "react-resizable-panels": "1.0.5",
     "tailwind-merge": "2.1.0",
@@ -45,8 +44,8 @@
     "@tauri-apps/cli": "^2.1.0",
     "@types/babel__standalone": "^7.1.9",
     "@types/node": "^20.10.0",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitest/ui": "2.1.5",
