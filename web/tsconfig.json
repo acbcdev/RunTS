@@ -8,8 +8,8 @@
 		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
-			"@/web/*": ["./src/*"],
-			"@/core/*": ["../core/src/*"]
+			"@web/*": ["./src/*"],
+			"@core/*": ["../core/src/*"]
 		}
 	}
 }
