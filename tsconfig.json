@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@core/*": ["./core/src/*"],
+			"@tauri/*": ["./tauri/src/*"],
+			"@web/*": ["./web/src/*"]
+		}
+	}
+}
