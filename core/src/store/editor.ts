@@ -31,12 +31,11 @@ interface EditorState {
   currentTab: (id: Tab["id"]) => Tab | undefined;
   setMonaco: (monaco: Monaco) => void;
   setEditorRef: (editor: editor.IStandaloneCodeEditor) => void;
-  addTab: (tab: Omit<Tab, "id">) => void;
+  addTab: (tab: Omit<Tab, "id">) => Tab["id"];
   removeTab: (id: string) => void;
   setActiveTab: (id: string) => void;
   updateTabCode: (id: string, code: string) => void;
   runCode: () => void;
-  resetCode: () => void;
   clearConsole: (id: Tab["id"]) => void;
   setTheme: (theme: keyof typeof themes) => void;
   getCurrentTheme: () => Theme;
@@ -93,11 +92,13 @@ export const useEditorStore = create<EditorState>()(
           ...tab,
           id: Math.random().toString(36).substring(7),
         };
+
         set((state) => ({
           tabs: [...state.tabs, newTab],
           activeTabId: newTab.id,
           code: newTab.code,
         }));
+        return newTab.id;
       },
       changeNameTab: (id, name) => {
         set((state) => {
@@ -230,29 +231,6 @@ export const useEditorStore = create<EditorState>()(
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
           get().setRunning(false);
-        }
-      },
-
-      resetCode: () => {
-        const state = get();
-        const activeTab = state.tabs.find(
-          (tab) => tab.id === state.activeTabId
-        );
-        if (activeTab) {
-          const index = state.tabs.findIndex((tab) => tab.id === activeTab.id);
-          if (index === -1) return;
-
-          set((state) => ({
-            tabs: state.tabs.with(index, {
-              ...state.tabs[index],
-              code: initialTabs[0].code,
-            }),
-            code:
-              state.activeTabId === activeTab.id
-                ? initialTabs[0].code
-                : state.code,
-            output: [],
-          }));
         }
       },
 

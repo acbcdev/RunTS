@@ -2,12 +2,12 @@ import {
   Play,
   Plus,
   Minus,
-  RotateCcw,
   Download,
   Copy,
   Trash2,
   Columns,
   Rows,
+  Share2,
 } from "lucide-react";
 import { Button } from "@core/components/ui/button";
 import { Tooltip } from "@core/components/ui/tooltip";
@@ -21,10 +21,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
   const { toast } = useToast();
   const {
     code,
-    editorRef,
-    monaco,
     getCurrentTheme,
-    resetCode,
     clearConsole,
     runCode,
     activeTabId,
@@ -32,11 +29,13 @@ export const EditorTopBar = memo(function EditorTopBar() {
   const { layout, setLayout, setFontSize } = useConfigStore();
   const currentTheme = getCurrentTheme();
 
-  const handleReset = () => {
-    resetCode();
+  const handleShare = () => {
+    const url = new URL(window.location.href);
+    const link = `${url.origin}/?code=${btoa(code)}`;
+    navigator.clipboard.writeText(link);
     toast({
-      title: "Code reset",
-      description: "The editor has been reset to the default code.",
+      title: "Link Created",
+      description: `The ${link} has been copied to your clipboard.`,
       duration: 2000,
     });
   };
@@ -50,25 +49,6 @@ export const EditorTopBar = memo(function EditorTopBar() {
       description: "The console output has been cleared.",
       duration: 2000,
     });
-  };
-  const increaseFontSize = () => {
-    if (editorRef && monaco) {
-      const currentFontSize = editorRef.getOption(
-        monaco.editor.EditorOption.fontSize,
-      );
-      setFontSize(currentFontSize + 2);
-    }
-  };
-
-  const decreaseFontSize = () => {
-    if (editorRef && monaco) {
-      const currentFontSize = editorRef.getOption(
-        monaco.editor.EditorOption.fontSize,
-      );
-      if (currentFontSize > 8) {
-        setFontSize(currentFontSize - 2);
-      }
-    }
   };
 
   const copyCode = () => {
@@ -106,40 +86,8 @@ export const EditorTopBar = memo(function EditorTopBar() {
       }}
     >
       <div className="flex items-center space-x-2">
-        <Tooltip content="Decrease font size">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8"
-            style={
-              {
-                color: currentTheme.ui.foreground,
-                "--hover-color": currentTheme.ui.warning,
-                "--hover-bg": currentTheme.ui.hover,
-              } as React.CSSProperties
-            }
-            onClick={decreaseFontSize}
-          >
-            <Minus className="w-4 h-4" />
-          </Button>
-        </Tooltip>
-        <Tooltip content="Increase font size">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8"
-            style={
-              {
-                color: currentTheme.ui.foreground,
-                "--hover-color": currentTheme.ui.warning,
-                "--hover-bg": currentTheme.ui.hover,
-              } as React.CSSProperties
-            }
-            onClick={increaseFontSize}
-          >
-            <Plus className="w-4 h-4" />
-          </Button>
-        </Tooltip>
+
+        <EditorSettingsDialog />
         <Tooltip content="Run code (Ctrl+Q)">
           <Button
             variant="ghost"
@@ -176,10 +124,9 @@ export const EditorTopBar = memo(function EditorTopBar() {
             )}
           </Button>
         </Tooltip>
-        <EditorSettingsDialog />
       </div>
       <div className="flex items-center space-x-2">
-        <Tooltip content="Reset to default code">
+        <Tooltip content="Share Code current Tab">
           <Button
             variant="ghost"
             size="icon"
@@ -191,9 +138,9 @@ export const EditorTopBar = memo(function EditorTopBar() {
                 "--hover-bg": currentTheme.ui.hover,
               } as React.CSSProperties
             }
-            onClick={handleReset}
+            onClick={handleShare}
           >
-            <RotateCcw className="w-4 h-4" />
+            <Share2 className="w-4 h-4" />
           </Button>
         </Tooltip>
         <Tooltip content="Copy code">
