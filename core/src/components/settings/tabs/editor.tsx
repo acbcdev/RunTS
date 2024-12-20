@@ -140,6 +140,7 @@ export function Editor() {
                 >
                   show the Console.log without need to use the
                   console.log(variable)
+                  only works inline
                 </div>
               </div>
               <Switch

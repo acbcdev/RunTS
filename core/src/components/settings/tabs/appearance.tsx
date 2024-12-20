@@ -62,9 +62,9 @@ export function Appearance() {
                       value.ui.success,
                       value.ui.warning,
                       value.ui.error,
-                    ].map((color) => (
+                    ].map((color, index) => (
                       <div
-                        key={`${color}-`}
+                        key={`${color}-${key}-${index * Math.random()}`}
                         className="w-4 h-4 rounded-full"
                         style={{ backgroundColor: color }}
                       />

@@ -13,6 +13,7 @@ import {
 import { ScrollArea } from "@core/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@core/components/ui/tabs";
 import { Editor } from "./tabs/editor";
+import { GithubStars } from "@core/components/GithubStars";
 
 export function EditorSettingsDialog() {
   const { getCurrentTheme } = useEditorStore();
@@ -20,7 +21,7 @@ export function EditorSettingsDialog() {
   const currentTheme = getCurrentTheme();
 
   return (
-    <Dialog >
+    <Dialog aria-description="Editor settings">
       <Tooltip content="Editor settings">
         <DialogTrigger asChild>
           <Button
@@ -41,12 +42,14 @@ export function EditorSettingsDialog() {
         </DialogTrigger>
       </Tooltip>
       <DialogContent
+        aria-description="Editor settings"
         className="p-0 overflow-hidden  xl:max-w-5xl lg:max-w-3xl"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border,
         }}
       >
+
         <DialogHeader className="p-6 pb-0">
           <DialogTitle style={{ color: currentTheme.ui.foreground }}>
             Editor Settings
@@ -63,20 +66,10 @@ export function EditorSettingsDialog() {
                 className="h-10 my-2"
               />
             </a>
-            <a
-              href="https://github.com/acbcdev/runts"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src="https://img.shields.io/github/stars/acbcdev/runts?style=flat&logo=github
-"
-                alt="Stars"
-                className="h-10 my-2"
-              />
-            </a>
+            <GithubStars />
           </div>
         </DialogHeader>
+
         <Tabs defaultValue="appearance" className="flex-1">
           <TabsList
             className="h-12 px-6 "
