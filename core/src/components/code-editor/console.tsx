@@ -33,10 +33,11 @@ export function Console() {
         <MonacoEditor
           value={currentTab(activeTabId)
             ?.logs.map(({ content, line }) => {
-              const splace = "\n".repeat(line - 1);
+              const numRepeats = Math.max(0, line - 1);
+              const splace = "\n".repeat(numRepeats);
               return `${splace}${content}`;
             })
-            .join("\n")}
+            .join("\n") ?? ''}
           language="typescript"
           theme={theme}
           beforeMount={(monaco) => {
@@ -52,15 +53,15 @@ export function Console() {
             lineNumbers: "off",
             language: "javascript",
             scrollbar: {
-              horizontal: "auto",
+              horizontal: "visible",
               vertical: "auto",
             },
             minimap: { enabled: false },
             readOnly: true,
             wordWrap: "on",
             padding: {
-              top: 12,
-              bottom: 4,
+              top: 20,
+              bottom: 12,
             },
             fontSize,
             automaticLayout: true,

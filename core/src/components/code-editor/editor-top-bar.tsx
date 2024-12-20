@@ -31,6 +31,15 @@ export const EditorTopBar = memo(function EditorTopBar() {
 
   const handleShare = () => {
     const url = new URL(window.location.href);
+    if (code === "") {
+      toast({
+        variant: "destructive",
+        title: "Empty Code",
+        description: "The code is empty, nothing to share.",
+        duration: 2000,
+      });
+      return;
+    }
     const link = `${url.origin}/?code=${btoa(code)}`;
     navigator.clipboard.writeText(link);
     toast({
