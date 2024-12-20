@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tauri": "pnpm --filter  tauri",
+    "app": "pnpm --filter app",
     "web": "pnpm --filter web",
     "core": "pnpm --filter core"
   },
