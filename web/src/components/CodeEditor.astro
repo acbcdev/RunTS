@@ -1,5 +1,5 @@
 ---
-import App from "@runts/core";
+import App from "@core/App";
 const code = Astro.url.searchParams.get("code");
 ---
 
@@ -8,4 +8,11 @@ const code = Astro.url.searchParams.get("code");
   url.searchParams.delete("code");
   window.history.replaceState({}, document.title, url);
 </script>
-<App client:only="react" code={code} />
+<App client:only="react" code={code}>
+  <div
+    slot="fallback"
+    class="absolute inset-0 flex items-center justify-center bg-gray-900"
+  >
+    <span class="text-white">Loading...</span>
+  </div>
+</App>
