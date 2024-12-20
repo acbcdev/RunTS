@@ -5,11 +5,6 @@ import { themes } from "@core/themes";
 import type { Theme } from "@core/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@core/types/worker";
-import { validateHeaderValue } from "http";
-import { a } from "vitest/dist/chunks/suite.B2jumIFP.js";
-// import * as prettier from "prettier/standalone";
-// import parserBabel from "prettier/parser-babel";
-// import parserBabel from "@babel/parser";
 interface Tab {
   id: string;
   name: string;

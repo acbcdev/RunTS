@@ -6,7 +6,7 @@ export function GithubStars() {
   const { getCurrentTheme } = useEditorStore();
   const currentTheme = getCurrentTheme();
   useEffect(() => {
-    fetch('https://api.github.com/repos/acbcdev/runts').then(res => res.json()).then(data => setStars(data.stargazers_count)).catch(err => setStars('error fetching stars'))
+    fetch('https://api.github.com/repos/acbcdev/runts').then(res => res.json()).then(data => setStars(data.stargazers_count)).catch(() => setStars('Error Fetching'))
   }, [])
   return (
     <a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer" >

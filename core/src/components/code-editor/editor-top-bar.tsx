@@ -1,7 +1,5 @@
 import {
   Play,
-  Plus,
-  Minus,
   Download,
   Copy,
   Trash2,
@@ -26,7 +24,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
     runCode,
     activeTabId,
   } = useEditorStore();
-  const { layout, setLayout, setFontSize } = useConfigStore();
+  const { layout, setLayout } = useConfigStore();
   const currentTheme = getCurrentTheme();
 
   const handleShare = () => {

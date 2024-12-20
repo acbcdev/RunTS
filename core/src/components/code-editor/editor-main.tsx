@@ -70,7 +70,7 @@ export function EditorMain() {
             documentation: 'Insert a console.log() statement',
             insertText: 'console.log($1);', // Texto que se inserta
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-            range: editor.getModel().getFullModelRange(), // Rango para reemplazar
+            range: editor.getModel()?.getFullModelRange(), // Rango para reemplazar
           },
         ],
       }),
