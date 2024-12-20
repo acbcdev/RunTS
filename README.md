@@ -1,6 +1,6 @@
 # RunTS 
 
-![Captura de pantalla en ordenador](./public/runts.webp)
+![Captura de pantalla en ordenador](./web/public/runts.webp)
 
 Welcome to **RunTS**! This project is built with **Tauri**, **React**, and **TypeScript** to provide a lightweight yet powerful desktop application experience.
 
