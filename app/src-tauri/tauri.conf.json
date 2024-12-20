@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "tauri",
+  "version": "0.1.0",
+  "identifier": "com.runts.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "tauri",
+        "width": 800,
+        "height": 600,
+        "decorations": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico",
+      "icons/icon.ico"
+    ],
+    "linux": {
+      "rpm": {
+        "epoch": 0,
+        "files": {},
+        "release": "1",
+        "preInstallScript": "../../app/src-tauri/scripts/prescript.sh",
+        "postInstallScript": "../../app/src-tauri/scripts/postscript.sh",
+        "preRemoveScript": "../../app/src-tauri/scripts/prescript.sh",
+        "postRemoveScript": "../../app/src-tauri/scripts/postscript.sh"
+      }
+    }
+  }
+}
