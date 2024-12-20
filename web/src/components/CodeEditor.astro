@@ -6,7 +6,6 @@ const code = Astro.url.searchParams.get("code");
 <script>
   const url = new URL(location.href);
   url.searchParams.delete("code");
-  console.log(url);
   window.history.replaceState({}, document.title, url);
 </script>
 <App client:only="react" code={code} />
