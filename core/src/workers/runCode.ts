@@ -1,6 +1,8 @@
 import { injectLogsIntoCode } from "@core/lib/addLogsToLines";
 import { Formatter } from "@core/lib/formatter";
 import type { ConsoleOutput } from "@core/types/worker";
+import { parse } from "acorn";
+import { simple } from "acorn-walk";
 import * as Babel from "@babel/standalone";
 self.onmessage = async (event: MessageEvent) => {
   const { activeTabCode, name, injectLogs } = event.data;
@@ -8,7 +10,7 @@ self.onmessage = async (event: MessageEvent) => {
   let outputLimitReached = false; // Bandera para limitar el output
 
   const sourceMap = new Map<number, { line: number; column: number }>();
-  let currentPosition = 0;
+
   const originalConsole = {
     log: self.console.log,
     error: self.console.error,
@@ -36,20 +38,32 @@ self.onmessage = async (event: MessageEvent) => {
   };
 
   try {
-    activeTabCode.split("\n").forEach((line: string, index: number) => {
-      if (line.includes("console.")) {
-        sourceMap.set(currentPosition++, { line: index + 1, column: 0 });
-      }
-    });
+    // console.log(activeTabCode, "activeTabCode");
+    const transpiledCode = Babel.transform(activeTabCode, {
+      presets: ["typescript"],
+      filename: name,
+      sourceType: "module",
+      retainLines: true,
+      compact: false, // Disable compacting
+      comments: true, // Preserve comments
+      minified: false, // Disable minification
+      sourceMaps: "inline",
+    }).code;
+    // console.log(transpiledCode, "transpiledCode");
 
+    const { code, lines } = injectLogsIntoCode(transpiledCode ?? "");
+    lines.forEach((line, index) => {
+      sourceMap.set(index, { line, column: 0 });
+    });
     let consolePosition = 0;
 
     self.console.clear = () => {
       output = [];
     };
+
     self.console.log = (...args) => {
       if (!checkOutputLimit()) {
-        const position = sourceMap.get(consolePosition++);
+        const position = sourceMap.get(consolePosition);
         output.push({
           type: "log",
           content: args.map((arg) => Formatter(arg)).join(" "),
@@ -57,11 +71,12 @@ self.onmessage = async (event: MessageEvent) => {
           column: position?.column || 0,
           timestamp: Date.now(),
         });
+        consolePosition++;
       }
     };
     self.console.error = (...args) => {
       if (!checkOutputLimit()) {
-        const position = sourceMap.get(consolePosition++);
+        const position = sourceMap.get(consolePosition);
         output.push({
           type: "error",
           content: args.map((arg) => Formatter(arg)).join(" "),
@@ -69,12 +84,13 @@ self.onmessage = async (event: MessageEvent) => {
           column: position?.column || 0,
           timestamp: Date.now(),
         });
+        consolePosition++;
       }
     };
 
     self.console.info = (...args) => {
       if (!checkOutputLimit()) {
-        const position = sourceMap.get(consolePosition++);
+        const position = sourceMap.get(consolePosition);
         output.push({
           type: "info",
           content: args.map((arg) => Formatter(arg)).join(" "),
@@ -82,12 +98,13 @@ self.onmessage = async (event: MessageEvent) => {
           column: position?.column || 0,
           timestamp: Date.now(),
         });
+        consolePosition++;
       }
     };
 
     self.console.warn = (...args) => {
       if (!checkOutputLimit()) {
-        const position = sourceMap.get(consolePosition++);
+        const position = sourceMap.get(consolePosition);
         output.push({
           type: "warn",
           content: args.map((arg) => Formatter(arg)).join(" "),
@@ -95,17 +112,10 @@ self.onmessage = async (event: MessageEvent) => {
           column: position?.column || 0,
           timestamp: Date.now(),
         });
+        consolePosition++;
       }
     };
 
-    const transpiledCode = Babel.transform(activeTabCode, {
-      presets: ["typescript"],
-      filename: name,
-      sourceType: "module",
-    }).code;
-    const code = injectLogs
-      ? injectLogsIntoCode(transpiledCode ?? "")
-      : transpiledCode;
     if (!outputLimitReached) {
       new Function(code ?? "")();
     }

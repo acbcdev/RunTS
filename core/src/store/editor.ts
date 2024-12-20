@@ -5,6 +5,8 @@ import { themes } from "@core/themes";
 import type { Theme } from "@core/types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "@core/types/worker";
+import { validateHeaderValue } from "http";
+import { a } from "vitest/dist/chunks/suite.B2jumIFP.js";
 // import * as prettier from "prettier/standalone";
 // import parserBabel from "prettier/parser-babel";
 // import parserBabel from "@babel/parser";
@@ -43,7 +45,7 @@ interface EditorState {
   updateTabLog: (
     id: Tab["id"],
     logs: Tab["logs"],
-    logFormated: Tab["logFormated"]
+    logFormated: Tab["logFormated"],
   ) => void;
 }
 
@@ -152,7 +154,7 @@ export const useEditorStore = create<EditorState>()(
       runCode: async () => {
         const state = get();
         const activeTab = state.tabs.find(
-          (tab) => tab.id === state.activeTabId
+          (tab) => tab.id === state.activeTabId,
         );
 
         if (!activeTab?.code) return;
@@ -169,10 +171,9 @@ export const useEditorStore = create<EditorState>()(
                 new URL("../workers/runCode.ts?worker", import.meta.url),
                 {
                   type: "module",
-                }
+                },
               );
 
-              // Configurar un timeout de 10 segundos
               const timeout = setTimeout(() => {
                 reject(new Error("El Worker excedió el tiempo de espera."));
                 worker.terminate();
@@ -192,27 +193,20 @@ export const useEditorStore = create<EditorState>()(
                 worker.terminate();
               };
 
-              // Manejar errores del Worker
-              worker.onerror = (error) => {
+              worker.onmessage = (event: MessageEvent) => {
                 clearTimeout(timeout);
-                reject(error);
+                resolve(event.data);
                 worker.terminate();
               };
-            }
+            },
           );
+          const ajustedOutput = output.map((value, index) => {
+            if (index === 0) return value;
+            return { ...value, line: value.line - output[index - 1].line };
+          });
 
-          // Mostrar la salida formateada
-          // prettier
-          //   .format(output.map((log) => log.content).join("\n"), {
-          //     parser: "babel",
-          //     plugins: [parserBabel],
-          //     printWidth: 80,
-          //     singleQuote: true,
-          //   })
-          // .then((formatted) => {
-          // });
           // Actualizar el log de la pestaña activa
-          get().updateTabLog(state.activeTabId, output, "");
+          get().updateTabLog(state.activeTabId, ajustedOutput, "");
         } catch (error) {
           // Manejar errores y actualizar el log con el error
           get().updateTabLog(
@@ -226,7 +220,7 @@ export const useEditorStore = create<EditorState>()(
                 timestamp: Date.now(),
               },
             ],
-            ""
+            "",
           );
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
@@ -264,6 +258,6 @@ export const useEditorStore = create<EditorState>()(
         code: state.code,
         experimetalConsole: state.experimetalConsole,
       }),
-    }
-  )
+    },
+  ),
 );

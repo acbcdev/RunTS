@@ -32,7 +32,10 @@ export function Console() {
       >
         <MonacoEditor
           value={currentTab(activeTabId)
-            ?.logs.map(({ content }) => content)
+            ?.logs.map(({ content, line }) => {
+              const splace = "\n".repeat(line - 1);
+              return `${splace}${content}`;
+            })
             .join("\n")}
           language="typescript"
           theme={theme}
@@ -56,7 +59,7 @@ export function Console() {
             readOnly: true,
             wordWrap: "on",
             padding: {
-              top: 4,
+              top: 12,
               bottom: 4,
             },
             fontSize,
