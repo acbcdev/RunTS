@@ -43,7 +43,7 @@ export function EditorSettingsDialog() {
       </Tooltip>
       <DialogContent
         aria-description="Editor settings"
-        className="p-0 overflow-hidden  xl:max-w-5xl lg:max-w-3xl"
+        className="p-0 overflow-hidden xl:max-w-5xl lg:max-w-3xl"
         style={{
           backgroundColor: currentTheme.ui.background,
           borderColor: currentTheme.ui.border,
@@ -63,7 +63,7 @@ export function EditorSettingsDialog() {
               <img
                 src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png"
                 alt="Buy Me A Coffee"
-                className="h-10 my-2"
+                className="h-10 my-2 aspect-[3.56]"
               />
             </a>
             <GithubStars />
