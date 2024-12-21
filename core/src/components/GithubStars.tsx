@@ -16,13 +16,13 @@ export function GithubStars() {
         color: currentTheme.ui.foreground
       }}>
 
-        <GithubIcon className="size-8" />
+        <GithubIcon className="size-6" />
         <p  >
-          Github Start <span className="font-bold" style={{
+          Github Starts <span className="font-bold text-lg" style={{
             color: currentTheme.ui.success
           }}>{stars}</span>
         </p>
-        <Star style={
+        <Star className="size-6" style={
           { color: currentTheme.ui.accent }
         } />
 

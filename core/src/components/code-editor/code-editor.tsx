@@ -6,12 +6,14 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useEditorStore } from "@core/store/editor";
 import { useConfigStore } from "@core/store/config";
 import { useHotkeys } from "react-hotkeys-hook";
+
 import {
   ResizablePanelGroup,
   ResizablePanel,
   ResizableHandle,
 } from "@core/components/ui/resizable";
 import { Console } from "@core/components/code-editor/console";
+import { Updates } from "../updates";
 
 export function CodeEditor() {
   const { tabs, activeTabId, theme, getCurrentTheme, runCode } =
@@ -38,7 +40,7 @@ export function CodeEditor() {
   if (!activeTab) return null;
 
   return (
-    <div
+    <main
       className="flex flex-col h-screen"
       style={{
         backgroundColor: currentTheme.ui.background,
@@ -57,6 +59,7 @@ export function CodeEditor() {
           <Console />
         </ResizablePanel>
       </ResizablePanelGroup>
-    </div>
+      <Updates />
+    </main>
   );
 }
