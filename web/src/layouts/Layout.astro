@@ -1,4 +1,5 @@
 ---
+import { pwaInfo } from "virtual:pwa-info";
 import SEO from "@web/components/SEO.astro";
 import "./styles.css";
 ---
@@ -9,6 +10,7 @@ import "./styles.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO />
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
   </head>
   <body>
     <slot />
@@ -17,6 +19,7 @@ import "./styles.css";
       is:inline
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon='{"token": "54f410181422422fa3c422ad9cd16328"}'></script>
+    <script is:inline defer src="../pwa.ts"></script>
   </body>
 </html>
 <style>

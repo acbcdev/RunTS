@@ -303,40 +303,6 @@ importers:
         specifier: 2.1.5
         version: 2.1.5(@types/node@20.17.6)(@vitest/ui@2.1.5)(terser@5.36.0)
 
-  tauri:
-    dependencies:
-      '@tauri-apps/api':
-        specifier: ^2
-        version: 2.1.1
-      '@tauri-apps/plugin-opener':
-        specifier: ^2
-        version: 2.2.2
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@tauri-apps/cli':
-        specifier: ^2
-        version: 2.1.0
-      '@types/react':
-        specifier: ^18.3.1
-        version: 18.3.17
-      '@types/react-dom':
-        specifier: ^18.3.1
-        version: 18.3.5(@types/react@18.3.17)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.0.5(@types/node@20.17.6)(jiti@1.21.6)(terser@5.36.0)(yaml@2.6.0))
-      typescript:
-        specifier: ~5.6.2
-        version: 5.6.3
-      vite:
-        specifier: ^6.0.3
-        version: 6.0.5(@types/node@20.17.6)(jiti@1.21.6)(terser@5.36.0)(yaml@2.6.0)
-
   web:
     dependencies:
       '@astrojs/check':
@@ -460,6 +426,9 @@ importers:
       '@types/node':
         specifier: ^20.10.0
         version: 20.17.6
+      '@vite-pwa/astro':
+        specifier: ^0.5.0
+        version: 0.5.0(astro@5.0.9(@types/node@20.17.6)(jiti@1.21.6)(rollup@2.79.2)(terser@5.36.0)(typescript@5.6.3)(yaml@2.6.0))(vite-plugin-pwa@0.21.1(vite@6.0.5(@types/node@20.17.6)(jiti@1.21.6)(terser@5.36.0)(yaml@2.6.0))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0))
       '@vitest/ui':
         specifier: 2.1.5
         version: 2.1.5(vitest@2.1.5)
@@ -2934,6 +2903,16 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@vite-pwa/astro@0.5.0':
+    resolution: {integrity: sha512-Yd3Pug/c1EUQJXWvzYh6eTtoqzmSKcdCqWCcNquZeaD13tLWpBb2FIPJ4HMULVY6+GfxMvrT+OBuMrbHQCvftw==}
+    peerDependencies:
+      '@vite-pwa/assets-generator': ^0.2.6
+      astro: ^1.6.0 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+      vite-plugin-pwa: '>=0.21.1 <1'
+    peerDependenciesMeta:
+      '@vite-pwa/assets-generator':
+        optional: true
 
   '@vitejs/plugin-react@4.3.4':
     resolution: {integrity: sha512-SCCPBJtYLdE8PX/7ZQAs1QAZ8Jqwih+0VBLum1EGqmCCQal+MIUqLCzj3ZUy8ufbC0cAM4LRlSTm7IQJwWT4ug==}
@@ -8111,6 +8090,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@vite-pwa/astro@0.5.0(astro@5.0.9(@types/node@20.17.6)(jiti@1.21.6)(rollup@2.79.2)(terser@5.36.0)(typescript@5.6.3)(yaml@2.6.0))(vite-plugin-pwa@0.21.1(vite@6.0.5(@types/node@20.17.6)(jiti@1.21.6)(terser@5.36.0)(yaml@2.6.0))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0))':
+    dependencies:
+      astro: 5.0.9(@types/node@20.17.6)(jiti@1.21.6)(rollup@2.79.2)(terser@5.36.0)(typescript@5.6.3)(yaml@2.6.0)
+      vite-plugin-pwa: 0.21.1(vite@6.0.5(@types/node@20.17.6)(jiti@1.21.6)(terser@5.36.0)(yaml@2.6.0))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0)
 
   '@vitejs/plugin-react@4.3.4(vite@5.4.11(@types/node@20.17.6)(terser@5.36.0))':
     dependencies:
