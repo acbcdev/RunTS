@@ -11,7 +11,6 @@ interface Tab {
   language: string;
   code: string;
   logs: ConsoleOutput[];
-  logFormated: string;
 }
 
 interface EditorState {
@@ -37,11 +36,7 @@ interface EditorState {
   setTheme: (theme: keyof typeof themes) => void;
   getCurrentTheme: () => Theme;
   changeNameTab: (id: string, name: string) => void;
-  updateTabLog: (
-    id: Tab["id"],
-    logs: Tab["logs"],
-    logFormated: Tab["logFormated"],
-  ) => void;
+  updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
 }
 
 const DEFAULT_CODE = `
@@ -56,7 +51,6 @@ const initialTabs: Tab[] = [
     language: "typescript",
     code: DEFAULT_CODE,
     logs: [],
-    logFormated: "",
   },
 ];
 
@@ -153,7 +147,7 @@ export const useEditorStore = create<EditorState>()(
         );
 
         if (!activeTab?.code) {
-          get().updateTabLog(activeTab.id, [], "");
+          get().updateTabLog(activeTab.id, []);
           return;
         }
 
@@ -204,22 +198,18 @@ export const useEditorStore = create<EditorState>()(
           });
 
           // Actualizar el log de la pestaña activa
-          get().updateTabLog(state.activeTabId, ajustedOutput, "");
+          get().updateTabLog(state.activeTabId, ajustedOutput);
         } catch (error) {
           // Manejar errores y actualizar el log con el error
-          get().updateTabLog(
-            state.activeTabId,
-            [
-              {
-                type: "error",
-                content: error instanceof Error ? error.message : String(error),
-                line: 0,
-                column: 0,
-                timestamp: Date.now(),
-              },
-            ],
-            "",
-          );
+          get().updateTabLog(state.activeTabId, [
+            {
+              type: "error",
+              content: error instanceof Error ? error.message : String(error),
+              line: 0,
+              column: 0,
+              timestamp: Date.now(),
+            },
+          ]);
         } finally {
           // Asegurarse de que el estado de 'running' se actualice
           get().setRunning(false);

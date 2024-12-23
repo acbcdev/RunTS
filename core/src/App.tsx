@@ -13,9 +13,8 @@ function App({ code }: { code?: string | null }) {
     if (code) {
       try {
         const codigo = atob(code)
-        const id = addTab({ name: "shared.ts", language: "typescript", code: codigo, logs: [], logFormated: "" })
+        const id = addTab({ name: "shared.ts", language: "typescript", code: codigo, logs: [] })
         setActiveTab(id)
-
       } catch {
         toast({
           variant: "destructive",

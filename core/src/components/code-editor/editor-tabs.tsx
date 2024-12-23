@@ -31,18 +31,17 @@ export function EditorTabs() {
       language: "typescript",
       code: "// Start coding here\n",
       logs: [],
-      logFormated: "",
     });
   };
-  
+
   const handleRightClick = (tabId: string) => {
     if (activeTabId !== tabId) return
-      
-    const spanElement = document.querySelector(".underline");
-    
+
+    const spanElement = document.querySelector(".underline") as HTMLSpanElement;
+
     if (spanElement) {
       spanElement.contentEditable = "true";
-
+      spanElement.classList.add(`outline-[${currentTheme.ui.accent}]`);
       const range = document.createRange();
       const selection = window.getSelection();
 
@@ -94,10 +93,7 @@ export function EditorTabs() {
             // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
             <div
               key={tab.id}
-              className={cn(
-                "group flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors",
-                activeTabId === tab.id && "bg-[var(--tab-active)]",
-              )}
+              className="group flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors "
               style={
                 {
                   borderColor: currentTheme.ui.border,
@@ -109,6 +105,7 @@ export function EditorTabs() {
                   "--tab-hover": currentTheme.ui.hover,
                 } as React.CSSProperties
               }
+              onDoubleClick={() => handleRightClick(tab.id)}
               onClick={() => handleActiveTabChange(tab.id)}
               onContextMenu={(e) => {
                 e.preventDefault();
@@ -127,13 +124,12 @@ export function EditorTabs() {
             >
               <span
                 className={cn(
-                  `${tab.id === activeTabId ? "underline" : ""}`,
-                  "outline-none focus:text-sm",
+                  `${tab.id === activeTabId ? "underline" : ""}  focus:outline-red`,
                 )}
                 style={{ color: currentTheme.ui.foreground }}
                 onBlur={handleBlur}
                 onKeyDown={handleKeyDown}
-                spellcheck="false"
+                spellCheck="false"
               >
                 {tab.name}
               </span>
