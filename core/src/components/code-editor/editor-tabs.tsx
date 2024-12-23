@@ -15,6 +15,8 @@ export function EditorTabs() {
     removeTab,
     setActiveTab,
     getCurrentTheme,
+    changeNameTab,
+    currentTab,
   } = useEditorStore();
 
   const currentTheme = getCurrentTheme();
@@ -31,6 +33,51 @@ export function EditorTabs() {
       logs: [],
       logFormated: "",
     });
+  };
+  
+  const handleRightClick = (tabId: string) => {
+    if (activeTabId !== tabId) return
+      
+    const spanElement = document.querySelector(".underline");
+    
+    if (spanElement) {
+      spanElement.contentEditable = "true";
+
+      const range = document.createRange();
+      const selection = window.getSelection();
+
+      range.setStart(spanElement.firstChild, 0);
+      range.setEnd(spanElement.firstChild, spanElement.textContent.length - 3);
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }
+
+  const handleBlur = (event: React.FocusEvent<HTMLSpanElement>) => {
+    const tabTextContent = event.currentTarget.textContent;
+
+    if (!tabTextContent) {
+      const { name } = currentTab(activeTabId);
+      event.currentTarget.textContent = name
+      return;
+    }
+
+    const tsFile = tabTextContent.endsWith(".ts") || tabTextContent.endsWith(".js");
+    const [nameTab, extension] = tabTextContent.split(".");
+
+    let changeName: string = tabTextContent;
+    if (!tsFile) changeName = `${nameTab}.ts`;
+
+    changeNameTab(activeTabId, changeName);
+    event.currentTarget.contentEditable = "false";
+    event.currentTarget.textContent = changeName;
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   };
 
   return (
@@ -63,6 +110,10 @@ export function EditorTabs() {
                 } as React.CSSProperties
               }
               onClick={() => handleActiveTabChange(tab.id)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                handleRightClick(tab.id);
+              }}
               onMouseEnter={(e) => {
                 if (activeTabId !== tab.id) {
                   e.currentTarget.style.backgroundColor = currentTheme.ui.hover;
@@ -75,8 +126,14 @@ export function EditorTabs() {
               }}
             >
               <span
-                className={`${tab.id === activeTabId ? "underline" : ""}`}
+                className={cn(
+                  `${tab.id === activeTabId ? "underline" : ""}`,
+                  "outline-none focus:text-sm",
+                )}
                 style={{ color: currentTheme.ui.foreground }}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
+                spellcheck="false"
               >
                 {tab.name}
               </span>
