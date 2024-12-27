@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GithubIcon, Star } from 'lucide-react'
-import { useEditorStore } from "@core/store/editor";
+import { useEditorStore } from "@/store/editor";
 export function GithubStars() {
   const [stars, setStars] = useState<number | string>('loading...')
   const { getCurrentTheme } = useEditorStore();
@@ -11,14 +11,14 @@ export function GithubStars() {
   return (
     <a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer" >
 
-      <div className="flex items-center gap-1 rounded-lg p-1 text-zinc-100" style={{
+      <div className="flex items-center gap-1 p-1 rounded-lg text-zinc-100" style={{
         border: `1px solid ${currentTheme.ui.border}`,
         color: currentTheme.ui.foreground
       }}>
 
         <GithubIcon className="size-6" />
         <p  >
-          Github Starts <span className="font-bold text-lg" style={{
+          Github Starts <span className="text-lg font-bold" style={{
             color: currentTheme.ui.success
           }}>{stars}</span>
         </p>

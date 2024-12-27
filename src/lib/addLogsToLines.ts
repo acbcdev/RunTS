@@ -15,7 +15,7 @@ export function injectLogsIntoCode(code: string): {
   lines: number[];
 } {
   const lines = code.split("\n");
-  const logs = [];
+  const logs: number[] = [];
   try {
     // Parsear el código a AST
     const ast = parse(code, {

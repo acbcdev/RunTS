@@ -1,19 +1,19 @@
 import { Settings2 } from "lucide-react";
-import { Button } from "@core/components/ui/button";
-import { Tooltip } from "@core/components/ui/tooltip";
-import { useEditorStore } from "@core/store/editor";
-import { Appearance } from "@core/components/settings/tabs/appearance";
+import { Button } from "@/components/ui/button";
+import { Tooltip } from "@/components/ui/tooltip";
+import { useEditorStore } from "@/store/editor";
+import { Appearance } from "@/components/settings/tabs/appearance";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@core/components/ui/dialog";
-import { ScrollArea } from "@core/components/ui/scroll-area";
-import { Tabs, TabsList, TabsTrigger } from "@core/components/ui/tabs";
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Editor } from "./tabs/editor";
-import { GithubStars } from "@core/components/GithubStars";
+import { GithubStars } from "@/components/GithubStars";
 
 export function EditorSettingsDialog() {
   const { getCurrentTheme } = useEditorStore();

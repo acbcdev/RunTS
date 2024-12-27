@@ -3,16 +3,16 @@ import { EditorTopBar } from "./editor-top-bar";
 import { EditorTabs } from "./editor-tabs";
 import { EditorMain } from "./editor-main";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useEditorStore } from "@core/store/editor";
-import { useConfigStore } from "@core/store/config";
+import { useEditorStore } from "@/store/editor";
+import { useConfigStore } from "@/store/config";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import {
   ResizablePanelGroup,
   ResizablePanel,
   ResizableHandle,
-} from "@core/components/ui/resizable";
-import { Console } from "@core/components/code-editor/console";
+} from "@/components/ui/resizable";
+import { Console } from "@/components/code-editor/console";
 import { Updates } from "../updates";
 
 export function CodeEditor() {

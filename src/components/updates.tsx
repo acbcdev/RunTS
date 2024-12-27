@@ -4,9 +4,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@core/components/ui/dialog";
-import { useConfigStore } from "@core/store/config";
-import { useEditorStore } from "@core/store/editor";
+} from "@/components/ui/dialog";
+import { useConfigStore } from "@/store/config";
+import { useEditorStore } from "@/store/editor";
 export function Updates() {
   const { getCurrentTheme } = useEditorStore();
   const { updates, setUpdates } = useConfigStore();
@@ -17,7 +17,7 @@ export function Updates() {
         <DialogContent style={{
           backgroundColor: currentTheme.ui.background,
           color: currentTheme.ui.info,
-        }} className=" border-none ">
+        }} className="border-none ">
           <DialogHeader>
             <DialogTitle>New Updates 🚀</DialogTitle>
             <DialogDescription className="p-4 text-lg">
