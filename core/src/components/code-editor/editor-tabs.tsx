@@ -34,7 +34,7 @@ export function EditorTabs() {
     });
   };
 
-  const handleRightClick = (tabId: string) => {
+  const handleChangeName = (tabId: string) => {
     if (activeTabId !== tabId) return
 
     const spanElement = document.querySelector(".underline") as HTMLSpanElement;
@@ -105,11 +105,11 @@ export function EditorTabs() {
                   "--tab-hover": currentTheme.ui.hover,
                 } as React.CSSProperties
               }
-              onDoubleClick={() => handleRightClick(tab.id)}
+              onDoubleClick={() => handleChangeName(tab.id)}
               onClick={() => handleActiveTabChange(tab.id)}
               onContextMenu={(e) => {
                 e.preventDefault();
-                handleRightClick(tab.id);
+                handleChangeName(tab.id);
               }}
               onMouseEnter={(e) => {
                 if (activeTabId !== tab.id) {

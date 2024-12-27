@@ -11,6 +11,7 @@ interface Tab {
   language: string;
   code: string;
   logs: ConsoleOutput[];
+  editing?: boolean;
 }
 
 interface EditorState {
