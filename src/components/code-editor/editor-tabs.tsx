@@ -44,7 +44,8 @@ export function EditorTabs() {
       spanElement.classList.add(`outline-[${currentTheme.ui.accent}]`);
       const range = document.createRange();
       const selection = window.getSelection();
-
+      if (!selection) return;
+      if (!spanElement.firstChild || !spanElement.textContent) return;
       range.setStart(spanElement.firstChild, 0);
       range.setEnd(spanElement.firstChild, spanElement.textContent.length - 3);
 
@@ -57,13 +58,14 @@ export function EditorTabs() {
     const tabTextContent = event.currentTarget.textContent;
 
     if (!tabTextContent) {
-      const { name } = currentTab(activeTabId);
-      event.currentTarget.textContent = name
+      const tab = currentTab(activeTabId);
+      if (!tab) return;
+      event.currentTarget.textContent = tab.name;
       return;
     }
 
     const tsFile = tabTextContent.endsWith(".ts") || tabTextContent.endsWith(".js");
-    const [nameTab, extension] = tabTextContent.split(".");
+    const [nameTab] = tabTextContent.split(".");
 
     let changeName: string = tabTextContent;
     if (!tsFile) changeName = `${nameTab}.ts`;

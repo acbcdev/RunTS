@@ -1,6 +1,6 @@
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { Formatter } from "@/lib/formatter";
-import type { ConsoleOutput } from "../types/worker";
+import type { ConsoleOutput } from "@/types/worker";
 import * as Babel from "@babel/standalone";
 self.onmessage = async (event: MessageEvent) => {
   const { activeTabCode, name } = event.data;

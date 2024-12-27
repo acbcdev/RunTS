@@ -10,5 +10,5 @@ const code = Astro.url.searchParams.get("code");
   window.history.replaceState({}, document.title, url);
 </script>
 <App client:only="react" code={code}>
-  <Skeleton />
+  <Skeleton slot="fallback" />
 </App>

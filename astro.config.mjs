@@ -59,42 +59,15 @@ export default defineConfig({
     enabled: false,
   },
 
-  output: "server",
-
   vite: {
-    optimizeDeps: {
-      include: [
-        "monaco-editor/esm/vs/language/typescript/ts.worker",
-        "monaco-editor/esm/vs/language/json/json.worker",
-        "monaco-editor/esm/vs/language/css/css.worker",
-        "monaco-editor/esm/vs/language/html/html.worker",
-        "monaco-editor/esm/vs/editor/editor.worker",
-      ],
-      exclude: ["@monaco-editor/react"],
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            "monaco-editor": ["monaco-editor"],
-            "monaco-workers": [
-              "monaco-editor/esm/vs/editor/editor.worker",
-              "monaco-editor/esm/vs/language/typescript/ts.worker",
-              "monaco-editor/esm/vs/language/json/json.worker",
-              "monaco-editor/esm/vs/language/css/css.worker",
-              "monaco-editor/esm/vs/language/html/html.worker",
-            ],
-          },
-        },
-      },
-    },
     resolve: {
       alias: {
-        "@core": path.resolve("../core/src"),
-        "monaco-editor": path.resolve("./node_modules/monaco-editor"),
+        "@": path.resolve("./src"),
       },
     },
   },
+
+  output: "server",
 
   adapter: cloudflare(),
 });
