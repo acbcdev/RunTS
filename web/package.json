@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tauri": "tauri"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@babel/parser": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
+    "@tauri-apps/cli": "^2.1.0",
     "@types/babel__standalone": "^7.1.9",
     "@types/node": "^20.10.0",
     "@types/react": "^18.3.17",
