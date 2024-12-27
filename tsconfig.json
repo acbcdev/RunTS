@@ -1,10 +1,15 @@
 {
+	"extends": "astro/tsconfigs/strict",
+
+	"include": [".astro/types.d.ts", "**/*", "../src-tauri", "../src"],
+	"exclude": ["dist"],
 	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"paths": {
-			"@core/*": ["./core/src/*"],
-			"@tauri/*": ["./tauri/src/*"],
-			"@web/*": ["./web/src/*"]
+			"@/*": ["./src/*"],
+			"@core/*": ["./src/*"]
 		}
 	}
 }
