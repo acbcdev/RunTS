@@ -1,5 +1,6 @@
 ---
 import App from "@/components/App.tsx";
+import Skeleton from "@/components/Skeleton.astro";
 const code = Astro.url.searchParams.get("code");
 ---
 
@@ -8,11 +9,6 @@ const code = Astro.url.searchParams.get("code");
   url.searchParams.delete("code");
   window.history.replaceState({}, document.title, url);
 </script>
-<App client:idle code={code}>
-  <div
-    slot="fallback"
-    class="absolute inset-0 flex items-center justify-center bg-gray-900"
-  >
-    <span class="text-white">Loading...</span>
-  </div>
+<App client:only="react" code={code}>
+  <Skeleton />
 </App>

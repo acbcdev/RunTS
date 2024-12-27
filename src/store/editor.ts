@@ -147,7 +147,10 @@ export const useEditorStore = create<EditorState>()(
           (tab) => tab.id === state.activeTabId,
         );
 
-        if (!activeTab?.code) {
+        if (!activeTab) {
+          return;
+        }
+        if (!activeTab.code) {
           get().updateTabLog(activeTab.id, []);
           return;
         }

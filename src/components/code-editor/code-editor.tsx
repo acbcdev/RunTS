@@ -13,7 +13,7 @@ import {
   ResizableHandle,
 } from "@/components/ui/resizable";
 import { Console } from "@/components/code-editor/console";
-import { Updates } from "../updates";
+import { Updates } from "@/components/updates";
 
 export function CodeEditor() {
   const { tabs, activeTabId, theme, getCurrentTheme, runCode } =
