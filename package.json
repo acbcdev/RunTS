@@ -10,6 +10,9 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.6",
+    "@ai-sdk/google": "^1.0.12",
+    "@ai-sdk/openai": "^1.0.11",
     "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "^12.1.0",
     "@astrojs/react": "3.6.3",
@@ -32,6 +35,7 @@
     "@uidotdev/usehooks": "2.4.1",
     "acorn": "^8.14.0",
     "acorn-walk": "^8.3.4",
+    "ai": "^4.0.22",
     "astro": "5.0.9",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
