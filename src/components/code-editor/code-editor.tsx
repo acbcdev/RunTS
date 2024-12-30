@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/resizable";
 import { Console } from "@/components/code-editor/console";
 import { Updates } from "@/components/updates";
+// import { Chat } from "../AI/Chat";
 
 export function CodeEditor() {
   const { tabs, activeTabId, theme, getCurrentTheme, runCode } =
@@ -50,7 +51,13 @@ export function CodeEditor() {
     >
       <EditorTopBar />
       <EditorTabs />
+
       <ResizablePanelGroup direction={layout} className="flex-1">
+        {/* <ResizablePanel defaultSize={0} maxSize={20}>
+          <Chat />
+        </ResizablePanel>
+        <ResizableHandle withHandle /> */}
+
         <ResizablePanel defaultSize={60} minSize={30}>
           <EditorMain />
         </ResizablePanel>
