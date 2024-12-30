@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Fira Code";
-  src: url("./src/fonts/FiraCode.woff2") format("woff2");
+  src: url("/fonts/FiraCode.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: Monocraft;
-  src: url("./src/fonts/Monocraft.woff2") format("woff2");
+  src: url("/fonts/Monocraft.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "Cascadia Code";
-  src: url("./src/fonts/CascadiaCode.woff2") format("woff2");
+  src: url("/fonts/CascadiaCode.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

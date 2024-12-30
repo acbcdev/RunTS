@@ -584,7 +584,7 @@ export const themes: Record<string, Theme> = {
   },
 
   midudev: {
-    name: "Midudev",
+    name: "midu.dev",
     value: "midudev",
     ui: {
       background: "#0b1422", // Fondo oscuro para el editor
