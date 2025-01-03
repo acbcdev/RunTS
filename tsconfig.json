@@ -4,6 +4,11 @@
 	"include": [".astro/types.d.ts", "**/*", "../src-tauri", "../src"],
 	"exclude": ["dist"],
 	"compilerOptions": {
+		"types": [
+			"vite-plugin-pwa/info",
+			"vite-plugin-pwa/vanillajs",
+			"@vite-pwa/astro"
+		],
 		"jsx": "react-jsx",
 		"jsxImportSource": "react",
 		"baseUrl": ".",

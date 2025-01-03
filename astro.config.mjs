@@ -48,8 +48,15 @@ export default defineConfig({
         enabled: true,
       },
       workbox: {
+        globDirectory: "dist",
         maximumFileSizeToCacheInBytes: 1024 * 1024 * 5,
-        globPatterns: ["**/*.{js,css,html,png,svg,woff2}"],
+        globPatterns: [
+          "**/*.{js,css,html}",
+          "**/*.{png,jpg,jpeg,svg}",
+          "**/*.{woff2}",
+        ],
+        clientsClaim: true,
+        skipWaiting: true,
         cleanupOutdatedCaches: true,
       },
     }),
