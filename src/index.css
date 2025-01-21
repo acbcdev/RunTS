@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "Fira Code";
+  src: url("/fonts/FiraCode.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Monocraft;
+  src: url("/fonts/Monocraft.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia Code";
+  src: url("/fonts/CascadiaCode.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0.5rem;
+  color: var(--foreground);
+}
+
+textarea {
+  --sb-track-color: transparent;
+  --sb-thumb-color: var(--muted);
+  --sb-size: 5px;
+  /* field-sizing: content;
+  overflow-x: hidden;
+  max-width: 55ch;
+  max-height: 30px; */
+}
+
+textarea::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+textarea::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  textarea {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
+/* Transitions */
+.theme-transition {
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+/* Resizable handle styling */
+[data-panel-resize-handle-enabled] {
+  transition: all 0.15s ease;
+  background-color: transparent;
+}
+
+[data-panel-resize-handle-enabled]:hover,
+[data-panel-resize-handle-enabled][data-panel-resize-handle-active] {
+  background-color: var(--accent);
+}
+
+.monaco-editor {
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1;
+  /* Enable ligatures */
+}
+
+body {
+  background-color: var(--muted);
+}
