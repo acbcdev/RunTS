@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# RunTS 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Captura de pantalla en ordenador](/public/runts.webp)
 
-Currently, two official plugins are available:
+Welcome to **RunTS**! This project is built with **Tauri**, **React**, and **TypeScript** to provide a lightweight yet powerful desktop application experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Project Overview
 
-## Expanding the ESLint configuration
+Currently, only the **web version** of the application is available. The **Tauri-based desktop application** is under development and will be available in the future. Stay tuned for updates!
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠 Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **Framework App**: [Tauri](https://tauri.app/)
+- **Frontend**: [Astro](https://astro.build), [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📁 Project Setup
+
+To get started with this project, follow these steps:
+
+### Prerequisites
+- **Node.js** (v20 or above)
+- **Rust** (Required for compiling Tauri backend, currently only the web version is available, future versions will support Linux, macOS, and Windows)
+- **PNPM** (Package manager used in this project)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/acbcdev/RunTS.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd RunTS
+   ```
+3. Install the dependencies:
+   ```bash
+   pnpm install
+   ```
+
+### Running the Project
+To run the project in development mode:
+```bash
+pnpm dev
 ```
+This command will start the application with hot-reloading enabled for easy development.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 📦 Dependencies and DevDependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Dependencies**
+  - `react`, `react-dom`: `18`
+  - `tauri`: Project framework for building desktop apps (future release).
+  - `vite`: Development server and build tool for fast projects.
+  - `typescript`: Superset of JavaScript for type safety.
+  - `tailwindcss`: Utility-first CSS framework.
+  - `zustand`: State management library for React.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## ⚙️ Configuration
+The app includes various configuration options for the frontend and backend, which can be adjusted in the Tauri configuration files found in the `src-tauri/` directory.
+
+## 🎨 UI Elements
+The UI components are styled using **Tailwind CSS**, providing a consistent and modern look across all components. Buttons, modals, and other UI elements are crafted for responsiveness and user experience.
+
+## 🧪 Testing
+Testing functionality will be added in future updates. Stay tuned! 🚧
+
+## 🤝 Contributing
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
+[guía de contribución](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md)
+If you have a suggestion that would make this project better, please fork the repository and create a pull request. You can also simply open an issue with the tag "enhancement".
+
+Here's a quick guide:
+
+
+
+Please check our [contribution guide](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
+
+Happy coding! 🚀
