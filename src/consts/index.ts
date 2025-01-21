@@ -1,3 +1,6 @@
+import { claude } from "@/svg/claude";
+import { gemini } from "@/svg/gemini";
+import { openai } from "@/svg/openai";
 import type { ProviderItem } from "@/types/ai";
 
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
@@ -32,10 +35,12 @@ export const providersList: ProviderItem[] = [
       "o1-mini-2024-09-12",
       "o1-2024-12-17",
     ],
+    Icon: openai,
   },
   {
     name: "anthropic",
     models: ["claude-3-sonnet-20240229", "claude-3-5-haiku-latest"],
+    Icon: claude,
   },
   {
     name: "google",
@@ -44,5 +49,6 @@ export const providersList: ProviderItem[] = [
       "gemini-1.5-pro-latest",
       "gemini-1.5-flash-latest",
     ],
+    Icon: gemini,
   },
 ];

@@ -12,12 +12,12 @@ const providers: Provider[] = [
 	{ name: "anthropic", url: "https://console.anthropic.com/settings/keys" },
 ];
 
-export function AI() {
+export function AI({ tabs = true }) {
 	const { apiKeys, setApiKeys, setProvider, setSelectedModel } =
 		useAIConfigStore();
-
+	const Comp = tabs ? TabsContent : "div";
 	return (
-		<TabsContent value="ai" className="p-6 m-0">
+		<Comp value="ai" className="p-6 m-0">
 			<div className="space-y-8">
 				<section>
 					<h3 translate="no" className="mb-3 text-lg font-medium ">
@@ -53,6 +53,6 @@ export function AI() {
 					</div>
 				</section>
 			</div>
-		</TabsContent>
+		</Comp>
 	);
 }

@@ -49,7 +49,7 @@ export const useConfigStore = create<ConfigEditor>()(
       setLayout: (layout) => set({ layout }),
     }),
     {
-      name: "config-editor",
+      name: "config-editor-store",
     }
   )
 );
