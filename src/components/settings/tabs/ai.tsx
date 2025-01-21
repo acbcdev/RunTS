@@ -17,7 +17,7 @@ export function AI({ tabs = true }) {
 		useAIConfigStore();
 	const Comp = tabs ? TabsContent : "div";
 	return (
-		<Comp value="ai" className="p-6 m-0">
+		<Comp value="ai (beta)" className="p-6 m-0">
 			<div className="space-y-8">
 				<section>
 					<h3 translate="no" className="mb-3 text-lg font-medium ">

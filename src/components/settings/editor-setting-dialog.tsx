@@ -18,7 +18,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Editor } from "./tabs/editor";
 import { GithubStars } from "@/components/GithubStars";
 import { AI } from "./tabs/ai";
-const Trigers = ["Appearance", "Editor", "AI"];
+const Trigers = ["Appearance", "Editor", "AI (Beta)"];
 export function EditorSettingsDialog() {
 	return (
 		<Dialog aria-description="Editor settings">
