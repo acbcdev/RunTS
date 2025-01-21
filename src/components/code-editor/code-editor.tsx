@@ -48,7 +48,7 @@ export function CodeEditor() {
 			<ResizablePanelGroup direction="horizontal" className="flex-1">
 				<ResizablePanel
 					collapsible={true}
-					maxSize={45}
+					maxSize={35}
 					collapsedSize={15}
 					// defaultSize={30}
 					minSize={0}
