@@ -1,4 +1,4 @@
-import { Plus, X } from "lucide-react";
+import { Plus, X, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -14,7 +14,7 @@ export function EditorTabs() {
 	const tabs = useEditorStore((state) => state.tabs);
 	const activeTabId = useEditorStore((state) => state.activeTabId);
 	const editorRef = useEditorStore((state) => state.editorRef);
-	const addTab = useEditorStore((state) => state.addTab);
+	const newTab = useEditorStore((state) => state.newTab);
 	const updateTabCode = useEditorStore((state) => state.updateTabCode);
 	const removeTab = useEditorStore((state) => state.removeTab);
 	const setActiveTab = useEditorStore((state) => state.setActiveTab);
@@ -25,14 +25,6 @@ export function EditorTabs() {
 		setActiveTab(tabId);
 		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
 		editorRef?.focus();
-	};
-	const handleAddTab = () => {
-		addTab({
-			name: `untitled-${Date.now().toString().slice(-4)}.ts`,
-			language: "typescript",
-			code: "// Start coding here\n",
-			logs: [],
-		});
 	};
 
 	const handleChangeName = (tabId: string) => {
@@ -92,7 +84,7 @@ export function EditorTabs() {
 							key={tab.id}
 							className={cn(
 								`${activeTabId === tab.id ? "bg-header " : "bg-transparent hover:bg-background"}`,
-								" border-border group flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors ",
+								" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors ",
 							)}
 							onDoubleClick={() => handleChangeName(tab.id)}
 							onClick={() => handleActiveTabChange(tab.id)}
@@ -109,13 +101,22 @@ export function EditorTabs() {
 							>
 								{tab.name}
 							</span>
+
+							<Button
+								variant={"ghost"}
+								className="w-5 h-5 p-0 opacity-0 group-hover/tab:opacity-100"
+								aria-label="Edit tab"
+								onClick={() => handleChangeName(tab.id)}
+							>
+								<Edit className="w-3 h-3" />
+							</Button>
 							{tabs.length > 1 && (
 								<Button
 									variant="destructive"
 									size="icon"
 									aria-label="Close tab"
 									translate="no"
-									className="w-4 h-4 p-0 bg-transparent opacity-0 hover:text-destructive group-hover:opacity-100"
+									className="h-5 w-5 p-0 bg-transparent opacity-0 group-hover/tab:opacity-100"
 									onClick={(e) => {
 										e.stopPropagation();
 										removeTab(tab.id);
@@ -136,12 +137,12 @@ export function EditorTabs() {
 						aria-label="New tab"
 						size="icon"
 						className="rounded-full size-5"
-						onClick={handleAddTab}
+						onClick={newTab}
 					>
 						<Plus className="w-4 h-4" />
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent>New tab</TooltipContent>
+				<TooltipContent>New tab (ctrl + D)</TooltipContent>
 			</Tooltip>
 		</div>
 	);

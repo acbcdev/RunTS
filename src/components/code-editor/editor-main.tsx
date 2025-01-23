@@ -20,6 +20,7 @@ export function EditorMain() {
 	const theme = useEditorStore((state) => state.theme);
 	const runCode = useEditorStore((state) => state.runCode);
 	const running = useEditorStore((state) => state.running);
+	const newTab = useEditorStore((state) => state.newTab);
 	// useConfigStore
 	const fontSize = useConfigStore((state) => state.fontSize);
 	const wordWrap = useConfigStore((state) => state.wordWrap);
@@ -55,10 +56,6 @@ export function EditorMain() {
 			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyG,
 			runCode,
 		);
-		editor.addCommand(
-			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
-			toogleChat,
-		);
 		editor.addAction({
 			id: "run-code",
 			label: "Run Code",
@@ -67,6 +64,10 @@ export function EditorMain() {
 			],
 			run: runCode,
 		});
+		editor.addCommand(
+			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
+			toogleChat,
+		);
 		editor.addAction({
 			id: "show-chat",
 			label: "Show Chat",
@@ -74,6 +75,18 @@ export function EditorMain() {
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
 			],
 			run: () => toogleChat(),
+		});
+		editor.addCommand(
+			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+			newTab,
+		);
+		editor.addAction({
+			id: "new-tab",
+			label: "New Tab",
+			keybindings: [
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+			],
+			run: newTab,
 		});
 		monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
 			{
