@@ -13,6 +13,7 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import type { providers } from "@/types/ai";
 import { Send, StopCircle } from "lucide-react";
 import type { FormEvent } from "react";
+import { useShallow } from "zustand/react/shallow";
 type MultiModalInputProps = {
 	input: string;
 	isLoading: boolean;
@@ -31,7 +32,15 @@ export default function MultiModalInput({
 		setProvider,
 		selectedModel,
 		setSelectedModel,
-	} = useAIConfigStore();
+	} = useAIConfigStore(
+		useShallow((state) => ({
+			provider: state.provider,
+			getProviders: state.getProviders,
+			setProvider: state.setProvider,
+			selectedModel: state.selectedModel,
+			setSelectedModel: state.setSelectedModel,
+		})),
+	);
 	return (
 		<form
 			onSubmit={handleSubmit}
@@ -97,7 +106,9 @@ export default function MultiModalInput({
 							))}
 						</SelectContent>
 					</Select>
-					<span className="p-2">Beta</span>
+					<span className="px-2 py-1 mx-2 border rounded-lg border-accent">
+						beta
+					</span>
 				</div>
 			</div>
 		</form>
