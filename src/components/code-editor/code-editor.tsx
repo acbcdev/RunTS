@@ -25,6 +25,7 @@ export function CodeEditor() {
 	const theme = useEditorStore((state) => state.theme);
 	const getCurrentTheme = useEditorStore((state) => state.getCurrentTheme);
 	const runCode = useEditorStore((state) => state.runCode);
+	const newTab = useEditorStore((state) => state.newTab);
 	// useConfigStore
 	const layout = useConfigStore((state) => state.layout);
 	const radius = useConfigStore((state) => state.radius);
@@ -37,13 +38,9 @@ export function CodeEditor() {
 		activeTab?.code || "",
 		refreshTime || 60000 * 10,
 	);
-	useHotkeys("ctrl+q", () => {
-		runCode();
-	});
-	useHotkeys("ctrl+b", () => {
-		toggleChat();
-	});
-
+	useHotkeys("ctrl+q", runCode);
+	useHotkeys("ctrl+b", () => toggleChat());
+	useHotkeys("ctrl+d", newTab);
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
 	}, [radius]);
@@ -63,26 +60,7 @@ export function CodeEditor() {
 			<EditorTopBar />
 			<EditorTabs />
 			<ResizablePanelGroup direction="horizontal" className="flex-1">
-				{/* <ResizablePanel */}
-				{/* // onClick={() => setChat((prev) => (prev === 0 ? 30 : 0))}
-						// collapsedSize={15}
-						maxSize={chatSize}
-						defaultSize={chatSize}
-						minSize={chatSize} */}
-				{/* // > */}
 				{showChat && <Chat />}
-				{/* </ResizablePanel> */}
-				{/* <ResizableHandle withHandle /> */}
-
-				{/* <ResizablePanel
-				// onClick={() => setChat((prev) => (prev === 0 ? 30 : 0))}
-				// collapsedSize={15}
-				// maxSize={chatSize}
-				// defaultSize={chatSize}
-				// minSize={chatSize}
-				>
-					<Chat />
-				</ResizablePanel> */}
 				<ResizablePanel defaultSize={100}>
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60} minSize={30}>

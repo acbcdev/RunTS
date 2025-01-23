@@ -24,15 +24,15 @@ export function EditorSettingsDialog() {
 		<Dialog aria-description="Editor settings">
 			<Tooltip>
 				<TooltipTrigger>
-					<DialogTrigger asChild>
+					<DialogTrigger>
 						<Button
 							variant="ghost"
 							size="icon"
 							aria-label="Editor settings"
-							className="w-8 h-8"
+							className="size-8"
 							translate="no"
 						>
-							<Settings2 className="w-4 h-4" />
+							<Settings2 />
 						</Button>
 					</DialogTrigger>
 					<TooltipContent>Editor settings</TooltipContent>

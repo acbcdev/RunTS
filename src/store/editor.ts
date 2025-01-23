@@ -28,6 +28,7 @@ interface EditorState {
   setMonaco: (monaco: Monaco) => void;
   setEditorRef: (editor: editor.IStandaloneCodeEditor) => void;
   addTab: (tab: Omit<Tab, "id">) => Tab["id"];
+  newTab: VoidFunction;
   removeTab: (id: string) => void;
   setActiveTab: (id: string) => void;
   updateTabCode: (id: string, code: string) => void;
@@ -76,7 +77,14 @@ export const useEditorStore = create<EditorState>()(
       currentTab: (id) => get().tabs.find((tab) => tab.id === id),
       setMonaco: (monaco) => set({ monaco }),
       setEditorRef: (editor) => set({ editorRef: editor ?? null }),
-
+      newTab: () => {
+        get().addTab({
+          name: `untitled-${Date.now().toString().slice(-4)}.ts`,
+          language: "typescript",
+          code: "// Start coding here\n",
+          logs: [],
+        });
+      },
       addTab: (tab) => {
         const newTab = {
           ...tab,

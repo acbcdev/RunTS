@@ -33,7 +33,6 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	const runCode = useEditorStore((state) => state.runCode);
 	const layout = useConfigStore((state) => state.layout);
 	const setLayout = useConfigStore((state) => state.setLayout);
-	const showChat = useAIConfigStore((state) => state.showChat);
 	const toggleChat = useAIConfigStore((state) => state.toggleChat);
 
 	const handleShare = () => {
@@ -109,10 +108,10 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Run code"
-								className="w-8 h-8 text-accent"
+								className="size-8 text-accent"
 								onClick={runCode}
 							>
-								<Play className="w-4 h-4" />
+								<Play />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Run code (Ctrl + Q)</TooltipContent>
@@ -127,11 +126,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								className="size-8"
 								onClick={toogleLayout}
 							>
-								{layout === "horizontal" ? (
-									<Columns className="size-4" />
-								) : (
-									<Rows className="size-4" />
-								)}
+								{layout === "horizontal" ? <Columns /> : <Rows />}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Toogle layout</TooltipContent>
@@ -142,13 +137,13 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Run code"
-								className=" size-8 from-accent hover:bg-gradient-to-br hover:text-foreground from-30% to-destructive "
+								className="size-8  from-accent hover:bg-linear-to-br hover:text-foreground from-30% to-destructive "
 								onClick={() => toggleChat()}
 							>
 								<Sparkles />
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent>Show Chat (ctrl+b)</TooltipContent>
+						<TooltipContent>Show Chat (ctrl + B)</TooltipContent>
 					</Tooltip>
 				</div>
 				<div className="flex items-center space-x-2">
@@ -158,10 +153,10 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								aria-label="Share code"
 								variant="ghost"
 								size="icon"
-								className="w-8 h-8 text-accent"
+								className="size-8 text-accent"
 								onClick={handleShare}
 							>
-								<Share2 className="w-4 h-4" />
+								<Share2 />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Share Code current Tab</TooltipContent>
@@ -173,10 +168,10 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								aria-label="Copy code"
 								size="icon"
-								className="w-8 h-8"
+								className="size-8"
 								onClick={copyCode}
 							>
-								<Copy className="w-4 h-4" />
+								<Copy />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Copy code</TooltipContent>
@@ -188,10 +183,10 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Download code"
-								className="w-8 h-8"
+								className="size-8"
 								onClick={downloadCode}
 							>
-								<Download className="w-4 h-4" />
+								<Download />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Download code</TooltipContent>
@@ -203,10 +198,10 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								aria-label="Clear console"
 								size="icon"
-								className="w-8 h-8 hover:text-destructive"
+								className="size-8 hover:text-destructive"
 								onClick={handleClear}
 							>
-								<Trash2 className="w-4 h-4" />
+								<Trash2 />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Clear console</TooltipContent>
