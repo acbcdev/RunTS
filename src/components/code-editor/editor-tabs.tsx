@@ -10,17 +10,16 @@ import { useEditorStore } from "@/store/editor";
 import { cn } from "@/lib/utils";
 
 export function EditorTabs() {
-	const {
-		tabs,
-		activeTabId,
-		editorRef,
-		addTab,
-		updateTabCode,
-		removeTab,
-		setActiveTab,
-		changeNameTab,
-		currentTab,
-	} = useEditorStore();
+	// useEditorStore
+	const tabs = useEditorStore((state) => state.tabs);
+	const activeTabId = useEditorStore((state) => state.activeTabId);
+	const editorRef = useEditorStore((state) => state.editorRef);
+	const addTab = useEditorStore((state) => state.addTab);
+	const updateTabCode = useEditorStore((state) => state.updateTabCode);
+	const removeTab = useEditorStore((state) => state.removeTab);
+	const setActiveTab = useEditorStore((state) => state.setActiveTab);
+	const changeNameTab = useEditorStore((state) => state.changeNameTab);
+	const currentTab = useEditorStore((state) => state.currentTab);
 
 	const handleActiveTabChange = (tabId: string) => {
 		setActiveTab(tabId);
@@ -84,7 +83,7 @@ export function EditorTabs() {
 	};
 
 	return (
-		<div className="flex items-center border-b border-border bg-background  bg-opacity-80">
+		<div className="flex items-center border-b border-border bg-background bg-opacity-80">
 			<ScrollArea className="max-w-[calc(100%-32px)]">
 				<div className="flex">
 					{tabs.map((tab) => (
@@ -116,7 +115,7 @@ export function EditorTabs() {
 									size="icon"
 									aria-label="Close tab"
 									translate="no"
-									className="w-4 h-4 p-0 opacity-0 hover:text-destructive bg-transparent group-hover:opacity-100"
+									className="w-4 h-4 p-0 bg-transparent opacity-0 hover:text-destructive group-hover:opacity-100"
 									onClick={(e) => {
 										e.stopPropagation();
 										removeTab(tab.id);
@@ -136,7 +135,7 @@ export function EditorTabs() {
 						variant="ghost"
 						aria-label="New tab"
 						size="icon"
-						className="size-5 rounded-full"
+						className="rounded-full size-5"
 						onClick={handleAddTab}
 					>
 						<Plus className="w-4 h-4" />

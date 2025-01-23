@@ -13,8 +13,11 @@ const providers: Provider[] = [
 ];
 
 export function AI({ tabs = true }) {
-	const { apiKeys, setApiKeys, setProvider, setSelectedModel } =
-		useAIConfigStore();
+	const apiKeys = useAIConfigStore((state) => state.apiKeys);
+	const setApiKeys = useAIConfigStore((state) => state.setApiKeys);
+	const setProvider = useAIConfigStore((state) => state.setProvider);
+	const setSelectedModel = useAIConfigStore((state) => state.setSelectedModel);
+
 	const Comp = tabs ? TabsContent : "div";
 	return (
 		<Comp value="ai (beta)" className="p-6 m-0">

@@ -5,6 +5,7 @@ import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {
 	const {
@@ -18,8 +19,26 @@ export function Editor() {
 		setWhiteSpace,
 		setLineNumbers,
 		setRefreshTime,
-	} = useConfigStore();
-	const { setExperimental, experimetalConsole } = useEditorStore();
+	} = useConfigStore(
+		useShallow((state) => ({
+			wordWrap: state.wordWrap,
+			lineNumbers: state.lineNumbers,
+			refreshTime: state.refreshTime,
+			minimap: state.minimap,
+			whiteSpace: state.whiteSpace,
+			setMinimap: state.setMinimap,
+			setWordWrap: state.setWordWrap,
+			setWhiteSpace: state.setWhiteSpace,
+			setLineNumbers: state.setLineNumbers,
+			setRefreshTime: state.setRefreshTime,
+		})),
+	);
+	const { setExperimental, experimetalConsole } = useEditorStore(
+		useShallow((state) => ({
+			setExperimental: state.setExperimental,
+			experimetalConsole: state.experimetalConsole,
+		})),
+	);
 
 	const editorBehaviors = [
 		{
