@@ -6,11 +6,8 @@ import {
 	DialogDescription,
 } from "@/components/ui/dialog";
 import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
 export function Updates() {
-	const { getCurrentTheme } = useEditorStore();
 	const { updates, setUpdates } = useConfigStore();
-	const currentTheme = getCurrentTheme();
 	return (
 		<>
 			{updates && (
