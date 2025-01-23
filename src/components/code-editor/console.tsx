@@ -1,17 +1,26 @@
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
 import { lazy, Suspense } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function Console() {
 	// useEditorStore
-	const currentTab = useEditorStore((state) => state.currentTab);
-	const activeTabId = useEditorStore((state) => state.activeTabId);
-	const theme = useEditorStore((state) => state.theme);
+	const { currentTab, activeTabId, theme } = useEditorStore(
+		useShallow((state) => ({
+			currentTab: state.currentTab,
+			activeTabId: state.activeTabId,
+			theme: state.theme,
+		})),
+	);
 	// useConfigStore
-	const fontSize = useConfigStore((state) => state.fontSize);
-	const fontFamily = useConfigStore((state) => state.fontFamily);
+	const { fontSize, fontFamily } = useConfigStore(
+		useShallow((state) => ({
+			fontSize: state.fontSize,
+			fontFamily: state.fontFamily,
+		})),
+	);
 	return (
 		<div className="relative h-full bg-background" translate="no">
 			<Suspense

@@ -22,19 +22,32 @@ import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
 
 import { memo } from "react";
+import { Kd } from "../ui/kd";
+import { useShallow } from "zustand/react/shallow";
 
 export const EditorTopBar = memo(function EditorTopBar() {
 	const { toast } = useToast();
-	const code = useEditorStore((state) => state.code);
-	const activeTabId = useEditorStore((state) => state.activeTabId);
-	const currentTab = useEditorStore((state) => state.currentTab);
-
-	const clearConsole = useEditorStore((state) => state.clearConsole);
-	const runCode = useEditorStore((state) => state.runCode);
-	const layout = useConfigStore((state) => state.layout);
-	const setLayout = useConfigStore((state) => state.setLayout);
-	const toggleChat = useAIConfigStore((state) => state.toggleChat);
-
+	const { code, activeTabId, currentTab, clearConsole, runCode } =
+		useEditorStore(
+			useShallow((state) => ({
+				code: state.code,
+				activeTabId: state.activeTabId,
+				currentTab: state.currentTab,
+				clearConsole: state.clearConsole,
+				runCode: state.runCode,
+			})),
+		);
+	const { layout, setLayout } = useConfigStore(
+		useShallow((state) => ({
+			layout: state.layout,
+			setLayout: state.setLayout,
+		})),
+	);
+	const { toggleChat } = useAIConfigStore(
+		useShallow((state) => ({
+			toggleChat: state.toggleChat,
+		})),
+	);
 	const handleShare = () => {
 		const url = new URL(window.location.href);
 		if (code === "") {
@@ -114,7 +127,9 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								<Play />
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent>Run code (Ctrl + Q)</TooltipContent>
+						<TooltipContent>
+							Run code <Kd>(Ctrl + Q)</Kd>
+						</TooltipContent>
 					</Tooltip>
 
 					<Tooltip>
@@ -143,7 +158,9 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								<Sparkles />
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent>Show Chat (ctrl + B)</TooltipContent>
+						<TooltipContent>
+							Show Chat <Kd>(ctrl + B)</Kd>
+						</TooltipContent>
 					</Tooltip>
 				</div>
 				<div className="flex items-center space-x-2">

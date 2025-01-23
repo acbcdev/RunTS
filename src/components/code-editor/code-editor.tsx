@@ -7,7 +7,6 @@ import { useEditorStore } from "@/store/editor";
 import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useHotkeys } from "react-hotkeys-hook";
-
 import {
 	ResizablePanelGroup,
 	ResizablePanel,
@@ -17,22 +16,37 @@ import { Console } from "@/components/code-editor/console";
 import { Updates } from "@/components/updates";
 import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
+import { useShallow } from "zustand/react/shallow";
 
 export function CodeEditor() {
 	// useEditorStore
-	const tabs = useEditorStore((state) => state.tabs);
-	const activeTabId = useEditorStore((state) => state.activeTabId);
-	const theme = useEditorStore((state) => state.theme);
-	const getCurrentTheme = useEditorStore((state) => state.getCurrentTheme);
-	const runCode = useEditorStore((state) => state.runCode);
-	const newTab = useEditorStore((state) => state.newTab);
+	const { tabs, activeTabId, theme, getCurrentTheme, runCode, newTab } =
+		useEditorStore(
+			useShallow((state) => ({
+				tabs: state.tabs,
+				activeTabId: state.activeTabId,
+				theme: state.theme,
+				getCurrentTheme: state.getCurrentTheme,
+				runCode: state.runCode,
+				newTab: state.newTab,
+			})),
+		);
+
 	// useConfigStore
-	const layout = useConfigStore((state) => state.layout);
-	const radius = useConfigStore((state) => state.radius);
-	const refreshTime = useConfigStore((state) => state.refreshTime);
+	const { layout, radius, refreshTime } = useConfigStore(
+		useShallow((state) => ({
+			layout: state.layout,
+			radius: state.radius,
+			refreshTime: state.refreshTime,
+		})),
+	);
 	const activeTab = tabs.find((tab) => tab.id === activeTabId);
-	const showChat = useAIConfigStore((state) => state.showChat);
-	const toggleChat = useAIConfigStore((state) => state.toggleChat);
+	const { showChat, toggleChat } = useAIConfigStore(
+		useShallow((state) => ({
+			showChat: state.showChat,
+			toggleChat: state.toggleChat,
+		})),
+	);
 
 	const debouncedCode = useDebounce(
 		activeTab?.code || "",
@@ -40,7 +54,7 @@ export function CodeEditor() {
 	);
 	useHotkeys("ctrl+q", runCode);
 	useHotkeys("ctrl+b", () => toggleChat());
-	useHotkeys("ctrl+d", newTab);
+	useHotkeys("ctrl+d", newTab, { preventDefault: true });
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
 	}, [radius]);

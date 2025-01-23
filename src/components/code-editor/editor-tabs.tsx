@@ -8,18 +8,29 @@ import {
 } from "@/components/ui/tooltip";
 import { useEditorStore } from "@/store/editor";
 import { cn } from "@/lib/utils";
+import { Kd } from "../ui/kd";
+import { useShallow } from "zustand/react/shallow";
 
 export function EditorTabs() {
 	// useEditorStore
-	const tabs = useEditorStore((state) => state.tabs);
-	const activeTabId = useEditorStore((state) => state.activeTabId);
-	const editorRef = useEditorStore((state) => state.editorRef);
-	const newTab = useEditorStore((state) => state.newTab);
-	const updateTabCode = useEditorStore((state) => state.updateTabCode);
-	const removeTab = useEditorStore((state) => state.removeTab);
-	const setActiveTab = useEditorStore((state) => state.setActiveTab);
-	const changeNameTab = useEditorStore((state) => state.changeNameTab);
-	const currentTab = useEditorStore((state) => state.currentTab);
+	const { tabs, activeTabId, editorRef, newTab, updateTabCode, removeTab } =
+		useEditorStore(
+			useShallow((state) => ({
+				tabs: state.tabs,
+				activeTabId: state.activeTabId,
+				editorRef: state.editorRef,
+				newTab: state.newTab,
+				updateTabCode: state.updateTabCode,
+				removeTab: state.removeTab,
+			})),
+		);
+	const { setActiveTab, changeNameTab, currentTab } = useEditorStore(
+		useShallow((state) => ({
+			setActiveTab: state.setActiveTab,
+			changeNameTab: state.changeNameTab,
+			currentTab: state.currentTab,
+		})),
+	);
 
 	const handleActiveTabChange = (tabId: string) => {
 		setActiveTab(tabId);
@@ -116,7 +127,7 @@ export function EditorTabs() {
 									size="icon"
 									aria-label="Close tab"
 									translate="no"
-									className="h-5 w-5 p-0 bg-transparent opacity-0 group-hover/tab:opacity-100"
+									className="h-5 w-5 p-0 bg-transparent "
 									onClick={(e) => {
 										e.stopPropagation();
 										removeTab(tab.id);
@@ -136,13 +147,15 @@ export function EditorTabs() {
 						variant="ghost"
 						aria-label="New tab"
 						size="icon"
-						className="rounded-full size-5"
+						className="rounded-full size-3"
 						onClick={newTab}
 					>
 						<Plus className="w-4 h-4" />
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent>New tab (ctrl + D)</TooltipContent>
+				<TooltipContent>
+					New tab <Kd>(ctrl + D)</Kd>
+				</TooltipContent>
 			</Tooltip>
 		</div>
 	);

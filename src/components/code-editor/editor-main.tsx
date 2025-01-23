@@ -8,27 +8,48 @@ import { Loader } from "lucide-react";
 import * as monaco from "monaco-editor";
 import { extraLib } from "@/consts/extraLib";
 import { useAIConfigStore } from "@/store/aiConfig";
+import { useShallow } from "zustand/react/shallow";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function EditorMain() {
 	// useEditorStore
-	const code = useEditorStore((state) => state.code);
-	const setMonaco = useEditorStore((state) => state.setMonaco);
-	const setEditorRef = useEditorStore((state) => state.setEditorRef);
-	const updateTabCode = useEditorStore((state) => state.updateTabCode);
-	const activeTabId = useEditorStore((state) => state.activeTabId);
-	const theme = useEditorStore((state) => state.theme);
-	const runCode = useEditorStore((state) => state.runCode);
-	const running = useEditorStore((state) => state.running);
-	const newTab = useEditorStore((state) => state.newTab);
+	const {
+		code,
+		setMonaco,
+		setEditorRef,
+		updateTabCode,
+		activeTabId,
+		theme,
+		runCode,
+		running,
+		newTab,
+	} = useEditorStore(
+		useShallow((state) => ({
+			code: state.code,
+			setMonaco: state.setMonaco,
+			setEditorRef: state.setEditorRef,
+			updateTabCode: state.updateTabCode,
+			activeTabId: state.activeTabId,
+			theme: state.theme,
+			runCode: state.runCode,
+			running: state.running,
+			newTab: state.newTab,
+		})),
+	);
 	// useConfigStore
-	const fontSize = useConfigStore((state) => state.fontSize);
-	const wordWrap = useConfigStore((state) => state.wordWrap);
-	const lineNumbers = useConfigStore((state) => state.lineNumbers);
-	const fontFamily = useConfigStore((state) => state.fontFamily);
-	const minimap = useConfigStore((state) => state.minimap);
-	const whiteSpace = useConfigStore((state) => state.whiteSpace);
-	const toogleChat = useAIConfigStore((state) => state.toggleChat);
+	const { fontSize, wordWrap, lineNumbers, fontFamily, minimap, whiteSpace } =
+		useConfigStore(
+			useShallow((state) => ({
+				fontSize: state.fontSize,
+				wordWrap: state.wordWrap,
+				lineNumbers: state.lineNumbers,
+				fontFamily: state.fontFamily,
+				minimap: state.minimap,
+				whiteSpace: state.whiteSpace,
+			})),
+		);
+
+	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
 	const onEditorReady = (
 		editor: editor.IStandaloneCodeEditor,
 		monacoInstance: Monaco,
