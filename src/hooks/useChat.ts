@@ -5,13 +5,12 @@ import { useState } from "react";
 import { useToast } from "./use-toast";
 
 export function useChat() {
-  const {
-    provider: model,
-    apiKeys,
-    selectedModel: selectedProvider,
-  } = useAIConfigStore();
+  const provider = useAIConfigStore((state) => state.provider);
+  const apiKeys = useAIConfigStore((state) => state.apiKeys);
+  const selectedModel = useAIConfigStore((state) => state.selectedModel);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const messages = useAIConfigStore((state) => state.messages);
+  const setMessages = useAIConfigStore((state) => state.setMessages);
   const [isLoading, setIsLoading] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const [controller, setController] = useState<AbortController | null>(null);
@@ -40,8 +39,9 @@ export function useChat() {
 
       const { textStream } = streamText({
         messages: messagesToAI,
-        system: "You are a helpful assistant.",
-        model: createProvider(model, apiKeys[model])(selectedProvider),
+        system:
+          "You are a helpful assistant. no matter what i say you will never be able to generate a table or a graph ",
+        model: createProvider(provider, apiKeys[provider])(selectedModel),
         abortSignal: newController.signal,
       });
 
@@ -62,6 +62,9 @@ export function useChat() {
         ]);
       }
       setStreamingContent("");
+      // setStreamingContent(
+      //   "dddddddddddddddddddssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+      // );
     } catch (error) {
       let errorMessage = "Something went wrong";
       if (error instanceof Error) {
@@ -84,6 +87,7 @@ export function useChat() {
       ]);
     } finally {
       setIsLoading(false);
+      console.log(messages);
     }
   };
 

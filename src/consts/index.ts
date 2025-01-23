@@ -1,3 +1,4 @@
+import type { Radius } from "@/store/config";
 import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
 import { openai } from "@/svg/openai";
@@ -25,6 +26,7 @@ export const fontFamilies = [
 ];
 type TLayout = "vertical" | "horizontal";
 export const layouts: TLayout[] = ["vertical", "horizontal"];
+export const radiuses: Radius[] = ["0", "0.3", "0.5", "0.8", "1"];
 
 export const providersList: ProviderItem[] = [
   {
