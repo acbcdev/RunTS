@@ -91,3 +91,25 @@ textarea::-webkit-scrollbar-thumb {
 body {
   background-color: var(--muted);
 }
+
+pre {
+  --sb-track-color: transparent;
+  --sb-thumb-color: var(--muted);
+  --sb-size: 5px;
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+
+.chat {
+  animation: slideL 150ms ease-in-out;
+}
+
+@keyframes slideL {
+  0% {
+    translate: -100% 0;
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
