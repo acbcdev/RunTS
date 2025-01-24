@@ -13,7 +13,6 @@ import {
 	ResizableHandle,
 } from "@/components/ui/resizable";
 import { Console } from "@/components/code-editor/console";
-// import { Updates } from "@/components/updates";
 import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
 import { useShallow } from "zustand/react/shallow";
@@ -52,6 +51,7 @@ export function CodeEditor() {
 	useHotkeys("ctrl+q", runCode);
 	useHotkeys("ctrl+b", () => toggleChat());
 	useHotkeys("ctrl+d", newTab, { preventDefault: true });
+
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
 	}, [radius]);
