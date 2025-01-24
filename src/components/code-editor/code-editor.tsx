@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { EditorTopBar } from "./editor-top-bar";
 import { EditorTabs } from "./editor-tabs";
 import { EditorMain } from "./editor-main";
-import { useDebounce } from "@uidotdev/usehooks";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useEditorStore } from "@/store/editor";
 import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
@@ -48,10 +48,7 @@ export function CodeEditor() {
 		})),
 	);
 
-	const debouncedCode = useDebounce(
-		activeTab?.code || "",
-		refreshTime || 60000 * 10,
-	);
+	const debouncedCode = useDebounce(activeTab?.code || "", refreshTime);
 	useHotkeys("ctrl+q", runCode);
 	useHotkeys("ctrl+b", () => toggleChat());
 	useHotkeys("ctrl+d", newTab, { preventDefault: true });

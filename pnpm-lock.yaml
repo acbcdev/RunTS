@@ -62,9 +62,6 @@ importers:
       '@types/react-dom':
         specifier: 18.3.5
         version: 18.3.5(@types/react@18.3.17)
-      '@uidotdev/usehooks':
-        specifier: 2.4.1
-        version: 2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       acorn:
         specifier: ^8.14.0
         version: 8.14.0
@@ -2143,13 +2140,6 @@ packages:
   '@typescript-eslint/visitor-keys@8.20.0':
     resolution: {integrity: sha512-v/BpkeeYAsPkKCkR8BDwcno0llhzWVqPOamQrAEMdpZav2Y9OVjd9dwJyBLJWwf335B5DmlifECIkZRJCaGaHA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@uidotdev/usehooks@2.4.1':
-    resolution: {integrity: sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
@@ -6177,11 +6167,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.20.0
       eslint-visitor-keys: 4.2.0
-
-  '@uidotdev/usehooks@2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@ungap/structured-clone@1.2.1': {}
 
