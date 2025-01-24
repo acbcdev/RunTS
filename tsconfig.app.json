@@ -6,7 +6,7 @@
 		"lib": ["ES2023", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"skipLibCheck": true,
-		"types": ["vite-plugin-pwa/client"],
+		"types": ["vite-plugin-pwa/react"],
 		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,

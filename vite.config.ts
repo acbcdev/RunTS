@@ -8,7 +8,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: "generateSW",
       registerType: "prompt",
+      injectRegister: "auto",
       manifest: {
         name: "Runts",
         short_name: "Runts",
@@ -53,6 +55,9 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  worker: {
+    format: "es",
+  },
   resolve: {
     alias: {
       "@": path.resolve("./src"),
