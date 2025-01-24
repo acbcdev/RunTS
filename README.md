@@ -1,8 +1,21 @@
-# RunTS 
 
 ![Captura de pantalla en ordenador](/public/runts.webp)
 
+<div align='center'>
+   
+### <img src="public/logo.svg" width='35' /> [Runts](https://runts.acbc.dev)
+  ***Your TypeScript/JavaScript Playground Editor***
+
+</div>
+<div align="center">
+   
+![](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)
+![](https://img.shields.io/badge/Maintained%3F-Yes-brightgreen.svg)
+
+</div>
+
 Welcome to **RunTS**! This project is built with **Tauri**, **React**, and **TypeScript** to provide a lightweight yet powerful desktop application experience.
+
 
 ## 🚀 Project Overview
 
@@ -75,5 +88,9 @@ Here's a quick guide:
 
 
 Please check our [contribution guide](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
-
 Happy coding! 🚀
+### Contributors
+<a href="https://github.com/acbcdev/runts/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=acbcdev/runts" />
+</a>
+
