@@ -46,7 +46,7 @@ export function EditorSettingsDialog() {
 			>
 				<DialogHeader className="p-6 pb-0">
 					<DialogTitle>
-						Editor Settings <span className="opacity-85">v1.2.0</span>
+						Editor Settings <span className="opacity-85">v1.3.0</span>
 					</DialogTitle>
 					<div className="flex items-center gap-2 mt-2 ">
 						<a

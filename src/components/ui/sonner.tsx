@@ -6,7 +6,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
 	return (
 		<Sonner
 			className="toaster group bg-background"
-			closeButton
 			toastOptions={{
 				style: {
 					background: "var(--background)",
