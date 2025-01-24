@@ -10,6 +10,7 @@ import { useEditorStore } from "@/store/editor";
 import { cn } from "@/lib/utils";
 import { Kd } from "../ui/kd";
 import { useShallow } from "zustand/react/shallow";
+import { toast } from "sonner";
 
 export function EditorTabs() {
 	// useEditorStore
@@ -75,6 +76,7 @@ export function EditorTabs() {
 		if (!tsFile) changeName = `${nameTab.slice(0, 20)}.ts`;
 
 		changeNameTab(activeTabId, changeName);
+		toast.success("Tab name changed");
 		event.currentTarget.contentEditable = "false";
 		event.currentTarget.textContent = changeName;
 	};
@@ -113,14 +115,6 @@ export function EditorTabs() {
 								{tab.name}
 							</span>
 
-							<Button
-								variant={"ghost"}
-								className="w-5 h-5 p-0 opacity-0 group-hover/tab:opacity-100"
-								aria-label="Edit tab"
-								onClick={() => handleChangeName(tab.id)}
-							>
-								<Edit className="w-3 h-3" />
-							</Button>
 							{tabs.length > 1 && (
 								<Button
 									variant="destructive"

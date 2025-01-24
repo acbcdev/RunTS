@@ -15,18 +15,16 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/use-toast";
 import { useEditorStore } from "@/store/editor";
 import { EditorSettingsDialog } from "@/components/settings/editor-setting-dialog";
 import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
-
+import { toast } from "sonner";
 import { memo } from "react";
 import { Kd } from "../ui/kd";
 import { useShallow } from "zustand/react/shallow";
 
 export const EditorTopBar = memo(function EditorTopBar() {
-	const { toast } = useToast();
 	const { code, activeTabId, currentTab, clearConsole, runCode } =
 		useEditorStore(
 			useShallow((state) => ({
@@ -51,9 +49,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	const handleShare = () => {
 		const url = new URL(window.location.href);
 		if (code === "") {
-			toast({
-				variant: "destructive",
-				title: "Empty Code",
+			toast.error("Empty Code", {
 				description: "The code is empty, nothing to share.",
 				duration: 2000,
 			});
@@ -61,8 +57,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		}
 		const link = `${url.origin}/?code=${btoa(code)}`;
 		navigator.clipboard.writeText(link);
-		toast({
-			title: "Link Created",
+		toast.success("Link Created", {
 			description: `The ${link} has been copied to your clipboard.`,
 			duration: 2000,
 		});
@@ -72,17 +67,22 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	};
 	const handleClear = () => {
 		clearConsole(activeTabId);
-		toast({
-			title: "Console cleared",
+		toast.success("Console cleared", {
 			description: "The console output has been cleared.",
 			duration: 2000,
 		});
 	};
 
 	const copyCode = () => {
+		if (code.trim() === "") {
+			toast.error("Empty Code", {
+				description: "The code is empty, nothing to copy.",
+				duration: 2000,
+			});
+			return;
+		}
 		navigator.clipboard.writeText(code);
-		toast({
-			title: "Code copied!",
+		toast.success("Code copied!", {
 			description: "The code has been copied to your clipboard.",
 			duration: 2000,
 		});
@@ -90,6 +90,13 @@ export const EditorTopBar = memo(function EditorTopBar() {
 
 	const downloadCode = () => {
 		const activeCode = currentTab(activeTabId);
+		if (!activeCode || activeCode.code.trim() === "") {
+			toast.error("Empty Code", {
+				description: "The code is empty, nothing to download.",
+				duration: 2000,
+			});
+			return;
+		}
 		const blob = new Blob([code], { type: "text/typescript" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
@@ -99,8 +106,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		a.click();
 		document.body.removeChild(a);
 		URL.revokeObjectURL(url);
-		toast({
-			title: "Code downloaded!",
+		toast.success("Code downloaded!", {
 			description: "The code has been downloaded as 'code.js'",
 			duration: 2000,
 		});

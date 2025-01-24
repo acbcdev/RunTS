@@ -731,7 +731,7 @@ export const themes: Record<string, Theme> = {
       border: "#1E253088", // Sin bordes visibles
       accent: "#FFCC66", // Color de acento (amarillo suave)
       selection: "#1E2530", // Fondo de selección
-      header: "#13172A", // Fondo del encabezado
+      header: "#1A1F2A", // Fondo del encabezado oscuro
       hover: "#1A1F28", // Fondo al pasar el cursor
       muted: "#5C6773", // Texto deshabilitado o atenuado
       success: "#aad94c", // Verde para éxito

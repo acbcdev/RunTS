@@ -1,13 +1,11 @@
 import { CodeEditor } from "@/components/code-editor/code-editor";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { useEditorStore } from "@/store/editor";
 import { useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-
+import { toast } from "sonner";
 function App() {
 	const { addTab, setActiveTab } = useEditorStore();
-	const { toast } = useToast();
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const code = new URLSearchParams(window.location.search).get("code");
@@ -23,9 +21,7 @@ function App() {
 				});
 				setActiveTab(id);
 			} catch {
-				toast({
-					variant: "destructive",
-					title: "Invalid Code",
+				toast("invaliad Code", {
 					description: "The code is error on decode",
 				});
 			}

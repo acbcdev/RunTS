@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Stars } from "lucide-react";
+import { Star } from "lucide-react";
 import type { SVGProps } from "react";
 export function GithubStars() {
 	const [stars, setStars] = useState<number | string>("...");
@@ -11,13 +11,13 @@ export function GithubStars() {
 	}, []);
 	return (
 		<a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer">
-			<div className="flex items-center justify-center gap-1 p-2 rounded-lg text-zinc-100 border border-border ">
+			<div className="flex items-center justify-center gap-x-2 p-2 rounded-lg text-zinc-100 border border-border ">
 				<Github className="size-6" />
 				<p>
 					Github Starts:{" "}
 					<span className="text-lg font-bold text-success">{stars}</span>
 				</p>
-				<Stars className="size-6 text-accent" />
+				<Star className="size-6 text-accent fill-accent" />
 			</div>
 		</a>
 	);

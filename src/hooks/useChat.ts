@@ -2,8 +2,7 @@ import { createProvider } from "@/lib/ai/providers";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { type Message, streamText } from "ai";
 import { useState } from "react";
-import { useToast } from "./use-toast";
-
+import { toast } from "sonner";
 export function useChat() {
   const provider = useAIConfigStore((state) => state.provider);
   const apiKeys = useAIConfigStore((state) => state.apiKeys);
@@ -15,7 +14,6 @@ export function useChat() {
   const [streamingContent, setStreamingContent] = useState("");
   const [controller, setController] = useState<AbortController | null>(null);
 
-  const { toast } = useToast();
   const handleStreamText = async (userContent: string) => {
     if (userContent.trim() === "clear") {
       setMessages([]);
@@ -71,10 +69,8 @@ export function useChat() {
         errorMessage = error.message;
       }
 
-      toast({
-        title: "Error",
+      toast.error("Error Generating Response", {
         description: errorMessage,
-        variant: "destructive",
       });
 
       setMessages((prev) => [
