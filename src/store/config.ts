@@ -8,7 +8,7 @@ type ConfigEditor = {
   lineNumbers: boolean;
   whiteSpace: boolean;
   fontFamily: string;
-  refreshTime: number | null;
+  refreshTime: number;
   minimap: boolean;
   layout: TLayout;
   updates: boolean;
@@ -20,7 +20,7 @@ type ConfigEditor = {
   setLineNumbers: (enabled: boolean) => void;
   setWhiteSpace: (enabled: boolean) => void;
   setFontFamily: (fontFamily: string) => void;
-  setRefreshTime: (time: number | null) => void;
+  setRefreshTime: (time: number) => void;
   setMinimap: (enabled: boolean) => void;
   setLayout: (layout: TLayout) => void;
 };

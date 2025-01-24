@@ -7,7 +7,7 @@ import type { ProviderItem } from "@/types/ai";
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
 
 export const refreshTimes = [
-  { value: null, time: "off" },
+  { value: 0, time: "off" },
   { value: 100, time: "100ms" },
   { value: 200, time: "200ms" },
   { value: 400, time: "400ms" },

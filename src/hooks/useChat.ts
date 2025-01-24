@@ -68,22 +68,19 @@ export function useChat() {
       if (error instanceof Error) {
         errorMessage = error.message;
       }
-
       toast.error("Error Generating Response", {
         description: errorMessage,
+        position: "bottom-center",
+        duration: 10000,
       });
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          role: "assistant",
-          content: errorMessage,
-        },
-      ]);
+      if (
+        messages.filter((m) => m.role === "user").length === messages.length &&
+        messages.length > 0
+      ) {
+        setMessages([]);
+      }
     } finally {
       setIsLoading(false);
-      console.log(messages);
     }
   };
 

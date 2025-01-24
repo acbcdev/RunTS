@@ -4,8 +4,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { useEditorStore } from "@/store/editor";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { PromptProvider } from "@/providers/promptProvider";
+import { useShallow } from "zustand/react/shallow";
 function App() {
-	const { addTab, setActiveTab } = useEditorStore();
+	const { addTab, setActiveTab } = useEditorStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const code = new URLSearchParams(window.location.search).get("code");
@@ -30,7 +32,9 @@ function App() {
 	return (
 		<>
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-				<CodeEditor />
+				<PromptProvider>
+					<CodeEditor />
+				</PromptProvider>
 				<Toaster />
 			</TooltipProvider>
 		</>
