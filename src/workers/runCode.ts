@@ -39,12 +39,9 @@ self.onmessage = async (event: MessageEvent) => {
     // console.log(activeTabCode, "activeTabCode");
     const transpiledCode = Babel.transform(activeTabCode, {
       presets: ["typescript"],
-      filename: name,
+      filename: name ?? "code.ts",
       sourceType: "module",
       retainLines: true,
-      compact: false, // Disable compacting
-      comments: true, // Preserve comments
-      minified: false, // Disable minification
       sourceMaps: "inline",
     }).code;
     // console.log(transpiledCode, "transpiledCode");

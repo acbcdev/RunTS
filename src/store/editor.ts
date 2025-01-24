@@ -5,6 +5,7 @@ import { themes } from "../themes";
 import type { Theme } from "../types/editor";
 import type { editor } from "monaco-editor";
 import type { ConsoleOutput } from "../types/worker";
+import { runCode } from "@/lib/runCode";
 interface Tab {
   id: string;
   name: string;
@@ -171,41 +172,11 @@ export const useEditorStore = create<EditorState>()(
           const name = activeTab.name;
 
           // Crear una promesa para manejar el Worker
-          const output: ConsoleOutput[] = await new Promise<ConsoleOutput[]>(
-            (resolve, reject) => {
-              const worker = new Worker(
-                new URL("../workers/runCode.ts?worker", import.meta.url),
-                {
-                  type: "module",
-                }
-              );
+          const output = await runCode(activeTab.code, {
+            name,
+            injectLogs: get().experimetalConsole,
+          });
 
-              const timeout = setTimeout(() => {
-                reject(new Error("El Worker excedió el tiempo de espera."));
-                worker.terminate();
-              }, 10000);
-
-              // Enviar mensaje al Worker
-              worker.postMessage({
-                activeTabCode: activeTab.code,
-                name,
-                injectLogs: get().experimetalConsole,
-              });
-
-              // Manejar mensajes del Worker
-              worker.onmessage = (event: MessageEvent) => {
-                clearTimeout(timeout);
-                resolve(event.data);
-                worker.terminate();
-              };
-
-              worker.onmessage = (event: MessageEvent) => {
-                clearTimeout(timeout);
-                resolve(event.data);
-                worker.terminate();
-              };
-            }
-          );
           const ajustedOutput = output.map((value, index) => {
             if (index === 0) return value;
             return { ...value, line: value.line - output[index - 1].line };
