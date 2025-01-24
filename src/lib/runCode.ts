@@ -1,5 +1,5 @@
 import type { ConsoleOutput } from "@/types/worker";
-import WorkerJS from "@/workers/runCode?worker";
+// import WorkerJS from "@/workers/runCode?worker";
 
 type RunCodeOptions = {
   injectLogs: boolean;
@@ -12,7 +12,13 @@ export function runCode(
   options: Partial<RunCodeOptions>
 ): Promise<ConsoleOutput[]> {
   return new Promise((resolve, reject) => {
-    const worker = new WorkerJS({ name: "runCode" });
+    const worker = new Worker(
+      new URL("../workers/runCode.ts?worker", import.meta.url),
+      {
+        type: "module",
+        name: "runCode",
+      }
+    );
     const timeout = setTimeout(() => {
       reject(new Error("El Worker excedió el tiempo de espera."));
       worker.terminate();
