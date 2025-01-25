@@ -21,7 +21,7 @@ import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { toast } from "sonner";
 import { memo } from "react";
-import { Kd } from "../ui/kd";
+import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
 
 export const EditorTopBar = memo(function EditorTopBar() {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { EditorTopBar } from "./editor-top-bar";
-import { EditorTabs } from "./editor-tabs";
-import { EditorMain } from "./editor-main";
+import { EditorTopBar } from "@/components/code-editor/editor-top-bar";
+import { EditorTabs } from "@/components/code-editor/editor-tabs";
+import { EditorMain } from "@/components/code-editor/editor-main";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useEditorStore } from "@/store/editor";
 import { useConfigStore } from "@/store/config";

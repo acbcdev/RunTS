@@ -60,9 +60,6 @@ export function useChat() {
         ]);
       }
       setStreamingContent("");
-      // setStreamingContent(
-      //   "dddddddddddddddddddssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-      // );
     } catch (error) {
       let errorMessage = "Something went wrong";
       if (error instanceof Error) {

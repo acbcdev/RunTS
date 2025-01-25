@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Editor } from "./tabs/editor";
+import { Editor } from "@/components/settings/tabs/editor";
 import { GithubStars } from "@/components/GithubStars";
-import { AI } from "./tabs/ai";
+import { AI } from "@/components/settings/tabs/ai";
 const Trigers = ["Appearance", "Editor", "AI (Beta)"];
 export function EditorSettingsDialog() {
 	return (

@@ -165,9 +165,9 @@ export const useEditorStore = create<EditorState>()(
           get().updateTabLog(activeTab.id, []);
           return;
         }
-
-        get().setRunning(true);
-
+        const loading = setTimeout(() => {
+          get().setRunning(true);
+        }, 500);
         try {
           const name = activeTab.name;
 
@@ -176,7 +176,7 @@ export const useEditorStore = create<EditorState>()(
             name,
             injectLogs: get().experimetalConsole,
           });
-
+          clearTimeout(loading);
           const ajustedOutput = output.map((value, index) => {
             if (index === 0) return value;
             return { ...value, line: value.line - output[index - 1].line };
@@ -196,7 +196,7 @@ export const useEditorStore = create<EditorState>()(
             },
           ]);
         } finally {
-          // Asegurarse de que el estado de 'running' se actualice
+          clearTimeout(loading);
           get().setRunning(false);
         }
       },

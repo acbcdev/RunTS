@@ -1,10 +1,10 @@
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "@/hooks/useChat";
 import MultiModalInput from "./core/MultiModal-Input";
 
 import { useAIConfigStore } from "@/store/aiConfig";
-import { AI } from "../settings/tabs/ai";
-import Markdown from "./core/Markdown";
+import { AI } from "@/components/settings/tabs/ai";
+import Markdown from "@/components/AI/core/Markdown";
 import { useShallow } from "zustand/react/shallow";
 export function Chat() {
 	const { getProviders, showChat } = useAIConfigStore(
