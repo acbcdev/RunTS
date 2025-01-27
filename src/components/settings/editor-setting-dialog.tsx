@@ -9,6 +9,7 @@ import { Appearance } from "@/components/settings/tabs/appearance";
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -48,6 +49,7 @@ export function EditorSettingsDialog() {
 					<DialogTitle>
 						Editor Settings <span className="opacity-85">v1.3.0</span>
 					</DialogTitle>
+					<DialogDescription>Configure the editor settings</DialogDescription>
 					<div className="flex items-center gap-2 mt-2 ">
 						<a
 							href="https://www.buymeacoffee.com/runts"
