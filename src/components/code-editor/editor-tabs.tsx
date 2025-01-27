@@ -8,31 +8,29 @@ import {
 } from "@/components/ui/tooltip";
 import { useEditorStore } from "@/store/editor";
 import { cn } from "@/lib/utils";
-import { Kd } from "../ui/kd";
+import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
 import { toast } from "sonner";
+import { useTabsStore } from "@/store/tabs";
 
 export function EditorTabs() {
 	// useEditorStore
-	const { tabs, activeTabId, editorRef, newTab, updateTabCode, removeTab } =
-		useEditorStore(
-			useShallow((state) => ({
-				tabs: state.tabs,
-				activeTabId: state.activeTabId,
-				editorRef: state.editorRef,
-				newTab: state.newTab,
-				updateTabCode: state.updateTabCode,
-				removeTab: state.removeTab,
-			})),
-		);
-	const { setActiveTab, changeNameTab, currentTab } = useEditorStore(
-		useShallow((state) => ({
-			setActiveTab: state.setActiveTab,
-			changeNameTab: state.changeNameTab,
-			currentTab: state.currentTab,
-		})),
-	);
+	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
 
+	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
+	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
+	const tabs = useTabsStore(useShallow((state) => state.tabs));
+	const updateTabCode = useTabsStore(
+		useShallow((state) => state.updateTabCode),
+	);
+	const getCurrentTab = useTabsStore(
+		useShallow((state) => state.getCurrentTab),
+	);
+	const removeTab = useTabsStore(useShallow((state) => state.removeTab));
+	const changeNameTab = useTabsStore(
+		useShallow((state) => state.changeNameTab),
+	);
+	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	const handleActiveTabChange = (tabId: string) => {
 		setActiveTab(tabId);
 		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
@@ -62,7 +60,7 @@ export function EditorTabs() {
 		const tabTextContent = event.currentTarget.textContent;
 
 		if (!tabTextContent) {
-			const tab = currentTab(activeTabId);
+			const tab = getCurrentTab();
 			if (!tab) return;
 			event.currentTarget.textContent = tab.name;
 			return;

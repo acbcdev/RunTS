@@ -3,34 +3,23 @@ import { TabsContent } from "@/components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
 import { fontFamilies, fontSizes, layouts, radiuses } from "@/consts";
 import { cn } from "@/lib/utils";
-import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
 import { themes } from "@/themes";
+import { useApparenceStore } from "@/store/apparence";
 export function Appearance() {
-	const {
-		layout,
-		setLayout,
-		fontSize,
-		setFontSize,
-		fontFamily,
-		setFontFamily,
-		setRadius,
-		radius,
-	} = useConfigStore(
-		useShallow((state) => ({
-			layout: state.layout,
-			setLayout: state.setLayout,
-			fontSize: state.fontSize,
-			setFontSize: state.setFontSize,
-			fontFamily: state.fontFamily,
-			setFontFamily: state.setFontFamily,
-			setRadius: state.setRadius,
-			radius: state.radius,
-		})),
+	const layout = useApparenceStore(useShallow((state) => state.layout));
+	const setLayout = useApparenceStore(useShallow((state) => state.setLayout));
+	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
+	const setFontSize = useApparenceStore(
+		useShallow((state) => state.setFontSize),
 	);
-	const { setTheme, theme } = useEditorStore(
-		useShallow((state) => ({ setTheme: state.setTheme, theme: state.theme })),
+	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
+	const setFontFamily = useApparenceStore(
+		useShallow((state) => state.setFontFamily),
 	);
+	const setRadius = useApparenceStore(useShallow((state) => state.setRadius));
+	const radius = useApparenceStore(useShallow((state) => state.radius));
+	const theme = useApparenceStore(useShallow((state) => state.theme));
+	const setTheme = useApparenceStore(useShallow((state) => state.setTheme));
 
 	return (
 		<TabsContent value="appearance" className="p-6 m-0">

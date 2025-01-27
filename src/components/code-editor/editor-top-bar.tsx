@@ -15,32 +15,26 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useEditorStore } from "@/store/editor";
 import { EditorSettingsDialog } from "@/components/settings/editor-setting-dialog";
-import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { toast } from "sonner";
 import { memo } from "react";
 import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
+import { useApparenceStore } from "@/store/apparence";
+import { useTabsStore } from "@/store/tabs";
+import { useRun } from "@/hooks/useRun";
 
 export const EditorTopBar = memo(function EditorTopBar() {
-	const { code, activeTabId, currentTab, clearConsole, runCode } =
-		useEditorStore(
-			useShallow((state) => ({
-				code: state.code,
-				activeTabId: state.activeTabId,
-				currentTab: state.currentTab,
-				clearConsole: state.clearConsole,
-				runCode: state.runCode,
-			})),
-		);
-	const { layout, setLayout } = useConfigStore(
+	const { layout, setLayout } = useApparenceStore(
 		useShallow((state) => ({
 			layout: state.layout,
 			setLayout: state.setLayout,
 		})),
 	);
+	const { runCode } = useRun();
+	const clearConsole = useTabsStore(useShallow((state) => state.clearConsole));
+	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
 	const { toggleChat } = useAIConfigStore(
 		useShallow((state) => ({
 			toggleChat: state.toggleChat,
@@ -48,14 +42,14 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	);
 	const handleShare = () => {
 		const url = new URL(window.location.href);
-		if (code === "") {
+		if (activeTab?.code === "") {
 			toast.error("Empty Code", {
 				description: "The code is empty, nothing to share.",
 				duration: 2000,
 			});
 			return;
 		}
-		const link = `${url.origin}/?code=${btoa(code)}`;
+		const link = `${url.origin}/?code=${btoa(activeTab?.code ?? "")}`;
 		navigator.clipboard.writeText(link);
 		toast.success("Link Created", {
 			description: `The ${link} has been copied to your clipboard.`,
@@ -66,7 +60,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		setLayout(layout === "horizontal" ? "vertical" : "horizontal");
 	};
 	const handleClear = () => {
-		clearConsole(activeTabId);
+		clearConsole();
 		toast.success("Console cleared", {
 			description: "The console output has been cleared.",
 			duration: 2000,
@@ -74,14 +68,14 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	};
 
 	const copyCode = () => {
-		if (code.trim() === "") {
+		if (activeTab?.code.trim() === "") {
 			toast.error("Empty Code", {
 				description: "The code is empty, nothing to copy.",
 				duration: 2000,
 			});
 			return;
 		}
-		navigator.clipboard.writeText(code);
+		navigator.clipboard.writeText(activeTab?.code ?? "");
 		toast.success("Code copied!", {
 			description: "The code has been copied to your clipboard.",
 			duration: 2000,
@@ -89,19 +83,18 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	};
 
 	const downloadCode = () => {
-		const activeCode = currentTab(activeTabId);
-		if (!activeCode || activeCode.code.trim() === "") {
+		if (!activeTab || activeTab?.code.trim() === "") {
 			toast.error("Empty Code", {
 				description: "The code is empty, nothing to download.",
 				duration: 2000,
 			});
 			return;
 		}
-		const blob = new Blob([code], { type: "text/typescript" });
+		const blob = new Blob([activeTab?.code ?? ""], { type: "text/typescript" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = activeCode?.name || "code.ts";
+		a.download = activeTab?.name || "code.ts";
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);

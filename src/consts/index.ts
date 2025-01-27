@@ -1,4 +1,4 @@
-import type { Radius } from "@/store/config";
+import type { Radius } from "@/store/apparence";
 import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
 import { openai } from "@/svg/openai";

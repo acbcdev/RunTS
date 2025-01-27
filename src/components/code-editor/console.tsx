@@ -1,26 +1,19 @@
-import { useConfigStore } from "@/store/config";
-import { useEditorStore } from "@/store/editor";
+import { ajuestLogs } from "@/lib/ajuestLogs";
+import { useApparenceStore } from "@/store/apparence";
+import { useTabsStore } from "@/store/tabs";
 import { lazy, Suspense } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function Console() {
-	// useEditorStore
-	const { currentTab, activeTabId, theme } = useEditorStore(
-		useShallow((state) => ({
-			currentTab: state.currentTab,
-			activeTabId: state.activeTabId,
-			theme: state.theme,
-		})),
+	// useTabsStore
+	const getCurrentTab = useTabsStore(
+		useShallow((state) => state.getCurrentTab),
 	);
-	// useConfigStore
-	const { fontSize, fontFamily } = useConfigStore(
-		useShallow((state) => ({
-			fontSize: state.fontSize,
-			fontFamily: state.fontFamily,
-		})),
-	);
+	const theme = useApparenceStore(useShallow((state) => state.theme));
+	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
+	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
 	return (
 		<div className="relative h-full bg-background" translate="no">
 			<Suspense
@@ -33,28 +26,11 @@ export function Console() {
 				}
 			>
 				<MonacoEditor
-					value={
-						currentTab(activeTabId)
-							?.logs.map(({ content, line }) => {
-								const numRepeats = Math.max(0, line - 1);
-								const splace = "\n".repeat(numRepeats);
-								return `${splace}${content}`;
-							})
-							.join("\n") ?? ""
-					}
-					language="typescript"
+					value={ajuestLogs(getCurrentTab()?.logs ?? []) ?? ""}
+					language="javascript"
 					theme={theme}
-					beforeMount={(monaco) => {
-						monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
-							{
-								noSemanticValidation: true,
-								noSyntaxValidation: true,
-								noSuggestionDiagnostics: true,
-							},
-						);
-					}}
 					options={{
-						lineNumbers: "off",
+						lineNumbers: "on",
 						language: "javascript",
 						scrollbar: {
 							horizontal: "visible",

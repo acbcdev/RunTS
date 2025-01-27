@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useCallback } from "react";
 import type { Monaco } from "@monaco-editor/react";
 import { useEditorStore } from "@/store/editor";
 import { themes } from "@/themes";
@@ -9,149 +9,140 @@ import * as monaco from "monaco-editor";
 import { extraLib } from "@/consts/extraLib";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
+import { useTabsStore } from "@/store/tabs";
+import { useApparenceStore } from "@/store/apparence";
+import { useRun } from "@/hooks/useRun";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function EditorMain() {
+	const { runCode } = useRun();
 	// useEditorStore
-	const {
-		code,
-		setMonaco,
-		setEditorRef,
-		updateTabCode,
-		activeTabId,
-		theme,
-		runCode,
-		running,
-		newTab,
-	} = useEditorStore(
+	const setMonaco = useEditorStore(useShallow((state) => state.setMonaco));
+	const setEditorRef = useEditorStore(
+		useShallow((state) => state.setEditorRef),
+	);
+	const running = useEditorStore(useShallow((state) => state.running));
+	// useConfigStore
+	const { wordWrap, lineNumbers, minimap, whiteSpace } = useConfigStore(
 		useShallow((state) => ({
-			code: state.code,
-			setMonaco: state.setMonaco,
-			setEditorRef: state.setEditorRef,
-			updateTabCode: state.updateTabCode,
-			activeTabId: state.activeTabId,
-			theme: state.theme,
-			runCode: state.runCode,
-			running: state.running,
-			newTab: state.newTab,
+			wordWrap: state.wordWrap,
+			lineNumbers: state.lineNumbers,
+			minimap: state.minimap,
+			whiteSpace: state.whiteSpace,
 		})),
 	);
-	// useConfigStore
-	const { fontSize, wordWrap, lineNumbers, fontFamily, minimap, whiteSpace } =
-		useConfigStore(
-			useShallow((state) => ({
-				fontSize: state.fontSize,
-				wordWrap: state.wordWrap,
-				lineNumbers: state.lineNumbers,
-				fontFamily: state.fontFamily,
-				minimap: state.minimap,
-				whiteSpace: state.whiteSpace,
-			})),
-		);
-
+	// useTabsStore
+	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
+	const updateTabCode = useTabsStore(
+		useShallow((state) => state.updateTabCode),
+	);
+	const newTab = useTabsStore(useShallow((state) => state.newTab));
+	const getCurrentTab = useTabsStore(
+		useShallow((state) => state.getCurrentTab),
+	);
 	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
-	const onEditorReady = (
-		editor: editor.IStandaloneCodeEditor,
-		monacoInstance: Monaco,
-	) => {
-		setMonaco(monacoInstance);
-		setEditorRef(editor);
-	};
+	// useApparenceStore
+	const theme = useApparenceStore(useShallow((state) => state.theme));
+	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
+	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
 
-	const handleEditorDidMount = async (
-		editor: editor.IStandaloneCodeEditor,
-		monacoInstance: Monaco,
-	) => {
-		// Define all themes
-		for (const [key, value] of Object.entries(themes)) {
-			monacoInstance.editor.defineTheme(key, value.monaco);
-		}
-		monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions({
-			target: monacoInstance.languages.typescript.ScriptTarget.ESNext,
-			allowNonTsExtensions: true,
-			moduleResolution:
-				monacoInstance.languages.typescript.ModuleResolutionKind.NodeJs,
-			noEmit: true,
-		});
-		editor.addCommand(
-			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyG,
-			runCode,
-		);
-		editor.addAction({
-			id: "run-code",
-			label: "Run Code",
-			keybindings: [
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
-			],
-			run: runCode,
-		});
-		editor.addCommand(
-			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
-			toogleChat,
-		);
-		editor.addAction({
-			id: "show-chat",
-			label: "Show Chat",
-			keybindings: [
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
-			],
-			run: () => toogleChat(),
-		});
-		editor.addCommand(
-			monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
-			newTab,
-		);
-		editor.addAction({
-			id: "new-tab",
-			label: "New Tab",
-			keybindings: [
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
-			],
-			run: newTab,
-		});
-		monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
-			{
-				noSemanticValidation: false,
-				noSyntaxValidation: false,
-			},
-		);
-
-		monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(
-			extraLib,
-			"file:///custom.d.ts",
-		);
-		monacoInstance.languages.registerCompletionItemProvider("javascript", {
-			provideCompletionItems: () => ({
-				suggestions: [
-					{
-						label: ".log", // La palabra que activa el autocompletado
-						kind: monaco.languages.CompletionItemKind.Snippet, // Tipo de sugerencia
-						documentation: "Insert a console.log() statement",
-						insertText: "console.log($1);", // Texto que se inserta
-						insertTextRules:
-							monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-						range:
-							editor.getModel()?.getFullModelRange() ||
-							new monaco.Range(1, 1, 1, 1), // Rango para reemplazar
-					},
-					{
-						label: "console.", // La palabra que activa el autocompletado
-						kind: monaco.languages.CompletionItemKind.Snippet, // Tipo de sugerencia
-						documentation: "Insert a console.log() statement",
-						insertText: "console.log($1);", // Texto que se inserta
-						insertTextRules:
-							monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-						range:
-							editor.getModel()?.getFullModelRange() ||
-							new monaco.Range(1, 1, 1, 1), // Rango para reemplazar
-					},
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	const handleEditorDidMount = useCallback(
+		async (editor: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
+			// Define all themes
+			for (const [key, value] of Object.entries(themes)) {
+				monacoInstance.editor.defineTheme(key, value.monaco);
+			}
+			monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions(
+				{
+					target: monacoInstance.languages.typescript.ScriptTarget.ESNext,
+					allowNonTsExtensions: true,
+					moduleResolution:
+						monacoInstance.languages.typescript.ModuleResolutionKind.NodeJs,
+					noEmit: true,
+				},
+			);
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyG,
+				runCode,
+			);
+			editor.addAction({
+				id: "run-code",
+				label: "Run Code",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
 				],
-			}),
-		});
-		monacoInstance.editor.setTheme(theme);
-		setEditorRef(editor);
-		onEditorReady(editor, monacoInstance);
-	};
+				run: runCode,
+			});
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
+				toogleChat,
+			);
+			editor.addAction({
+				id: "show-chat",
+				label: "Show Chat",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
+				],
+				run: () => toogleChat(),
+			});
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+				newTab,
+			);
+			editor.addAction({
+				id: "new-tab",
+				label: "New Tab",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+				],
+				run: newTab,
+			});
+			monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
+				{
+					noSemanticValidation: false,
+					noSyntaxValidation: false,
+				},
+			);
+
+			monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(
+				extraLib,
+				"file:///custom.d.ts",
+			);
+			monacoInstance.languages.registerCompletionItemProvider("typescript", {
+				provideCompletionItems: () => ({
+					suggestions: [
+						{
+							label: ".log", // La palabra que activa el autocompletado
+							kind: monaco.languages.CompletionItemKind.Snippet, // Tipo de sugerencia
+							documentation: "Insert a console.log() statement",
+							insertText: "console.log($1);", // Texto que se inserta
+							insertTextRules:
+								monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+							range:
+								editor.getModel()?.getFullModelRange() ||
+								new monaco.Range(1, 1, 1, 1), // Rango para reemplazar
+						},
+						{
+							label: "console.", // La palabra que activa el autocompletado
+							kind: monaco.languages.CompletionItemKind.Snippet, // Tipo de sugerencia
+							documentation: "Insert a console.log() statement",
+							insertText: "console.log($1);", // Texto que se inserta
+							insertTextRules:
+								monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+							range:
+								editor.getModel()?.getFullModelRange() ||
+								new monaco.Range(1, 1, 1, 1), // Rango para reemplazar
+						},
+					],
+				}),
+			});
+			monacoInstance.editor.setTheme(theme);
+			setEditorRef(editor);
+			setMonaco(monacoInstance);
+		},
+		[setMonaco, setEditorRef],
+	);
 
 	return (
 		<div className="relative h-full" translate="no">
@@ -168,7 +159,7 @@ export function EditorMain() {
 				<MonacoEditor
 					height="100%"
 					defaultLanguage="typescript"
-					value={code}
+					value={getCurrentTab()?.code}
 					onChange={(value) => updateTabCode(activeTabId, value || "")}
 					onMount={handleEditorDidMount}
 					theme={theme}
@@ -203,6 +194,11 @@ export function EditorMain() {
 							showFunctions: true,
 							showConstructors: true,
 							showDeprecated: true,
+							showSnippets: true,
+							showConstants: true,
+							showVariables: true,
+							showInterfaces: true,
+							showKeywords: true,
 						},
 						quickSuggestions: true,
 						suggestOnTriggerCharacters: true,
@@ -233,7 +229,6 @@ export function EditorMain() {
 						// Editor UI Features
 						minimap: {
 							enabled: minimap,
-							scale: 0.4,
 						},
 						lineNumbers: lineNumbers ? "on" : "off",
 						padding: {

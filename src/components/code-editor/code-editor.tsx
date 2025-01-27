@@ -3,7 +3,6 @@ import { EditorTopBar } from "@/components/code-editor/editor-top-bar";
 import { EditorTabs } from "@/components/code-editor/editor-tabs";
 import { EditorMain } from "@/components/code-editor/editor-main";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useEditorStore } from "@/store/editor";
 import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -16,38 +15,38 @@ import { Console } from "@/components/code-editor/console";
 import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
 import { useShallow } from "zustand/react/shallow";
+import { useTabsStore } from "@/store/tabs";
+import { useApparenceStore } from "@/store/apparence";
+import { useRun } from "@/hooks/useRun";
 
 export function CodeEditor() {
 	// useEditorStore
-	const { tabs, activeTabId, theme, getCurrentTheme, runCode, newTab } =
-		useEditorStore(
-			useShallow((state) => ({
-				tabs: state.tabs,
-				activeTabId: state.activeTabId,
-				theme: state.theme,
-				getCurrentTheme: state.getCurrentTheme,
-				runCode: state.runCode,
-				newTab: state.newTab,
-			})),
-		);
-
+	const { runCode } = useRun();
 	// useConfigStore
-	const { layout, radius, refreshTime } = useConfigStore(
-		useShallow((state) => ({
-			layout: state.layout,
-			radius: state.radius,
-			refreshTime: state.refreshTime,
-		})),
-	);
-	const activeTab = tabs.find((tab) => tab.id === activeTabId);
+	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
 	const { showChat, toggleChat } = useAIConfigStore(
 		useShallow((state) => ({
 			showChat: state.showChat,
 			toggleChat: state.toggleChat,
 		})),
 	);
+	// useTabsStore
+	const getCurrentTab = useTabsStore(
+		useShallow((state) => state.getCurrentTab),
+	);
+	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 
-	const debouncedCode = useDebounce(activeTab?.code || "", refreshTime);
+	const newTab = useTabsStore(useShallow((state) => state.newTab));
+	const debouncedCode = useDebounce(getCurrentTab()?.code || "", refreshTime);
+	// useApparenceStore
+	const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
+		useShallow((state) => ({
+			radius: state.radius,
+			theme: state.theme,
+			layout: state.layout,
+			getCurrentTheme: state.getCurrentTheme,
+		})),
+	);
 	useHotkeys("ctrl+q", runCode);
 	useHotkeys("ctrl+b", () => toggleChat());
 	useHotkeys("ctrl+d", newTab, { preventDefault: true });
@@ -65,7 +64,9 @@ export function CodeEditor() {
 	useEffect(() => {
 		runCode();
 	}, [debouncedCode]);
-	if (!activeTab) return null;
+	if (!activeTabId) {
+		return null;
+	}
 	return (
 		<main className="flex flex-col h-screen bg-background " translate="no">
 			<EditorTopBar />
