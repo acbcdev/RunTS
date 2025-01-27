@@ -1,4 +1,4 @@
-import type { Theme } from "../types/editor";
+import type { Theme } from "@/types/editor";
 
 export const themes: Record<string, Theme> = {
   oneDark: {
@@ -680,7 +680,7 @@ export const themes: Record<string, Theme> = {
 
   monokaiPro: {
     name: "Monokai Pro",
-    value: "monokai-pro",
+    value: "monokaiPro",
     ui: {
       background: "#272822", // Fondo principal
       foreground: "#F8F8F2", // Texto principal
@@ -724,7 +724,7 @@ export const themes: Record<string, Theme> = {
   },
   ayuDark: {
     name: "Ayu Dark",
-    value: "ayu-dark",
+    value: "ayuDark",
     ui: {
       background: "#0F1419", // Fondo principal oscuro
       foreground: "#E6E1CF", // Texto principal
@@ -767,8 +767,8 @@ export const themes: Record<string, Theme> = {
     },
   },
   adventjs: {
-    name: "adventjs",
-    value: "dark",
+    name: "adventJs",
+    value: "adventjs",
     ui: {
       background: "#071e22", // Fondo oscuro profundo
       foreground: "#e0e5e8", // Texto principal ligeramente más claro

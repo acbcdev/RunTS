@@ -1,5 +1,4 @@
 import type { ConsoleOutput } from "@/types/worker";
-// import WorkerJS from "@/workers/runCode?worker";
 
 type RunCodeOptions = {
   injectLogs: boolean;
@@ -7,7 +6,7 @@ type RunCodeOptions = {
   timeoutWorker: number;
 };
 
-export function runCode(
+export function runCodeWorker(
   code: string,
   options: Partial<RunCodeOptions>
 ): Promise<ConsoleOutput[]> {
