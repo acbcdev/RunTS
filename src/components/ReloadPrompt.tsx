@@ -16,10 +16,10 @@ export function ReloadPrompt() {
 		updateServiceWorker,
 	} = useRegisterSW({
 		onRegisteredSW() {
-			toast("Service Worker Registered");
+			console.log("Service Worker Registered");
 		},
 		onRegisterError() {
-			toast("SW registration error");
+			console.log("SW registration error");
 		},
 		onOfflineReady() {
 			toast("App ready to work offline");
