@@ -6,16 +6,15 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useEditorStore } from "@/store/editor";
 import { cn } from "@/lib/utils";
 import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
 import { toast } from "sonner";
 import { useTabsStore } from "@/store/tabs";
+import { Input } from "@/components/ui/input";
 
 export function EditorTabs() {
 	// useEditorStore
-	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
 
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
@@ -23,66 +22,34 @@ export function EditorTabs() {
 	const updateTabCode = useTabsStore(
 		useShallow((state) => state.updateTabCode),
 	);
-	const getCurrentTab = useTabsStore(
-		useShallow((state) => state.getCurrentTab),
-	);
 	const removeTab = useTabsStore(useShallow((state) => state.removeTab));
 	const changeNameTab = useTabsStore(
 		useShallow((state) => state.changeNameTab),
 	);
+	const setEditing = useTabsStore(useShallow((state) => state.setEditing));
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	const handleActiveTabChange = (tabId: string) => {
 		setActiveTab(tabId);
 		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
-		editorRef?.focus();
 	};
 
-	const handleChangeName = (tabId: string) => {
-		if (activeTabId !== tabId) return;
-
-		const spanElement = document.querySelector(".underline") as HTMLSpanElement;
-		if (spanElement) {
-			spanElement.contentEditable = "true";
-			spanElement.classList.add("outline-accent ring-0 p-2");
-			const range = document.createRange();
-			const selection = window.getSelection();
-			if (!selection) return;
-			if (!spanElement.firstChild || !spanElement.textContent) return;
-			range.setStart(spanElement.firstChild, 0);
-			range.setEnd(spanElement.firstChild, spanElement.textContent.length - 3);
-
-			selection.removeAllRanges();
-			selection.addRange(range);
-		}
-	};
-
-	const handleBlur = (event: React.FocusEvent<HTMLSpanElement>) => {
-		const tabTextContent = event.currentTarget.textContent;
-
-		if (!tabTextContent) {
-			const tab = getCurrentTab();
-			if (!tab) return;
-			event.currentTarget.textContent = tab.name;
+	const handleTabEdited = (tabId: string) => {
+		const tab = tabs.find((tab) => tab.id === tabId);
+		if (!tab) return;
+		if (!tab.name.trim()) {
+			changeNameTab(tabId, "code.ts");
+			setEditing(tabId);
 			return;
 		}
 
-		const tsFile =
-			tabTextContent.endsWith(".ts") || tabTextContent.endsWith(".js");
-		const [nameTab] = tabTextContent.split(".");
+		const tsFile = tab.name.endsWith(".ts") || tab.name.endsWith(".js");
+		const [nameTab] = tab.name.split(".");
 
-		let changeName: string = tabTextContent;
+		let changeName = tab.name.trim().replace(/\s+/g, "-");
 		if (!tsFile) changeName = `${nameTab.slice(0, 20)}.ts`;
-
 		changeNameTab(activeTabId, changeName);
+		setEditing(tabId, false);
 		toast.success("Tab name changed");
-		event.currentTarget.contentEditable = "false";
-		event.currentTarget.textContent = changeName;
-	};
-
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
-		if (event.key === "Enter") {
-			event.preventDefault();
-		}
 	};
 
 	return (
@@ -95,31 +62,40 @@ export function EditorTabs() {
 							key={tab.id}
 							className={cn(
 								`${activeTabId === tab.id ? "bg-header " : "bg-transparent hover:bg-background"}`,
-								" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors ",
+								" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  group/tab",
 							)}
-							onDoubleClick={() => handleChangeName(tab.id)}
+							// onDoubleClick={() => handleChangeName(tab.id)}
 							onClick={() => handleActiveTabChange(tab.id)}
-							onContextMenu={(e) => {
-								e.preventDefault();
-								handleChangeName(tab.id);
-							}}
 						>
-							<span
-								className={cn(`${tab.id === activeTabId && "underline"}  `)}
-								onBlur={handleBlur}
-								onKeyDown={handleKeyDown}
-								spellCheck="false"
-							>
-								{tab.name}
-							</span>
-
+							{tab.editing ? (
+								<Input
+									value={tab.name}
+									onKeyDown={(e) => {
+										if (e.code === "Enter") {
+											e.preventDefault();
+											handleTabEdited(tab.id);
+										}
+									}}
+									className="border-none outline-none m-0  max-w-32 h-fit p-0 underline focus-visible:ring-0"
+									onChange={(e) => changeNameTab(tab.id, e.target.value)}
+									onBlur={() => handleTabEdited(tab.id)}
+								/>
+							) : (
+								<span
+									className={cn(`${tab.id === activeTabId && "underline"}  `)}
+									spellCheck="false"
+									onDoubleClick={() => setEditing(tab.id, true)}
+								>
+									{tab.name}
+								</span>
+							)}
 							{tabs.length > 1 && (
 								<Button
 									variant="destructive"
 									size="icon"
 									aria-label="Close tab"
 									translate="no"
-									className="h-5 w-5 p-0 bg-transparent "
+									className="h-5 w-5 p-0 bg-transparent rounded-full"
 									onClick={(e) => {
 										e.stopPropagation();
 										removeTab(tab.id);
@@ -142,7 +118,7 @@ export function EditorTabs() {
 						className="rounded-full size-3"
 						onClick={newTab}
 					>
-						<Plus className="w-4 h-4" />
+						<Plus />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>

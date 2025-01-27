@@ -18,6 +18,7 @@ interface TabsStore {
   removeTab: (id: Tab["id"]) => void;
   addTab: (tab: Omit<Tab, "id">) => Tab["id"];
   newTab: VoidFunction;
+  setEditing: (id: Tab["id"], editing?: boolean) => void;
   changeNameTab: (id: Tab["id"], name: string) => void;
   updateTabCode: (id: Tab["id"], code: string) => void;
   updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
@@ -80,6 +81,19 @@ export const useTabsStore = create<TabsStore>()(
           code: "// Start coding here\n",
           logs: [],
         });
+      },
+      setEditing: (id, editing = false) => {
+        set((state) => ({
+          tabs: state.tabs.map((tab) => {
+            if (tab.id === id) {
+              return {
+                ...tab,
+                editing,
+              };
+            }
+            return { ...tab, editing: false };
+          }),
+        }));
       },
       addTab: (tab) => {
         const newTab = {

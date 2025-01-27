@@ -1,16 +1,16 @@
 import { RefreshCw } from "lucide-react";
-import { createContext } from "react";
+import { createContext, memo, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
 type PromptProviderState = {
 	needRefresh: boolean;
-	updateServiceWorker: (force: boolean) => void;
+	updateServiceWorker: (force?: boolean) => Promise<void>;
 };
 
 const initialState: PromptProviderState = {
 	needRefresh: false,
-	updateServiceWorker: () => {},
+	updateServiceWorker: async () => {},
 };
 
 export const PromptContext = createContext<PromptProviderState>(initialState);
@@ -18,53 +18,51 @@ export const PromptContext = createContext<PromptProviderState>(initialState);
 interface PromptProviderProps {
 	children: React.ReactNode;
 }
+
 const intervalMS = 60 * 60 * 1000;
 
-export const PromptProvider: React.FC<PromptProviderProps> = ({ children }) => {
+const PromptProvider = memo(({ children }: PromptProviderProps) => {
 	const {
-		offlineReady: [offlineReady, setOfflineReady],
-		needRefresh: [needRefresh],
+		needRefresh: [needRefreshValue],
 		updateServiceWorker,
 	} = useRegisterSW({
-		onRegistered(r) {
-			if (r) {
+		onRegistered(registration) {
+			if (registration) {
 				setInterval(() => {
-					r.update();
+					registration.update();
 				}, intervalMS);
 			}
-			console.log(`SW Registered: ${r}`);
-		},
-		onRegisterError(error) {
-			console.error("SW registration error", error);
 		},
 	});
 
-	const onOfflineClose = () => setOfflineReady(false);
+	useEffect(() => {
+		if (needRefreshValue) {
+			toast("New content available", {
+				description: "click on reload button to update",
+				icon: <RefreshCw className="size-4" />,
+				action: {
+					label: "Reload",
+					onClick: () => updateServiceWorker(true),
+				},
+			});
+		}
+	}, [needRefreshValue, updateServiceWorker]);
 
-	if (offlineReady) {
-		toast("App ready to work offline", {
-			onDismiss: onOfflineClose,
-			onAutoClose: onOfflineClose,
-		});
-	}
-
-	if (needRefresh) {
-		toast("New content available", {
-			description: "click on reload button to update",
-			icon: <RefreshCw className="size-4" />,
-			action: {
-				label: "Reload",
-				onClick: () => updateServiceWorker(true),
-			},
-		});
-	}
-
-	const value = {
-		needRefresh,
-		updateServiceWorker,
-	};
+	const contextValue = useMemo(
+		() => ({
+			needRefresh: needRefreshValue,
+			updateServiceWorker,
+		}),
+		[needRefreshValue, updateServiceWorker],
+	);
 
 	return (
-		<PromptContext.Provider value={value}>{children}</PromptContext.Provider>
+		<PromptContext.Provider value={contextValue}>
+			{children}
+		</PromptContext.Provider>
 	);
-};
+});
+
+PromptProvider.displayName = "PromptProvider";
+
+export { PromptProvider };
