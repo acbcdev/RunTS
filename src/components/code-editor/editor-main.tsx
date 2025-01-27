@@ -87,14 +87,18 @@ export function EditorMain() {
 				run: () => toogleChat(),
 			});
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+				monacoInstance.KeyMod.CtrlCmd |
+					monacoInstance.KeyCode.KeyD |
+					monacoInstance.KeyMod.Shift,
 				newTab,
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+					monacoInstance.KeyMod.CtrlCmd |
+						monacoInstance.KeyCode.KeyD |
+						monacoInstance.KeyMod.Shift,
 				],
 				run: newTab,
 			});
