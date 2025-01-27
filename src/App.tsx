@@ -1,13 +1,13 @@
 import { CodeEditor } from "@/components/code-editor/code-editor";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
-import { useEditorStore } from "@/store/editor";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { PromptProvider } from "@/providers/promptProvider";
 import { useShallow } from "zustand/react/shallow";
+import { useTabsStore } from "./store/tabs";
 function App() {
-	const { addTab, setActiveTab } = useEditorStore(useShallow((state) => state));
+	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const code = new URLSearchParams(window.location.search).get("code");
