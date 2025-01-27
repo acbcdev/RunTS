@@ -56,6 +56,7 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
 }
 
 @layer base {
@@ -86,7 +87,9 @@
 
 :root {
   --radius: 0.5rem;
+  caret-color: var(--accent);
   color: var(--foreground);
+
 }
 
 textarea {
