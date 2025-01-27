@@ -29,7 +29,7 @@ export const useApparenceStore = create<ApparenceStore>()(
       setFontSize: (fontSize) => set({ fontSize }),
       radius: "0.5",
       setRadius: (radius) => set({ radius }),
-      fontFamily: '"Cascadia Code", monospace',
+      fontFamily: '"Cascadia Code"',
       setFontFamily: (fontFamily) => set({ fontFamily }),
       layout: "horizontal",
       setLayout: (layout) => set({ layout }),
