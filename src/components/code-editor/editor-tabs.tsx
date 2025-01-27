@@ -41,19 +41,19 @@ export function EditorTabs() {
 			setEditing(tabId);
 			return;
 		}
-
-		const tsFile = tab.name.endsWith(".ts") || tab.name.endsWith(".js");
-		const [nameTab] = tab.name.split(".");
-
-		let changeName = tab.name.trim().replace(/\s+/g, "-");
-		if (!tsFile) changeName = `${nameTab.slice(0, 20)}.ts`;
+		const name = tab.name.trim();
+		const tsFile = name.endsWith(".ts") || name.endsWith(".js");
+		const [nameTab] = name.split(/\.$/);
+		let changeName = nameTab.replace(/\s+/g, "-");
+		if (!tsFile) changeName = `${changeName.slice(0, 20)}.ts`;
+		alert(changeName);
 		changeNameTab(activeTabId, changeName);
 		setEditing(tabId, false);
-		toast.success("Tab name changed");
+		toast.success("Tab name changed", { duration: 700 });
 	};
 
 	return (
-		<div className="flex items-center border-b border-border bg-background bg-opacity-80">
+		<div className="flex items-center border-b border-border justify-start bg-background bg-opacity-80">
 			<ScrollArea className="max-w-[calc(100%-32px)]">
 				<div className="flex">
 					{tabs.map((tab) => (
@@ -62,9 +62,8 @@ export function EditorTabs() {
 							key={tab.id}
 							className={cn(
 								`${activeTabId === tab.id ? "bg-header " : "bg-transparent hover:bg-background"}`,
-								" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  group/tab",
+								" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  ",
 							)}
-							// onDoubleClick={() => handleChangeName(tab.id)}
 							onClick={() => handleActiveTabChange(tab.id)}
 						>
 							{tab.editing ? (
@@ -76,7 +75,7 @@ export function EditorTabs() {
 											handleTabEdited(tab.id);
 										}
 									}}
-									className="border-none outline-none m-0  max-w-32 h-fit p-0 underline focus-visible:ring-0"
+									className="border-none rounded-none outline-none m-0  max-w-32 h-fit px-0.5 underline focus-visible:ring-0"
 									onChange={(e) => changeNameTab(tab.id, e.target.value)}
 									onBlur={() => handleTabEdited(tab.id)}
 								/>
@@ -101,7 +100,7 @@ export function EditorTabs() {
 										removeTab(tab.id);
 									}}
 								>
-									<X className="w-3 h-3" />
+									<X className="size-3" />
 								</Button>
 							)}
 						</div>
@@ -115,7 +114,7 @@ export function EditorTabs() {
 						variant="ghost"
 						aria-label="New tab"
 						size="icon"
-						className="rounded-full size-3"
+						className="rounded-full size-8 m-0 "
 						onClick={newTab}
 					>
 						<Plus />
