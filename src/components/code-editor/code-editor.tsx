@@ -18,9 +18,9 @@ import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/store/tabs";
 import { useApparenceStore } from "@/store/apparence";
 import { useRun } from "@/hooks/useRun";
+import { ReloadPrompt } from "@/components/ReloadPrompt";
 
 export function CodeEditor() {
-	// useEditorStore
 	const { runCode } = useRun();
 	// useConfigStore
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
@@ -71,6 +71,7 @@ export function CodeEditor() {
 		<main className="flex flex-col h-screen bg-background " translate="no">
 			<EditorTopBar />
 			<EditorTabs />
+
 			<ResizablePanelGroup direction="horizontal" className="flex-1">
 				{showChat && <Chat />}
 				<ResizablePanel defaultSize={100}>
@@ -86,6 +87,7 @@ export function CodeEditor() {
 				</ResizablePanel>
 			</ResizablePanelGroup>
 			{/* <Updates /> */}
+			<ReloadPrompt />
 		</main>
 	);
 }

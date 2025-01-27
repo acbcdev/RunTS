@@ -3,9 +3,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { PromptProvider } from "@/providers/promptProvider";
 import { useShallow } from "zustand/react/shallow";
-import { useTabsStore } from "./store/tabs";
+import { useTabsStore } from "@/store/tabs";
 function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -32,9 +31,7 @@ function App() {
 	return (
 		<>
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-				<PromptProvider>
-					<CodeEditor />
-				</PromptProvider>
+				<CodeEditor />
 				<Toaster />
 			</TooltipProvider>
 		</>
