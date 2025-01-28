@@ -71,7 +71,7 @@ export default function MultiModalInput({
 						type="submit"
 						size="icon"
 						variant={"ghost"}
-						className="size-5"
+						className="size-10"
 					>
 						{isLoading ? <StopCircle /> : <Send />}
 					</Button>
@@ -106,9 +106,10 @@ export default function MultiModalInput({
 							))}
 						</SelectContent>
 					</Select>
-					<span className="px-2 py-1 mx-2 border rounded-lg border-accent">
+
+					{/* <span className="px-2 py-1 mx-2 border rounded-lg border-accent">
 						beta
-					</span>
+					</span> */}
 				</div>
 			</div>
 		</form>

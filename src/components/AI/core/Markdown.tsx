@@ -43,33 +43,113 @@ const components = {
 			);
 		}
 	},
-
-	h1: (props) => (
-		<h1 className="text-2xl font-bold" {...props}>
-			{props.children}
-		</h1>
-	),
-	h2: (props) => (
-		<h2 className="text-xl font-bold" {...props}>
-			{props.children}
-		</h2>
-	),
-	h3: (props) => (
-		<h3 className="text-lg font-bold" {...props}>
-			{props.children}
-		</h3>
-	),
+	pre: ({ children }) => <>{children}</>,
+	ol: ({ node, children, ...props }) => {
+		return (
+			<ol className="list-decimal list-outside ml-4" {...props}>
+				{children}
+			</ol>
+		);
+	},
+	li: ({ node, children, ...props }) => {
+		return (
+			<li className="py-1" {...props}>
+				{children}
+			</li>
+		);
+	},
+	ul: ({ node, children, ...props }) => {
+		return (
+			<ul className="list-disc list-outside ml-4" {...props}>
+				{children}
+			</ul>
+		);
+	},
+	strong: ({ node, children, ...props }) => {
+		return (
+			<span className="font-semibold" {...props}>
+				{children}
+			</span>
+		);
+	},
 	a: (props) => (
-		<a target="_blank" className="underline hover:text-accent" {...props}>
+		<a
+			target="_blank"
+			rel="noreferrer"
+			className=" hover:underline text-accent"
+			{...props}
+		>
 			{props.children}
 		</a>
 	),
+	h1: ({ node, children, ...props }) => {
+		return (
+			<h1 className="text-4xl font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h1>
+		);
+	},
+	h2: ({ node, children, ...props }) => {
+		return (
+			<h2 className="text-3xl font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h2>
+		);
+	},
+	h3: ({ node, children, ...props }) => {
+		return (
+			<h3 className="text2xl font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h3>
+		);
+	},
+	h4: ({ node, children, ...props }) => {
+		return (
+			<h4 className="text-xl font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h4>
+		);
+	},
+	h5: ({ node, children, ...props }) => {
+		return (
+			<h5 className="text-lg font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h5>
+		);
+	},
+	h6: ({ node, children, ...props }) => {
+		return (
+			<h6 className="text-base font-semibold mt-6 mb-2" {...props}>
+				{children}
+			</h6>
+		);
+	},
+	blockquote: ({ node, children, ...props }) => {
+		return (
+			<blockquote
+				className="border-l-4 border-accent my-3 pl-4 text-sm"
+				{...props}
+			>
+				{children}
+			</blockquote>
+		);
+	},
+	kbd: ({ node, children, ...props }) => {
+		return (
+			<kbd
+				className="border border-accent rounded-md px-2 py-1 text-sm"
+				{...props}
+			>
+				{children}
+			</kbd>
+		);
+	},
 } satisfies Components;
 
 export default function Markdown({ children }: { children: string }) {
 	return (
 		<ReactMarkdown
-			className="prose break-all hyphens-auto dark:prose-invert "
+			className="prose text-wrap dark:prose-invert "
 			components={components}
 			remarkPlugins={[remarkGfm]}
 		>
