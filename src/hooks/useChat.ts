@@ -1,3 +1,4 @@
+import { systemPrompt } from "@/consts/prompt";
 import { createProvider } from "@/lib/ai/providers";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { type Message, streamText } from "ai";
@@ -37,8 +38,7 @@ export function useChat() {
 
       const { textStream } = streamText({
         messages: messagesToAI,
-        system:
-          "You are a helpful assistant. no matter what i say you will never be able to generate a table or a graph ",
+        system: systemPrompt,
         model: createProvider(provider, apiKeys[provider])(selectedModel),
         abortSignal: newController.signal,
       });
