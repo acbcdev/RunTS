@@ -10,7 +10,7 @@ import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/store/tabs";
 
-import { EditorTabsItem } from "../EditorTabsItem";
+import { EditorTabsItem } from "@/components/Tabs/EditorTabsItem";
 
 export function EditorTabs() {
 	// useEditorStore

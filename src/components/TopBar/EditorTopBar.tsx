@@ -15,7 +15,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EditorSettingsDialog } from "@/components/settings/editor-setting-dialog";
+import { EditorSettingsDialog } from "@/components/settings/EditorSettingDialog";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { toast } from "sonner";
 import { memo } from "react";

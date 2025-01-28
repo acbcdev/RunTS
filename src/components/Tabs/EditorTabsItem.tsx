@@ -4,12 +4,12 @@ import {
 	ContextMenuContent,
 	ContextMenuItem,
 	ContextMenuTrigger,
-} from "./ui/context-menu";
-import { Input } from "./ui/input";
+} from "@/components/ui/context-menu";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/react/shallow";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import type { Tab } from "@/types/editor";
 import { useEditorStore } from "@/store/editor";

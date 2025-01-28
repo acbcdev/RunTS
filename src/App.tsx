@@ -1,4 +1,4 @@
-import { CodeEditor } from "@/components/Editor/code-editor";
+import { CodeEditor } from "@/components/Editor/CodeEditor";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { useEffect } from "react";
