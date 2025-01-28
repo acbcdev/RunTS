@@ -35,11 +35,13 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	const { runCode } = useRun();
 	const clearConsole = useTabsStore(useShallow((state) => state.clearConsole));
 	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
-	const { toggleChat } = useAIConfigStore(
+	const { toggleChat, showChat } = useAIConfigStore(
 		useShallow((state) => ({
 			toggleChat: state.toggleChat,
+			showChat: state.showChat,
 		})),
 	);
+
 	const handleShare = () => {
 		const url = new URL(window.location.href);
 		if (activeTab?.code === "") {
@@ -155,7 +157,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Run code"
-								className="size-8  from-accent hover:bg-linear-to-br hover:text-foreground from-30% to-destructive "
+								className={`size-8  from-accent  hover:bg-linear-to-br hover:text-foreground from-30% to-destructive  ${showChat && "bg-accent"}`}
 								onClick={() => toggleChat()}
 							>
 								<Sparkles />
