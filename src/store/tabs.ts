@@ -1,15 +1,8 @@
-import type { ConsoleOutput } from "@/types/worker";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
-interface Tab {
-  id: string;
-  name: string;
-  language: string;
-  code: string;
-  logs: ConsoleOutput[];
-  editing?: boolean;
-}
+import type { Tab } from "@/types/editor";
+
 interface TabsStore {
   tabs: Tab[];
   activeTabId: Tab["id"];

@@ -1,5 +1,6 @@
 // EditorState.ts
 import type { editor } from "monaco-editor";
+import type { ConsoleOutput } from "./worker";
 
 export interface Theme {
   name: string;
@@ -19,4 +20,13 @@ export interface Theme {
     info: string;
   };
   monaco: editor.IStandaloneThemeData;
+}
+
+export interface Tab {
+  id: string;
+  name: string;
+  language: string;
+  code: string;
+  logs: ConsoleOutput[];
+  editing?: boolean;
 }
