@@ -17,7 +17,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Editor } from "@/components/settings/tabs/editor";
-import { GithubStars } from "@/components/GithubStars";
+import { GithubStars } from "@/components/settings/GithubStars";
 import { AI } from "@/components/settings/tabs/ai";
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
@@ -67,6 +67,12 @@ export function EditorSettingsDialog() {
 							/>
 						</a>
 						<GithubStars />
+						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input text-lg border border-border rounded-lg px-4 py-2  font-semibold">
+							Feedback
+						</a>
+						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input border border-border rounded-lg px-4 py-2 text-lg font-semibold">
+							Report a bug
+						</a>
 					</div>
 				</DialogHeader>
 
