@@ -247,7 +247,6 @@ export function EditorMain() {
 							horizontalHasArrows: false,
 							horizontalScrollbarSize: 10,
 							verticalScrollbarSize: 10,
-							arrowSize: 30,
 						},
 						scrollBeyondLastLine: false,
 

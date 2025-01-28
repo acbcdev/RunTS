@@ -46,7 +46,6 @@ export function EditorTabs() {
 		const [nameTab] = name.split(/\.$/);
 		let changeName = nameTab.replace(/\s+/g, "-");
 		if (!tsFile) changeName = `${changeName.slice(0, 20)}.ts`;
-		alert(changeName);
 		changeNameTab(activeTabId, changeName);
 		setEditing(tabId, false);
 		toast.success("Tab name changed", { duration: 700 });
