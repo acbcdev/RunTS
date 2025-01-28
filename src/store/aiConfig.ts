@@ -20,6 +20,8 @@ interface AIConfigStore {
   provider: providers;
   setProvider: (model: providers) => void;
   getProviders: () => ProviderItem[];
+  contenxtFile: boolean;
+  setContenxtFile: (contenxtFile: boolean) => void;
 }
 
 export const useAIConfigStore = create<AIConfigStore>()(
@@ -30,6 +32,8 @@ export const useAIConfigStore = create<AIConfigStore>()(
         google: "",
         anthropic: "",
       },
+      contenxtFile: true,
+      setContenxtFile: (contenxtFile) => set({ contenxtFile }),
       messages: [],
       setMessages: (messages) =>
         set((state) => ({

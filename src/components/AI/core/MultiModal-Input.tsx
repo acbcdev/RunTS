@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/select";
 import TextareaAutosize from "@/components/ui/TextareaAutosize";
 import { useAIConfigStore } from "@/store/aiConfig";
+import { useTabsStore } from "@/store/tabs";
 import type { providers } from "@/types/ai";
-import { Send, StopCircle } from "lucide-react";
+import { Eye, EyeOff, Send, StopCircle } from "lucide-react";
 import type { FormEvent } from "react";
 import { useShallow } from "zustand/react/shallow";
 type MultiModalInputProps = {
@@ -32,6 +33,8 @@ export default function MultiModalInput({
 		setProvider,
 		selectedModel,
 		setSelectedModel,
+		contenxtFile,
+		setContenxtFile,
 	} = useAIConfigStore(
 		useShallow((state) => ({
 			provider: state.provider,
@@ -39,8 +42,11 @@ export default function MultiModalInput({
 			setProvider: state.setProvider,
 			selectedModel: state.selectedModel,
 			setSelectedModel: state.setSelectedModel,
+			contenxtFile: state.contenxtFile,
+			setContenxtFile: state.setContenxtFile,
 		})),
 	);
+	const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
 	return (
 		<form
 			onSubmit={handleSubmit}
@@ -77,7 +83,7 @@ export default function MultiModalInput({
 					</Button>
 				</div>
 
-				<div className="flex w-fit ">
+				<div className="flex w-fit gap-1 ">
 					<Select
 						required
 						defaultValue={`${provider}::::${selectedModel}`}
@@ -105,10 +111,15 @@ export default function MultiModalInput({
 							))}
 						</SelectContent>
 					</Select>
-
-					{/* <span className="px-2 py-1 mx-2 border rounded-lg border-accent">
-						beta
-					</span> */}
+					<Button variant={"currentFile"} type="button" className={
+						`${!contenxtFile && "border-dashed"}`
+					} onClick={() => setContenxtFile(!contenxtFile)}>
+					<span className={`${!contenxtFile && "line-through"}`}>
+						{currentTab?.name} 
+						</span>	<span className="text-muted ">Current Tab</span> {
+							contenxtFile ? <Eye /> : <EyeOff />
+						}
+					</Button>
 				</div>
 			</div>
 		</form>

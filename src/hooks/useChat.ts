@@ -1,20 +1,32 @@
 import { systemPrompt } from "@/consts/prompt";
 import { createProvider } from "@/lib/ai/providers";
 import { useAIConfigStore } from "@/store/aiConfig";
+import { useTabsStore } from "@/store/tabs";
 import { type Message, streamText } from "ai";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useShallow } from "zustand/react/shallow";
+
+function createSystemPrompt(systemPrompt: string, code: string | undefined) {
+  return `system: ${systemPrompt}  ${
+    code ? ` this is the code of the current tab: ${code}` : ""
+  }`;
+}
+
 export function useChat() {
   const provider = useAIConfigStore((state) => state.provider);
   const apiKeys = useAIConfigStore((state) => state.apiKeys);
   const selectedModel = useAIConfigStore((state) => state.selectedModel);
-  const [input, setInput] = useState("");
-  const messages = useAIConfigStore((state) => state.messages);
   const setMessages = useAIConfigStore((state) => state.setMessages);
+  const messages = useAIConfigStore((state) => state.messages);
+  const contenxtFile = useAIConfigStore(
+    useShallow((state) => state.contenxtFile)
+  );
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const [controller, setController] = useState<AbortController | null>(null);
-
+  const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
   const handleStreamText = async (userContent: string) => {
     if (userContent.trim() === "clear") {
       setMessages([]);
@@ -38,7 +50,10 @@ export function useChat() {
 
       const { textStream } = streamText({
         messages: messagesToAI,
-        system: systemPrompt,
+        system: createSystemPrompt(
+          systemPrompt,
+          contenxtFile ? currentTab?.code : ""
+        ),
         model: createProvider(provider, apiKeys[provider])(selectedModel),
         abortSignal: newController.signal,
       });
