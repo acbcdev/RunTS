@@ -15,7 +15,7 @@ const components = {
 		if (match) {
 			return (
 				<div className="relative max-w-2xl overflow-x-auto group/code">
-					<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg border-border top-3 bg-[#282c34]">
+					<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg top-3 bg-[#282c34]">
 						<span className="capitalize">{match[1]}</span>
 						<nav className="top-0 right-0 z-10 opacity-0 group-hover/code:opacity-100">
 							<Button variant={"ghost"} onClick={copyToClipboard}>
@@ -97,7 +97,7 @@ const components = {
 	},
 	h3: ({ node, children, ...props }) => {
 		return (
-			<h3 className="text2xl font-semibold mt-6 mb-2" {...props}>
+			<h3 className="text-2xl font-semibold mt-6 mb-2" {...props}>
 				{children}
 			</h3>
 		);
@@ -141,6 +141,49 @@ const components = {
 			>
 				{children}
 			</kbd>
+		);
+	
+	},
+	table: ({ node, children, ...props }) => {
+		return (
+			<table className="table-auto border border-muted" {...props}>
+				{children}
+			</table>
+		);
+	},
+	thead: ({ node, children, ...props }) => {
+		return (
+			<thead className="text-left border border-muted" {...props}>
+				{children}
+			</thead>
+		);
+	},
+	tbody: ({ node, children, ...props }) => {
+		return (
+			<tbody className="divide-y border  border-muted divide-border" {...props}>
+				{children}
+			</tbody>
+		);
+	},
+	tr: ({ node, children, ...props }) => {
+		return (
+			<tr className=" border border-muted" {...props}>
+				{children}
+			</tr>
+		);
+	},
+	td: ({ node, children, ...props }) => {
+		return (
+			<td className="p-2 border border-muted" {...props}>
+				{children}
+			</td>
+		);
+	},
+	th: ({ node, children, ...props }) => {
+		return (
+			<th className="p-2 border border-muted" {...props}>
+				{children}
+			</th>
 		);
 	},
 } satisfies Components;

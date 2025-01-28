@@ -57,7 +57,7 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 				<div
 					className={cn(
 						`${activeTabId === tab.id ? "bg-header " : "bg-transparent hover:bg-background"}`,
-						" border-border group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  ",
+						"  group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  ",
 					)}
 					onClick={() => {
 						if (!tab.editing || activeTabId !== tab.id) {

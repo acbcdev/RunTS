@@ -67,10 +67,10 @@ export function EditorSettingsDialog() {
 							/>
 						</a>
 						<GithubStars />
-						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input text-lg border border-border rounded-lg px-4 py-2  font-semibold">
+						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input text-lg border  rounded-lg px-4 py-2  font-semibold">
 							Feedback
 						</a>
-						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input border border-border rounded-lg px-4 py-2 text-lg font-semibold">
+						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input border  rounded-lg px-4 py-2 text-lg font-semibold">
 							Report a bug
 						</a>
 					</div>

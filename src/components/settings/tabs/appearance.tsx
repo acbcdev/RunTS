@@ -35,7 +35,7 @@ export function Appearance() {
 								translate="no"
 								key={key}
 								className={cn(
-									theme === key ? "border-accent" : "border-border",
+									theme === key &&"border-accent" ,
 									"border rounded-lg p-3",
 								)}
 								style={{

@@ -11,7 +11,7 @@ export function GithubStars() {
 	}, []);
 	return (
 		<a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer">
-			<div className="flex items-center justify-center gap-x-2 p-2 rounded-lg text-zinc-100 border border-border ">
+			<div className="flex items-center justify-center gap-x-2 p-2 rounded-lg text-zinc-100 border  ">
 				<Github className="size-6" />
 				<p>
 					Github Starts:{" "}

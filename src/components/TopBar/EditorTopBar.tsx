@@ -111,7 +111,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 			<div
 				className={
-					"flex items-center justify-between p-2 border-b bg-header border-border "
+					"flex items-center justify-between p-2 border-b bg-header "
 				}
 			>
 				<div className="flex items-center space-x-2">

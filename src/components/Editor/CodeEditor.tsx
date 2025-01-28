@@ -76,7 +76,7 @@ export function CodeEditor() {
 				{showChat && <Chat />}
 				<ResizablePanel defaultSize={100}>
 					<ResizablePanelGroup direction={layout}>
-						<ResizablePanel defaultSize={60}>
+						<ResizablePanel defaultSize={60} collapsedSize={10} collapsible>
 							<EditorMain />
 						</ResizablePanel>
 						<ResizableHandle withHandle />

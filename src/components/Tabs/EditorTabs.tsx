@@ -20,7 +20,7 @@ export function EditorTabs() {
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 
 	return (
-		<div className="flex items-center border-b border-border justify-start bg-background bg-opacity-80">
+		<div className="flex items-center border-b  justify-start bg-background bg-opacity-80">
 			<ScrollArea className="max-w-[calc(100%-32px)]">
 				<div className="flex">
 					{tabs.map((tab) => (

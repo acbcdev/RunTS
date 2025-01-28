@@ -13,7 +13,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
 					borderColor: "var(--border)",
 				},
 				classNames: {
-					default: "bg-background text-foreground border-border",
+					default: "bg-background text-foreground",
 					success: "bg-success text-foreground",
 					warning: "bg-destructive text-foreground",
 					info: "bg-info text-foreground",

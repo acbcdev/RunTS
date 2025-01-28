@@ -50,7 +50,7 @@ export default function MultiModalInput({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex w-full gap-2 mx-auto border rounded-lg bg-background border-border"
+			className="flex w-full gap-2 mx-auto border rounded-lg bg-background "
 		>
 			<div className="flex flex-col flex-1 gap-2 px-3 py-2">
 				<div className="flex flex-1">
