@@ -82,7 +82,6 @@ export default function MultiModalInput({
 						required
 						defaultValue={`${provider}::::${selectedModel}`}
 						onValueChange={(value) => {
-							// alert(value);
 							const [name, model] = value.split("::::");
 							setSelectedModel(model);
 							setProvider(name as providers);

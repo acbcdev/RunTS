@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { EditorTopBar } from "@/components/code-editor/editor-top-bar";
-import { EditorTabs } from "@/components/code-editor/editor-tabs";
-import { EditorMain } from "@/components/code-editor/editor-main";
+import { EditorTopBar } from "@/components/TopBar/editor-top-bar";
+import { EditorTabs } from "@/components/Tabs/editor-tabs";
+import { EditorMain } from "@/components/Editor/editor-main";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useConfigStore } from "@/store/config";
 import { useAIConfigStore } from "@/store/aiConfig";
@@ -11,7 +11,7 @@ import {
 	ResizablePanel,
 	ResizableHandle,
 } from "@/components/ui/resizable";
-import { Console } from "@/components/code-editor/console";
+import { Console } from "@/components/Editor/console";
 import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
 import { useShallow } from "zustand/react/shallow";
