@@ -1,4 +1,4 @@
-import { Settings2 } from "lucide-react";
+import { Cog, Brush, MonitorCog, BrainCog } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
@@ -19,7 +19,11 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Editor } from "@/components/settings/tabs/editor";
 import { GithubStars } from "@/components/GithubStars";
 import { AI } from "@/components/settings/tabs/ai";
-const Trigers = ["Appearance", "Editor", "AI (Beta)"];
+const Trigers = [
+	{ name: "Appearance", Icon: Brush },
+	{ name: "Editor", Icon: MonitorCog },
+	{ name: "AI (Beta)", Icon: BrainCog },
+];
 export function EditorSettingsDialog() {
 	return (
 		<Dialog aria-description="Editor settings">
@@ -33,7 +37,7 @@ export function EditorSettingsDialog() {
 							className="size-8"
 							translate="no"
 						>
-							<Settings2 />
+							<Cog />
 						</Button>
 					</DialogTrigger>
 					<TooltipContent>Editor settings</TooltipContent>
@@ -68,9 +72,9 @@ export function EditorSettingsDialog() {
 
 				<Tabs defaultValue="appearance" className="flex-1">
 					<TabsList className="h-12 px-6 ">
-						{Trigers.map((tr) => (
-							<TabsTrigger key={tr} value={tr.toLowerCase()}>
-								{tr}
+						{Trigers.map(({ name, Icon }) => (
+							<TabsTrigger key={name} value={name.toLowerCase()}>
+								<Icon className="size-4 mr-1" /> {name}
 							</TabsTrigger>
 						))}
 					</TabsList>

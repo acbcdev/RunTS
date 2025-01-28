@@ -3,8 +3,8 @@ import {
 	Download,
 	Copy,
 	Trash2,
-	Columns,
-	Rows,
+	SquareSplitHorizontal,
+	SquareSplitVertical,
 	Share2,
 	Sparkles,
 } from "lucide-react";
@@ -140,7 +140,11 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								className="size-8"
 								onClick={toogleLayout}
 							>
-								{layout === "horizontal" ? <Columns /> : <Rows />}
+								{layout === "horizontal" ? (
+									<SquareSplitHorizontal />
+								) : (
+									<SquareSplitVertical />
+								)}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Toogle layout</TooltipContent>
