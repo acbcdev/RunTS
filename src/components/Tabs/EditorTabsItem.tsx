@@ -165,10 +165,10 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 					Share
 				</ContextMenuItem>
 				<ContextMenuItem
-					className="focus:bg-destructive focus:text-destructive-foreground flex justify-between "
+					className="focus:bg-destructive focus:text-destructive-foreground"
 					onClick={() => removeTab(tab.id)}
 				>
-					Delete <Delete />
+					Delete
 				</ContextMenuItem>
 			</ContextMenuContent>
 		</ContextMenu>

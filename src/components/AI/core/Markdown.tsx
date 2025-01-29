@@ -4,6 +4,9 @@ import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
+// import { Editor } from "@monaco-editor/react";
+// import { useApparenceStore } from "@/store/apparence";
+// import { useShallow } from "zustand/react/shallow";
 const components = {
 	code: ({ className, children }) => {
 		const match = /language-(\w+)/.exec(className || "");
@@ -12,6 +15,7 @@ const components = {
 		const copyToClipboard = () => {
 			navigator.clipboard.writeText(codeContent);
 		};
+		console.log(match);
 		if (match) {
 			return (
 				<div className="relative max-w-2xl overflow-x-auto group/code">
@@ -42,6 +46,36 @@ const components = {
 			);
 		}
 	},
+	// code: ({ className, children }) => {
+	// 	const theme = useApparenceStore(useShallow((state) => state.theme));
+	// 	const match = /language-(\w+)/.exec(className || "");
+	// 	const height = String(children).split("\n").length * 20;
+	// 	return match ? (
+	// 		<Editor
+	// 			language={match[1] === "jsx" ? "javascript" : match[1]}
+	// 			height={height}
+	// 			theme={theme}
+	// 			value={String(children)}
+	// 			className="rounded-lg"
+	// 			options={{
+	// 				readOnly: true,
+	// 				renderLineHighlight: "none",
+	// 				minimap: {
+	// 					enabled: false,
+	// 				},
+	//        automaticLayout: true,
+	//        scrollBeyondLastLine:false
+	// 				scrollbar: {
+	// 					scrollByPage: false,
+	// 					horizontal: "hidden",
+	// 					vertical: "hidden",
+	// 				},
+	// 			}}
+	// 		/>
+	// 	) : (
+	// 		<code>{children}</code>
+	// 	);
+	// },
 	pre: ({ children }) => <>{children}</>,
 	ol: ({ node, children, ...props }) => {
 		return (
@@ -142,7 +176,6 @@ const components = {
 				{children}
 			</kbd>
 		);
-	
 	},
 	table: ({ node, children, ...props }) => {
 		return (
