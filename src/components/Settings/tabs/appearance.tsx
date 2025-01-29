@@ -5,21 +5,17 @@ import { fontFamilies, fontSizes, layouts, radiuses } from "@/consts";
 import { cn } from "@/lib/utils";
 import { themes } from "@/themes";
 import { useApparenceStore } from "@/store/apparence";
+
 export function Appearance() {
-	const layout = useApparenceStore(useShallow((state) => state.layout));
-	const setLayout = useApparenceStore(useShallow((state) => state.setLayout));
-	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
-	const setFontSize = useApparenceStore(
-		useShallow((state) => state.setFontSize),
+	const {
+		options: { fontSize, fontFamily, radius, theme, layout },
+		setOption,
+	} = useApparenceStore(
+		useShallow((state) => ({
+			options: state.options,
+			setOption: state.setOption,
+		})),
 	);
-	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
-	const setFontFamily = useApparenceStore(
-		useShallow((state) => state.setFontFamily),
-	);
-	const setRadius = useApparenceStore(useShallow((state) => state.setRadius));
-	const radius = useApparenceStore(useShallow((state) => state.radius));
-	const theme = useApparenceStore(useShallow((state) => state.theme));
-	const setTheme = useApparenceStore(useShallow((state) => state.setTheme));
 
 	return (
 		<TabsContent value="appearance" className="p-6 m-0">
@@ -30,18 +26,18 @@ export function Appearance() {
 					</h3>
 					<div className="grid grid-cols-2 gap-3 cursor-pointer">
 						{Object.entries(themes).map(([key, value]) => (
-							// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-							<div
+							<button
 								translate="no"
 								key={key}
+								type="button"
 								className={cn(
-									theme === key &&"border-accent" ,
+									theme === key && "border-accent",
 									"border rounded-lg p-3",
 								)}
 								style={{
 									backgroundColor: value.ui.background,
 								}}
-								onClick={() => setTheme(key as keyof typeof themes)}
+								onClick={() => setOption("theme", key as keyof typeof themes)}
 							>
 								<div className="space-y-2">
 									<div className="flex items-center justify-between">
@@ -71,7 +67,7 @@ export function Appearance() {
 										))}
 									</div>
 								</div>
-							</div>
+							</button>
 						))}
 					</div>
 				</section>
@@ -83,7 +79,7 @@ export function Appearance() {
 								translate="no"
 								key={value}
 								variant={radius === value ? "border" : "outline"}
-								onClick={() => setRadius(value)}
+								onClick={() => setOption("radius", value)}
 							>
 								{value}
 							</Button>
@@ -100,7 +96,7 @@ export function Appearance() {
 								variant={layout === direction ? "border" : "outline"}
 								key={direction}
 								translate="no"
-								onClick={() => setLayout(direction)}
+								onClick={() => setOption("layout", direction)}
 							>
 								{direction}
 							</Button>
@@ -122,7 +118,7 @@ export function Appearance() {
 										translate="no"
 										key={size}
 										variant={fontSize === size ? "border" : "outline"}
-										onClick={() => setFontSize(size)}
+										onClick={() => setOption("fontSize", size)}
 									>
 										{size}px
 									</Button>
@@ -140,7 +136,7 @@ export function Appearance() {
 										key={font.name}
 										variant={fontFamily === font.value ? "border" : "outline"}
 										translate="no"
-										onClick={() => setFontFamily(font.value)}
+										onClick={() => setOption("fontFamily", font.value)}
 										style={{ fontFamily: font.value }}
 									>
 										{font.name}

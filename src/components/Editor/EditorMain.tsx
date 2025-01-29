@@ -42,9 +42,9 @@ export function EditorMain() {
 	);
 	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
 	// useApparenceStore
-	const theme = useApparenceStore(useShallow((state) => state.theme));
-	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
-	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
+	const {
+		options: { theme, fontFamily, fontSize },
+	} = useApparenceStore(useShallow((state) => ({ options: state.options })));
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const handleEditorDidMount = useCallback(

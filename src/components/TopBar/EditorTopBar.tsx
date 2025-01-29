@@ -17,24 +17,22 @@ import {
 } from "@/components/ui/tooltip";
 import { EditorSettingsDialog } from "@/components/Settings/EditorSettingDialog";
 import { useAIConfigStore } from "@/store/aiConfig";
-import { toast } from "sonner";
 import { memo } from "react";
 import { Kd } from "@/components/ui/kd";
 import { useShallow } from "zustand/react/shallow";
 import { useApparenceStore } from "@/store/apparence";
-import { useTabsStore } from "@/store/tabs";
 import { useRun } from "@/hooks/useRun";
+import { useHandler } from "@/hooks/useHandler";
 
 export const EditorTopBar = memo(function EditorTopBar() {
-	const { layout, setLayout } = useApparenceStore(
+	const { layout, setOption } = useApparenceStore(
 		useShallow((state) => ({
-			layout: state.layout,
-			setLayout: state.setLayout,
+			layout: state.options.layout,
+			setOption: state.setOption,
 		})),
 	);
 	const { runCode } = useRun();
-	const clearConsole = useTabsStore(useShallow((state) => state.clearConsole));
-	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
+	const { handleShare, handleClear, copyCode, downloadCode } = useHandler();
 	const { toggleChat, showChat } = useAIConfigStore(
 		useShallow((state) => ({
 			toggleChat: state.toggleChat,
@@ -42,69 +40,8 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		})),
 	);
 
-	const handleShare = () => {
-		const url = new URL(window.location.href);
-		if (activeTab?.code === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to share.",
-				duration: 2000,
-			});
-			return;
-		}
-		const link = `${url.origin}/?code=${btoa(activeTab?.code ?? "")}`;
-		navigator.clipboard.writeText(link);
-		toast.success("Link Created", {
-			description: `The ${link} has been copied to your clipboard.`,
-			duration: 2000,
-		});
-	};
 	const toogleLayout = () => {
-		setLayout(layout === "horizontal" ? "vertical" : "horizontal");
-	};
-	const handleClear = () => {
-		clearConsole();
-		toast.success("Console cleared", {
-			description: "The console output has been cleared.",
-			duration: 2000,
-		});
-	};
-
-	const copyCode = () => {
-		if (activeTab?.code.trim() === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to copy.",
-				duration: 2000,
-			});
-			return;
-		}
-		navigator.clipboard.writeText(activeTab?.code ?? "");
-		toast.success("Code copied!", {
-			description: "The code has been copied to your clipboard.",
-			duration: 2000,
-		});
-	};
-
-	const downloadCode = () => {
-		if (!activeTab || activeTab?.code.trim() === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to download.",
-				duration: 2000,
-			});
-			return;
-		}
-		const blob = new Blob([activeTab?.code ?? ""], { type: "text/typescript" });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = activeTab?.name || "code.ts";
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		URL.revokeObjectURL(url);
-		toast.success("Code downloaded!", {
-			description: "The code has been downloaded as 'code.js'",
-			duration: 2000,
-		});
+		setOption("layout", layout === "horizontal" ? "vertical" : "horizontal");
 	};
 
 	return (
@@ -174,7 +111,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								className="size-8 text-accent"
-								onClick={handleShare}
+								onClick={() => handleShare()}
 							>
 								<Share2 />
 							</Button>
@@ -189,7 +126,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								aria-label="Copy code"
 								size="icon"
 								className="size-8"
-								onClick={copyCode}
+								onClick={() => copyCode}
 							>
 								<Copy />
 							</Button>
@@ -204,7 +141,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								size="icon"
 								aria-label="Download code"
 								className="size-8"
-								onClick={downloadCode}
+								onClick={() => downloadCode}
 							>
 								<Download />
 							</Button>

@@ -16,6 +16,7 @@ interface TabsStore {
   updateTabCode: (id: Tab["id"], code: string) => void;
   updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
   clearConsole: VoidFunction;
+  getTab: (id: Tab["id"]) => Tab | undefined;
 }
 
 const DEFAULT_CODE = `
@@ -75,6 +76,7 @@ export const useTabsStore = create<TabsStore>()(
           logs: [],
         });
       },
+      getTab: (id) => get().tabs.find((tab) => tab.id === id),
       setEditing: (id, editing = false) => {
         set((state) => ({
           tabs: state.tabs.map((tab) => {

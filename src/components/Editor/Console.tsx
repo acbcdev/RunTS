@@ -11,9 +11,13 @@ export function Console() {
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
-	const theme = useApparenceStore(useShallow((state) => state.theme));
-	const fontSize = useApparenceStore(useShallow((state) => state.fontSize));
-	const fontFamily = useApparenceStore(useShallow((state) => state.fontFamily));
+	const {
+		options: { fontSize, fontFamily, theme },
+	} = useApparenceStore(
+		useShallow((state) => ({
+			options: state.options,
+		})),
+	);
 	return (
 		<div className="relative h-full bg-background" translate="no">
 			<Suspense

@@ -40,11 +40,12 @@ export function CodeEditor() {
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	const debouncedCode = useDebounce(getCurrentTab()?.code || "", refreshTime);
 	// useApparenceStore
-	const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
+	const {
+		options: { radius, theme, layout },
+		getCurrentTheme,
+	} = useApparenceStore(
 		useShallow((state) => ({
-			radius: state.radius,
-			theme: state.theme,
-			layout: state.layout,
+			options: state.options,
 			getCurrentTheme: state.getCurrentTheme,
 		})),
 	);

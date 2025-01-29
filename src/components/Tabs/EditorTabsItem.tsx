@@ -10,28 +10,48 @@ import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/react/shallow";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Delete, X } from "lucide-react";
 import type { Tab } from "@/types/editor";
 import { useEditorStore } from "@/store/editor";
+import { useHandler } from "@/hooks/useHandler";
+import { useRef } from "react";
 
 export function EditorTabsItem({ tab }: { tab: Tab }) {
+	const { handleShare, copyCode, downloadCode } = useHandler();
+	const inputRef = useRef<HTMLInputElement | null>(null);
 	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
 	const tabs = useTabsStore(useShallow((state) => state.tabs));
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 	const setEditing = useTabsStore(useShallow((state) => state.setEditing));
 	const removeTab = useTabsStore(useShallow((state) => state.removeTab));
+	const addTab = useTabsStore(useShallow((state) => state.addTab));
 	const changeNameTab = useTabsStore(
 		useShallow((state) => state.changeNameTab),
 	);
+
 	const updateTabCode = useTabsStore(
 		useShallow((state) => state.updateTabCode),
 	);
+
+	const handleDuplicateTab = (tabId: string) => {
+		const tab = tabs.find((tab) => tab.id === tabId);
+		if (!tab) return;
+		const id = addTab({
+			name: `${tab.name}-copy`,
+			language: tab.language,
+			code: tab.code,
+			logs: tab.logs,
+		});
+		handleActiveTabChange(id);
+	};
+
 	const handleActiveTabChange = (tabId: string) => {
 		setActiveTab(tabId);
 		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
 		editorRef?.focus();
 	};
+
 	const handleTabEdited = (tabId: string) => {
 		const tab = tabs.find((tab) => tab.id === tabId);
 		if (!tab) return;
@@ -67,8 +87,8 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 				>
 					{tab.editing ? (
 						<Input
+							ref={inputRef}
 							value={tab.name}
-							autoFocus
 							onKeyDown={(e) => {
 								if (e.code === "Enter") {
 									e.preventDefault();
@@ -109,24 +129,41 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 				</div>
 			</ContextMenuTrigger>
 			<ContextMenuContent>
-				<ContextMenuItem onClick={() => setEditing(tab.id, true)}>
-					Rename
-				</ContextMenuItem>
-				{/* <ContextMenuItem>Duplicate</ContextMenuItem> */} {/*TODO*/}
 				<ContextMenuItem
 					onClick={() => {
-						navigator.clipboard.writeText(tab.code);
-						toast.success("Code copied to clipboard", {
-							description: "The code has been copied to your clipboard.",
-							duration: 2000,
-						});
+						setEditing(tab.id, true);
+						setTimeout(() => {
+							inputRef.current?.focus();
+						}, 200);
+					}}
+				>
+					Rename
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => handleDuplicateTab(tab.id)}>
+					Duplicate
+				</ContextMenuItem>
+				<ContextMenuItem
+					onClick={() => {
+						copyCode(tab.id);
 					}}
 				>
 					Copy
 				</ContextMenuItem>
-				{/* <ContextMenuItem>Share</ContextMenuItem> */} {/*TODO*/}
-				<ContextMenuItem className="focus:bg-destructive focus:text-destructive-foreground">
-					Delete
+				<ContextMenuItem
+					onClick={() => {
+						downloadCode(tab.id);
+					}}
+				>
+					Download
+				</ContextMenuItem>
+				<ContextMenuItem onClick={() => handleShare(tab.id)}>
+					Share
+				</ContextMenuItem>
+				<ContextMenuItem
+					className="focus:bg-destructive focus:text-destructive-foreground flex justify-between "
+					onClick={() => removeTab(tab.id)}
+				>
+					Delete <Delete />
 				</ContextMenuItem>
 			</ContextMenuContent>
 		</ContextMenu>
