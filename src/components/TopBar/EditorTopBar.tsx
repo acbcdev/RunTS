@@ -15,7 +15,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EditorSettingsDialog } from "@/components/settings/EditorSettingDialog";
+import { EditorSettingsDialog } from "@/components/Settings/EditorSettingDialog";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { toast } from "sonner";
 import { memo } from "react";
@@ -110,9 +110,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 	return (
 		<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 			<div
-				className={
-					"flex items-center justify-between p-2 border-b bg-header "
-				}
+				className={"flex items-center justify-between p-2 border-b bg-header "}
 			>
 				<div className="flex items-center space-x-2">
 					<EditorSettingsDialog />

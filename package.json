@@ -40,7 +40,7 @@
     "react-dom": "18.3.1",
     "react-hotkeys-hook": "4.6.1",
     "react-markdown": "9.0.3",
-    "react-resizable-panels": "1.0.10",
+    "react-resizable-panels": "2.1.7",
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.0",
     "sonner": "^1.7.2",

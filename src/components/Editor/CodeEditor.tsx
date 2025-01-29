@@ -11,6 +11,7 @@ import {
 	ResizablePanel,
 	ResizableHandle,
 } from "@/components/ui/resizable";
+
 import { Console } from "@/components/Editor/Console";
 import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
@@ -76,7 +77,7 @@ export function CodeEditor() {
 				{showChat && <Chat />}
 				<ResizablePanel defaultSize={100}>
 					<ResizablePanelGroup direction={layout}>
-						<ResizablePanel defaultSize={60} collapsedSize={10} collapsible>
+						<ResizablePanel defaultSize={60}>
 							<EditorMain />
 						</ResizablePanel>
 						<ResizableHandle withHandle />

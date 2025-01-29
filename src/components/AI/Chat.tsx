@@ -3,7 +3,7 @@ import { useChat } from "@/hooks/useChat";
 import MultiModalInput from "./core/MultiModal-Input";
 
 import { useAIConfigStore } from "@/store/aiConfig";
-import { AI } from "@/components/settings/tabs/ai";
+import { AI } from "@/components/Settings/tabs/ai";
 import Markdown from "@/components/AI/core/Markdown";
 import { useShallow } from "zustand/react/shallow";
 export function Chat() {

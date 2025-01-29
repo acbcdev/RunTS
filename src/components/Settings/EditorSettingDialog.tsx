@@ -5,7 +5,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Appearance } from "@/components/settings/tabs/appearance";
+import { Appearance } from "@/components/Settings/tabs/appearance";
 import {
 	Dialog,
 	DialogContent,
@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Editor } from "@/components/settings/tabs/editor";
-import { GithubStars } from "@/components/settings/GithubStars";
-import { AI } from "@/components/settings/tabs/ai";
+import { Editor } from "@/components/Settings/tabs/editor";
+import { GithubStars } from "@/components/Settings/GithubStars";
+import { AI } from "@/components/Settings/tabs/ai";
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },
@@ -67,10 +67,20 @@ export function EditorSettingsDialog() {
 							/>
 						</a>
 						<GithubStars />
-						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input text-lg border  rounded-lg px-4 py-2  font-semibold">
+						<a
+							href="https://github.com/acbcdev/runts/issues/new"
+							target="_blank"
+							rel="noreferrer"
+							className="bg-input text-lg border  rounded-lg px-4 py-2  font-semibold"
+						>
 							Feedback
 						</a>
-						<a href="https://github.com/acbcdev/runts/issues/new" target="_blank" rel="noreferrer" className="bg-input border  rounded-lg px-4 py-2 text-lg font-semibold">
+						<a
+							href="https://github.com/acbcdev/runts/issues/new"
+							target="_blank"
+							rel="noreferrer"
+							className="bg-input border  rounded-lg px-4 py-2 text-lg font-semibold"
+						>
 							Report a bug
 						</a>
 					</div>
