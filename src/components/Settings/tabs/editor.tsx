@@ -1,38 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
-import { refreshTimes } from "@/consts";
-import { useConfigStore } from "@/store/config";
+import {
+	type EditorBehaviorOption,
+	editorBehaviorsOptions,
+	refreshTimes,
+} from "@/consts";
+import { type ConfigOptions, useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {
-	const {
-		wordWrap,
-		lineNumbers,
-		refreshTime,
-		minimap,
-		whiteSpace,
-		setMinimap,
-		setWordWrap,
-		setWhiteSpace,
-		setLineNumbers,
-		setRefreshTime,
-	} = useConfigStore(
-		useShallow((state) => ({
-			wordWrap: state.wordWrap,
-			lineNumbers: state.lineNumbers,
-			refreshTime: state.refreshTime,
-			minimap: state.minimap,
-			whiteSpace: state.whiteSpace,
-			setMinimap: state.setMinimap,
-			setWordWrap: state.setWordWrap,
-			setWhiteSpace: state.setWhiteSpace,
-			setLineNumbers: state.setLineNumbers,
-			setRefreshTime: state.setRefreshTime,
-		})),
-	);
+	const getOption = useConfigStore(useShallow((state) => state.getOption));
+	const setOption = useConfigStore(useShallow((state) => state.setOption));
 	const { setExperimental, experimetalConsole } = useEditorStore(
 		useShallow((state) => ({
 			setExperimental: state.setExperimental,
@@ -40,44 +21,20 @@ export function Editor() {
 		})),
 	);
 
-	const editorBehaviors = [
-		{
-			id: "wordWrap",
-			callback: setWordWrap,
-			value: wordWrap,
-			label: "Word Wrap",
-			description: "Wrap long lines of code",
-		},
-		{
-			id: "lineNumbers",
-			callback: setLineNumbers,
-			value: lineNumbers,
-			label: "Line Numbers",
-			description: "Show line numbers in the editor",
-		},
-		{
-			id: "minimap",
-			callback: setMinimap,
-			value: minimap,
-			label: "Minimap",
-			description: "Show minimap in the editor",
-		},
-		{
-			id: "whiteSpace",
-			callback: setWhiteSpace,
-			value: whiteSpace,
-			label: "White Space",
-			description: "Show white space in the editor",
-		},
-	];
 	return (
 		<TabsContent value="editor" className="p-6 m-0">
 			<div className="space-y-8">
 				<section>
 					<h3 className="mb-4 text-base font-medium">Editor Behavior</h3>
 					<div className="space-y-4">
-						{editorBehaviors.map(
-							({ id, callback, value, label, description }) => (
+						{(
+							Object.entries(editorBehaviorsOptions) as [
+								keyof ConfigOptions,
+								EditorBehaviorOption,
+							][]
+						).map(([id, { label, description }]) => {
+							const value = getOption(id);
+							return (
 								<Label
 									key={id}
 									className="flex items-center justify-between p-3 rounded-lg bg-header"
@@ -87,12 +44,12 @@ export function Editor() {
 										<div className="text-sm">{description}</div>
 									</div>
 									<Switch
-										checked={value}
-										onCheckedChange={() => callback(!value)}
+										checked={Boolean(value)}
+										onCheckedChange={() => setOption(id, value)}
 									/>
 								</Label>
-							),
-						)}
+							);
+						})}
 					</div>
 				</section>
 
@@ -102,8 +59,10 @@ export function Editor() {
 						{refreshTimes.map(({ time, value }) => (
 							<Button
 								key={time}
-								variant={refreshTime === value ? "border" : "outline"}
-								onClick={() => setRefreshTime(value)}
+								variant={
+									getOption("refreshTime") === value ? "border" : "outline"
+								}
+								onClick={() => setOption("refreshTime", value)}
 							>
 								{time}
 							</Button>

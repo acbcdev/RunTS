@@ -27,7 +27,7 @@ import { useHandler } from "@/hooks/useHandler";
 export const EditorTopBar = memo(function EditorTopBar() {
 	const { layout, setOption } = useApparenceStore(
 		useShallow((state) => ({
-			layout: state.options.layout,
+			layout: state.layout,
 			setOption: state.setOption,
 		})),
 	);

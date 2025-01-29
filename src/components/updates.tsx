@@ -6,12 +6,18 @@ import {
 	DialogDescription,
 } from "@/components/ui/dialog";
 import { useConfigStore } from "@/store/config";
+import { useShallow } from "zustand/react/shallow";
 export function Updates() {
-	const { updates, setUpdates } = useConfigStore();
+	const { updates, setOption } = useConfigStore(
+		useShallow((state) => ({
+			updates: state.updates,
+			setOption: state.setOption,
+		})),
+	);
 	return (
 		<>
 			{updates && (
-				<Dialog open onOpenChange={() => setUpdates(false)}>
+				<Dialog open onOpenChange={() => setOption("updates", false)}>
 					<DialogContent className="border-none bg-background text-info ">
 						<DialogHeader>
 							<DialogTitle>New Updates 🚀</DialogTitle>

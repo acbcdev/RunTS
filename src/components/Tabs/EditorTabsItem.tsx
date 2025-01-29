@@ -105,7 +105,12 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 							className={cn(`${tab.id === activeTabId && "underline"}  `)}
 							spellCheck="false"
 							onClick={() => {
-								if (activeTabId === tab.id) setEditing(tab.id, true);
+								if (activeTabId === tab.id) {
+									setEditing(tab.id, true);
+									setTimeout(() => {
+										inputRef.current?.focus();
+									}, 100);
+								}
 							}}
 						>
 							{tab.name}
@@ -134,7 +139,7 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 						setEditing(tab.id, true);
 						setTimeout(() => {
 							inputRef.current?.focus();
-						}, 200);
+						}, 150);
 					}}
 				>
 					Rename

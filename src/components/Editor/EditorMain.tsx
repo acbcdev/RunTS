@@ -42,9 +42,13 @@ export function EditorMain() {
 	);
 	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
 	// useApparenceStore
-	const {
-		options: { theme, fontFamily, fontSize },
-	} = useApparenceStore(useShallow((state) => ({ options: state.options })));
+	const { theme, fontFamily, fontSize } = useApparenceStore(
+		useShallow((state) => ({
+			theme: state.theme,
+			fontFamily: state.fontFamily,
+			fontSize: state.fontSize,
+		})),
+	);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const handleEditorDidMount = useCallback(
@@ -55,10 +59,10 @@ export function EditorMain() {
 			}
 			monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions(
 				{
-					target: monacoInstance.languages.typescript.ScriptTarget.ESNext,
+					target: monacoInstance.languages.typescript.ScriptTarget.Latest,
+					module: monacoInstance.languages.typescript.ModuleKind.ESNext,
 					allowNonTsExtensions: true,
-					moduleResolution:
-						monacoInstance.languages.typescript.ModuleResolutionKind.NodeJs,
+					lib: ["esnext"],
 					noEmit: true,
 				},
 			);
@@ -152,7 +156,7 @@ export function EditorMain() {
 		<div className="relative h-full" translate="no">
 			<Suspense
 				fallback={
-					<div className="flex items-center justify-center h-full bg-background">
+					<div className="flex items-center justify-center h-full bg-background animate-pulse">
 						<div className="text-lg animate-pulse">Loading editor...</div>
 					</div>
 				}

@@ -7,15 +7,17 @@ import { themes } from "@/themes";
 import { useApparenceStore } from "@/store/apparence";
 
 export function Appearance() {
-	const {
-		options: { fontSize, fontFamily, radius, theme, layout },
-		setOption,
-	} = useApparenceStore(
-		useShallow((state) => ({
-			options: state.options,
-			setOption: state.setOption,
-		})),
-	);
+	const { fontSize, fontFamily, radius, theme, layout, setOption } =
+		useApparenceStore(
+			useShallow((state) => ({
+				fontFamily: state.fontFamily,
+				fontSize: state.fontSize,
+				radius: state.radius,
+				theme: state.theme,
+				layout: state.layout,
+				setOption: state.setOption,
+			})),
+		);
 
 	return (
 		<TabsContent value="appearance" className="p-6 m-0">

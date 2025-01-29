@@ -54,3 +54,30 @@ export const providersList: ProviderItem[] = [
     Icon: gemini,
   },
 ];
+
+export interface EditorBehaviorOption {
+  label: string;
+  description: string;
+}
+
+export const editorBehaviorsOptions: Record<
+  "wordWrap" | "lineNumbers" | "minimap" | "whiteSpace",
+  EditorBehaviorOption
+> = {
+  wordWrap: {
+    label: "Word Wrap",
+    description: "Wrap long lines of code",
+  },
+  lineNumbers: {
+    label: "Line Numbers",
+    description: "Show line numbers in the editor",
+  },
+  minimap: {
+    label: "Minimap",
+    description: "Show minimap in the editor",
+  },
+  whiteSpace: {
+    label: "White Space",
+    description: "Show white space in the editor",
+  },
+};

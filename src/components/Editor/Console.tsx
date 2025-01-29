@@ -11,18 +11,18 @@ export function Console() {
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
-	const {
-		options: { fontSize, fontFamily, theme },
-	} = useApparenceStore(
+	const { fontSize, fontFamily, theme } = useApparenceStore(
 		useShallow((state) => ({
-			options: state.options,
+			fontSize: state.fontSize,
+			theme: state.theme,
+			fontFamily: state.fontFamily,
 		})),
 	);
 	return (
 		<div className="relative h-full bg-background" translate="no">
 			<Suspense
 				fallback={
-					<div className="flex items-center justify-center h-full bg-background">
+					<div className="flex items-center justify-center h-full bg-background animate-pulse">
 						<div className="text-lg animate-pulse text-muted">
 							Loading Terminal...
 						</div>
