@@ -1,188 +1,179 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* @plugin 'tailwindcss-animate'; */
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --animate-in: fade-in 0.2s ease-out;
+	--animate-in: fade-in 0.2s ease-out;
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
 
-    to {
-      opacity: 1;
-    }
-  }
+		to {
+			opacity: 1;
+		}
+	}
 
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+	--radius-lg: var(--radius);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-sm: calc(var(--radius) - 4px);
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-success: var(--success);
-  --color-info: var(--info);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-success: var(--success);
+	--color-info: var(--info);
 
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
 
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
 
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
 
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
 
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
 
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
 
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
 
-  --color-header: var(--header);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+	--color-header: var(--header);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
 
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
 }
 
 @layer base {
-
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--border, currentColor);
-  }
-
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--border, currentColor);
+	}
 }
 
 @layer base {
-  @font-face {
-    font-family: 'Fira Code';
-    src: url('/fonts/FiraCode.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
+	@font-face {
+		font-family: "Fira Code";
+		src: url("/fonts/FiraCode.woff2") format("woff2");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
 
-  @font-face {
-    font-family: Monocraft;
-    src: url('/fonts/Monocraft.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
+	@font-face {
+		font-family: Monocraft;
+		src: url("/fonts/Monocraft.woff2") format("woff2");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
 
-  @font-face {
-    font-family: 'Cascadia Code';
-    src: url('/fonts/CascadiaCode.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
+	@font-face {
+		font-family: "Cascadia Code";
+		src: url("/fonts/CascadiaCode.woff2") format("woff2");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
 }
 
 :root {
-  --radius: 0.5rem;
-  caret-color: var(--accent);
-  color: var(--foreground);
-
+	--radius: 0.5rem;
+	caret-color: var(--accent);
+	color: var(--foreground);
 }
 
 textarea {
-  --sb-track-color: transparent;
-  --sb-thumb-color: var(--muted);
-  --sb-size: 5px;
-  /* field-sizing: content;
+	--sb-track-color: transparent;
+	--sb-thumb-color: var(--muted);
+	--sb-size: 5px;
+	/* field-sizing: content;
   overflow-x: hidden;
   max-width: 55ch;
   max-height: 30px; */
 }
 
 textarea::-webkit-scrollbar {
-  width: var(--sb-size)
+	width: var(--sb-size);
 }
 
 textarea::-webkit-scrollbar-track {
-  background: var(--sb-track-color);
-  border-radius: 3px;
+	background: var(--sb-track-color);
+	border-radius: 3px;
 }
 
 textarea::-webkit-scrollbar-thumb {
-  background: var(--sb-thumb-color);
-  border-radius: 3px;
-
+	background: var(--sb-thumb-color);
+	border-radius: 3px;
 }
 
 @supports not selector(::-webkit-scrollbar) {
-  textarea {
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
+	textarea {
+		scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+	}
 }
 
 /* Transitions */
 .theme-transition {
-  transition:
-    background-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    border-color 0.2s ease-in-out;
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+		border-color 0.2s ease-in-out;
 }
 
 /* Resizable handle styling */
 [data-panel-resize-handle-enabled] {
-  transition: all 0.15s ease;
-  background-color: transparent;
+	transition: all 0.15s ease;
+	background-color: transparent;
 }
 
 [data-panel-resize-handle-enabled]:hover,
 [data-panel-resize-handle-enabled][data-panel-resize-handle-active] {
-  background-color: var(--accent);
+	background-color: var(--accent);
 }
 
 .monaco-editor {
-  font-feature-settings:
-    "liga" 1,
-    "calt" 1;
-  /* Enable ligatures */
+	font-feature-settings: "liga" 1, "calt" 1;
+	/* Enable ligatures */
 }
 
 body {
-  background-color: var(--muted);
+	background-color: var(--muted);
 }
 
 pre {
-  --sb-track-color: transparent;
-  --sb-thumb-color: var(--muted);
-  --sb-size: 5px;
-  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+	--sb-track-color: transparent;
+	--sb-thumb-color: var(--muted);
+	--sb-size: 5px;
+	scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
 }
 
-
 .chat {
-  animation: slideL 150ms ease-in-out;
+	animation: slideL 150ms ease-in-out;
 }
 
 @keyframes slideL {
-  0% {
-    translate: -100% 0;
-  }
+	0% {
+		translate: -100% 0;
+	}
 
-  100% {
-    translate: 0 0;
-  }
+	100% {
+		translate: 0 0;
+	}
 }

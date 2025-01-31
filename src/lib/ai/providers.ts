@@ -3,12 +3,12 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
 import type { providers } from "@/types/ai";
 const generativeAIProviders = {
-  openai: createOpenAI,
-  google: createGoogleGenerativeAI,
-  anthropic: createAnthropic,
+	openai: createOpenAI,
+	google: createGoogleGenerativeAI,
+	anthropic: createAnthropic,
 };
 export function createProvider(provider: providers, apiKey: string) {
-  return generativeAIProviders[provider]({ apiKey });
+	return generativeAIProviders[provider]({ apiKey });
 }
 // openai("gpt-4o-2024-11-20");
 // openai("gpt-4o-mini-2024-07-18");

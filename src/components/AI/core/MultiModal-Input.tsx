@@ -111,14 +111,17 @@ export default function MultiModalInput({
 							))}
 						</SelectContent>
 					</Select>
-					<Button variant={"currentFile"} type="button" className={
-						`${!contenxtFile && "border-dashed"}`
-					} onClick={() => setContenxtFile(!contenxtFile)}>
-					<span className={`${!contenxtFile && "line-through"}`}>
-						{currentTab?.name} 
-						</span>	<span className="text-muted ">Current Tab</span> {
-							contenxtFile ? <Eye /> : <EyeOff />
-						}
+					<Button
+						variant={"currentFile"}
+						type="button"
+						className={`${!contenxtFile && "border-dashed"}`}
+						onClick={() => setContenxtFile(!contenxtFile)}
+					>
+						<span className={`${!contenxtFile && "line-through"}`}>
+							{currentTab?.name}
+						</span>
+						<span className="text-muted ">Current Tab</span>{" "}
+						{contenxtFile ? <Eye /> : <EyeOff />}
 					</Button>
 				</div>
 			</div>
