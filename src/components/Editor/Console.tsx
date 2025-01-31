@@ -1,7 +1,7 @@
 import { ajuestLogs } from "@/lib/ajuestLogs";
 import { useApparenceStore } from "@/store/apparence";
 import { useTabsStore } from "@/store/tabs";
-import { lazy, Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));

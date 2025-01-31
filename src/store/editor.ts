@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import type { Monaco } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface EditorState {
 	experimetalConsole: boolean;

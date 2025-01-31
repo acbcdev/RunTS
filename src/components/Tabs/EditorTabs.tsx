@@ -1,14 +1,14 @@
-import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Kd } from "@/components/ui/kd";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Kd } from "@/components/ui/kd";
-import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/store/tabs";
+import { Plus } from "lucide-react";
+import { useShallow } from "zustand/react/shallow";
 
 import { EditorTabsItem } from "@/components/Tabs/EditorTabsItem";
 

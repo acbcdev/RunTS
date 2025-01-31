@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { TabsContent } from "@/components/ui/tabs";
 import {
 	type EditorBehaviorOption,
@@ -7,8 +9,6 @@ import {
 } from "@/consts";
 import { type ConfigOptions, useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {

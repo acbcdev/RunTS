@@ -1,11 +1,8 @@
-import { Cog, Brush, MonitorCog, BrainCog } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { GithubStars } from "@/components/Settings/GithubStars";
+import { AI } from "@/components/Settings/tabs/ai";
 import { Appearance } from "@/components/Settings/tabs/appearance";
+import { Editor } from "@/components/Settings/tabs/editor";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -16,9 +13,12 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Editor } from "@/components/Settings/tabs/editor";
-import { GithubStars } from "@/components/Settings/GithubStars";
-import { AI } from "@/components/Settings/tabs/ai";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { BrainCog, Brush, Cog, MonitorCog } from "lucide-react";
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },

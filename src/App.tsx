@@ -1,10 +1,10 @@
 import { CodeEditor } from "@/components/Editor/CodeEditor";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { useTabsStore } from "@/store/tabs";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { useTabsStore } from "@/store/tabs";
 function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

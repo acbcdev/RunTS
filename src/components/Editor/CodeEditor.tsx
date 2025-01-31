@@ -1,25 +1,25 @@
-import { useEffect } from "react";
-import { EditorTopBar } from "@/components/TopBar/EditorTopBar";
-import { EditorTabs } from "@/components/Tabs/EditorTabs";
 import { EditorMain } from "@/components/Editor/EditorMain";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useConfigStore } from "@/store/config";
-import { useAIConfigStore } from "@/store/aiConfig";
-import { useHotkeys } from "react-hotkeys-hook";
+import { EditorTabs } from "@/components/Tabs/EditorTabs";
+import { EditorTopBar } from "@/components/TopBar/EditorTopBar";
 import {
-	ResizablePanelGroup,
-	ResizablePanel,
 	ResizableHandle,
+	ResizablePanel,
+	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useAIConfigStore } from "@/store/aiConfig";
+import { useConfigStore } from "@/store/config";
+import { useEffect } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
-import { Console } from "@/components/Editor/Console";
-import { updateChangeTheme } from "@/lib/utils";
 import { Chat } from "@/components/AI/Chat";
-import { useShallow } from "zustand/react/shallow";
-import { useTabsStore } from "@/store/tabs";
-import { useApparenceStore } from "@/store/apparence";
-import { useRun } from "@/hooks/useRun";
+import { Console } from "@/components/Editor/Console";
 import { ReloadPrompt } from "@/components/ReloadPrompt";
+import { useRun } from "@/hooks/useRun";
+import { updateChangeTheme } from "@/lib/utils";
+import { useApparenceStore } from "@/store/apparence";
+import { useTabsStore } from "@/store/tabs";
+import { useShallow } from "zustand/react/shallow";
 
 export function CodeEditor() {
 	const { runCode } = useRun();

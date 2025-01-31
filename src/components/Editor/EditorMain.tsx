@@ -1,17 +1,17 @@
-import { lazy, Suspense, useCallback } from "react";
-import type { Monaco } from "@monaco-editor/react";
-import { useEditorStore } from "@/store/editor";
-import { themes } from "@/themes";
-import { editor } from "monaco-editor";
-import { useConfigStore } from "@/store/config";
-import { Loader } from "lucide-react";
-import * as monaco from "monaco-editor";
 import { extraLib } from "@/consts/extraLib";
-import { useAIConfigStore } from "@/store/aiConfig";
-import { useShallow } from "zustand/react/shallow";
-import { useTabsStore } from "@/store/tabs";
-import { useApparenceStore } from "@/store/apparence";
 import { useRun } from "@/hooks/useRun";
+import { useAIConfigStore } from "@/store/aiConfig";
+import { useApparenceStore } from "@/store/apparence";
+import { useConfigStore } from "@/store/config";
+import { useEditorStore } from "@/store/editor";
+import { useTabsStore } from "@/store/tabs";
+import { themes } from "@/themes";
+import type { Monaco } from "@monaco-editor/react";
+import { Loader } from "lucide-react";
+import { editor } from "monaco-editor";
+import * as monaco from "monaco-editor";
+import { Suspense, lazy, useCallback } from "react";
+import { useShallow } from "zustand/react/shallow";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function EditorMain() {

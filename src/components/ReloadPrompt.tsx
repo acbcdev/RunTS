@@ -1,6 +1,5 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { Button } from "./ui/button";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -9,6 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Info, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
 
 export function ReloadPrompt() {
 	const {

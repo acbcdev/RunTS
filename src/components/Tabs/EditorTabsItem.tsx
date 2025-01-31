@@ -1,4 +1,4 @@
-import { useTabsStore } from "@/store/tabs";
+import { Button } from "@/components/ui/button";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -6,15 +6,15 @@ import {
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { useShallow } from "zustand/react/shallow";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import type { Tab } from "@/types/editor";
-import { useEditorStore } from "@/store/editor";
 import { useHandler } from "@/hooks/useHandler";
+import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/editor";
+import { useTabsStore } from "@/store/tabs";
+import type { Tab } from "@/types/editor";
+import { X } from "lucide-react";
 import { useRef } from "react";
+import { toast } from "sonner";
+import { useShallow } from "zustand/react/shallow";
 
 export function EditorTabsItem({ tab }: { tab: Tab }) {
 	const { handleShare, copyCode, downloadCode } = useHandler();

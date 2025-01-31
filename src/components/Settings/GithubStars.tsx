@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { SVGProps } from "react";
 export function GithubStars() {
 	const [stars, setStars] = useState<number | string>("...");

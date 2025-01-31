@@ -1,14 +1,14 @@
+import TextareaAutosize from "@/components/ui/TextareaAutosize";
 import { Button } from "@/components/ui/button";
 import {
 	Select,
-	SelectTrigger,
-	SelectLabel,
+	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectContent,
+	SelectLabel,
+	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import TextareaAutosize from "@/components/ui/TextareaAutosize";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
 import type { providers } from "@/types/ai";

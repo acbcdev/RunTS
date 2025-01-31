@@ -1,9 +1,9 @@
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogDescription,
 } from "@/components/ui/dialog";
 import { useConfigStore } from "@/store/config";
 import { useShallow } from "zustand/react/shallow";

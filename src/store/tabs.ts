@@ -1,7 +1,7 @@
+import type { Tab } from "@/types/editor";
+import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { nanoid } from "nanoid";
-import type { Tab } from "@/types/editor";
 
 interface TabsStore {
 	tabs: Tab[];

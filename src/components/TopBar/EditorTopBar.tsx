@@ -1,28 +1,28 @@
-import {
-	Play,
-	Download,
-	Copy,
-	Trash2,
-	SquareSplitHorizontal,
-	SquareSplitVertical,
-	Share2,
-	Sparkles,
-} from "lucide-react";
+import { EditorSettingsDialog } from "@/components/Settings/EditorSettingDialog";
 import { Button } from "@/components/ui/button";
+import { Kd } from "@/components/ui/kd";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { EditorSettingsDialog } from "@/components/Settings/EditorSettingDialog";
-import { useAIConfigStore } from "@/store/aiConfig";
-import { memo } from "react";
-import { Kd } from "@/components/ui/kd";
-import { useShallow } from "zustand/react/shallow";
-import { useApparenceStore } from "@/store/apparence";
-import { useRun } from "@/hooks/useRun";
 import { useHandler } from "@/hooks/useHandler";
+import { useRun } from "@/hooks/useRun";
+import { useAIConfigStore } from "@/store/aiConfig";
+import { useApparenceStore } from "@/store/apparence";
+import {
+	Copy,
+	Download,
+	Play,
+	Share2,
+	Sparkles,
+	SquareSplitHorizontal,
+	SquareSplitVertical,
+	Trash2,
+} from "lucide-react";
+import { memo } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 export const EditorTopBar = memo(function EditorTopBar() {
 	const { layout, setOption } = useApparenceStore(
