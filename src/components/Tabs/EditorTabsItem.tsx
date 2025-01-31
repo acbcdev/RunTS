@@ -34,19 +34,19 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 		useShallow((state) => state.updateTabCode),
 	);
 
-	const handleDuplicateTab = (tabId: string) => {
-		const tab = tabs.find((tab) => tab.id === tabId);
-		if (!tab) return;
-		const id = addTab({
-			name: `${tab.name}-copy`,
-			language: tab.language,
-			code: tab.code,
-			logs: tab.logs,
+	const handleDuplicateTab = (tabId: Tab["id"]) => {
+		const duplicateTab = tabs.find((tab) => tab.id === tabId);
+		if (!duplicateTab) return;
+		addTab({
+			name: `copy-${duplicateTab.name}`,
+			language: duplicateTab.language,
+			code: duplicateTab.code,
+			logs: duplicateTab.logs,
 		});
-		handleActiveTabChange(id);
+		// handleActiveTabChange(id);
 	};
 
-	const handleActiveTabChange = (tabId: string) => {
+	const handleActiveTabChange = (tabId: Tab["id"]) => {
 		setActiveTab(tabId);
 		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
 		editorRef?.focus();
