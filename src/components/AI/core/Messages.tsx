@@ -1,14 +1,15 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Message } from "ai";
 import Markdown from "@/components/AI/core/Markdown";
-import { useScrollToBottom } from "@/hooks/useScrollToBottom";
-import { memo } from "react";
+import { memo, useRef } from "react";
 
 function PureMessages({
 	messages,
 	streamingContent,
 }: { messages: Message[]; streamingContent: string }) {
-	const [containerRef, endRef] = useScrollToBottom<HTMLDivElement>();
+	// const [containerRef, endRef] = useScrollToBottom<HTMLDivElement>();
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<ScrollArea ref={containerRef} className="flex-1 h-0 scroll-m-2 ">
 			<section className="px-4 py-2 space-y-4 overflow-auto">
@@ -31,10 +32,7 @@ function PureMessages({
 					</div>
 				))}
 
-				<div
-					className="flex flex-col mb-4 prose break-all animate-pulse gap-x-2 hyphens-auto "
-					ref={endRef}
-				>
+				<div className="flex flex-col mb-4 prose break-all animate-pulse gap-x-2 hyphens-auto ">
 					<Markdown
 					// className="prose break-all hyphens-auto dark:prose-invert "
 					>
