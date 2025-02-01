@@ -253,7 +253,8 @@ export function EditorMain() {
 							verticalScrollbarSize: 10,
 						},
 						scrollBeyondLastLine: false,
-
+						lineNumbersMinChars: 2,
+						lineDecorationsWidth: 0,
 						// Editor Behavior
 						contextmenu: true,
 						dragAndDrop: true,

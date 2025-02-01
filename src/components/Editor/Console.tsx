@@ -62,7 +62,7 @@ export function Console() {
 						codeLens: false,
 						multiCursorLimit: 0,
 						lineDecorationsWidth: 0,
-						lineNumbersMinChars: 0,
+						lineNumbersMinChars: 2,
 						renderWhitespace: "selection",
 
 						renderLineHighlight: "none",
