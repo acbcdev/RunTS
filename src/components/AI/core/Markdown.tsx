@@ -110,7 +110,7 @@ const components = {
 	pre: ({ children }) => <>{children}</>,
 	p: ({ node, children, ...props }) => {
 		return (
-			<p className="my-2 leading-7 " {...props}>
+			<p className="my-1 leading-7 " {...props}>
 				{children}
 			</p>
 		);
@@ -124,24 +124,27 @@ const components = {
 	},
 	li: ({ node, children, ...props }) => {
 		return (
-			<li className="py-1 my-2 leading-7" {...props}>
+			<li className=" py-1 leading-7" {...props}>
 				{children}
 			</li>
 		);
 	},
 	ul: ({ node, children, ...props }) => {
 		return (
-			<ul className="list-disc my-2 list-outside ml-4" {...props}>
+			<ul className="list-disc my-1 list-outside ml-4" {...props}>
 				{children}
 			</ul>
 		);
 	},
 	strong: ({ node, children, ...props }) => {
 		return (
-			<span className="font-semibold" {...props}>
+			<span className="font-bold" {...props}>
 				{children}
 			</span>
 		);
+	},
+	br: ({ ...props }) => {
+		return <br className="m-10" {...props} />;
 	},
 	a: (props) => (
 		<a
