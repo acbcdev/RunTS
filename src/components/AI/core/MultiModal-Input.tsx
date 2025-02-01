@@ -50,7 +50,7 @@ export default function MultiModalInput({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex w-full gap-2 mx-auto border rounded-lg bg-background "
+			className="flex w-full gap-2 mx-auto border rounded-lg  "
 		>
 			<div className="flex flex-col flex-1 gap-2 px-3 py-2">
 				<div className="flex flex-1">
@@ -86,9 +86,9 @@ export default function MultiModalInput({
 				<div className="flex w-fit gap-1 ">
 					<Select
 						required
-						defaultValue={`${provider}::::${selectedModel}`}
+						defaultValue={`${provider}::${selectedModel}`}
 						onValueChange={(value) => {
-							const [name, model] = value.split("::::");
+							const [name, model] = value.split("::");
 							setSelectedModel(model);
 							setProvider(name as providers);
 						}}
@@ -103,7 +103,7 @@ export default function MultiModalInput({
 										<Icon className="size-4" /> {name}
 									</SelectLabel>
 									{models.map((model) => (
-										<SelectItem key={model} value={`${name}::::${model}`}>
+										<SelectItem key={model} value={`${name}::${model}`}>
 											{model}
 										</SelectItem>
 									))}
