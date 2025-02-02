@@ -50,7 +50,7 @@ export default function MultiModalInput({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex w-full gap-2 mx-auto border rounded-lg  "
+			className="flex w-full gap-2 mx-auto border rounded-lg overflow-hidden "
 		>
 			<div className="flex flex-col flex-1 gap-2 px-3 py-2">
 				<div className="flex flex-1">
@@ -114,10 +114,12 @@ export default function MultiModalInput({
 					<Button
 						variant={"currentFile"}
 						type="button"
-						className={`${!contenxtFile && "border-dashed"}`}
+						className={`${!contenxtFile && "border-dashed"} `}
 						onClick={() => setContenxtFile(!contenxtFile)}
 					>
-						<span className={`${!contenxtFile && "line-through"}`}>
+						<span
+							className={`${!contenxtFile && "line-through"} hidden md:inline-block`}
+						>
 							{currentTab?.name}
 						</span>
 						<span className="text-muted ">Current Tab</span>{" "}
