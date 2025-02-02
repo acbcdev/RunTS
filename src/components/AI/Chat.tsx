@@ -20,6 +20,7 @@ export function Chat() {
 		isLoading,
 		streamingContent,
 		handleSubmit,
+		stop,
 	} = useChat();
 	return getProviders().length === 0 ? (
 		<AI tabs={false} />
@@ -32,6 +33,7 @@ export function Chat() {
 			<section className=" flex flex-col gap-2 p-4 ">
 				<MultiModalInput
 					input={input}
+					stop={stop}
 					isLoading={isLoading}
 					handleSubmit={handleSubmit}
 					setInput={setInput}
