@@ -7,11 +7,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
-function createSystemPrompt(systemPrompt: string, code: string | undefined) {
-  return `system: ${systemPrompt}  ${
-    code ? ` this is the code of the current tab: ${code}` : ""
-  }`;
-}
+// function createSystemPrompt(systemPrompt: string, code: string | undefined) {
+//   return `system: ${systemPrompt}  ${
+//     code ? ` this is the code of the current tab: ${code}` : ""
+//   }`;
+// }
 
 export function useChat() {
   const provider = useAIConfigStore((state) => state.provider);
@@ -51,10 +51,7 @@ export function useChat() {
 
       const { textStream } = streamText({
         messages: messagesToAI,
-        system: createSystemPrompt(
-          systemPrompt,
-          contenxtFile ? currentTab?.code : ""
-        ),
+        system: systemPrompt(contenxtFile ? currentTab?.code : ""),
         model: createProvider(provider, apiKeys[provider])(selectedModel),
         abortSignal: newController.signal,
       });
