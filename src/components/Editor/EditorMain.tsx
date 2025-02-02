@@ -62,7 +62,8 @@ export function EditorMain() {
 					target: monacoInstance.languages.typescript.ScriptTarget.Latest,
 					module: monacoInstance.languages.typescript.ModuleKind.ESNext,
 					allowNonTsExtensions: true,
-					lib: ["esnext"],
+					lib: ["esnext", "dom"],
+
 					noEmit: true,
 				},
 			);
