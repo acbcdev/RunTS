@@ -24,6 +24,7 @@ Example message:
 ---
 
 ### 🖥️ **ACTIVE TAB CODE SECTION**
+## any question must be answered in the context of the current tab
 this is the code of the current tab
 \`\`\`typescript
 ${code}
