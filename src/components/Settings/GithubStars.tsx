@@ -1,13 +1,13 @@
 import { Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import type { SVGProps } from "react";
-export function GithubStars() {
+function PureGithubStars() {
 	const [stars, setStars] = useState<number | string>("...");
 	useEffect(() => {
 		fetch("https://api.github.com/repos/acbcdev/runts")
 			.then((res) => res.json())
 			.then((data) => setStars(data.stargazers_count))
-			.catch(() => setStars("Error Fetching"));
+			.catch(() => setStars("error fetching"));
 	}, []);
 	return (
 		<a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer">
@@ -22,6 +22,7 @@ export function GithubStars() {
 		</a>
 	);
 }
+export const GithubStars = memo(PureGithubStars);
 const Github = (props: SVGProps<SVGSVGElement>) => (
 	<svg
 		viewBox="0 0 256 250"
