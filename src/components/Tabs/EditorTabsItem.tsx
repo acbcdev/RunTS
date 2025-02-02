@@ -147,7 +147,9 @@ const EditorTabItemName = ({
 			) : (
 				// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 				<span
-					className={cn(`${tab.id === activeTabId && "underline"}  `)}
+					className={cn(
+						`${tab.id === activeTabId && "underline"} line-clamp-2 `,
+					)}
 					spellCheck="false"
 					onClick={() => {
 						if (activeTabId === tab.id) {
