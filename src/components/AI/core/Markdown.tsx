@@ -16,7 +16,7 @@ const components = {
 		const copyToClipboard = () => {
 			navigator.clipboard.writeText(codeContent);
 		};
-		console.log(match);
+		// console.log(match);
 
 		return match ? (
 			<div className="relative max-w-2xl overflow-x-auto group/code">
