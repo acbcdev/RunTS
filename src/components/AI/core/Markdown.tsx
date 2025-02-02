@@ -22,7 +22,7 @@ const components = {
 			<div className="relative max-w-2xl overflow-x-auto group/code">
 				<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg top-3 bg-[#282c34]">
 					<span className="capitalize">{match[1]}</span>
-					<nav className="top-0 right-0 z-10 opacity-0 group-hover/code:opacity-100">
+					<nav className="top-0 right-0 z-10 ">
 						<Button variant={"ghost"} onClick={copyToClipboard}>
 							<Copy />
 						</Button>
