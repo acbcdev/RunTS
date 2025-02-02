@@ -14,7 +14,7 @@ export default function TextareaAutosize({
 }: TextareaAutosizeProps) {
 	const id = useId();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const defaultRows = 2;
+	const defaultRows = 1;
 	const maxRows = 6; // You can set a max number of rows
 
 	const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
