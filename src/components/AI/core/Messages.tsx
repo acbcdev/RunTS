@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Message } from "ai";
 import Markdown from "@/components/AI/core/Markdown";
-import { memo, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 
 function PureMessages({
 	messages,
@@ -9,10 +9,13 @@ function PureMessages({
 }: { messages: Message[]; streamingContent: string }) {
 	// const [containerRef, endRef] = useScrollToBottom<HTMLDivElement>();
 	const containerRef = useRef<HTMLDivElement>(null);
-
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		containerRef.current?.scrollIntoView({ behavior: "instant", block: "end" });
+	}, [messages, containerRef]);
 	return (
-		<ScrollArea ref={containerRef} className="flex-1 h-0 scroll-m-2 ">
-			<section className="px-4 py-2 space-y-4 overflow-auto">
+		<ScrollArea className="flex-1 h-0 scroll-m-2 ">
+			<section ref={containerRef} className="px-4 py-2 space-y-4 overflow-auto">
 				{messages.map((message) => (
 					<div
 						key={message.id}
