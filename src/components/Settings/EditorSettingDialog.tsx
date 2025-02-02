@@ -47,14 +47,14 @@ export function EditorSettingsDialog() {
 			<DialogContent
 				aria-describedby="editor-settings-dialog-description"
 				aria-description="Editor settings"
-				className="p-0 overflow-hidden xl:max-w-5xl lg:max-w-3xl"
+				className="p-0 overflow-hidden xl:max-w-7xl lg:max-w-3xl"
 			>
 				<DialogHeader className="p-6 pb-0">
 					<DialogTitle>
-						Editor Settings <span className="opacity-85">v1.3.0</span>
+						Editor Settings <span className="opacity-85">v1.3.8</span>
 					</DialogTitle>
 					<DialogDescription>Configure the editor settings</DialogDescription>
-					<div className="flex items-center gap-2 mt-2 ">
+					<div className="flex items-center flex-wrap gap-2 mt-2 ">
 						<a
 							href="https://www.buymeacoffee.com/runts"
 							target="_blank"
@@ -71,7 +71,7 @@ export function EditorSettingsDialog() {
 							href="https://github.com/acbcdev/runts/issues/new"
 							target="_blank"
 							rel="noreferrer"
-							className="bg-input text-lg border  rounded-lg px-4 py-2  font-semibold"
+							className="bg-input text-lg border  rounded-lg px-3 py-2  font-semibold"
 						>
 							Feedback
 						</a>
@@ -79,7 +79,7 @@ export function EditorSettingsDialog() {
 							href="https://github.com/acbcdev/runts/issues/new"
 							target="_blank"
 							rel="noreferrer"
-							className="bg-input border  rounded-lg px-4 py-2 text-lg font-semibold"
+							className="bg-input border rounded-lg px-3 py-2 text-lg font-semibold"
 						>
 							Report a bug
 						</a>
