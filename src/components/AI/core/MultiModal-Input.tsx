@@ -20,12 +20,14 @@ type MultiModalInputProps = {
 	isLoading: boolean;
 	handleSubmit: (event: FormEvent) => void;
 	setInput: (value: string) => void;
+	stop: () => void;
 };
 export default function MultiModalInput({
 	input,
 	isLoading,
 	handleSubmit,
 	setInput,
+	stop,
 }: MultiModalInputProps) {
 	const {
 		provider,
@@ -72,14 +74,15 @@ export default function MultiModalInput({
 						}}
 						className="flex-1 break-words border-none shadow-none resize-none caret-accent focus:outline-hidden focus-visible:ring-0 focus:ring-0"
 					/>
+
 					<Button
-						disabled={isLoading}
-						type="submit"
+						type={isLoading ? "button" : "submit"}
+						onClick={isLoading ? stop : handleSubmit}
 						size="icon"
 						variant={"ghost"}
 						className={`size-10 ${isLoading && "bg-accent"}`}
 					>
-						{isLoading ? <StopCircle className="" /> : <Send />}
+						{isLoading ? <StopCircle /> : <Send />}
 					</Button>
 				</div>
 
