@@ -30,6 +30,7 @@ export function useChat() {
   const handleStreamText = async (userContent: string) => {
     if (userContent.trim() === "clear") {
       setMessages([]);
+      setInput("");
       return;
     }
     if (userContent.trim() === "") return;
