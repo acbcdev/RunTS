@@ -35,7 +35,7 @@ function PureMessages({
 					</div>
 				))}
 
-				<div className="flex flex-col mb-4 prose break-all animate-pulse gap-x-2 hyphens-auto ">
+				<div>
 					<Markdown
 					// className="prose break-all hyphens-auto dark:prose-invert "
 					>
