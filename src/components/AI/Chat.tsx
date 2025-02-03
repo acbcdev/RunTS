@@ -27,7 +27,7 @@ export function Chat() {
 	) : (
 		<aside
 			data-state={showChat}
-			className="relative flex flex-col w-full h-full max-w-3xl mx-auto border-none rounded-none shadow-none "
+			className="relative flex flex-col w-full h-full max-w-3xl mx-auto chat border-none rounded-none shadow-none "
 		>
 			<Messages messages={messages} streamingContent={streamingContent} />
 			<section className=" flex flex-col gap-2 p-4 ">
