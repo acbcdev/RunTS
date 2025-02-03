@@ -126,7 +126,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								aria-label="Copy code"
 								size="icon"
 								className="size-8"
-								onClick={() => copyCode}
+								onClick={() => copyCode()}
 							>
 								<Copy />
 							</Button>
