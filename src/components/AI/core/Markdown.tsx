@@ -1,112 +1,115 @@
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
-import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+// import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
-// import { Editor, OnMount } from "@monaco-editor/react";
-// import { useApparenceStore } from "@/store/apparence";
-// import { useShallow } from "zustand/react/shallow";
-// import { useRef } from "react";
+import { Editor } from "@monaco-editor/react";
+import { useApparenceStore } from "@/store/apparence";
+import { useShallow } from "zustand/react/shallow";
 const components = {
-	code: ({ className, children }) => {
-		const match = /language-(\w+)/.exec(className || "");
-		const codeContent = String(children).replace(/\n$/, "");
-
-		const copyToClipboard = () => {
-			navigator.clipboard.writeText(codeContent);
-		};
-		// console.log(match);
-
-		return match ? (
-			<div className="relative max-w-2xl overflow-x-auto group/code">
-				<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg top-3 bg-[#282c34]">
-					<span className="capitalize">{match[1]}</span>
-					<nav className="top-0 right-0 z-10 ">
-						<Button variant={"ghost"} onClick={copyToClipboard}>
-							<Copy />
-						</Button>
-					</nav>
-				</header>
-
-				<SyntaxHighlighter
-					language={match[1]}
-					style={oneDark}
-					PreTag="div"
-					codeTagProps={{
-						className: "whitespace-pre-wrap",
-						style: {
-							display: "inline-block",
-							minWidth: "100%",
-						},
-					}}
-				>
-					{codeContent}
-				</SyntaxHighlighter>
-			</div>
-		) : (
-			<code className="bg-background/60  text-foreground px-2 py-1  rounded">
-				{children}
-			</code>
-		);
-	},
 	// code: ({ className, children }) => {
-	// 	const theme = useApparenceStore(useShallow((state) => state.theme));
 	// 	const match = /language-(\w+)/.exec(className || "");
-	// 	const height = String(children).split("\n").length * 20;
 	// 	const codeContent = String(children).replace(/\n$/, "");
+
 	// 	const copyToClipboard = () => {
 	// 		navigator.clipboard.writeText(codeContent);
 	// 	};
-	// 	const lang = ["tsx", "jsx"].includes(match?.[1] ?? "")
-	// 		? "javascript"
-	// 		: match?.[1];
-	// 	// Calcula el número de líneas
+	// 	// console.log(match);
 
 	// 	return match ? (
-	// 		<section className=" overflow-hidden  my-2  rounded-sm ">
-	// 			<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
-	// 				<span className="px-5 text-accent">{match[1]}</span>
-	// 				<nav className=" ">
-	// 					<Button variant={"ghost"} size={"sm"} onClick={copyToClipboard}>
+	// 		<div className="relative max-w-2xl overflow-x-auto group/code">
+	// 			<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg top-3 bg-[#282c34]">
+	// 				<span className="capitalize">{match[1]}</span>
+	// 				<nav className="top-0 right-0 z-10 ">
+	// 					<Button variant={"ghost"} onClick={copyToClipboard}>
 	// 						<Copy />
 	// 					</Button>
 	// 				</nav>
 	// 			</header>
-	// 			<div className="relative">
-	// 				<div className="absolute inset-0 z-10 " />
-	// 				<Editor
-	// 					language={lang}
-	// 					height={height}
-	// 					theme={theme}
-	// 					value={String(children)}
-	// 					options={{
-	// 						readOnly: true,
-	// 						renderLineHighlight: "none",
-	// 						minimap: {
-	// 							enabled: false,
-	// 						},
-	// 						wordWrap: "on",
-	// 						lineNumbers: "off",
-	// 						lineNumbersMinChars: 3,
-	// 						overviewRulerLanes: 0,
-	// 						automaticLayout: true,
-	// 						scrollBeyondLastLine: false,
-	// 						scrollbar: {
-	// 							// scrollByPage: false,
-	// 							horizontal: "auto",
-	// 							vertical: "hidden",
-	// 						},
-	// 					}}
-	// 				/>
-	// 			</div>
-	// 		</section>
+
+	// 			<SyntaxHighlighter
+	// 				language={match[1]}
+	// 				style={oneDark}
+	// 				PreTag="div"
+	// 				codeTagProps={{
+	// 					className: "whitespace-pre-wrap",
+	// 					style: {
+	// 						display: "inline-block",
+	// 						minWidth: "100%",
+	// 					},
+	// 				}}
+	// 			>
+	// 				{codeContent}
+	// 			</SyntaxHighlighter>
+	// 		</div>
 	// 	) : (
-	// 		<code className="bg-background/60  text-foreground px-2 py-1  rounded-sm">
+	// 		<code className="bg-background/60  text-foreground px-2 py-1  rounded">
 	// 			{children}
 	// 		</code>
 	// 	);
 	// },
+	code: ({ className, children }) => {
+		const theme = useApparenceStore(useShallow((state) => state.theme));
+		const match = /language-(\w+)/.exec(className || "");
+		const code = `\n${String(children).trim()}\n`;
+		const height = code.split("\n").length * 20;
+		const codeContent = String(children).replace(/\n$/, "");
+		const copyToClipboard = () => {
+			navigator.clipboard.writeText(codeContent);
+		};
+		const lang = ["tsx", "jsx"].includes(match?.[1] ?? "")
+			? "javascript"
+			: match?.[1];
+		// Calcula el número de líneas
+
+		return match ? (
+			<section className=" overflow-hidden  my-2  rounded-sm ">
+				<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
+					<span className="px-5 text-foreground/90">{match[1]}</span>
+					<nav className=" ">
+						<Button variant={"ghost"} size={"sm"} onClick={copyToClipboard}>
+							<Copy />
+						</Button>
+					</nav>
+				</header>
+				<div className="relative">
+					{/* <div className="absolute inset-0 z-10 " /> */}
+					<Editor
+						language={lang}
+						height={height}
+						theme={theme}
+						value={code}
+						options={{
+							readOnly: true,
+							renderLineHighlight: "none",
+							minimap: {
+								enabled: false,
+							},
+							// wordWrap: "on",
+							lineNumbers: "off",
+							lineNumbersMinChars: 3,
+							overviewRulerLanes: 0,
+							automaticLayout: true,
+							scrollBeyondLastLine: false,
+							contextmenu: false,
+
+							scrollbar: {
+								// scrollByPage: false,
+								handleMouseWheel: false,
+								horizontal: "auto",
+								vertical: "hidden",
+							},
+						}}
+					/>
+				</div>
+			</section>
+		) : (
+			<code className="bg-background/60  text-foreground px-2 py-1  rounded-sm">
+				{children}
+			</code>
+		);
+	},
 	pre: ({ children }) => <>{children}</>,
 	p: ({ node, children, ...props }) => {
 		return (
