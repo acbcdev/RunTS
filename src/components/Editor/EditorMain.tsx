@@ -248,6 +248,7 @@ export function EditorMain() {
 							vertical: "auto",
 							horizontal: "auto",
 							useShadows: false,
+
 							verticalHasArrows: false,
 							horizontalHasArrows: false,
 							horizontalScrollbarSize: 10,
