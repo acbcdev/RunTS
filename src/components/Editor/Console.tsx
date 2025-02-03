@@ -1,16 +1,16 @@
 import { ajuestLogs } from "@/lib/ajuestLogs";
 import { useApparenceStore } from "@/store/apparence";
 import { useTabsStore } from "@/store/tabs";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+// import {
+// 	Tooltip,
+// 	TooltipContent,
+// 	TooltipTrigger,
+// } from "@/components/ui/tooltip";
 import { Suspense, lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
-import { useAIConfigStore } from "@/store/aiConfig";
+// import { Button } from "@/components/ui/button";
+// import { Sparkles } from "lucide-react";
+// import { useAIConfigStore } from "@/store/aiConfig";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
@@ -26,11 +26,11 @@ export function Console() {
 			fontFamily: state.fontFamily,
 		})),
 	);
-	const { toggleChat } = useAIConfigStore(
-		useShallow((state) => ({
-			toggleChat: state.toggleChat,
-		})),
-	);
+	// const { toggleChat } = useAIConfigStore(
+	// 	useShallow((state) => ({
+	// 		toggleChat: state.toggleChat,
+	// 	})),
+	// );
 
 	// const handleAskAI = () => {
 	// 	toggleChat(true);
