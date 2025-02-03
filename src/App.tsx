@@ -13,16 +13,21 @@ function App() {
 		window.history.replaceState(null, "", "/");
 		if (code) {
 			try {
-				const codigo = atob(code);
+				console.log(code);
+				const decodedCode = window.atob(code);
 				const id = addTab({
 					name: "shared.ts",
 					language: "typescript",
-					code: codigo,
+					code: decodedCode,
 					logs: [],
 				});
 				setActiveTab(id);
+				toast.success("Code loaded", {
+					description: "The code has been loaded.",
+					duration: 2000,
+				});
 			} catch {
-				toast("invaliad Code", {
+				toast.error("invaliad Code", {
 					description: "The code is error on decode",
 				});
 			}
