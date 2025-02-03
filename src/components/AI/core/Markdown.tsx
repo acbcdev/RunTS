@@ -1,54 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
-// import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { Editor } from "@monaco-editor/react";
 import { useApparenceStore } from "@/store/apparence";
 import { useShallow } from "zustand/react/shallow";
 const components = {
-	// code: ({ className, children }) => {
-	// 	const match = /language-(\w+)/.exec(className || "");
-	// 	const codeContent = String(children).replace(/\n$/, "");
-
-	// 	const copyToClipboard = () => {
-	// 		navigator.clipboard.writeText(codeContent);
-	// 	};
-	// 	// console.log(match);
-
-	// 	return match ? (
-	// 		<div className="relative max-w-2xl overflow-x-auto group/code">
-	// 			<header className="sticky flex items-center justify-between px-4 py-2 border-b rounded-t-lg top-3 bg-[#282c34]">
-	// 				<span className="capitalize">{match[1]}</span>
-	// 				<nav className="top-0 right-0 z-10 ">
-	// 					<Button variant={"ghost"} onClick={copyToClipboard}>
-	// 						<Copy />
-	// 					</Button>
-	// 				</nav>
-	// 			</header>
-
-	// 			<SyntaxHighlighter
-	// 				language={match[1]}
-	// 				style={oneDark}
-	// 				PreTag="div"
-	// 				codeTagProps={{
-	// 					className: "whitespace-pre-wrap",
-	// 					style: {
-	// 						display: "inline-block",
-	// 						minWidth: "100%",
-	// 					},
-	// 				}}
-	// 			>
-	// 				{codeContent}
-	// 			</SyntaxHighlighter>
-	// 		</div>
-	// 	) : (
-	// 		<code className="bg-background/60  text-foreground px-2 py-1  rounded">
-	// 			{children}
-	// 		</code>
-	// 	);
-	// },
 	code: ({ className, children }) => {
 		const theme = useApparenceStore(useShallow((state) => state.theme));
 		const match = /language-(\w+)/.exec(className || "");
