@@ -1,8 +1,16 @@
 import { ajuestLogs } from "@/lib/ajuestLogs";
 import { useApparenceStore } from "@/store/apparence";
 import { useTabsStore } from "@/store/tabs";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Suspense, lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
+import { useAIConfigStore } from "@/store/aiConfig";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
@@ -18,8 +26,17 @@ export function Console() {
 			fontFamily: state.fontFamily,
 		})),
 	);
+	const { toggleChat } = useAIConfigStore(
+		useShallow((state) => ({
+			toggleChat: state.toggleChat,
+		})),
+	);
+
+	// const handleAskAI = () => {
+	// 	toggleChat(true);
+	// };
 	return (
-		<div className="relative h-full bg-background" translate="no">
+		<div className="relative h-full bg-background group/console" translate="no">
 			<Suspense
 				fallback={
 					<div className="flex items-center justify-center h-full bg-background animate-pulse">
@@ -29,6 +46,23 @@ export function Console() {
 					</div>
 				}
 			>
+				{/* <Tooltip delayDuration={50}>
+					<TooltipTrigger className="absolute hidden duration-200 group-hover/console:block z-50 top-1 right-4">
+						<Button
+							variant="ghost"
+							size="icon"
+							aria-label="ask AI about output"
+							onClick={handleAskAI}
+							className={
+								"size-8   from-accent hover:bg-linear-to-br hover:text-foreground from-30% to-destructive"
+							}
+						>
+							<Sparkles className="rotate-90" />
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent side="left">Explain Output</TooltipContent>
+				</Tooltip> */}
+
 				<MonacoEditor
 					value={ajuestLogs(getCurrentTab()?.logs ?? []) ?? ""}
 					language="javascript"
