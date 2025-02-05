@@ -192,7 +192,8 @@ export function EditorMain() {
 							bracketPairs: true,
 							indentation: true,
 						},
-
+						autoClosingBrackets: "always",
+						autoClosingQuotes: "always",
 						// Code Intelligence
 						codeLens: true,
 						lightbulb: {

@@ -18,7 +18,6 @@ const components = {
 		const lang = ["tsx", "jsx"].includes(match?.[1] ?? "")
 			? "javascript"
 			: match?.[1];
-		// Calcula el número de líneas
 
 		return match ? (
 			<section className=" overflow-hidden  my-2  rounded-sm ">
@@ -43,6 +42,7 @@ const components = {
 							minimap: {
 								enabled: false,
 							},
+
 							// wordWrap: "on",
 							lineNumbers: "off",
 							lineNumbersMinChars: 3,
@@ -50,7 +50,7 @@ const components = {
 							automaticLayout: true,
 							scrollBeyondLastLine: false,
 							contextmenu: false,
-
+							mouseWheelZoom: false,
 							scrollbar: {
 								// scrollByPage: false,
 								handleMouseWheel: false,
