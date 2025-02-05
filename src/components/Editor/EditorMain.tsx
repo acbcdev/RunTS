@@ -182,7 +182,7 @@ export function EditorMain() {
 						trimAutoWhitespace: true,
 						glyphMargin: true,
 						wordWrap: wordWrap ? "on" : "off",
-
+						fixedOverflowWidgets: true,
 						// Auto-formatting & Indentation
 						autoIndent: "full",
 						formatOnPaste: true,
