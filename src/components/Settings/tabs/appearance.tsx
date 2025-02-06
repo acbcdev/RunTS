@@ -26,7 +26,7 @@ export function Appearance() {
 					<h3 translate="no" className="mb-4 text-base font-medium">
 						Color Theme
 					</h3>
-					<div className="grid grid-cols-2 gap-3 cursor-pointer">
+					<div className="grid grid-cols-2 md:grid-cols-3 gap-3 cursor-pointer">
 						{Object.entries(themes).map(([key, value]) => (
 							<button
 								translate="no"
