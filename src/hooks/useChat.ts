@@ -84,11 +84,9 @@ export function useChat() {
         position: "bottom-center",
         duration: 10000,
       });
-      if (
-        messages.filter((m) => m.role === "user").length === messages.length &&
-        messages.length > 0
-      ) {
-        setMessages([]);
+      console.log(messages.at(-1));
+      if (messages.at(-1)?.role === "user") {
+        setMessages(messages.slice(0, -1));
       }
     } finally {
       setIsLoading(false);
