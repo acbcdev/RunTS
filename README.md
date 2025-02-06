@@ -23,7 +23,6 @@ Currently, only the **web version** of the application is available. The **Tauri
 
 ## 🛠 Tech Stack
 
-- **Framework App**: [Tauri](https://tauri.app/)
 - **Frontend**: [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
