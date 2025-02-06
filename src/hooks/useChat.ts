@@ -90,6 +90,7 @@ export function useChat() {
       }
     } finally {
       setIsLoading(false);
+      setStreamingContent("");
     }
   };
 
