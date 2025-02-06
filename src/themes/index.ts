@@ -20,7 +20,7 @@ export const themes: Record<string, Theme> = {
     },
     monaco: {
       comment: "#5c6773",
-      keyword: "#d17742",
+      keyword: "#c371db",
       string: "#769463",
       number: "#b88a5f",
       operator: "#8dc6e6",
