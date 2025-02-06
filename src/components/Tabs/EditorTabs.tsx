@@ -21,8 +21,8 @@ export function EditorTabs() {
 
 	return (
 		<div className="flex items-center border-b  justify-start bg-background bg-opacity-80">
-			<ScrollArea className="max-w-[calc(100%-32px)]">
-				<div className="flex">
+			<ScrollArea className="max-w-dvw">
+				<div className="flex  overflow-x-auto">
 					{tabs.map((tab) => (
 						<EditorTabsItem key={tab.id} tab={tab} />
 					))}
