@@ -140,7 +140,7 @@ const EditorTabItemName = ({
 							handleTabEdited(tab.id);
 						}
 					}}
-					className="border-none  rounded-none outline-none m-0  max-w-32 h-full p-0   focus-visible:ring-0"
+					className="border-none  rounded-none outline-none m-0 w-fit  max-w-32 h-full p-0   focus-visible:ring-0"
 					onChange={(e) => changeNameTab(tab.id, e.target.value)}
 					onBlur={() => handleTabEdited(tab.id)}
 				/>
@@ -148,7 +148,7 @@ const EditorTabItemName = ({
 				// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 				<span
 					className={cn(
-						`${tab.id === activeTabId && "underline"} line-clamp-2 `,
+						`${tab.id === activeTabId && "underline"} line-clamp-1  `,
 					)}
 					spellCheck="false"
 					onClick={() => {
@@ -190,49 +190,48 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 	};
 
 	return (
-		<TabContextMenuItem
-			tabs={tabs}
-			tab={tab}
-			removeTab={removeTab}
-			setEditing={setEditing}
-			inputRef={inputRef}
+		<button
+			type="button"
+			className={`${activeTabId === tab.id && " bg-border/30 grow-2"}  border-r cursor-pointer transition-colors  `}
+			onClick={() => {
+				if (!tab.editing || activeTabId !== tab.id) {
+					handleActiveTabChange(tab.id);
+				}
+			}}
 		>
-			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-			<div
-				className={cn(
-					`${activeTabId === tab.id ? "bg-header " : "bg-transparent hover:bg-background"}`,
-					"  group/tab flex items-center gap-2 px-3 py-1.5 border-r cursor-pointer transition-colors  ",
-				)}
-				onClick={() => {
-					if (!tab.editing || activeTabId !== tab.id) {
-						handleActiveTabChange(tab.id);
-					}
-				}}
+			<TabContextMenuItem
+				tabs={tabs}
+				tab={tab}
+				removeTab={removeTab}
+				setEditing={setEditing}
+				inputRef={inputRef}
 			>
-				<EditorTabItemName
-					tab={tab}
-					inputRef={inputRef}
-					tabs={tabs}
-					changeNameTab={changeNameTab}
-					activeTabId={activeTabId}
-					setEditing={setEditing}
-				/>
-				{tabs.length > 1 && (
-					<Button
-						variant="destructive"
-						size="icon"
-						aria-label="Close tab"
-						translate="no"
-						className="h-5 w-5 p-0 bg-transparent rounded-full"
-						onClick={(e) => {
-							e.stopPropagation();
-							removeTab(tab.id);
-						}}
-					>
-						<X className="size-3" />
-					</Button>
-				)}
-			</div>
-		</TabContextMenuItem>
+				<div className={"group/tab flex items-center gap-x-1 px-3 py-1.5     "}>
+					<EditorTabItemName
+						tab={tab}
+						inputRef={inputRef}
+						tabs={tabs}
+						changeNameTab={changeNameTab}
+						activeTabId={activeTabId}
+						setEditing={setEditing}
+					/>
+					{tabs.length > 1 && (
+						<Button
+							variant="destructive"
+							size="icon"
+							aria-label="Close tab"
+							translate="no"
+							className="h-5 w-5 p-0 bg-transparent rounded-full"
+							onClick={(e) => {
+								e.stopPropagation();
+								removeTab(tab.id);
+							}}
+						>
+							<X className="size-3" />
+						</Button>
+					)}
+				</div>
+			</TabContextMenuItem>
+		</button>
 	);
 }
