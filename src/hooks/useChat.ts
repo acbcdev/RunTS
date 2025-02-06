@@ -73,7 +73,6 @@ export function useChat() {
           },
         ]);
       }
-      setStreamingContent("");
     } catch (error) {
       let errorMessage = "Something went wrong";
       if (error instanceof Error) {
