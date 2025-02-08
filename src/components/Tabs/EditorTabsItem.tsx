@@ -192,6 +192,7 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 	return (
 		<button
 			type="button"
+			title={tab.name}
 			className={`${activeTabId === tab.id && " bg-border/30 grow-2"}  border-r cursor-pointer transition-colors  `}
 			onClick={() => {
 				if (!tab.editing || activeTabId !== tab.id) {
