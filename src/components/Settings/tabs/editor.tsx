@@ -101,8 +101,8 @@ export function Editor() {
 					<h3 className="mb-4 text-base font-medium">Experimetal</h3>
 					<div className="space-y-4">
 						<EditorSwitch
-							label="Direct Console.log"
-							description="show the Console.log without need to use the console.log(variable) only works inline"
+							label="Expression Runner"
+							description="Automatically displays the output of expressions in the console without requiring console.log(). Works only for inline expressions."
 							value={experimetalConsole}
 							callback={() => setExperimental(!experimetalConsole)}
 						/>
