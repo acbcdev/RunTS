@@ -83,7 +83,7 @@ export function useChat() {
         position: "bottom-center",
         duration: 10000,
       });
-      console.log(messages.at(-1));
+      // console.log(messages.at(-1));
       if (messages.at(-1)?.role === "user") {
         setMessages(messages.slice(0, -1));
       }
