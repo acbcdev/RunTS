@@ -13,8 +13,8 @@ function PureGithubStars() {
 		<a href="https://github.com/acbcdev/RunTS" target="_blank" rel="noreferrer">
 			<div className="flex items-center justify-center gap-x-2 p-2 rounded-lg text-zinc-100 border  ">
 				<Github className="size-6" />
-				<p>
-					<span className="hidden md:inline-block">Github Starts:</span>
+				<p className="space-x-0.5">
+					<span className="hidden md:inline-block">Github Starts: </span>
 					<span className="text-lg font-bold text-success">{stars}</span>
 				</p>
 				<Star className="size-6 text-accent fill-accent" />
