@@ -5,6 +5,8 @@ import { useTabsStore } from "@/store/tabs";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { decode } from "js-base64";
+
 function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -13,8 +15,7 @@ function App() {
 		window.history.replaceState(null, "", "/");
 		if (code) {
 			try {
-				console.log(code);
-				const decodedCode = window.atob(code);
+				const decodedCode = decode(code);
 				const id = addTab({
 					name: "shared.ts",
 					language: "typescript",

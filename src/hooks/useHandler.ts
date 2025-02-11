@@ -2,7 +2,7 @@ import { useTabsStore } from "@/store/tabs";
 import type { Tab } from "@/types/editor";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-
+import { encode } from "js-base64";
 export function useHandler() {
   const getCurrentTab = useTabsStore(
     useShallow((state) => state.getCurrentTab)
@@ -22,7 +22,7 @@ export function useHandler() {
       return;
     }
     try {
-      const encodedCode = window.btoa(tab?.code.trim() ?? "");
+      const encodedCode = encode(tab?.code.trim() ?? "");
       const link = `${url.origin}/?code=${encodedCode}`;
       navigator.clipboard.writeText(link);
       toast.success("Link Created", {
