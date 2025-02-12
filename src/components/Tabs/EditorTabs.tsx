@@ -30,7 +30,7 @@ export function EditorTabs() {
 			</ScrollArea>
 
 			<Tooltip>
-				<TooltipTrigger>
+				<TooltipTrigger tabIndex={-1}>
 					<Button
 						variant="ghost"
 						aria-label="New tab"

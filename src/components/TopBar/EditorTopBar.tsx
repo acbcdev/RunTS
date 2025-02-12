@@ -52,7 +52,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 				<div className="flex items-center space-x-2">
 					<EditorSettingsDialog />
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -69,7 +69,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -87,7 +87,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 						<TooltipContent>Toogle layout</TooltipContent>
 					</Tooltip>
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -105,7 +105,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 				</div>
 				<div className="flex items-center space-x-2">
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								aria-label="Share code"
 								variant="ghost"
@@ -120,7 +120,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								aria-label="Copy code"
@@ -135,7 +135,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -150,7 +150,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger tabIndex={-1}>
 							<Button
 								variant="ghost"
 								aria-label="Clear console"

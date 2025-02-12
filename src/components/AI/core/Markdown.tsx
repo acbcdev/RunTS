@@ -10,6 +10,7 @@ import { useTabsStore } from "@/store/tabs";
 import {
 	Tooltip,
 	TooltipContent,
+	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 const components = {
@@ -35,27 +36,35 @@ const components = {
 			<section className=" overflow-hidden  my-2  rounded-sm ">
 				<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
 					<span className="px-5 text-foreground/90">{match[1]}</span>
-					<nav className=" ">
-						<Tooltip>
-							<TooltipTrigger tabIndex={-1}>
-								<Button
-									variant={"ghost"}
-									size={"sm"}
-									onClick={() => newTab(code)}
-								>
-									<FilePlus2 />
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>New Tab</TooltipContent>
-						</Tooltip>
-						<Tooltip>
-							<TooltipTrigger tabIndex={-1}>
-								<Button variant={"ghost"} size={"sm"} onClick={copyToClipboard}>
-									{copied ? <CopyCheck /> : <Copy />}
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>Copy code</TooltipContent>
-						</Tooltip>
+					<nav>
+						<TooltipProvider delayDuration={0} skipDelayDuration={0}>
+							<Tooltip>
+								<TooltipTrigger tabIndex={-1}>
+									<Button
+										variant={"ghost"}
+										size={"sm"}
+										aria-label="New tab with this code"
+										onClick={() => newTab(code)}
+									>
+										<FilePlus2 />
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>New Tab</TooltipContent>
+							</Tooltip>
+							<Tooltip>
+								<TooltipTrigger tabIndex={-1}>
+									<Button
+										variant={"ghost"}
+										size={"sm"}
+										aria-label="Copy code"
+										onClick={copyToClipboard}
+									>
+										{copied ? <CopyCheck /> : <Copy />}
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>Copy code</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
 					</nav>
 				</header>
 				<div className="relative">

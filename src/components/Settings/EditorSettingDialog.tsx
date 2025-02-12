@@ -28,8 +28,8 @@ export function EditorSettingsDialog() {
 	return (
 		<Dialog aria-description="Editor settings">
 			<Tooltip>
-				<TooltipTrigger>
-					<DialogTrigger>
+				<TooltipTrigger tabIndex={-1}>
+					<DialogTrigger tabIndex={-1}>
 						<Button
 							variant="ghost"
 							size="icon"
