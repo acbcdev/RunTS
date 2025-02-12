@@ -10,7 +10,7 @@ interface TabsStore {
   getCurrentTab: () => Tab | undefined;
   removeTab: (id: Tab["id"]) => void;
   addTab: (tab: Omit<Tab, "id">) => Tab["id"];
-  newTab: VoidFunction;
+  newTab: (code?: string) => void;
   setEditing: (id: Tab["id"], editing?: boolean) => void;
   changeNameTab: (id: Tab["id"], name: string) => void;
   updateTabCode: (id: Tab["id"], code: string) => void;
@@ -68,11 +68,11 @@ export const useTabsStore = create<TabsStore>()(
       activeTabId: "1",
       getCurrentTab: () =>
         get().tabs.find((tab) => tab.id === get().activeTabId),
-      newTab: () => {
+      newTab: (code) => {
         get().addTab({
           name: `untitled-${Date.now().toString().slice(-4)}.ts`,
           language: "typescript",
-          code: "",
+          code: code || "",
           logs: [],
         });
       },
