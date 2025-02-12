@@ -50,7 +50,7 @@ export function CodeEditor() {
 	);
 	useHotkeys("ctrl+q", runCode);
 	useHotkeys("ctrl+b", () => toggleChat());
-	useHotkeys("ctrl+shift+d", newTab, { preventDefault: true });
+	useHotkeys("ctrl+shift+d", () => newTab(), { preventDefault: true });
 
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
