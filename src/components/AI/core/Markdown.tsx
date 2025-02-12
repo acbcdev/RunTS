@@ -1,19 +1,31 @@
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Editor } from "@monaco-editor/react";
 import { useApparenceStore } from "@/store/apparence";
 import { useShallow } from "zustand/react/shallow";
+import { useState } from "react";
+import { useTabsStore } from "@/store/tabs";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 const components = {
 	code: ({ className, children }) => {
 		const theme = useApparenceStore(useShallow((state) => state.theme));
+		const newTab = useTabsStore(useShallow((state) => state.newTab));
+
 		const match = /language-(\w+)/.exec(className || "");
 		const code = `\n${String(children).trim()}\n`;
 		const height = code.split("\n").length * 20;
 		const codeContent = String(children).replace(/\n$/, "");
+		const [copied, setCopied] = useState(false);
 		const copyToClipboard = () => {
 			navigator.clipboard.writeText(codeContent);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
 		};
 		const lang = ["tsx", "jsx"].includes(match?.[1] ?? "")
 			? "javascript"
@@ -24,9 +36,26 @@ const components = {
 				<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
 					<span className="px-5 text-foreground/90">{match[1]}</span>
 					<nav className=" ">
-						<Button variant={"ghost"} size={"sm"} onClick={copyToClipboard}>
-							<Copy />
-						</Button>
+						<Tooltip>
+							<TooltipTrigger tabIndex={-1}>
+								<Button
+									variant={"ghost"}
+									size={"sm"}
+									onClick={() => newTab(code)}
+								>
+									<FilePlus2 />
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>New Tab</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger tabIndex={-1}>
+								<Button variant={"ghost"} size={"sm"} onClick={copyToClipboard}>
+									{copied ? <CopyCheck /> : <Copy />}
+								</Button>
+							</TooltipTrigger>
+							<TooltipContent>Copy code</TooltipContent>
+						</Tooltip>
 					</nav>
 				</header>
 				<div className="relative">
