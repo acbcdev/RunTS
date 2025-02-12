@@ -26,7 +26,7 @@ function PureMessages({
 						<div
 							className={`rounded-lg p-4  ${
 								message.role === "user"
-									? "bg-border text-primary-foreground"
+									? "bg-border/20 text-primary-foreground"
 									: "bg-input"
 							}`}
 						>
