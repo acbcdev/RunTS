@@ -66,8 +66,6 @@ export function EditorMain() {
 					isolatedModules: true,
 					composite: false,
 					declaration: false,
-					allowJs: true,
-					checkJs: true,
 					skipLibCheck: true,
 					noResolve: true,
 					noEmit: true,
