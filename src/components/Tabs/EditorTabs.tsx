@@ -36,7 +36,7 @@ export function EditorTabs() {
 						aria-label="New tab"
 						size="icon"
 						className="rounded-full size-8 m-0 "
-						onClick={newTab}
+						onClick={() => newTab()}
 					>
 						<Plus />
 					</Button>
