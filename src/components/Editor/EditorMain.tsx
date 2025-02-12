@@ -63,12 +63,6 @@ export function EditorMain() {
 					module: monacoInstance.languages.typescript.ModuleKind.ESNext,
 					allowNonTsExtensions: true,
 					lib: ["esnext", "dom"],
-					isolatedModules: true,
-					composite: false,
-					declaration: false,
-					skipLibCheck: true,
-					noResolve: true,
-					noEmit: true,
 				},
 			);
 			editor.addCommand(
