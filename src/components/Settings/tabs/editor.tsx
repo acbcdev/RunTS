@@ -90,7 +90,7 @@ export function Editor() {
 							<Button
 								key={time}
 								variant={refreshTime === value ? "border" : "outline"}
-								onClick={() => setRefreshTime(refreshTime)}
+								onClick={() => setRefreshTime(value)}
 							>
 								{time}
 							</Button>
@@ -129,8 +129,8 @@ function EditorSwitch({
 			key={label}
 			className="flex border items-center justify-between p-3 rounded-lg "
 		>
-			<div>
-				<h3 className="font-bold ">{label}</h3>
+			<div className="space-y-1">
+				<h3 className="font-bold  ">{label}</h3>
 				<p className="text-sm font-medium opacity-60">{description}</p>
 			</div>
 			<Switch checked={value} onCheckedChange={callback} />
