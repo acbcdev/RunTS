@@ -98,7 +98,7 @@
 :root {
 	--radius: 0.5rem;
 	caret-color: var(--accent);
-	color: var(--foreground,white);
+	color: var(--foreground, white);
 }
 
 textarea {
