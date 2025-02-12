@@ -79,7 +79,6 @@ export default function MultiModalInput({
 						type={isLoading ? "button" : "submit"}
 						onClick={isLoading ? stop : handleSubmit}
 						size="icon"
-						variant={"ghost"}
 						className={`size-10 ${isLoading && "bg-accent"}`}
 					>
 						{isLoading ? <StopCircle /> : <Send />}
