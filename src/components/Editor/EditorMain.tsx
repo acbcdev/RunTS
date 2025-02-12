@@ -81,7 +81,7 @@ export function EditorMain() {
 			});
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
-				toogleChat,
+				() => toogleChat(),
 			);
 			editor.addAction({
 				id: "show-chat",
@@ -95,7 +95,7 @@ export function EditorMain() {
 				monacoInstance.KeyMod.CtrlCmd |
 					monacoInstance.KeyCode.KeyD |
 					monacoInstance.KeyMod.Shift,
-				newTab,
+				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
@@ -105,7 +105,7 @@ export function EditorMain() {
 						monacoInstance.KeyCode.KeyD |
 						monacoInstance.KeyMod.Shift,
 				],
-				run: newTab,
+				run: () => newTab(),
 			});
 			monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
 				{
