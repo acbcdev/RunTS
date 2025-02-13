@@ -3,6 +3,7 @@ import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
 import { openai } from "@/svg/openai";
 import type { ProviderItem } from "@/types/ai";
+import type { lineRendererEditor } from "@/types/editor";
 
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
 
@@ -18,6 +19,13 @@ export const refreshTimes = [
 	{ value: 1000, time: "1s" },
 	{ value: 2000, time: "2s" },
 	{ value: 3000, time: "3s" },
+];
+
+export const renderLines: lineRendererEditor[] = [
+	"none",
+	"gutter",
+	"line",
+	"all",
 ];
 export const fontFamilies = [
 	{ name: "Cascadia Code", value: '"Cascadia Code"' },
