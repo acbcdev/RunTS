@@ -92,7 +92,7 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Run code"
-								className={`size-8  from-accent  hover:bg-linear-to-br hover:text-foreground from-30% to-destructive  ${showChat && "bg-accent"}`}
+								className={`size-8  from-accent  hover:bg-linear-to-br hover:text-foreground from-30% to-destructive  ${showChat && "bg-linear-to-br"}`}
 								onClick={() => toggleChat()}
 							>
 								<Sparkles />
