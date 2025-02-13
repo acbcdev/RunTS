@@ -1,3 +1,4 @@
+import type { lineRendererEditor } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 export type ConfigEditor = {
@@ -7,12 +8,14 @@ export type ConfigEditor = {
 	refreshTime: number;
 	minimap: boolean;
 	updates: boolean;
+	lineRenderer: lineRendererEditor;
 	setWordWrap: (value: boolean) => void;
 	setLineNumbers: (value: boolean) => void;
 	setWhiteSpace: (value: boolean) => void;
 	setRefreshTime: (value: number) => void;
 	setMinimap: (value: boolean) => void;
 	setUpdates: (value: boolean) => void;
+	setLineRenderer: (value: lineRendererEditor) => void;
 };
 
 export const useConfigStore = create<ConfigEditor>()(
@@ -24,6 +27,8 @@ export const useConfigStore = create<ConfigEditor>()(
 			whiteSpace: true,
 			refreshTime: 200,
 			minimap: true,
+			lineRenderer: "line",
+			setLineRenderer: (lineRenderer) => set({ lineRenderer }),
 			setWordWrap: (wordWrap) => set({ wordWrap }),
 			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
 			setWhiteSpace: (whiteSpace) => set({ whiteSpace }),
