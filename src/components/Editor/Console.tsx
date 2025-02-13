@@ -1,21 +1,15 @@
 import { ajuestLogs } from "@/lib/ajuestLogs";
 import { useApparenceStore } from "@/store/apparence";
+import { useConfigStore } from "@/store/config";
 import { useTabsStore } from "@/store/tabs";
-// import {
-// 	Tooltip,
-// 	TooltipContent,
-// 	TooltipTrigger,
-// } from "@/components/ui/tooltip";
 import { Suspense, lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
-// import { Button } from "@/components/ui/button";
-// import { Sparkles } from "lucide-react";
-// import { useAIConfigStore } from "@/store/aiConfig";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function Console() {
 	// useTabsStore
+	const lineNumbers = useConfigStore(useShallow((state) => state.lineNumbers));
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
@@ -68,7 +62,7 @@ export function Console() {
 					language="javascript"
 					theme={theme}
 					options={{
-						lineNumbers: "on",
+						lineNumbers: lineNumbers ? "on" : "off",
 						language: "javascript",
 						scrollbar: {
 							horizontal: "visible",
@@ -81,6 +75,7 @@ export function Console() {
 							top: 20,
 							bottom: 12,
 						},
+
 						fontSize,
 						automaticLayout: true,
 						fontFamily,
@@ -88,11 +83,12 @@ export function Console() {
 						glyphMargin: false,
 						scrollBeyondLastLine: false,
 						folding: true,
+
 						bracketPairColorization: {
 							enabled: false,
 						},
 						cursorStyle: "block",
-						cursorBlinking: "expand",
+						cursorBlinking: "phase",
 						codeLens: false,
 						multiCursorLimit: 0,
 						lineDecorationsWidth: 0,
