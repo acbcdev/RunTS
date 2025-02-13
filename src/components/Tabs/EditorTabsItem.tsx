@@ -145,13 +145,12 @@ const EditorTabItemName = ({
 					onBlur={() => handleTabEdited(tab.id)}
 				/>
 			) : (
-				// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 				<span
 					className={cn(
 						`${tab.id === activeTabId && "underline"} line-clamp-1  `,
 					)}
 					spellCheck="false"
-					onClick={() => {
+					onDoubleClick={() => {
 						if (activeTabId === tab.id) {
 							setEditing(tab.id, true);
 							setTimeout(() => {
