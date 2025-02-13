@@ -23,14 +23,16 @@ export function EditorMain() {
 	);
 	const running = useEditorStore(useShallow((state) => state.running));
 	// useConfigStore
-	const { wordWrap, lineNumbers, minimap, whiteSpace } = useConfigStore(
-		useShallow((state) => ({
-			wordWrap: state.wordWrap,
-			lineNumbers: state.lineNumbers,
-			minimap: state.minimap,
-			whiteSpace: state.whiteSpace,
-		})),
-	);
+	const { wordWrap, lineNumbers, minimap, whiteSpace, lineRenderer } =
+		useConfigStore(
+			useShallow((state) => ({
+				wordWrap: state.wordWrap,
+				lineNumbers: state.lineNumbers,
+				minimap: state.minimap,
+				whiteSpace: state.whiteSpace,
+				lineRenderer: state.lineRenderer,
+			})),
+		);
 	// useTabsStore
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 	const updateTabCode = useTabsStore(
@@ -231,7 +233,7 @@ export function EditorMain() {
 							enabled: true,
 						},
 						renderControlCharacters: true,
-						renderLineHighlight: "all",
+						renderLineHighlight: lineRenderer,
 						renderValidationDecorations: "on",
 						renderWhitespace: whiteSpace ? "all" : "selection",
 						"semanticHighlighting.enabled": true,
