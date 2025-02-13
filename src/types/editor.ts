@@ -30,3 +30,5 @@ export interface Tab {
 	logs: ConsoleOutput[];
 	editing?: boolean;
 }
+
+export type lineRendererEditor = "none" | "gutter" | "line" | "all";
