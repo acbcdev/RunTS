@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { TabsContent } from "@/components/ui/tabs";
-import { refreshTimes } from "@/consts";
+import { refreshTimes, renderLines } from "@/consts";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
 import { useShallow } from "zustand/react/shallow";
@@ -25,6 +25,8 @@ export function Editor() {
 		setWhiteSpace,
 		refreshTime,
 		setRefreshTime,
+		lineRenderer,
+		setLineRenderer,
 	} = useConfigStore(
 		useShallow((state) => ({
 			wordWrap: state.wordWrap,
@@ -37,6 +39,8 @@ export function Editor() {
 			setWhiteSpace: state.setWhiteSpace,
 			refreshTime: state.refreshTime,
 			setRefreshTime: state.setRefreshTime,
+			lineRenderer: state.lineRenderer,
+			setLineRenderer: state.setLineRenderer,
 		})),
 	);
 	const SettingsEditor = [
@@ -82,7 +86,20 @@ export function Editor() {
 						))}
 					</div>
 				</section>
-
+				<section>
+					<h3 className="mb-4 text-base font-medium">Line Renderer</h3>
+					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
+						{renderLines.map((renderline) => (
+							<Button
+								key={renderline}
+								variant={lineRenderer === renderline ? "border" : "outline"}
+								onClick={() => setLineRenderer(renderline)}
+							>
+								{renderline}
+							</Button>
+						))}
+					</div>
+				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Refresh Time</h3>
 					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
