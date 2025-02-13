@@ -11,7 +11,7 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { useConfigStore } from "@/store/config";
 import { useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-
+import { AnimatePresence, motion } from "motion/react";
 import { Chat } from "@/components/AI/Chat";
 import { Console } from "@/components/Editor/Console";
 import { ReloadPrompt } from "@/components/ReloadPrompt";
@@ -74,7 +74,19 @@ export function CodeEditor() {
 			<EditorTabs />
 
 			<ResizablePanelGroup direction="horizontal" className="flex-1">
-				{showChat && <Chat />}
+				<AnimatePresence>
+					{showChat && (
+						<motion.div
+							key="chat"
+							transition={{ duration: 0.2 }}
+							initial={{ opacity: 0, translateX: -100 }}
+							animate={{ translateX: 0, opacity: 1 }}
+							exit={{ translateX: -100, opacity: 0 }}
+						>
+							<Chat />
+						</motion.div>
+					)}
+				</AnimatePresence>
 				<ResizablePanel defaultSize={100}>
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>
