@@ -35,7 +35,9 @@ function PureMessages({
 					</div>
 				))}
 
-				<div>
+				<div
+					className={`bg-accent/10 px-4 py-2 rounded-lg ${!streamingContent && "hidden"}`}
+				>
 					<Markdown
 					// className="prose break-all hyphens-auto dark:prose-invert "
 					>
