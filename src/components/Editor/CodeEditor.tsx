@@ -78,7 +78,7 @@ export function CodeEditor() {
 					{showChat && (
 						<motion.div
 							key="chat"
-							transition={{ duration: 0.2 }}
+							transition={{ duration: 0.3 }}
 							initial={{ opacity: 0, translateX: -100 }}
 							animate={{ translateX: 0, opacity: 1 }}
 							exit={{ translateX: -100, opacity: 0 }}
