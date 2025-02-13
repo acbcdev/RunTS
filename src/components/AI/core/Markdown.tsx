@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
+import { Copy, CopyCheck, FilePlus2, WrapText } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Editor } from "@monaco-editor/react";
@@ -16,13 +16,17 @@ import {
 const components = {
 	code: ({ className, children }) => {
 		const theme = useApparenceStore(useShallow((state) => state.theme));
+		const fontFamily = useApparenceStore(
+			useShallow((state) => state.fontFamily),
+		);
 		const newTab = useTabsStore(useShallow((state) => state.newTab));
 
 		const match = /language-(\w+)/.exec(className || "");
 		const code = `\n${String(children).trim()}\n`;
-		const height = code.split("\n").length * 20;
+		const height = String(children).split("\n").length * 20;
 		const codeContent = String(children).replace(/\n$/, "");
 		const [copied, setCopied] = useState(false);
+		const [warpCode, setWarpCode] = useState(true);
 		const copyToClipboard = () => {
 			navigator.clipboard.writeText(codeContent);
 			setCopied(true);
@@ -33,11 +37,24 @@ const components = {
 			: match?.[1];
 
 		return match ? (
-			<section className=" overflow-hidden  my-2  rounded-sm ">
+			<section className=" group/code-block overflow-hidden  my-2  rounded-sm ">
 				<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
 					<span className="px-5 text-foreground/90">{match[1]}</span>
-					<nav>
+					<nav className="opacity-0 duration-150 group-hover/code-block:opacity-100">
 						<TooltipProvider delayDuration={0} skipDelayDuration={0}>
+							<Tooltip>
+								<TooltipTrigger tabIndex={-1}>
+									<Button
+										variant={"ghost"}
+										size={"sm"}
+										aria-label="Wrap Code"
+										onClick={() => setWarpCode((prev) => !prev)}
+									>
+										<WrapText />
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>Warp Code</TooltipContent>
+							</Tooltip>
 							<Tooltip>
 								<TooltipTrigger tabIndex={-1}>
 									<Button
@@ -68,32 +85,34 @@ const components = {
 					</nav>
 				</header>
 				<div className="relative">
-					{/* <div className="absolute inset-0 z-10 " /> */}
 					<Editor
 						language={lang}
 						height={height}
 						theme={theme}
-						value={code}
+						value={code.trim()}
 						options={{
 							readOnly: true,
 							renderLineHighlight: "none",
 							minimap: {
 								enabled: false,
 							},
-
-							// wordWrap: "on",
+							wordWrap: warpCode ? "on" : "off",
+							fontFamily: fontFamily,
 							lineNumbers: "off",
-							lineNumbersMinChars: 3,
 							overviewRulerLanes: 0,
 							automaticLayout: true,
 							scrollBeyondLastLine: false,
 							contextmenu: false,
 							mouseWheelZoom: false,
+							fontLigatures: true,
 							scrollbar: {
 								// scrollByPage: false,
+								verticalScrollbarSize: 8,
+								horizontalScrollbarSize: 8,
+
 								handleMouseWheel: false,
 								horizontal: "auto",
-								vertical: "hidden",
+								vertical: "auto",
 							},
 						}}
 					/>
@@ -129,7 +148,7 @@ const components = {
 	},
 	ul: ({ node, children, ...props }) => {
 		return (
-			<ul className="list-disc my-1 list-outside ml-4" {...props}>
+			<ul className="list-disc  my-1 list-outside ml-4" {...props}>
 				{children}
 			</ul>
 		);
@@ -260,6 +279,13 @@ const components = {
 	},
 	hr: ({ node, children, ...props }) => {
 		return <hr className="my-4 border-muted" {...props} />;
+	},
+	main: ({ node, children, ...props }) => {
+		return (
+			<main className="my-4 border-muted" {...props}>
+				{children}
+			</main>
+		);
 	},
 } satisfies Components;
 
