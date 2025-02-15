@@ -144,7 +144,7 @@ function EditorSwitch({
 	return (
 		<Label
 			key={label}
-			className="flex border items-center justify-between p-3 rounded-lg "
+			className="flex border items-center justify-between p-3 md:gap-x-4 rounded-lg "
 		>
 			<div className="space-y-1">
 				<h3 className="font-bold  ">{label}</h3>
