@@ -119,7 +119,7 @@ export function Editor() {
 					<div className="space-y-4">
 						<EditorSwitch
 							label="Expression Runner"
-							description="Automatically displays the output of expressions in the console without requiring console.log(). Works only for inline expressions."
+							description="Automatically displays the output of expressions in the console without requiring console.log(). Works with any expression, not just console info error and warn."
 							value={experimetalConsole}
 							callback={() => setExperimental(!experimetalConsole)}
 						/>
