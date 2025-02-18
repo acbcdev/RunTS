@@ -14,120 +14,120 @@ import { useShallow } from "zustand/react/shallow";
 // }
 type statusType = "submitted" | "streaming" | "ready" | "error";
 export function useChat() {
-  const provider = useAIConfigStore((state) => state.provider);
-  const apiKeys = useAIConfigStore((state) => state.apiKeys);
-  const selectedModel = useAIConfigStore((state) => state.selectedModel);
-  const setMessages = useAIConfigStore((state) => state.setMessages);
-  const messages = useAIConfigStore((state) => state.messages);
-  const contenxtFile = useAIConfigStore(
-    useShallow((state) => state.contenxtFile)
-  );
-  const [status, setStatus] = useState<statusType>("ready");
-  const [input, setInput] = useState("");
-  const [error, setError] = useState("");
-  const [streamingContent, setStreamingContent] = useState("");
-  const controller = useRef<AbortController | null>(null);
-  const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
+	const provider = useAIConfigStore((state) => state.provider);
+	const apiKeys = useAIConfigStore((state) => state.apiKeys);
+	const selectedModel = useAIConfigStore((state) => state.selectedModel);
+	const setMessages = useAIConfigStore((state) => state.setMessages);
+	const messages = useAIConfigStore((state) => state.messages);
+	const contenxtFile = useAIConfigStore(
+		useShallow((state) => state.contenxtFile),
+	);
+	const [status, setStatus] = useState<statusType>("ready");
+	const [input, setInput] = useState("");
+	const [error, setError] = useState("");
+	const [streamingContent, setStreamingContent] = useState("");
+	const controller = useRef<AbortController | null>(null);
+	const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
 
-  const handleStreamText = async (userContent: string) => {
-    if (userContent.trim() === "clear") {
-      setMessages([]);
-      setInput("");
-      return;
-    }
-    if (userContent.trim() === "") return;
-    const messagesToAI: Message[] = [
-      ...messages,
-      {
-        role: "user",
-        content: userContent.trim(),
-        id: `${Date.now()}-${userContent}`,
-      },
-    ];
+	const handleStreamText = async (userContent: string) => {
+		if (userContent.trim() === "clear") {
+			setMessages([]);
+			setInput("");
+			return;
+		}
+		if (userContent.trim() === "") return;
+		const messagesToAI: Message[] = [
+			...messages,
+			{
+				role: "user",
+				content: userContent.trim(),
+				id: `${Date.now()}-${userContent}`,
+			},
+		];
 
-    setMessages(messagesToAI);
-    setInput("");
-    try {
-      const newController = new AbortController();
-      controller.current = newController;
-      setStatus("submitted");
-      const { textStream } = streamText({
-        messages: messagesToAI,
-        system: systemPrompt(contenxtFile ? currentTab?.code : ""),
-        model: createProvider(provider, apiKeys[provider])(selectedModel),
-        abortSignal: controller.current.signal,
-      });
-      setStatus("streaming");
+		setMessages(messagesToAI);
+		setInput("");
+		try {
+			const newController = new AbortController();
+			controller.current = newController;
+			setStatus("submitted");
+			const { textStream } = streamText({
+				messages: messagesToAI,
+				system: systemPrompt(contenxtFile ? currentTab?.code : ""),
+				model: createProvider(provider, apiKeys[provider])(selectedModel),
+				abortSignal: controller.current.signal,
+			});
+			setStatus("streaming");
 
-      let fullResponse = "";
-      for await (const chunk of textStream) {
-        fullResponse += chunk;
-        setStreamingContent(fullResponse);
-      }
-      if (fullResponse.length > 0) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now().toString(),
-            role: "assistant",
-            content: fullResponse,
-          },
-        ]);
-      }
-    } catch (error) {
-      setStatus("error");
-      setError(String(error));
-      let errorMessage = "Something went wrong";
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-      toast.error("Error Generating Response", {
-        description: errorMessage,
-        position: "bottom-center",
-        duration: 10000,
-      });
-      if (messages.at(-1)?.role === "user") {
-        setMessages(messages.slice(0, -1));
-      }
-    } finally {
-      setStatus("ready");
-      setStreamingContent("");
-    }
-  };
+			let fullResponse = "";
+			for await (const chunk of textStream) {
+				fullResponse += chunk;
+				setStreamingContent(fullResponse);
+			}
+			if (fullResponse.length > 0) {
+				setMessages((prev) => [
+					...prev,
+					{
+						id: Date.now().toString(),
+						role: "assistant",
+						content: fullResponse,
+					},
+				]);
+			}
+		} catch (error) {
+			setStatus("error");
+			setError(String(error));
+			let errorMessage = "Something went wrong";
+			if (error instanceof Error) {
+				errorMessage = error.message;
+			}
+			toast.error("Error Generating Response", {
+				description: errorMessage,
+				position: "bottom-center",
+				duration: 10000,
+			});
+			if (messages.at(-1)?.role === "user") {
+				setMessages(messages.slice(0, -1));
+			}
+		} finally {
+			setStatus("ready");
+			setStreamingContent("");
+		}
+	};
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleStreamText(input);
-  };
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		handleStreamText(input);
+	};
 
-  const handleStop = () => {
-    controller.current?.abort();
-    controller.current = null;
-  };
+	const handleStop = () => {
+		controller.current?.abort();
+		controller.current = null;
+	};
 
-  const handleRegenerate = () => {
-    const lastUserIndex = messages.map((m) => m.role).lastIndexOf("user");
-    if (lastUserIndex === -1) return;
-    setError("");
-    const lastUserMessage = messages[lastUserIndex].content;
-    // Elimina el último mensaje de assistant (si existe)
-    setMessages((prev) => prev.slice(0, lastUserIndex + 1));
+	const handleRegenerate = () => {
+		const lastUserIndex = messages.map((m) => m.role).lastIndexOf("user");
+		if (lastUserIndex === -1) return;
+		setError("");
+		const lastUserMessage = messages[lastUserIndex].content;
+		// Elimina el último mensaje de assistant (si existe)
+		setMessages((prev) => prev.slice(0, lastUserIndex + 1));
 
-    handleStreamText(lastUserMessage);
-  };
+		handleStreamText(lastUserMessage);
+	};
 
-  return {
-    input,
-    messages,
-    setInput,
-    setMessages,
-    isLoading: status === "submitted" || status === "streaming",
-    streamingContent,
-    setStreamingContent,
-    handleSubmit,
-    stop: handleStop,
-    reload: handleRegenerate,
-    error,
-    status,
-  };
+	return {
+		input,
+		messages,
+		setInput,
+		setMessages,
+		isLoading: status === "submitted" || status === "streaming",
+		streamingContent,
+		setStreamingContent,
+		handleSubmit,
+		stop: handleStop,
+		reload: handleRegenerate,
+		error,
+		status,
+	};
 }
