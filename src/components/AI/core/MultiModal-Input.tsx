@@ -113,22 +113,41 @@ export default function MultiModalInput({
 							))}
 						</SelectContent>
 					</Select>
-					<Button
-						variant={"currentFile"}
-						type="button"
-						className={`${!contenxtFile && "border-dashed"} `}
-						onClick={() => setContenxtFile(!contenxtFile)}
-					>
-						<span
-							className={`${!contenxtFile && "line-through"} hidden md:inline-block`}
-						>
-							{currentTab?.name}
-						</span>
-						<span className="text-muted ">Current Tab</span>{" "}
-						{contenxtFile ? <Eye /> : <EyeOff />}
-					</Button>
+					<CurrentFileToggle
+						contenxtFile={contenxtFile}
+						setContenxtFile={setContenxtFile}
+						name={currentTab?.name ?? ""}
+					/>
 				</div>
 			</div>
 		</form>
+	);
+}
+type ContextToggleButtonProps = {
+	contenxtFile: boolean;
+	setContenxtFile: (value: boolean) => void;
+	name: string;
+};
+
+function CurrentFileToggle({
+	contenxtFile,
+	setContenxtFile,
+	name,
+}: ContextToggleButtonProps) {
+	return (
+		<Button
+			variant={"currentFile"}
+			type="button"
+			className={`${!contenxtFile && "border-dashed"} `}
+			onClick={() => setContenxtFile(!contenxtFile)}
+		>
+			<span
+				className={`${!contenxtFile && "line-through"} hidden md:inline-block`}
+			>
+				{name}
+			</span>
+			<span className="text-muted ">Current Tab</span>{" "}
+			{contenxtFile ? <Eye /> : <EyeOff />}
+		</Button>
 	);
 }
