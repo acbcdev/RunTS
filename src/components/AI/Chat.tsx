@@ -21,6 +21,8 @@ export function Chat() {
 		streamingContent,
 		handleSubmit,
 		stop,
+		reload,
+		error,
 	} = useChat();
 	return getProviders().length === 0 ? (
 		<AI tabs={false} />
@@ -29,7 +31,13 @@ export function Chat() {
 			data-state={showChat}
 			className="relative flex bg-border/10 border-r-2 border-accent/5 flex-col w-full h-full max-w-3xl mx-auto chat  rounded-none shadow-none "
 		>
-			<Messages messages={messages} streamingContent={streamingContent} />
+			<Messages
+				messages={messages}
+				streamingContent={streamingContent}
+				isLoading={isLoading}
+				reload={reload}
+				error={error}
+			/>
 			<section className=" flex flex-col gap-2 p-4 ">
 				<MultiModalInput
 					input={input}
