@@ -11,16 +11,21 @@ type ReplacementPoint = {
 	expr: string;
 	line: number;
 };
+function countLines(str: string): number {
+	return str.split("\n").length;
+}
 
 export function injectLogsIntoCode(
 	code: string,
 	options?: InjectLogsIntoCodeOptions,
 ): { code: string; lines: number[] } {
+	const numsOfToTrim = countLines(code);
+	const codeTrimmed = code.trim();
 	const logLines: number[] = [];
+	const diference = numsOfToTrim - countLines(codeTrimmed);
 	let newCode = code;
-
 	try {
-		const ast = parse(code, {
+		const ast = parse(codeTrimmed, {
 			ecmaVersion: "latest",
 			sourceType: "module",
 			locations: true,
@@ -59,7 +64,7 @@ export function injectLogsIntoCode(
 					expr: exprText.trim(),
 					line: node.loc.start.line,
 				});
-				logLines.push(node.loc.start.line);
+				logLines.push(node.loc.start.line + diference);
 			},
 		});
 
