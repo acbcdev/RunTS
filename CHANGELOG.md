@@ -11,3 +11,4 @@
 
 ## Run Code
 - fix bug on run Code with doc comments
+- fix bug on injecting logs
