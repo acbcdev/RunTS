@@ -46,14 +46,13 @@ self.onmessage = async (event: MessageEvent) => {
 			// plugins: ["injectLogs"],
 			sourceType: "module",
 			retainLines: true,
-			comments: false,
 		}).code;
 
-		console.log(transpiledCode, "/transpiledCode/");
-		const { code, lines } = injectLogsIntoCode(transpiledCode?.trim() ?? "", {
+		// console.log(transpiledCode);
+		const { code, lines } = injectLogsIntoCode(transpiledCode ?? "", {
 			injectLogs: injectLogs,
 		});
-		console.log(code);
+		// console.log(code);
 		lines.forEach((line, index) => {
 			sourceMap.set(index, { line, column: 0 });
 		});
@@ -100,7 +99,6 @@ self.onmessage = async (event: MessageEvent) => {
 		self.console.error = originalConsole.error;
 		self.console.info = originalConsole.info;
 		self.console.warn = originalConsole.warn;
-
 		if (!outputLimitReached) {
 			self.postMessage(output); // Enviar resultado final
 		}
