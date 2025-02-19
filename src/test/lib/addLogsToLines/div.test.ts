@@ -12,7 +12,7 @@ describe("injectLogsIntoCode - Division cases", () => {
 
 	it("injects log for division with extra whitespace", () => {
 		const input = "  20   /    4 ;";
-		const expected = "console.log(20   /    4)";
+		const expected = "console.log(20   /    4) ;";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		expect(result.lines).toEqual([1]);

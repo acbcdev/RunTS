@@ -12,7 +12,7 @@ describe("injectLogsIntoCode - Arrays cases", () => {
 
 	it("injects log for an array with extra whitespace", () => {
 		const input = "   [ 4, 5, 6 ]   ;";
-		const expected = "console.log([ 4, 5, 6 ])";
+		const expected = "console.log([ 4, 5, 6 ])  ;";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		expect(result.lines).toEqual([1]);

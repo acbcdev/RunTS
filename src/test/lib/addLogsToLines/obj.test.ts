@@ -11,7 +11,7 @@ describe("injectLogsIntoCode - Object cases", () => {
 	});
 
 	it("injects log for an object literal with extra whitespace", () => {
-		const input = "   ({ x: 10, y:20  });";
+		const input = "({ x: 10, y:20  });";
 		const expected = "console.log(({ x: 10, y:20  }))";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);

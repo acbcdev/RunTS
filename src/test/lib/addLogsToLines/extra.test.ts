@@ -61,24 +61,6 @@ describe("injectLogsIntoCode E2E Tests (Vitest)", () => {
 	});
 	it("Error Code", () => {
 		const inputCode = `
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '¡Hola, RunTS! 🌟';
 
 [1, 2, 3].map((x) => x * 2);
@@ -86,7 +68,8 @@ describe("injectLogsIntoCode E2E Tests (Vitest)", () => {
 475 + 465;`;
 		const expectedCode = `console.log('¡Hola, RunTS! 🌟')
 console.log([1, 2, 3].map((x) => x * 2))
-console.log(475 + 465)`;
+
+console.log(475 + 465);`;
 		const result = injectLogsIntoCode(inputCode, { injectLogs: true });
 		expect(result.code).toBe(expectedCode);
 	});

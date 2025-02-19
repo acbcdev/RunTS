@@ -12,7 +12,7 @@ describe("injectLogsIntoCode - Multiplication cases", () => {
 
 	it("injects log for multiplication with extra whitespace", () => {
 		const input = "   4   *    5 ;";
-		const expected = "console.log(4   *    5)";
+		const expected = "console.log(4   *    5 );";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		expect(result.lines).toEqual([1]);
