@@ -279,3 +279,7 @@ export function EditorMain() {
 		</div>
 	);
 }
+
+EditorMain.displayName = "EditorMain";
+
+export default EditorMain;

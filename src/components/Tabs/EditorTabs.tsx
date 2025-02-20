@@ -48,3 +48,6 @@ export function EditorTabs() {
 		</div>
 	);
 }
+
+EditorTabs.displayName = "EditorTabs";
+export default EditorTabs;

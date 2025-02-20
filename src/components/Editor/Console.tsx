@@ -103,3 +103,6 @@ export function Console() {
 		</div>
 	);
 }
+
+Console.displayName = "Console";
+export default Console;

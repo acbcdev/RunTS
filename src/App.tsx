@@ -1,21 +1,22 @@
-import { CodeEditor } from "@/components/Editor/CodeEditor";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { decode } from "js-base64";
+
+const CodeEditor = lazy(() => import("@/components/Editor/CodeEditor"));
 
 function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		console.log(`
-		
+
 		open to contributors ❤️
-		
-		repo:	https://github.com/acbcdev/Runts 
+
+		repo:	https://github.com/acbcdev/Runts
 		author:	https://acbc.dev
 		license:	Apache-2.0
 

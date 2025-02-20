@@ -1,6 +1,3 @@
-import { EditorMain } from "@/components/Editor/EditorMain";
-import { EditorTabs } from "@/components/Tabs/EditorTabs";
-import { EditorTopBar } from "@/components/TopBar/EditorTopBar";
 import {
 	ResizableHandle,
 	ResizablePanel,
@@ -9,11 +6,9 @@ import {
 import { useDebounce } from "@/hooks/useDebounce";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useConfigStore } from "@/store/config";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AnimatePresence, motion } from "motion/react";
-import { Chat } from "@/components/AI/Chat";
-import { Console } from "@/components/Editor/Console";
 import { ReloadPrompt } from "@/components/ReloadPrompt";
 import { useRun } from "@/hooks/useRun";
 import { updateChangeTheme } from "@/lib/utils";
@@ -21,6 +16,11 @@ import { useApparenceStore } from "@/store/apparence";
 import { useTabsStore } from "@/store/tabs";
 import { useShallow } from "zustand/react/shallow";
 
+const EditorMain = lazy(() => import("@/components/Editor/EditorMain"));
+const EditorTabs = lazy(() => import("@/components/Tabs/EditorTabs"));
+const EditorTopBar = lazy(() => import("@/components/TopBar/EditorTopBar"));
+const Console = lazy(() => import("@/components/Editor/Console"));
+const Chat = lazy(() => import("@/components/AI/Chat"));
 export function CodeEditor() {
 	const { runCode } = useRun();
 	// useConfigStore
@@ -105,3 +105,4 @@ export function CodeEditor() {
 		</main>
 	);
 }
+export default CodeEditor;

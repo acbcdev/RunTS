@@ -50,3 +50,5 @@ export function Chat() {
 		</aside>
 	);
 }
+Chat.displayName = "Chat";
+export default Chat;

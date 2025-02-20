@@ -24,7 +24,7 @@ import {
 import { memo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
-export const EditorTopBar = memo(function EditorTopBar() {
+export const EditorTopBar = memo(() => {
 	const { layout, setOption } = useApparenceStore(
 		useShallow((state) => ({
 			layout: state.layout,
@@ -92,7 +92,9 @@ export const EditorTopBar = memo(function EditorTopBar() {
 								variant="ghost"
 								size="icon"
 								aria-label="Run code"
-								className={`size-8  from-accent  hover:bg-linear-to-br hover:text-foreground from-30% to-destructive  ${showChat && "bg-linear-to-br"}`}
+								className={`size-8  from-accent  hover:bg-linear-to-br hover:text-foreground from-30% to-destructive  ${
+									showChat && "bg-linear-to-br"
+								}`}
 								onClick={() => toggleChat()}
 							>
 								<Sparkles />
@@ -168,3 +170,5 @@ export const EditorTopBar = memo(function EditorTopBar() {
 		</TooltipProvider>
 	);
 });
+EditorTopBar.displayName = "EditorTopBar";
+export default EditorTopBar;
