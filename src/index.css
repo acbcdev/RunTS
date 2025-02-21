@@ -59,7 +59,13 @@
 	--color-chart-5: var(--chart-5);
 }
 
+::selection {
+	background-color: var(--accent);
+	color: var(--header);
+}
+
 @layer base {
+
 	*,
 	::after,
 	::before,
