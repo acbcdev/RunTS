@@ -2,7 +2,7 @@ import { systemPrompt } from "@/consts/prompt";
 import { createProvider } from "@/lib/ai/providers";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
-import { type Message, streamText } from "ai";
+import { type Message, smoothStream, streamText } from "ai";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
@@ -56,6 +56,7 @@ export function useChat() {
 				system: systemPrompt(contenxtFile ? currentTab?.code : ""),
 				model: createProvider(provider, apiKeys[provider])(selectedModel),
 				abortSignal: controller.current.signal,
+				experimental_transform: smoothStream(),
 			});
 			setStatus("streaming");
 
