@@ -4,6 +4,8 @@ import { gemini } from "@/svg/gemini";
 import { openai } from "@/svg/openai";
 import type { ProviderItem } from "@/types/ai";
 import type { lineRendererEditor } from "@/types/editor";
+import pg from "@/../package.json";
+export const versionApp = pg.version;
 
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
 
