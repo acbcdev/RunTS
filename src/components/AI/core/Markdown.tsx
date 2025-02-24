@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Copy, CopyCheck, FilePlus2, WrapText } from "lucide-react";
+import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Editor } from "@monaco-editor/react";
@@ -22,13 +22,11 @@ const components = {
     const newTab = useTabsStore(useShallow((state) => state.newTab));
 
     const match = /language-(\w+)/.exec(className || "");
-    const code = `\n${String(children).trim()}\n`;
-    const height = String(children).split("\n").length * 20;
-    const codeContent = String(children).replace(/\n$/, "");
+    const code = String(children).trim();
+    const height = code.split("\n").length * 20;
     const [copied, setCopied] = useState(false);
-    const [warpCode, setWarpCode] = useState(false);
     const copyToClipboard = () => {
-      navigator.clipboard.writeText(codeContent);
+      navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     };
@@ -83,7 +81,7 @@ const components = {
               minimap: {
                 enabled: false,
               },
-              wordWrap: warpCode ? "on" : "off",
+              wordWrap: "off",
               fontFamily: fontFamily,
               lineNumbers: "off",
               overviewRulerLanes: 0,
