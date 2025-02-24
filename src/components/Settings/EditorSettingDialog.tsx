@@ -18,6 +18,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { versionApp } from "@/consts";
 import { BrainCog, Brush, Cog, MonitorCog } from "lucide-react";
 const Trigers = [
   { name: "Appearance", Icon: Brush },
@@ -51,7 +52,7 @@ export function EditorSettingsDialog() {
       >
         <DialogHeader className="p-6 pb-0">
           <DialogTitle>
-            Editor Settings <span className="opacity-85">v1.5.0</span>
+            Editor Settings <span className="opacity-85">{versionApp}</span>
           </DialogTitle>
           <DialogDescription>Configure the editor settings</DialogDescription>
           <div className="flex items-center flex-wrap gap-2 mt-2 ">
