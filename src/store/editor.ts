@@ -31,13 +31,10 @@ export const useEditorStore = create<EditorState>()(
 			setEditorRef: (editor) => set({ editorRef: editor ?? null }),
 		}),
 		{
-			name: "editor",
+			name: "editorV2",
 			partialize: (state) => ({
 				alignLogs: state.alignLogs,
-
 				expression: state.expression,
-				monaco: state.monaco,
-				editorRef: state.editorRef,
 			}),
 		},
 	),
