@@ -32,7 +32,6 @@ type ThemeProps = {
 		BracketHighlight3?: string;
 	};
 };
-
 export function createTheme({
 	name,
 	ui,
