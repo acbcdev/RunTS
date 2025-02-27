@@ -15,6 +15,10 @@ interface TabsStore {
 	changeNameTab: (id: Tab["id"], name: string) => void;
 	updateTabCode: (id: Tab["id"], code: string) => void;
 	updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
+	updateTabLogFormated: (
+		id: Tab["id"],
+		logsFormated: Tab["logsFormated"],
+	) => void;
 	clearConsole: VoidFunction;
 	getTab: (id: Tab["id"]) => Tab | undefined;
 }
@@ -58,6 +62,7 @@ const initialTabs: Tab[] = [
 		language: "typescript",
 		code: DEFAULT_CODE,
 		logs: [],
+		logsFormated: "",
 	},
 ];
 
@@ -73,6 +78,7 @@ export const useTabsStore = create<TabsStore>()(
 					name: `untitled-${Date.now().toString().slice(-4)}.ts`,
 					language: "typescript",
 					code: code || "",
+					logsFormated: "",
 					logs: [],
 				});
 			},
@@ -146,6 +152,18 @@ export const useTabsStore = create<TabsStore>()(
 						tabs: state.tabs.with(index, {
 							...state.tabs[index],
 							logs,
+						}),
+					};
+				});
+			},
+			updateTabLogFormated: (id, logsFormated) => {
+				set((state) => {
+					const index = state.tabs.findIndex((tab) => tab.id === id);
+					if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
+					return {
+						tabs: state.tabs.with(index, {
+							...state.tabs[index],
+							logsFormated,
 						}),
 					};
 				});

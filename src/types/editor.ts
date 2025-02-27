@@ -28,6 +28,7 @@ export interface Tab {
 	language: string;
 	code: string;
 	logs: ConsoleOutput[];
+	logsFormated: string;
 	editing?: boolean;
 }
 
