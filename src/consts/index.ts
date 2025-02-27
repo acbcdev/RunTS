@@ -47,12 +47,18 @@ export const providersList: ProviderItem[] = [
 			"o1-mini-2024-09-12",
 			"o1-2024-12-17",
 			"o3-mini",
+			"gpt-4.5-preview",
+			"gpt-4.5-preview-2025-02-27",
 		],
 		Icon: openai,
 	},
 	{
 		name: "anthropic",
-		models: ["claude-3-sonnet-20240229", "claude-3-5-haiku-latest"],
+		models: [
+			"claude-3-sonnet-20240229",
+			"claude-3-5-haiku-latest",
+			"claude-3-7-sonnet-20250219",
+		],
 		Icon: claude,
 	},
 	{

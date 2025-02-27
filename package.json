@@ -1,7 +1,7 @@
 {
   "name": "vite-runts",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.5.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,9 +14,9 @@
     "check": "biome check --write ./src"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.1.8",
-    "@ai-sdk/google": "^1.1.14",
-    "@ai-sdk/openai": "^1.1.12",
+    "@ai-sdk/anthropic": "^1.1.11",
+    "@ai-sdk/google": "^1.1.17",
+    "@ai-sdk/openai": "^1.1.15",
     "@babel/plugin-proposal-pipeline-operator": "7.26.7",
     "@hookform/resolvers": "^4.1.2",
     "@monaco-editor/react": "4.6.0",
