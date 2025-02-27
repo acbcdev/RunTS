@@ -34,6 +34,7 @@ function App() {
 					language: "typescript",
 					code: decodedCode,
 					logs: [],
+					logsFormated: "",
 				});
 				setActiveTab(id);
 				toast.success("Code loaded", {

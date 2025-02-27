@@ -44,6 +44,7 @@ const TabContextMenuItem = ({
 			language: duplicateTab.language,
 			code: duplicateTab.code,
 			logs: duplicateTab.logs,
+			logsFormated: duplicateTab.logsFormated,
 		});
 		// handleActiveTabChange(id);
 	};
@@ -192,7 +193,9 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 		<button
 			type="button"
 			title={tab.name}
-			className={`${activeTabId === tab.id && " bg-border/30 grow-2"}  border-r cursor-pointer transition-colors  `}
+			className={`${
+				activeTabId === tab.id && " bg-border/30 grow-2"
+			}  border-r cursor-pointer transition-colors  `}
 			onClick={() => {
 				if (!tab.editing || activeTabId !== tab.id) {
 					handleActiveTabChange(tab.id);
