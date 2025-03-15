@@ -29,7 +29,7 @@ export function Chat() {
 	) : (
 		<aside
 			data-state={showChat}
-			className="relative flex bg-border/10 border-r-2 border-accent/5 flex-col w-full h-full max-w-3xl mx-auto chat  rounded-none shadow-none "
+			className="relative flex bg-border/10 max-w-3xl flex-col w-full h-full mx-auto chat  rounded-none shadow-none "
 		>
 			<Messages
 				messages={messages}
