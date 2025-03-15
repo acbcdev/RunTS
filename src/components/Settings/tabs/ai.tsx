@@ -10,6 +10,10 @@ const providers: Provider[] = [
 	{ name: "openai", url: "https://platform.openai.com/api-keys" },
 	{ name: "google", url: "https://aistudio.google.com/apikey" },
 	{ name: "anthropic", url: "https://console.anthropic.com/settings/keys" },
+	{
+		name: "mistral",
+		url: "https://console.mistral.ai/api-keys",
+	},
 ];
 
 export function AI({ tabs = true }) {

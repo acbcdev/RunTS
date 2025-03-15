@@ -5,6 +5,7 @@ import { openai } from "@/svg/openai";
 import type { ProviderItem } from "@/types/ai";
 import type { lineRendererEditor } from "@/types/editor";
 import pg from "@/../package.json";
+import mistral from "@/svg/mistral";
 export const versionApp = pg.version;
 
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
@@ -71,6 +72,15 @@ export const providersList: ProviderItem[] = [
 			"gemini-2.0-flash-001",
 		],
 		Icon: gemini,
+	},
+	{
+		name: "mistral",
+		models: [
+			"pixtral-large-latest",
+			"mistral-large-latest",
+			"mistral-small-latest",
+		],
+		Icon: mistral,
 	},
 ];
 export interface EditorBehaviorOption {

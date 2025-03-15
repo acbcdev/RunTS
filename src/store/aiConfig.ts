@@ -9,6 +9,7 @@ interface AIConfigStore {
 		openai: string;
 		google: string;
 		anthropic: string;
+		mistral: string;
 	};
 	setApiKeys: (key: string, provider: providers) => void;
 	messages: Message[];
@@ -31,6 +32,7 @@ export const useAIConfigStore = create<AIConfigStore>()(
 				openai: "",
 				google: "",
 				anthropic: "",
+				mistral: "",
 			},
 			contenxtFile: true,
 			setContenxtFile: (contenxtFile) => set({ contenxtFile }),
