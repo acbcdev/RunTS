@@ -15,12 +15,12 @@ import { updateChangeTheme } from "@/lib/utils";
 import { useApparenceStore } from "@/store/apparence";
 import { useTabsStore } from "@/store/tabs";
 import { useShallow } from "zustand/react/shallow";
+import { Chat } from "@/components/AI/Chat";
 
 const EditorMain = lazy(() => import("@/components/Editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/Tabs/EditorTabs"));
 const EditorTopBar = lazy(() => import("@/components/TopBar/EditorTopBar"));
 const Console = lazy(() => import("@/components/Editor/Console"));
-const Chat = lazy(() => import("@/components/AI/Chat"));
 export function CodeEditor() {
 	const { runCode } = useRun();
 	// useConfigStore
@@ -88,6 +88,9 @@ export function CodeEditor() {
 						</motion.div>
 					)}
 				</AnimatePresence>
+				{/* <ResizablePanel>
+					<Chat />
+				</ResizablePanel> */}
 				<ResizablePanel defaultSize={100}>
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>
