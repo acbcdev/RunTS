@@ -1,8 +1,7 @@
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { Formatter } from "@/lib/formatter";
+import { transform } from "@/lib/transform";
 import type { ConsoleOutput } from "@/types/worker";
-import * as Babel from "@babel/standalone";
-// import type { PluginObj } from "@babel/core";
 
 self.onmessage = async (event: MessageEvent) => {
 	const { activeTabCode, name, injectLogs } = event.data;
@@ -40,13 +39,7 @@ self.onmessage = async (event: MessageEvent) => {
 	try {
 		// Babel.registerPlugin("injectLogs", injectLogsPlugin);
 		// console.log(activeTabCode, "activeTabCode");
-		const transpiledCode = Babel.transform(activeTabCode, {
-			presets: ["typescript"],
-			filename: name ?? "code.ts",
-			// plugins: ["injectLogs"],
-			sourceType: "module",
-			retainLines: true,
-		}).code;
+		const transpiledCode = transform(activeTabCode, name);
 
 		// console.log(transpiledCode);
 		const { code, lines } = injectLogsIntoCode(transpiledCode ?? "", {
