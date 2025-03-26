@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.5.4 March 26, 2025
+
+- add new Provider gemini-2.5-pro-exp-03-25
+
+
 ## Version 1.5.3 – March 14, 2025
 
 ### AI Chat
