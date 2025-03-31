@@ -4,6 +4,12 @@ import { TabsContent } from "@/components/ui/tabs";
 import { providersList } from "@/consts";
 import { useAIConfigStore } from "@/store/aiConfig";
 import type { providers as TProvider } from "@/types/ai";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ExternalLink } from "lucide-react";
 type Provider = { name: TProvider; url: string };
 const providers: Provider[] = [
@@ -37,9 +43,21 @@ export function AI({ tabs = true }) {
 									<Label htmlFor={name} className="block text-sm capitalize">
 										{name}
 									</Label>
-									<a href={url} target="_blank" rel="noreferrer">
-										<ExternalLink className="size-4" />
-									</a>
+									<TooltipProvider delayDuration={0}>
+										<Tooltip>
+											<TooltipTrigger>
+												<a
+													href={url}
+													target="_blank"
+													rel="noreferrer"
+													className="hover:text-accent"
+												>
+													<ExternalLink className="size-4" />
+												</a>
+											</TooltipTrigger>
+											<TooltipContent>Get your api key here</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
 								</div>
 								<Input
 									type={"password"}
