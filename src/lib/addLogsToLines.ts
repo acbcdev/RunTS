@@ -1,4 +1,4 @@
-import { parse, type ExpressionStatement } from "acorn";
+import { type ExpressionStatement, parse } from "acorn";
 import { ancestor } from "acorn-walk";
 
 type InjectLogsIntoCodeOptions = {

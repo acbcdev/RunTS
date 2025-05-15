@@ -1,8 +1,8 @@
 import type { providers } from "@/types/ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createOpenAI } from "@ai-sdk/openai";
 import { createMistral } from "@ai-sdk/mistral";
+import { createOpenAI } from "@ai-sdk/openai";
 
 const generativeAIProviders = {
 	openai: createOpenAI,

@@ -1,10 +1,10 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
+import { decode } from "js-base64";
 import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { decode } from "js-base64";
 
 const CodeEditor = lazy(() => import("@/components/Editor/CodeEditor"));
 

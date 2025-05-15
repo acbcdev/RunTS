@@ -1,18 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
-import ReactMarkdown, { type Components } from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Editor } from "@monaco-editor/react";
-import { useApparenceStore } from "@/store/apparence";
-import { useShallow } from "zustand/react/shallow";
-import { useState } from "react";
-import { useTabsStore } from "@/store/tabs";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useApparenceStore } from "@/store/apparence";
+import { useTabsStore } from "@/store/tabs";
+import { Editor } from "@monaco-editor/react";
+import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
+import { useState } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useShallow } from "zustand/react/shallow";
 const components = {
 	code: ({ className, children }) => {
 		const theme = useApparenceStore(useShallow((state) => state.theme));

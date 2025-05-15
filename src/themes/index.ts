@@ -1,5 +1,5 @@
-import type { Theme } from "@/types/editor";
 import { createTheme } from "@/themes/lib";
+import type { Theme } from "@/types/editor";
 
 export const themes: Record<string, Theme> = {
 	oneDark: createTheme({

@@ -1,15 +1,15 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
-import { providersList } from "@/consts";
-import { useAIConfigStore } from "@/store/aiConfig";
-import type { providers as TProvider } from "@/types/ai";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { providersList } from "@/consts";
+import { useAIConfigStore } from "@/store/aiConfig";
+import type { providers as TProvider } from "@/types/ai";
 import { ExternalLink } from "lucide-react";
 type Provider = { name: TProvider; url: string };
 const providers: Provider[] = [

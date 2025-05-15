@@ -1,8 +1,8 @@
 import { useTabsStore } from "@/store/tabs";
 import type { Tab } from "@/types/editor";
+import { encode } from "js-base64";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { encode } from "js-base64";
 export function useHandler() {
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),

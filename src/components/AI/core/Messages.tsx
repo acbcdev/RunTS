@@ -1,10 +1,10 @@
+import ActionButtons from "@/components/AI/core/ActionButtons";
+import Markdown from "@/components/AI/core/Markdown";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Message } from "ai";
-import Markdown from "@/components/AI/core/Markdown";
-import { memo, useEffect, useLayoutEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
-import ActionButtons from "@/components/AI/core/ActionButtons";
+import { memo, useEffect, useLayoutEffect, useRef } from "react";
 
 type PureMessagesProps = {
 	messages: Message[];
