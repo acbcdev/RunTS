@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
+import { describe, expect, it } from "vitest";
 
 describe("injectLogsIntoCode - Comment cases", () => {
 	it("leaves code unchanged if it only contains a comment", () => {

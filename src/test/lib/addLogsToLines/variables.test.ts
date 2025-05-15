@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
+import { describe, expect, it } from "vitest";
 
 describe("injectLogsIntoCode - Casos de variables", () => {
 	it("no transforma una declaración de variable const", () => {

@@ -1,5 +1,5 @@
 import { injectLogsIntoCode } from "@/lib/addLogsToLines"; // Ajusta la ruta
-import { describe, it, expect } from "vitest"; // Importa las funciones de Vitest
+import { describe, expect, it } from "vitest"; // Importa las funciones de Vitest
 
 describe("injectLogsIntoCode E2E Tests (Vitest)", () => {
 	// Bloque describe, ¡igual!

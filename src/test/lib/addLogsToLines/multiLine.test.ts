@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { injectLogsIntoCode } from "@/lib/addLogsToLines";
+import { describe, expect, it } from "vitest";
 
 describe("injectLogsIntoCode - Multiline Expression Cases", () => {
 	it("collapses a multiline Array.reduce expression into one line", () => {
