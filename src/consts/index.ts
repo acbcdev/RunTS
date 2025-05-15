@@ -1,11 +1,11 @@
+import pg from "@/../package.json";
 import type { Radius } from "@/store/apparence";
 import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
+import mistral from "@/svg/mistral";
 import { openai } from "@/svg/openai";
 import type { ProviderItem } from "@/types/ai";
 import type { lineRendererEditor } from "@/types/editor";
-import pg from "@/../package.json";
-import mistral from "@/svg/mistral";
 export const versionApp = pg.version;
 
 export const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
@@ -43,13 +43,19 @@ export const providersList: ProviderItem[] = [
 	{
 		name: "openai",
 		models: [
-			"gpt-4o-2024-11-20",
 			"gpt-4o-mini-2024-07-18",
-			"o1-mini-2024-09-12",
-			"o1-2024-12-17",
-			"o3-mini",
+			"gpt-4o-mini-search-preview",
+			"gpt-4o-2024-11-20",
+			"gpt-4o-search-preview",
+			"gpt-4.1-nano",
+			"gpt-4.1-mini",
 			"gpt-4.5-preview",
 			"gpt-4.5-preview-2025-02-27",
+			"o1-mini-2024-09-12",
+			"o1-2024-12-17",
+			"03",
+			"o3-mini",
+			"o4-mini",
 		],
 		Icon: openai,
 	},
@@ -65,12 +71,15 @@ export const providersList: ProviderItem[] = [
 	{
 		name: "google",
 		models: [
+			"gemma-3-27b-it",
 			"gemini-2.0-flash-exp",
 			"gemini-2.0-flash-thinking-exp",
 			"gemini-2.0-pro-exp-02-05",
 			"gemini-2.0-flash-lite-preview-02-05",
 			"gemini-2.0-flash-001",
 			"gemini-2.5-pro-exp-03-25",
+			"gemini-2.5-pro-preview-05-06",
+			"gemini-2.5-flash-preview-04-17",
 		],
 		Icon: gemini,
 	},

@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 1.5.5 – May 1, 2025
+
+### add new version models from google and openai providers
+
+### OpenAI
+- 03
+- o4-mini
+- gpt-4o-search-preview
+- gpt-4.1-nano
+- gpt-4o-mini-search-preview
+- gpt-4.1-mini
+
+### Google
+- gemini-2.5-pro-preview-05-06
+- gemini-2.5-flash-preview-04-17
+
 ## Version 1.5.4 March 26, 2025
 
 - add new Provider gemini-2.5-pro-exp-03-25
