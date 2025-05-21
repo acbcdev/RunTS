@@ -23,7 +23,7 @@ import { BrainCog, Brush, Cog, MonitorCog } from "lucide-react";
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },
-	{ name: "AI (Beta)", Icon: BrainCog },
+	{ name: "AI", Icon: BrainCog },
 ];
 export function EditorSettingsDialog() {
 	return (
@@ -96,7 +96,7 @@ export function EditorSettingsDialog() {
 				</DialogHeader>
 
 				<Tabs defaultValue="appearance" className="flex-1">
-					<TabsList className="h-12 px-6 ">
+					<TabsList className="h-12 px-6 justify-start">
 						{Trigers.map(({ name, Icon }) => (
 							<TabsTrigger key={name} value={name.toLowerCase()}>
 								<Icon className="size-4 mr-1" /> {name}

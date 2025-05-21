@@ -30,7 +30,7 @@ const TabContextMenuItem = ({
 	tab: Tab;
 	removeTab: (id: string) => void;
 	setEditing: (id: string, value: boolean) => void;
-	inputRef: React.RefObject<HTMLInputElement>;
+	inputRef: React.RefObject<HTMLInputElement | null>;
 }) => {
 	const { handleShare, copyCode, downloadCode } = useHandler();
 
@@ -107,7 +107,7 @@ const EditorTabItemName = ({
 }: {
 	tab: Tab;
 	tabs: Tab[];
-	inputRef: React.RefObject<HTMLInputElement>;
+	inputRef: React.RefObject<HTMLInputElement | null>;
 	changeNameTab: (id: string, name: string) => void;
 	activeTabId: string;
 	setEditing: (id: string, value?: boolean) => void;
@@ -168,7 +168,7 @@ const EditorTabItemName = ({
 };
 
 export function EditorTabsItem({ tab }: { tab: Tab }) {
-	const inputRef = useRef<HTMLInputElement | null>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
 	const tabs = useTabsStore(useShallow((state) => state.tabs));
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
@@ -195,7 +195,7 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 			title={tab.name}
 			className={`${
 				activeTabId === tab.id && " bg-border/30 grow-2"
-			}  border-r cursor-pointer transition-colors  `}
+			}  border-r  transition-colors  `}
 			onClick={() => {
 				if (!tab.editing || activeTabId !== tab.id) {
 					handleActiveTabChange(tab.id);
@@ -224,7 +224,7 @@ export function EditorTabsItem({ tab }: { tab: Tab }) {
 							size="icon"
 							aria-label="Close tab"
 							translate="no"
-							className="h-5 w-5 p-0 bg-transparent rounded-full"
+							className="h-5 w-5 p-0 bg-transparent hover:text-foreground rounded-full"
 							onClick={(e) => {
 								e.stopPropagation();
 								removeTab(tab.id);
