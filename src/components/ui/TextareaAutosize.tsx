@@ -44,7 +44,7 @@ export default function TextareaAutosize({
 			ref={textareaRef}
 			onChange={handleInput}
 			rows={defaultRows}
-			className={cn("min-h-[none] resize-none", className)}
+			className={cn("min-h-[none] resize-none bg-trasparent", className)}
 			{...props}
 		/>
 	);
