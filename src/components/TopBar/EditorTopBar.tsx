@@ -143,7 +143,7 @@ export const EditorTopBar = memo(() => {
 								size="icon"
 								aria-label="Download code"
 								className="size-8"
-								onClick={() => downloadCode}
+								onClick={() => downloadCode()}
 							>
 								<Download />
 							</Button>
