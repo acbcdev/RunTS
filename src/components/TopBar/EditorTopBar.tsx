@@ -136,20 +136,22 @@ export const EditorTopBar = memo(() => {
             <TooltipContent>Copy code</TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger tabIndex={-1}>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Download code"
-                className="size-8"
-                onClick={() => downloadCode()}
-              >
-                <Download />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Download code</TooltipContent>
-          </Tooltip>
+
+					<Tooltip>
+						<TooltipTrigger tabIndex={-1}>
+							<Button
+								variant="ghost"
+								size="icon"
+								aria-label="Download code"
+								className="size-8"
+								onClick={() => downloadCode()}
+							>
+								<Download />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Download code</TooltipContent>
+					</Tooltip>
+
 
           <Tooltip>
             <TooltipTrigger tabIndex={-1}>
