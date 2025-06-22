@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { isTauri } from "@tauri-apps/api/core";
 import { save } from "@tauri-apps/plugin-dialog";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 export function useHandler() {
   const getCurrentTab = useTabsStore(
@@ -59,7 +60,13 @@ export function useHandler() {
       });
       return;
     }
-    navigator.clipboard.writeText(tab?.code ?? "");
+
+    if (isTauri()) {
+      writeText(tab?.code ?? "");
+    } else {
+      navigator.clipboard.writeText(tab?.code ?? "");
+    }
+
     toast.success("Code copied!", {
       description: "The code has been copied to your clipboard.",
       duration: 2000,
