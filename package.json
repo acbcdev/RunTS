@@ -11,7 +11,9 @@
     "test": "vitest",
     "format": "biome format --write ./src",
     "lint:biome": "biome lint --write ./src",
-    "check": "biome check --write ./src"
+    "check": "biome check --write ./src",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.11",
@@ -37,7 +39,10 @@
     "@radix-ui/react-toast": "1.1.5",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/vite": "4.0.17",
+    "@tauri-apps/plugin-clipboard-manager": "~2",
     "@tauri-apps/plugin-dialog": "~2",
+    "@tauri-apps/plugin-opener": "~2",
+    "@tauri-apps/plugin-window-state": "~2",
     "acorn": "8.14.0",
     "acorn-walk": "8.3.4",
     "ai": "^4.3.16",
