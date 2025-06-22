@@ -11,7 +11,9 @@
     "test": "vitest",
     "format": "biome format --write ./src",
     "lint:biome": "biome lint --write ./src",
-    "check": "biome check --write ./src"
+    "check": "biome check --write ./src",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.11",
