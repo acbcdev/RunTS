@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { memo } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { isTauri } from "@tauri-apps/api/core";
 
 export const EditorTopBar = memo(() => {
   const { layout, setOption } = useApparenceStore(
@@ -106,20 +107,22 @@ export const EditorTopBar = memo(() => {
           </Tooltip>
         </div>
         <div className="flex items-center space-x-2">
-          <Tooltip>
-            <TooltipTrigger tabIndex={-1}>
-              <Button
-                aria-label="Share code"
-                variant="ghost"
-                size="icon"
-                className="size-8 text-accent"
-                onClick={() => handleShare()}
-              >
-                <Share2 />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Share Code current Tab</TooltipContent>
-          </Tooltip>
+          {!isTauri() && (
+            <Tooltip>
+              <TooltipTrigger tabIndex={-1}>
+                <Button
+                  aria-label="Share code"
+                  variant="ghost"
+                  size="icon"
+                  className="size-8 text-accent"
+                  onClick={() => handleShare()}
+                >
+                  <Share2 />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Share Code current Tab</TooltipContent>
+            </Tooltip>
+          )}
 
           <Tooltip>
             <TooltipTrigger tabIndex={-1}>
@@ -136,37 +139,37 @@ export const EditorTopBar = memo(() => {
             <TooltipContent>Copy code</TooltipContent>
           </Tooltip>
 
-
-					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
-							<Button
-								variant="ghost"
-								size="icon"
-								aria-label="Download code"
-								className="size-8"
-								onClick={() => downloadCode()}
-							>
-								<Download />
-							</Button>
-						</TooltipTrigger>
-						<TooltipContent>Download code</TooltipContent>
-					</Tooltip>
-
-
           <Tooltip>
             <TooltipTrigger tabIndex={-1}>
               <Button
                 variant="ghost"
-                aria-label="Clear console"
                 size="icon"
-                className="size-8 hover:text-destructive"
-                onClick={handleClear}
+                aria-label="Download code"
+                className="size-8"
+                onClick={() => downloadCode()}
               >
-                <Trash2 />
+                <Download />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Clear console</TooltipContent>
+            <TooltipContent>Download code</TooltipContent>
           </Tooltip>
+
+          {!isTauri() && (
+            <Tooltip>
+              <TooltipTrigger tabIndex={-1}>
+                <Button
+                  variant="ghost"
+                  aria-label="Clear console"
+                  size="icon"
+                  className="size-8 hover:text-destructive"
+                  onClick={handleClear}
+                >
+                  <Trash2 />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Clear console</TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </div>
     </TooltipProvider>
