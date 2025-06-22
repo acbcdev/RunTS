@@ -38,6 +38,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/vite": "4.0.17",
     "@tauri-apps/plugin-dialog": "~2",
+    "@tauri-apps/plugin-opener": "~2",
     "@tauri-apps/plugin-window-state": "~2",
     "acorn": "8.14.0",
     "acorn-walk": "8.3.4",

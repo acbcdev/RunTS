@@ -3,5 +3,10 @@
   "identifier": "default",
   "description": "enables the default permissions",
   "windows": ["main"],
-  "permissions": ["core:default", "dialog:default", "window-state:default"]
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "opener:default",
+    "window-state:default",
+  ]
 }
