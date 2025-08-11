@@ -1,10 +1,10 @@
 import { useChat } from "@/hooks/useChat";
-import MultiModalInput from "./core/MultiModal-Input";
 
 import { AI } from "@/components/Settings/tabs/ai";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
 import { Messages } from "./core/Messages";
+import { PromptInputWithActions } from "./core/PrompInput";
 export function Chat() {
 	const { getProviders, showChat } = useAIConfigStore(
 		useShallow((state) => ({
@@ -39,12 +39,12 @@ export function Chat() {
 				error={error}
 			/>
 			<section className=" flex flex-col gap-2 p-4 ">
-				<MultiModalInput
-					input={input}
-					stop={stop}
+				<PromptInputWithActions
+					value={input}
+					onValueChange={setInput}
 					isLoading={isLoading}
-					handleSubmit={handleSubmit}
-					setInput={setInput}
+					onSubmit={handleSubmit}
+					stop={stop}
 				/>
 			</section>
 		</aside>
