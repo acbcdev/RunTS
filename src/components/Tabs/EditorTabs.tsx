@@ -42,7 +42,7 @@ export function EditorTabs() {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					New tab <Kd>(ctrl + shift + D )</Kd>
+					New tab <Kd>(Ctrl+Shift+D)</Kd>
 				</TooltipContent>
 			</Tooltip>
 		</div>
