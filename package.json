@@ -21,8 +21,6 @@
     "@ai-sdk/mistral": "^2.0.1",
     "@ai-sdk/openai": "^2.0.8",
     "@babel/plugin-proposal-pipeline-operator": "7.26.7",
-    "@clerk/clerk-react": "^5.31.5",
-    "@clerk/themes": "^2.2.46",
     "@hookform/resolvers": "^5.0.1",
     "@monaco-editor/react": "4.7.0",
     "@radix-ui/react-context-menu": "2.2.15",
