@@ -72,7 +72,7 @@ export default function MultiModalInput({
 								setInput(`${input}\n`);
 							}
 						}}
-						className="flex-1 break-words border-none shadow-none resize-none caret-accent focus:outline-hidden focus-visible:ring-0 focus:ring-0"
+						className="flex-1 break-words border-none shadow-none resize-none caret-accent focus:outline-hidden focus-visible:ring-0 focus:ring-0 bg-transparent"
 					/>
 
 					<Button

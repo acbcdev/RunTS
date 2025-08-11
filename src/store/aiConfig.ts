@@ -1,6 +1,6 @@
-import { providersList } from "@/consts";
-import type { ProviderItem, providers } from "@/types/ai";
-import type { UIMessage } from "ai";
+import { models } from "@/consts";
+import type { providers } from "@/types/ai";
+import type { ModelMessage } from "ai";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -12,19 +12,21 @@ interface AIConfigStore {
     mistral: string;
   };
   setApiKeys: (key: string, provider: providers) => void;
-  messages: UIMessage[];
+  messages: ModelMessage[];
   setMessages: (
-    messages: UIMessage[] | ((prev: UIMessage[]) => UIMessage[])
+    messages: ModelMessage[] | ((prev: ModelMessage[]) => ModelMessage[])
   ) => void;
   showChat: boolean;
   toggleChat: (size?: boolean) => void;
-  selectedModel: string;
-  setSelectedModel: (provider: string) => void;
-  provider: providers;
-  setProvider: (model: providers) => void;
-  getProviders: () => ProviderItem[];
-  contenxtFile: boolean;
-  setContenxtFile: (contenxtFile: boolean) => void;
+  selectedModel: {
+    id: string | null;
+    provider: providers | null;
+    Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  };
+  changeModel: ({ id, provider, Icon }: AIConfigStore["selectedModel"]) => void;
+  getProviders: () => typeof models;
+  contextFile: boolean;
+  setContextFile: (contextFile: boolean) => void;
 }
 
 export const useAIConfigStore = create<AIConfigStore>()(
@@ -36,8 +38,8 @@ export const useAIConfigStore = create<AIConfigStore>()(
         anthropic: "",
         mistral: "",
       },
-      contenxtFile: true,
-      setContenxtFile: (contenxtFile) => set({ contenxtFile }),
+      contextFile: true,
+      setContextFile: (contextFile) => set({ contextFile }),
       messages: [],
       setMessages: (messages) =>
         set((state) => ({
@@ -64,15 +66,26 @@ export const useAIConfigStore = create<AIConfigStore>()(
         }
         set({ showChat });
       },
-      selectedModel: "",
-      setSelectedModel: (selectedProvider) =>
-        set({ selectedModel: selectedProvider }),
-      provider: "google",
-      setProvider: (model) => set({ provider: model }),
+      selectedModel: {
+        id: "",
+        provider: null,
+        Icon: undefined,
+      },
+
+      changeModel: ({ id, provider, Icon }) => {
+        set((state) => ({
+          selectedModel: {
+            ...state.selectedModel,
+            id,
+            provider,
+            Icon,
+          },
+        }));
+      },
 
       getProviders: () => {
         const apiKeys = get().apiKeys;
-        return providersList.filter((provider) => apiKeys[provider.name]);
+        return models.filter((model) => apiKeys[model.provider as providers]);
       },
     }),
     {
