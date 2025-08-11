@@ -3,6 +3,7 @@ import { useChat } from "@/hooks/useChat";
 import { AI } from "@/components/Settings/tabs/ai";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
+import { EmptyChatView } from "./EmptyChatView";
 import { Messages } from "./core/Messages";
 import { PromptInputWithActions } from "./core/PrompInput";
 export function Chat() {
@@ -24,21 +25,29 @@ export function Chat() {
 		reload,
 		error,
 	} = useChat();
-	return getProviders().length === 0 ? (
-		<AI tabs={false} />
-	) : (
+	if (getProviders().length === 0) {
+		return <AI tabs={false} />;
+	}
+
+	const isEmpty = !messages || messages.length === 0;
+
+	return (
 		<aside
 			data-state={showChat}
-			className="relative flex bg-border/10 max-w-3xl flex-col w-full h-full mx-auto chat  rounded-none shadow-none "
+			className="relative flex bg-border/10 max-w-3xl flex-col w-full h-full mx-auto chat rounded-none shadow-none "
 		>
-			<Messages
-				messages={messages}
-				streamingContent={streamingContent}
-				isLoading={isLoading}
-				reload={reload}
-				error={error}
-			/>
-			<section className=" flex flex-col gap-2 p-4 ">
+			{isEmpty ? (
+				<EmptyChatView />
+			) : (
+				<Messages
+					messages={messages}
+					streamingContent={streamingContent}
+					isLoading={isLoading}
+					reload={reload}
+					error={error}
+				/>
+			)}
+			<section className="flex flex-col gap-2 p-4">
 				<PromptInputWithActions
 					value={input}
 					onValueChange={setInput}
