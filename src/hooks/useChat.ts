@@ -3,7 +3,6 @@ import { createProvider } from "@/lib/ai/providers";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
 import {
-  type ModelMessage,
   type UIMessage,
   convertToModelMessages,
   smoothStream,
