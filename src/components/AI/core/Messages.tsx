@@ -2,12 +2,12 @@ import ActionButtons from "@/components/AI/core/ActionButtons";
 import Markdown from "@/components/AI/core/Markdown";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Message } from "ai";
+import type { UIMessage } from "ai";
 import { RefreshCw } from "lucide-react";
 import { memo, useEffect, useLayoutEffect, useRef } from "react";
 
 type PureMessagesProps = {
-	messages: Message[];
+	messages: UIMessage[];
 	isLoading: boolean;
 	streamingContent: string;
 	reload: () => void;
@@ -54,10 +54,25 @@ function PureMessages({
 									: ""
 							}`}
 						>
-							<Markdown>{message.content}</Markdown>
-							{message.role === "assistant" && (
-								<ActionButtons content={message.content} reload={reload} />
-							)}
+							{message.role === "user" &&
+								message.parts.map((part) => {
+									if (part.type === "text")
+										return (
+											<>
+												<Markdown>{part.text}</Markdown>
+											</>
+										);
+								})}
+							{message.role === "assistant" &&
+								message.parts.map((part) => {
+									if (part.type === "text")
+										return (
+											<>
+												<Markdown>{part.text}</Markdown>
+												<ActionButtons content={part.text} reload={reload} />
+											</>
+										);
+								})}
 						</div>
 					</div>
 				))}
