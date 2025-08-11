@@ -7,7 +7,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { providersList } from "@/consts";
 import { useAIConfigStore } from "@/store/aiConfig";
 import type { providers as TProvider } from "@/types/ai";
 import { ExternalLink } from "lucide-react";
@@ -25,8 +24,6 @@ const providers: Provider[] = [
 export function AI({ tabs = true }) {
 	const apiKeys = useAIConfigStore((state) => state.apiKeys);
 	const setApiKeys = useAIConfigStore((state) => state.setApiKeys);
-	const setProvider = useAIConfigStore((state) => state.setProvider);
-	const setSelectedModel = useAIConfigStore((state) => state.setSelectedModel);
 
 	const Comp = tabs ? TabsContent : "div";
 	return (
@@ -65,10 +62,6 @@ export function AI({ tabs = true }) {
 									className={`${apiKeys[name] && "border-accent"} `}
 									onChange={(e) => {
 										setApiKeys(e.target.value.trim(), name);
-										setProvider(name);
-										setSelectedModel(
-											providersList.find((p) => p.name === name)?.models[0].id || ""
-										);
 									}}
 									value={apiKeys[name]}
 								/>
