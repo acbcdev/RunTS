@@ -105,8 +105,8 @@ export default function MultiModalInput({
 										<Icon className="size-4" /> {name}
 									</SelectLabel>
 									{models.map((model) => (
-										<SelectItem key={model} value={`${name}::${model}`}>
-											{model}
+										<SelectItem key={model.id} value={`${name}::${model.id}`}>
+											{model.name}
 										</SelectItem>
 									))}
 								</SelectGroup>

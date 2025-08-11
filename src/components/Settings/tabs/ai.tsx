@@ -67,8 +67,7 @@ export function AI({ tabs = true }) {
 										setApiKeys(e.target.value.trim(), name);
 										setProvider(name);
 										setSelectedModel(
-											providersList.find((p) => p.name === name)?.models[0] ||
-												"",
+											providersList.find((p) => p.name === name)?.models[0].id || ""
 										);
 									}}
 									value={apiKeys[name]}
