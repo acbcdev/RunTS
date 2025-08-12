@@ -29,7 +29,7 @@ export function ReloadPrompt() {
 	return (
 		<>
 			{needRefresh && (
-				<Card className="fixed z-[1000] bottom-2 right-1.5 border-accent animate-in delay-700">
+				<Card className="fixed z-[1000] bottom-2 min-w-2xs right-1.5 border-accent animate-in delay-700">
 					<CardHeader>
 						<CardTitle className="flex items-center gap-x-1.5">
 							<Info className="text-accent" /> New content available
