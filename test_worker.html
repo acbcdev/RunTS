@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test setTimeout in Worker</title>
+</head>
+<body>
+    <h1>Testing setTimeout in Web Worker</h1>
+    <div id="output"></div>
+    <button onclick="testBasicTimeout()">Test Basic setTimeout</button>
+    <button onclick="testDebounce()">Test Debounce</button>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message) {
+            const div = document.createElement('div');
+            div.textContent = `${new Date().toISOString()}: ${message}`;
+            output.appendChild(div);
+        }
+        
+        function testBasicTimeout() {
+            log('Testing basic setTimeout...');
+            const worker = new Worker('./dist/assets/runCode-CnuQURNP.js');
+            
+            worker.postMessage({
+                activeTabCode: `
+                    console.log('Before setTimeout');
+                    setTimeout(() => {
+                        console.log('setTimeout executed');
+                    }, 100);
+                    console.log('After setTimeout');
+                `,
+                name: 'test.js',
+                injectLogs: false
+            });
+            
+            worker.onmessage = (event) => {
+                log('Basic setTimeout results:');
+                event.data.forEach((item, index) => {
+                    log(`${index + 1}. ${item.content}`);
+                });
+                worker.terminate();
+            };
+            
+            worker.onerror = (error) => {
+                log('Worker error: ' + error.message);
+            };
+        }
+        
+        function testDebounce() {
+            log('Testing debounce...');
+            const worker = new Worker('./dist/assets/runCode-CnuQURNP.js');
+            
+            worker.postMessage({
+                activeTabCode: `
+                    var debounce = function (fn, t) {
+                        let timerID;
+                        return function (...args) {
+                            clearTimeout(timerID);
+                            timerID = setTimeout(() => {
+                                fn.apply(this, args);
+                            }, t) 
+                        }
+                    };
+
+                    const log = debounce(console.log, 100);
+                    log('Hello 1'); // should be cancelled
+                    log('Hello 2'); // should be cancelled  
+                    log('Hello 3'); // should be logged at t=100ms
+                `,
+                name: 'debounce-test.js',
+                injectLogs: false
+            });
+            
+            worker.onmessage = (event) => {
+                log('Debounce results:');
+                event.data.forEach((item, index) => {
+                    log(`${index + 1}. ${item.content}`);
+                });
+                worker.terminate();
+            };
+            
+            worker.onerror = (error) => {
+                log('Worker error: ' + error.message);
+            };
+        }
+    </script>
+</body>
+</html>
