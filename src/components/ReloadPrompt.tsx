@@ -8,9 +8,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Info, RefreshCw } from "lucide-react";
+import { memo } from "react";
 import { toast } from "sonner";
 
-export function ReloadPrompt() {
+export const ReloadPrompt = memo(() => {
 	const {
 		needRefresh: [needRefresh],
 		updateServiceWorker,
@@ -45,4 +46,4 @@ export function ReloadPrompt() {
 			)}
 		</>
 	);
-}
+});
