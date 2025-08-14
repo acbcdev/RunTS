@@ -1,4 +1,4 @@
-import { EditorSettingsDialog } from "@/components/Settings/EditorSettingDialog";
+import { EditorSettingsDialog } from "@/components/settings/EditorSettingDialog";
 import { Button } from "@/components/ui/button";
 import { Kd } from "@/components/ui/kd";
 import {

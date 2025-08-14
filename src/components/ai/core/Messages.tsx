@@ -1,5 +1,5 @@
-import ActionButtons from "@/components/AI/core/ActionButtons";
-import Markdown from "@/components/AI/core/Markdown";
+import ActionButtons from "@/components/ai/core/ActionButtons";
+import Markdown from "@/components/ai/core/Markdown";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { UIMessage } from "ai";

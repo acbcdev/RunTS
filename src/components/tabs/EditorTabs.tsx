@@ -10,7 +10,7 @@ import { useTabsStore } from "@/store/tabs";
 import { Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 
-import { EditorTabsItem } from "@/components/Tabs/EditorTabsItem";
+import { EditorTabsItem } from "@/components/tabs/EditorTabsItem";
 
 export function EditorTabs() {
 	// useEditorStore

@@ -1,5 +1,5 @@
-import { Chat } from "@/components/AI/Chat";
 import { ReloadPrompt } from "@/components/ReloadPrompt";
+import { Chat } from "@/components/ai/Chat";
 import {
 	ResizableHandle,
 	ResizablePanel,
@@ -17,10 +17,10 @@ import { lazy, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useShallow } from "zustand/react/shallow";
 
-const EditorMain = lazy(() => import("@/components/Editor/EditorMain"));
-const EditorTabs = lazy(() => import("@/components/Tabs/EditorTabs"));
-const EditorTopBar = lazy(() => import("@/components/TopBar/EditorTopBar"));
-const Console = lazy(() => import("@/components/Editor/Console"));
+const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
+const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
+const EditorTopBar = lazy(() => import("@/components/topBar/EditorTopBar"));
+const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
 	const { runCode } = useRun();
 	// useConfigStore

@@ -1,6 +1,6 @@
 import { useChat } from "@/hooks/useChat";
 
-import { AI } from "@/components/Settings/tabs/ai";
+import { AI } from "@/components/settings/tabs/ai";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
 import { ChatActions } from "./ChatActions";

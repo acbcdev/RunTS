@@ -6,7 +6,7 @@ import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
-const CodeEditor = lazy(() => import("@/components/Editor/CodeEditor"));
+const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
 function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));

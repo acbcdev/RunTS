@@ -1,7 +1,7 @@
-import { GithubStars } from "@/components/Settings/GithubStars";
-import { AI } from "@/components/Settings/tabs/ai";
-import { Appearance } from "@/components/Settings/tabs/appearance";
-import { Editor } from "@/components/Settings/tabs/editor";
+import { GithubStars } from "@/components/settings/GithubStars";
+import { AI } from "@/components/settings/tabs/ai";
+import { Appearance } from "@/components/settings/tabs/appearance";
+import { Editor } from "@/components/settings/tabs/editor";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
