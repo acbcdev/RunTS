@@ -7,6 +7,7 @@ The following is a set of guidelines to help you contribute to this project. The
 ## 🌟 How to Contribute
 
 ## 📂 Project Structure
+
 Here is an overview of the project folder structure:
 
 ```
@@ -91,8 +92,8 @@ Here is an overview of the project folder structure:
 
 ### Code Contribution Process
 
-1. Fork the Project  [Fork](https://github.com/acbcdev/RunTS/fork)
-2. Clone your fork: 
+1. Fork the Project [Fork](https://github.com/acbcdev/RunTS/fork)
+2. Clone your fork:
    ```bash
    git clone <URL of your fork>
    ```
@@ -115,10 +116,12 @@ Here is an overview of the project folder structure:
 7. Open a Pull Request
 
 ### Commit Messages
+
 - Use clear and descriptive commit messages.
 - Prefix your message with tags such as "Fix:", "Add:", "Update:", etc., to indicate the type of change.
 
 ### Code Style
+
 - Make sure your code adheres to the existing style guidelines of the project.
 - Run the project's linter and formatter before pushing your code.
 
@@ -127,22 +130,27 @@ Here is an overview of the project folder structure:
 Make sure to follow the [Project Setup](README.md#project-setup) section from the README to configure your local development environment.
 
 - Ensure that you have **Node.js** and **Rust** installed as mentioned in the prerequisites.
-- **PNPM** is the preferred package manager for this project.
+- **bun** is the preferred package manager for this project.
 
 ## 🔄 Keeping Your Fork Updated
+
 To avoid merge conflicts, it is essential to keep your fork updated:
+
 1. Fetch the latest updates from upstream:
    ```bash
    git fetch upstream
    ```
 
 ## 🛠 Testing
+
 Tests will be added soon. Once available, please run tests to ensure your changes do not break existing functionality.
 
 ## 📋 Code of Conduct
+
 Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) in all your interactions with the project.
 
 ## 💌 Questions or Help?
+
 If you need any help or have questions, feel free to open an issue or contact the maintainers at [your-email@example.com].
 
 Thank you once again for your contribution! 🎉
