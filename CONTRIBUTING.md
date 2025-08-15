@@ -13,46 +13,16 @@ Here is an overview of the project folder structure:
 ```
 └── 📁vite-runts
     └── 📁public
-        └── 📁fonts
-        └── 📁icons
-        └── logo.png
-        └── logo.svg
-        └── og.jpg
-        └── ogOld.jpg
-        └── runts.webp
     └── 📁src
         └── App.tsx
         └── 📁components
-            └── 📁AI
-                └── Chat.tsx
-                └── 📁core
-                    └── Markdown.tsx
-                    └── Messages.tsx
-                    └── MultiModal-Input.tsx
-            └── 📁code-editor
-                └── code-editor.tsx
-                └── console.tsx
-                └── editor-main.tsx
-                └── editor-tabs.tsx
-                └── editor-top-bar.tsx
-            └── GithubStars.tsx
-            └── SEO.astro
+            └── 📁ai
+            └── 📁editor
             └── 📁settings
-                └── editor-setting-dialog.tsx
-                └── 📁tabs
-                    └── ai.tsx
-                    └── appearance.tsx
-                    └── editor.tsx
-            └── Skeleton.astro
             └── 📁ui
-            └── updates.tsx
         └── 📁consts
         └── 📁hooks
-        └── index.css
         └── 📁lib
-            └── 📁ai
-                └── crypt.ts
-                └── providers.ts
         └── main.tsx
         └── 📁store
         └── 📁svg
@@ -69,8 +39,6 @@ Here is an overview of the project folder structure:
     └── index.html
     └── LICENSE
     └── package.json
-    └── pnpm-lock.yaml
-    └── postcss.config.js
     └── README.md
     └── tailwind.config.js
     └── tsconfig.app.json
