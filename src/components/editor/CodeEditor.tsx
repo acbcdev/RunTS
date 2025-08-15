@@ -5,7 +5,6 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useChatAnimation } from "@/hooks/useChatAnimation";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
 import { updateChangeTheme } from "@/lib/utils";
@@ -24,16 +23,7 @@ const EditorTopBar = lazy(() => import("@/components/topBar/EditorTopBar"));
 const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
 	const { runCode } = useRun();
-	// Chat animation hook
-	// const {
-	// 	animationRef,
-	// 	showChat,
-	// 	handleToggleWithAnimation,
-	// 	springConfig,
-	// 	fadeConfig,
-	// } = useChatAnimation();
 
-	// useConfigStore
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
 	// useTabsStore
 	const getCurrentTab = useTabsStore(
@@ -87,16 +77,15 @@ export function CodeEditor() {
 					{showChat && (
 						<motion.div
 							key="chat"
-							initial={{ opacity: 0, x: -20, scale: 0.95 }}
+							initial={{ opacity: 0, x: -200, width: 0 }}
 							animate={{
 								opacity: 1,
 								x: 0,
-								scale: 1,
+								width: "auto",
 							}}
 							exit={{
-								opacity: 0,
-								x: -20,
-								scale: 0.95,
+								x: -200,
+								width: 0,
 							}}
 							className="h-full"
 						>
