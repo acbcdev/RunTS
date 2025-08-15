@@ -7,34 +7,23 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { API_PROVIDERS } from "@/consts";
 import { useAIConfigStore } from "@/store/aiConfig";
-import type { providers as TProvider } from "@/types/ai";
 import { ExternalLink } from "lucide-react";
-type Provider = { name: TProvider; url: string };
-const providers: Provider[] = [
-	{ name: "openai", url: "https://platform.openai.com/api-keys" },
-	{ name: "google", url: "https://aistudio.google.com/apikey" },
-	{ name: "anthropic", url: "https://console.anthropic.com/settings/keys" },
-	{
-		name: "mistral",
-		url: "https://console.mistral.ai/api-keys",
-	},
-];
 
-export function AI({ tabs = true }) {
+export function AI() {
 	const apiKeys = useAIConfigStore((state) => state.apiKeys);
 	const setApiKeys = useAIConfigStore((state) => state.setApiKeys);
 
-	const Comp = tabs ? TabsContent : "div";
 	return (
-		<Comp value="ai" className="p-6 m-0">
+		<TabsContent value="ai" className="p-6 m-0">
 			<div className="space-y-8">
 				<section>
 					<h3 translate="no" className="mb-3 text-lg font-medium ">
 						Api Keys
 					</h3>
 					<div className="flex flex-wrap xl:gap-2 md:gap-5">
-						{providers.map(({ name, url }) => (
+						{API_PROVIDERS.map(({ name, url }) => (
 							<div key={name}>
 								<div className="flex items-center justify-start mb-2 gap-x-2">
 									<Label htmlFor={name} className="block text-sm capitalize">
@@ -70,6 +59,6 @@ export function AI({ tabs = true }) {
 					</div>
 				</section>
 			</div>
-		</Comp>
+		</TabsContent>
 	);
 }

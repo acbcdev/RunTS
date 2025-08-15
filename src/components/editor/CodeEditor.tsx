@@ -71,8 +71,6 @@ export function CodeEditor() {
 
 	return (
 		<main className="flex flex-col h-screen bg-background/80 " translate="no">
-			<EditorTopBar />
-
 			<ResizablePanelGroup direction="horizontal" className="flex-1">
 				<AnimatePresence>
 					{showChat && (
@@ -91,6 +89,7 @@ export function CodeEditor() {
 					<Chat />
 				</ResizablePanel> */}
 				<ResizablePanel defaultSize={100}>
+					<EditorTopBar />
 					<EditorTabs />
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>

@@ -3,7 +3,7 @@ import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
 import mistral from "@/svg/mistral";
 import { openai } from "@/svg/openai";
-import type { model } from "@/types/ai";
+import type { Provider, model } from "@/types/ai";
 import type { Radius } from "@/types/editor";
 import type { lineRendererEditor } from "@/types/editor";
 import type { SVGProps } from "react";
@@ -43,6 +43,16 @@ export const RADIUS_SIZES: Radius[] = [
   { display: "Medium", size: "0.5" },
   { display: "Smooth", size: "0.75" },
   { display: "Curved", size: "1" },
+];
+
+export const API_PROVIDERS: Provider[] = [
+  { name: "openai", url: "https://platform.openai.com/api-keys" },
+  { name: "google", url: "https://aistudio.google.com/apikey" },
+  { name: "anthropic", url: "https://console.anthropic.com/settings/keys" },
+  {
+    name: "mistral",
+    url: "https://console.mistral.ai/api-keys",
+  },
 ];
 
 type providerType = "openai" | "google" | "anthropic" | "mistral";
