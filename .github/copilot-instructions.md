@@ -93,7 +93,7 @@
   </step>
 </workflow>
 
-<folder**structure>
+<folder_structure>
 src/
 components/ # Reusable shared UI
 const/ # Constants & config
@@ -106,7 +106,7 @@ svg/ # SVG assets
 themes/ # Theme definitions
 workers/ # Web Workers
 src-tauri/ # Tauri-specific code
-</folder**structure>
+</folder_structure>
 
 <pending_features>
 <feature>Implement a global error boundary.</feature>
