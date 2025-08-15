@@ -86,6 +86,7 @@ export function CodeEditor() {
 							exit={{
 								x: -200,
 								width: 0,
+								opacity: 0,
 							}}
 							className="h-full"
 						>
@@ -94,14 +95,14 @@ export function CodeEditor() {
 					)}
 				</AnimatePresence>
 
-				<ResizablePanel defaultSize={showChat ? 75 : 100}>
+				<ResizablePanel defaultSize={100}>
 					<EditorTopBar />
 					<EditorTabs />
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>
 							<EditorMain />
 						</ResizablePanel>
-						<ResizableHandle withHandle />
+						<ResizableHandle withHandle className="w-1" />
 						<ResizablePanel defaultSize={40}>
 							<Console />
 						</ResizablePanel>

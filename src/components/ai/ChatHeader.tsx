@@ -8,7 +8,7 @@ interface ChatHeaderProps {
 
 export function ChatHeader({ onNewChat }: ChatHeaderProps) {
 	return (
-		<header className="flex items-center justify-between  px-4 py-2">
+		<header className="flex items-center justify-between px-4 py-2">
 			<div className="flex items-center gap-x-2">
 				<MessageCircleIcon size={20} />
 				<p>Chat</p>
