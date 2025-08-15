@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
+import { terminateWorker } from "@/lib/runCode";
 import { updateChangeTheme } from "@/lib/utils";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
@@ -66,6 +67,14 @@ export function CodeEditor() {
 	useEffect(() => {
 		runCode();
 	}, [debouncedCode]);
+
+	// Cleanup worker on component unmount
+	useEffect(() => {
+		return () => {
+			terminateWorker();
+		};
+	}, []);
+
 	if (!activeTabId) {
 		return null;
 	}
