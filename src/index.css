@@ -95,6 +95,10 @@
 	color: var(--foreground, white);
 }
 
+.scroll {
+	scrollbar-color: var(--border) var(--color-background);
+}
+
 textarea {
 	--sb-track-color: transparent;
 	--sb-thumb-color: var(--muted);
