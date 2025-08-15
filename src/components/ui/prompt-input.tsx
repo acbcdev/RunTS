@@ -108,17 +108,17 @@ function PromptInputTextarea({
 }: PromptInputTextareaProps) {
 	const { value, setValue, maxHeight, onSubmit, disabled, textareaRef } =
 		usePromptInput();
-
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (disableAutosize) return;
 
 		if (!textareaRef.current) return;
 		textareaRef.current.style.height = "auto";
-		textareaRef.current.style.height =
-			typeof maxHeight === "number"
-				? `${Math.min(textareaRef.current.scrollHeight, maxHeight)}px`
-				: `min(${textareaRef.current.scrollHeight}px, ${maxHeight})`;
+
+		// textareaRef.current.style.height =
+		// 	typeof maxHeight === "number"
+		// 		? `${Math.min(textareaRef.current.scrollHeight, maxHeight)}px`
+		// 		: `min(${textareaRef.current.scrollHeight}px, ${maxHeight})`;
 	}, [value, maxHeight, disableAutosize]);
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
