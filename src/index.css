@@ -49,8 +49,8 @@
 }
 
 ::selection {
-	background-color: var(--accent);
-	color: var(--header);
+	background-color: var(--header);
+	color: var(--primary);
 }
 
 @layer base {
@@ -169,4 +169,8 @@ pre {
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+.elastic {
+	transition-timing-function: cubic-bezier(0.37, 1.83, 0.53, 1.64);
 }
