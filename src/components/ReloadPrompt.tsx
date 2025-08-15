@@ -15,17 +15,7 @@ export const ReloadPrompt = memo(() => {
 	const {
 		needRefresh: [needRefresh],
 		updateServiceWorker,
-	} = useRegisterSW({
-		onRegisteredSW() {
-			console.log("Service Worker Registered");
-		},
-		onRegisterError() {
-			console.log("SW registration error");
-		},
-		onOfflineReady() {
-			toast("App ready to work offline");
-		},
-	});
+	} = useRegisterSW();
 
 	return (
 		<>
