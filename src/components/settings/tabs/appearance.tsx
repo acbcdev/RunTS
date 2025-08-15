@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
-import { fontFamilies, fontSizes, layouts, radiuses } from "@/consts";
+import { RADIUS_SIZES, fontFamilies, fontSizes, layouts } from "@/consts";
 import { cn } from "@/lib/utils";
 import { useApparenceStore } from "@/store/apparence";
 import { themes } from "@/themes";
@@ -77,14 +77,14 @@ export function Appearance() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Border Radius</h3>
 					<div className="grid grid-cols-5 gap-2 md:grid-cols-10">
-						{radiuses.map((value) => (
+						{RADIUS_SIZES.map((value) => (
 							<Button
 								translate="no"
-								key={value}
-								variant={radius === value ? "border" : "outline"}
-								onClick={() => setOption("radius", value)}
+								key={value.size}
+								variant={radius === value.size ? "border" : "outline"}
+								onClick={() => setOption("radius", value.size)}
 							>
-								{value}
+								{value.display}
 							</Button>
 						))}
 					</div>

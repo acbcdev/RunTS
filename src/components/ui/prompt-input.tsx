@@ -84,7 +84,7 @@ function PromptInput({
 				{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 				<div
 					className={cn(
-						"bg-background/80 cursor-text rounded-lg p-2 shadow-xs",
+						"bg-background/80 cursor-text rounded-xl p-2 shadow-xs",
 						className,
 					)}
 					onClick={() => textareaRef.current?.focus()}
