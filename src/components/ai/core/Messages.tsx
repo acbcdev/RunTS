@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { UIMessage } from "ai";
 import { RefreshCw } from "lucide-react";
+import { motion } from "motion/react";
 import { memo, useEffect, useLayoutEffect, useRef } from "react";
 
 type PureMessagesProps = {
@@ -39,7 +40,10 @@ function PureMessages({
 	}, [messages, isLoading]);
 	return (
 		<ScrollArea className="flex-1 h-0 scroll-m-2 ">
-			<section ref={containerRef} className="px-4 py-2 space-y-4 overflow-auto">
+			<section
+				ref={containerRef}
+				className="px-4 py-2 space-y-4 overflow-auto animate-in delay-300"
+			>
 				{messages.map((message) => (
 					<div
 						key={message.id}

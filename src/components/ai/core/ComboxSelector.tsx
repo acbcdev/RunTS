@@ -40,7 +40,7 @@ export function ComboboxSelect() {
 				<Button
 					variant="outline"
 					aria-expanded={open}
-					className="min-w-[150px] justify-between "
+					className="min-w-[150px] justify-between bg-transparent"
 				>
 					{currentModel?.Icon && <currentModel.Icon className=" h-4 w-4" />}
 					{value.id ? currentModel?.name : "Select a model..."}

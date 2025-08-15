@@ -5,6 +5,7 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { useChatAnimation } from "@/hooks/useChatAnimation";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
 import { updateChangeTheme } from "@/lib/utils";
@@ -23,14 +24,17 @@ const EditorTopBar = lazy(() => import("@/components/topBar/EditorTopBar"));
 const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
 	const { runCode } = useRun();
+	// Chat animation hook
+	// const {
+	// 	animationRef,
+	// 	showChat,
+	// 	handleToggleWithAnimation,
+	// 	springConfig,
+	// 	fadeConfig,
+	// } = useChatAnimation();
+
 	// useConfigStore
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
-	const { showChat, toggleChat } = useAIConfigStore(
-		useShallow((state) => ({
-			showChat: state.showChat,
-			toggleChat: state.toggleChat,
-		})),
-	);
 	// useTabsStore
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
@@ -46,6 +50,13 @@ export function CodeEditor() {
 			theme: state.theme,
 			layout: state.layout,
 			getCurrentTheme: state.getCurrentTheme,
+		})),
+	);
+
+	const { showChat, toggleChat } = useAIConfigStore(
+		useShallow((state) => ({
+			showChat: state.showChat,
+			toggleChat: state.toggleChat,
 		})),
 	);
 	useHotkeys("ctrl+q", runCode);
@@ -71,24 +82,30 @@ export function CodeEditor() {
 
 	return (
 		<main className="flex flex-col h-screen bg-background/80 " translate="no">
-			<ResizablePanelGroup direction="horizontal" className="flex-1">
-				<AnimatePresence>
+			<ResizablePanelGroup direction="horizontal">
+				<AnimatePresence mode="wait">
 					{showChat && (
 						<motion.div
 							key="chat"
-							transition={{ duration: 0.3 }}
-							initial={{ opacity: 0, translateX: -100 }}
-							animate={{ translateX: 0, opacity: 1 }}
-							exit={{ translateX: -100, opacity: 0 }}
+							initial={{ opacity: 0, x: -20, scale: 0.95 }}
+							animate={{
+								opacity: 1,
+								x: 0,
+								scale: 1,
+							}}
+							exit={{
+								opacity: 0,
+								x: -20,
+								scale: 0.95,
+							}}
+							className="h-full"
 						>
 							<Chat />
 						</motion.div>
 					)}
 				</AnimatePresence>
-				{/* <ResizablePanel>
-					<Chat />
-				</ResizablePanel> */}
-				<ResizablePanel defaultSize={100}>
+
+				<ResizablePanel defaultSize={showChat ? 75 : 100}>
 					<EditorTopBar />
 					<EditorTabs />
 					<ResizablePanelGroup direction={layout}>
@@ -102,6 +119,7 @@ export function CodeEditor() {
 					</ResizablePanelGroup>
 				</ResizablePanel>
 			</ResizablePanelGroup>
+
 			{/* <Updates /> */}
 			<ReloadPrompt />
 		</main>
