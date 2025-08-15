@@ -6,7 +6,7 @@ import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
 import { NoProvidersView } from "./NoProvidersView";
 import { Messages } from "./core/Messages";
-import { PromptInputWithActions } from "./core/PrompInput";
+import { Prompt } from "./core/PrompInput";
 export function Chat() {
 	const { getProviders, showChat } = useAIConfigStore(
 		useShallow((state) => ({
@@ -56,7 +56,7 @@ export function Chat() {
 				/>
 			)}
 			<section className="flex flex-col gap-2 p-4">
-				<PromptInputWithActions
+				<Prompt
 					value={input}
 					onValueChange={setInput}
 					isLoading={isLoading}

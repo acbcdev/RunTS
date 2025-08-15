@@ -10,6 +10,8 @@ import {
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
 import { ArrowUp, Eye, EyeOff, Square } from "lucide-react";
+import { useMemo } from "react";
+import { ta } from "zod/v4/locales";
 import { useShallow } from "zustand/react/shallow";
 import { ComboboxSelect } from "./ComboxSelector";
 
@@ -20,7 +22,7 @@ type PromptInputProps = {
 	onSubmit: () => void;
 	stop: () => void;
 };
-export function PromptInputWithActions({
+export function Prompt({
 	value,
 	onValueChange,
 	isLoading,
@@ -39,6 +41,13 @@ export function PromptInputWithActions({
 			onSubmit();
 		}
 	};
+	const currentFile = useMemo(() => {
+		const MAX_LENGTH = 12;
+		if (!tab?.name) return "Current Tab";
+		return tab?.name.length > MAX_LENGTH
+			? `${tab?.name.slice(0, MAX_LENGTH)}...`
+			: tab?.name;
+	}, [tab]);
 
 	return (
 		<PromptInput
@@ -46,10 +55,12 @@ export function PromptInputWithActions({
 			onValueChange={onValueChange}
 			isLoading={isLoading}
 			onSubmit={handleSubmit}
-			maxHeight={200}
-			className="w-full max-w-(--breakpoint-md)"
+			className="w-full max-w-(--breakpoint-md)  "
 		>
-			<PromptInputTextarea placeholder="Ask me anything..." />
+			<PromptInputTextarea
+				className="max-h-32"
+				placeholder="Ask me anything..."
+			/>
 
 			<PromptInputActions className="flex items-center justify-between gap-2 pt-2">
 				<div className="flex items-center gap-2">
@@ -57,13 +68,14 @@ export function PromptInputWithActions({
 					<Button
 						variant={"currentFile"}
 						type="button"
+						size={"sm"}
 						className={`${!contextFile && "border-dashed"} `}
 						onClick={() => setContextFile(!contextFile)}
 					>
 						<span
 							className={`${!contextFile && "line-through"} hidden md:inline-block`}
 						>
-							{tab?.name}
+							{currentFile}
 						</span>
 						{/* <span className="text-muted ">Current Tab</span>{" "} */}
 						{contextFile ? <Eye /> : <EyeOff />}
