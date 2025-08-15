@@ -46,6 +46,7 @@ export function PromptInputWithActions({
 			onValueChange={onValueChange}
 			isLoading={isLoading}
 			onSubmit={handleSubmit}
+			maxHeight={200}
 			className="w-full max-w-(--breakpoint-md)"
 		>
 			<PromptInputTextarea placeholder="Ask me anything..." />
