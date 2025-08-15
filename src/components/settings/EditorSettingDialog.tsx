@@ -29,8 +29,8 @@ export function EditorSettingsDialog() {
 	return (
 		<Dialog aria-description="Editor settings">
 			<Tooltip>
-				<TooltipTrigger asChild>
-					<DialogTrigger asChild>
+				<DialogTrigger asChild>
+					<TooltipTrigger asChild>
 						<Button
 							variant="ghost"
 							size="icon"
@@ -40,9 +40,9 @@ export function EditorSettingsDialog() {
 						>
 							<Cog />
 						</Button>
-					</DialogTrigger>
-					<TooltipContent>Editor settings</TooltipContent>
-				</TooltipTrigger>
+					</TooltipTrigger>
+				</DialogTrigger>
+				<TooltipContent>Editor settings</TooltipContent>
 			</Tooltip>
 
 			<DialogContent

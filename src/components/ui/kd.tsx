@@ -1,6 +1,6 @@
 export function Kd({ children }: { children: string }) {
 	return (
-		<kbd className="capitalize text-xs font-black bg-foreground/10 px-3 py-1 border flex items-center rounded-md justify-center">
+		<kbd className="capitalize text-xs ml-2 font-black bg-foreground/10 px-3 py-1 border flex items-center rounded-md justify-center">
 			{children}
 		</kbd>
 	);
