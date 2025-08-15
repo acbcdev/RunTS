@@ -11,7 +11,6 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
 import { ArrowUp, Eye, EyeOff, Square } from "lucide-react";
 import { useMemo } from "react";
-import { ta } from "zod/v4/locales";
 import { useShallow } from "zustand/react/shallow";
 import { ComboboxSelect } from "./ComboxSelector";
 
