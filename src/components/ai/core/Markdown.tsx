@@ -104,7 +104,7 @@ const components = {
 				</div>
 			</section>
 		) : (
-			<code className="bg-background/60  text-foreground px-2 py-1  rounded-sm">
+			<code className="bg-background/60 text-foreground px-2 py-1  rounded-sm">
 				{children}
 			</code>
 		);
@@ -112,7 +112,7 @@ const components = {
 	pre: ({ children }) => <>{children}</>,
 	p: ({ node, children, ...props }) => {
 		return (
-			<p className="my-1 leading-7 " {...props}>
+			<p className="leading-6 text-sm" {...props}>
 				{children}
 			</p>
 		);
@@ -160,35 +160,35 @@ const components = {
 	),
 	h1: ({ node, children, ...props }) => {
 		return (
-			<h1 className="text-4xl font-black mt-6 mb-2" {...props}>
+			<h1 className="text-3xl font-black mt-6 mb-2" {...props}>
 				{children}
 			</h1>
 		);
 	},
 	h2: ({ node, children, ...props }) => {
 		return (
-			<h2 className="text-3xl font-black mt-6 mb-2" {...props}>
+			<h2 className="text-2xl font-black mt-6 mb-2" {...props}>
 				{children}
 			</h2>
 		);
 	},
 	h3: ({ node, children, ...props }) => {
 		return (
-			<h3 className="text-2xl font-black mt-6 mb-2" {...props}>
+			<h3 className="text-xl font-black mt-6 mb-2" {...props}>
 				{children}
 			</h3>
 		);
 	},
 	h4: ({ node, children, ...props }) => {
 		return (
-			<h4 className="text-xl font-bold mt-6 mb-2" {...props}>
+			<h4 className="text-lg font-bold mt-6 mb-2" {...props}>
 				{children}
 			</h4>
 		);
 	},
 	h5: ({ node, children, ...props }) => {
 		return (
-			<h5 className="text-lg font-semibold mt-6 mb-2" {...props}>
+			<h5 className="text-md font-semibold mt-6 mb-2" {...props}>
 				{children}
 			</h5>
 		);
