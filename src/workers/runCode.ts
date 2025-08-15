@@ -17,6 +17,30 @@ self.onmessage = async (event: MessageEvent) => {
 		warn: self.console.warn,
 	};
 
+	// Track pending async operations
+	let pendingTimeouts = new Set<number>();
+	const originalSetTimeout = self.setTimeout;
+	const originalClearTimeout = self.clearTimeout;
+
+	// Override setTimeout to track pending operations
+	(self as any).setTimeout = (callback: (...args: any[]) => void, delay?: number, ...args: any[]) => {
+		const id = originalSetTimeout(() => {
+			pendingTimeouts.delete(id);
+			callback(...args);
+			checkIfDone();
+		}, delay);
+		pendingTimeouts.add(id);
+		return id;
+	};
+
+	// Override clearTimeout to stop tracking cancelled timeouts
+	(self as any).clearTimeout = (id?: number) => {
+		if (id !== undefined) {
+			pendingTimeouts.delete(id);
+			originalClearTimeout(id);
+		}
+	};
+
 	const checkOutputLimit = () => {
 		if (output.length >= 4000) {
 			if (!outputLimitReached) {
@@ -30,10 +54,30 @@ self.onmessage = async (event: MessageEvent) => {
 				});
 				outputLimitReached = true;
 			}
-			self.postMessage(output); // Enviar resultado
+			finishExecution();
 			return true; // Indica que se alcanzó el límite
 		}
 		return false; // No se alcanzó el límite
+	};
+
+	const finishExecution = () => {
+		// Restore original setTimeout/clearTimeout
+		(self as any).setTimeout = originalSetTimeout;
+		(self as any).clearTimeout = originalClearTimeout;
+		// Restore original console methods
+		self.console.log = originalConsole.log;
+		self.console.error = originalConsole.error;
+		self.console.info = originalConsole.info;
+		self.console.warn = originalConsole.warn;
+		// Send result
+		self.postMessage(output);
+	};
+
+	const checkIfDone = () => {
+		// If no pending timeouts and not output limit reached, we're done
+		if (pendingTimeouts.size === 0 && !outputLimitReached) {
+			finishExecution();
+		}
 	};
 
 	try {
@@ -76,6 +120,9 @@ self.onmessage = async (event: MessageEvent) => {
 		if (!outputLimitReached) {
 			new Function(code ?? "")();
 		}
+		
+		// Check if we're done immediately (no pending async operations)
+		checkIfDone();
 	} catch (error) {
 		if (!outputLimitReached) {
 			output.push({
@@ -86,15 +133,7 @@ self.onmessage = async (event: MessageEvent) => {
 				timestamp: Date.now(),
 			});
 		}
-	} finally {
-		// Restore original console methods
-		self.console.log = originalConsole.log;
-		self.console.error = originalConsole.error;
-		self.console.info = originalConsole.info;
-		self.console.warn = originalConsole.warn;
-		if (!outputLimitReached) {
-			self.postMessage(output); // Enviar resultado final
-		}
+		finishExecution();
 	}
 };
 
