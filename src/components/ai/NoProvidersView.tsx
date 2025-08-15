@@ -44,7 +44,7 @@ export function NoProvidersView() {
 							<CardTitle className="text-base">Configure API Keys</CardTitle>
 						</div>
 						<CardDescription className="text-sm">
-							Add your API keys in Settings → AI tab
+							Add your API keys in Settings {">"} AI tab
 						</CardDescription>
 					</CardHeader>
 				</Card>
