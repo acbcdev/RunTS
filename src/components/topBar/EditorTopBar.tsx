@@ -53,7 +53,7 @@ export const EditorTopBar = memo(() => {
 				<div className="flex items-center space-x-2">
 					<EditorSettingsDialog />
 					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
+						<TooltipTrigger asChild>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -70,7 +70,7 @@ export const EditorTopBar = memo(() => {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
+						<TooltipTrigger asChild>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -88,7 +88,7 @@ export const EditorTopBar = memo(() => {
 						<TooltipContent>Toogle layout</TooltipContent>
 					</Tooltip>
 					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
+						<TooltipTrigger asChild>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -109,7 +109,7 @@ export const EditorTopBar = memo(() => {
 				<div className="flex items-center space-x-2">
 					{!isTauri() && (
 						<Tooltip>
-							<TooltipTrigger tabIndex={-1}>
+							<TooltipTrigger asChild>
 								<Button
 									aria-label="Share code"
 									variant="ghost"
@@ -125,7 +125,7 @@ export const EditorTopBar = memo(() => {
 					)}
 
 					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
+						<TooltipTrigger asChild>
 							<Button
 								variant="ghost"
 								aria-label="Copy code"
@@ -140,7 +140,7 @@ export const EditorTopBar = memo(() => {
 					</Tooltip>
 
 					<Tooltip>
-						<TooltipTrigger tabIndex={-1}>
+						<TooltipTrigger asChild>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -156,7 +156,7 @@ export const EditorTopBar = memo(() => {
 
 					{!isTauri() && (
 						<Tooltip>
-							<TooltipTrigger tabIndex={-1}>
+							<TooltipTrigger asChild>
 								<Button
 									variant="ghost"
 									aria-label="Clear console"

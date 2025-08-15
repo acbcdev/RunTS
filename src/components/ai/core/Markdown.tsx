@@ -41,7 +41,7 @@ const components = {
 					<nav>
 						<TooltipProvider delayDuration={0} skipDelayDuration={0}>
 							<Tooltip>
-								<TooltipTrigger tabIndex={-1}>
+								<TooltipTrigger asChild>
 									<Button
 										variant={"ghost"}
 										size={"sm"}
@@ -54,7 +54,7 @@ const components = {
 								<TooltipContent>New Tab</TooltipContent>
 							</Tooltip>
 							<Tooltip>
-								<TooltipTrigger tabIndex={-1}>
+								<TooltipTrigger asChild>
 									<Button
 										variant={"ghost"}
 										size={"sm"}

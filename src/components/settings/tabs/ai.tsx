@@ -31,7 +31,7 @@ export function AI() {
 									</Label>
 									<TooltipProvider delayDuration={0}>
 										<Tooltip>
-											<TooltipTrigger>
+											<TooltipTrigger asChild>
 												<a
 													href={url}
 													target="_blank"

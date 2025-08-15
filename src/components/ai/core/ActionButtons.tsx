@@ -24,7 +24,7 @@ export default function ActionButtons({
 		<div>
 			<TooltipProvider delayDuration={0}>
 				<Tooltip>
-					<TooltipTrigger>
+					<TooltipTrigger asChild>
 						<Button onClick={copyToClipboard} size={"icon"} variant={"ghost"}>
 							{copied ? <CopyCheck /> : <Copy />}
 						</Button>

@@ -29,8 +29,8 @@ export function EditorSettingsDialog() {
 	return (
 		<Dialog aria-description="Editor settings">
 			<Tooltip>
-				<TooltipTrigger tabIndex={-1}>
-					<DialogTrigger tabIndex={-1}>
+				<TooltipTrigger asChild>
+					<DialogTrigger asChild>
 						<Button
 							variant="ghost"
 							size="icon"
