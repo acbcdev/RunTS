@@ -70,6 +70,7 @@ export function ComboboxSelect() {
 										setOpen(false);
 									}}
 								>
+									{model?.Icon && <model.Icon className=" h-4 w-4" />}
 									{model.name}
 									{value.id === model.id && <Check className="mr-2 h-4 w-4" />}
 								</CommandItem>

@@ -1,10 +1,10 @@
 import { useChat } from "@/hooks/useChat";
 
-import { AI } from "@/components/settings/tabs/ai";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
-import { ChatActions } from "./ChatActions";
+import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
+import { NoProvidersView } from "./NoProvidersView";
 import { Messages } from "./core/Messages";
 import { PromptInputWithActions } from "./core/PrompInput";
 export function Chat() {
@@ -33,7 +33,7 @@ export function Chat() {
 		setInput("");
 	};
 	if (getProviders().length === 0) {
-		return <AI tabs={false} />;
+		return <NoProvidersView />;
 	}
 
 	const isEmpty = !messages || messages.length === 0;
@@ -43,7 +43,7 @@ export function Chat() {
 			data-state={showChat}
 			className="relative flex bg-border/10 border-r max-w-3xl flex-col w-full h-full mx-auto chat rounded-none shadow-none "
 		>
-			<ChatActions onNewChat={handleNewChat} />
+			<ChatHeader onNewChat={handleNewChat} />
 			{isEmpty ? (
 				<EmptyChatView />
 			) : (
