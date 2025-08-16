@@ -1,11 +1,14 @@
+import { DEFAULT_CODE } from "@/consts";
 import type { Tab } from "@/types/editor";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface TabsStore {
+interface TabsStoreState {
   tabs: Tab[];
   activeTabId: Tab["id"];
+}
+type TabsStoreActions = {
   setActiveTab: (id: Tab["id"]) => void;
   getCurrentTab: () => Tab | undefined;
   removeTab: (id: Tab["id"]) => void;
@@ -21,41 +24,9 @@ interface TabsStore {
   ) => void;
   clearConsole: VoidFunction;
   getTab: (id: Tab["id"]) => Tab | undefined;
-}
+};
 
-const DEFAULT_CODE = `
-/* 
- * 🌟 Bienvenido a RunTS 🚀
- *
- * Ejecuta TypeScript y JavaScript fácilmente.
- * 
- * Características:
- * - Gratis y Open Source. 🆓
- * - Themes. 🎨
- * - auto Refresh. 🔄
- * - Chatbot en desarrollo (Google, OpenAI, Claude).
- * 
- * Contribuye al proyecto en GitHub:  
- * https://github.com/acbcdev/RunTS
- */
-
-/* 
- * Ejemplo de código:
- */
-'¡Hola, RunTS! 🌟';
-
-[1, 2, 3].map(x => x * 2); // Duplica los números
-
-475 + 465
-/*
- * 💡 Tip:
- * Usa tu API Key para probar el chatbot.
- *
- * ¡Disfruta creando con RunTS! 🎉
- */
-
-`;
-
+type TabsStore = TabsStoreState & TabsStoreActions;
 const initialTabs: Tab[] = [
   {
     id: "1",

@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { TabsContent } from "@/components/ui/tabs";
-import { refreshTimes, renderLines } from "@/consts";
-import { EDITOR_SETTINGS_CONFIG } from "@/consts/config";
+import {
+	EDITOR_SETTINGS_CONFIG,
+	REFRESH_TIMES,
+	RENDER_LINES,
+} from "@/consts/config";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
 import { useMemo } from "react";
@@ -59,7 +62,7 @@ export function Editor() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Line Renderer</h3>
 					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
-						{renderLines.map((renderline) => (
+						{RENDER_LINES.map((renderline) => (
 							<Button
 								key={renderline}
 								variant={
@@ -77,7 +80,7 @@ export function Editor() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Refresh Time</h3>
 					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
-						{refreshTimes.map(({ time, value }) => (
+						{REFRESH_TIMES.map(({ time, value }) => (
 							<Button
 								key={time}
 								variant={

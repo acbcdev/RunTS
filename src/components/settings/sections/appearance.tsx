@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
-import { RADIUS_SIZES, fontFamilies, fontSizes, layouts } from "@/consts";
+import {
+	FONT_FAMILIES,
+	FONT_SIZES,
+	LAYOUTS,
+	RADIUS_SIZES,
+} from "@/consts/config";
 import { cn } from "@/lib/utils";
 import { useApparenceStore } from "@/store/apparence";
 import { themes } from "@/themes";
@@ -94,7 +99,7 @@ export function Appearance() {
 						EditLayout
 					</h3>
 					<div className="grid grid-cols-2 gap-2">
-						{layouts.map((direction) => (
+						{LAYOUTS.map((direction) => (
 							<Button
 								variant={layout === direction ? "border" : "outline"}
 								key={direction}
@@ -116,7 +121,7 @@ export function Appearance() {
 								Font Size
 							</h4>
 							<div className="grid grid-cols-8 gap-2 md:grid-cols-10">
-								{fontSizes.map((size) => (
+								{FONT_SIZES.map((size) => (
 									<Button
 										translate="no"
 										key={size}
@@ -134,7 +139,7 @@ export function Appearance() {
 								Font Family
 							</h4>
 							<div className="grid grid-cols-2 gap-2">
-								{fontFamilies.map((font) => (
+								{FONT_FAMILIES.map((font) => (
 									<Button
 										key={font.name}
 										variant={fontFamily === font.value ? "border" : "outline"}
