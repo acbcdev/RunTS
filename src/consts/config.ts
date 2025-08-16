@@ -1,5 +1,38 @@
 import type { ConfigEditorState } from "@/store/config";
-import type { Radius, lineRendererEditor } from "@/types/editor";
+import type { Radius, Tab, lineRendererEditor } from "@/types/editor";
+
+export const DEFAULT_CODE = `
+/*
+ * 🌟 Bienvenido a RunTS 🚀
+ *
+ * Ejecuta TypeScript y JavaScript fácilmente.
+ *
+ * Características:
+ * - Gratis y Open Source. 🆓
+ * - Themes. 🎨
+ * - auto Refresh. 🔄
+ * - Chatbot en desarrollo (Google, OpenAI, Claude).
+ *
+ * Contribuye al proyecto en GitHub:
+ * https://github.com/acbcdev/RunTS
+ */
+
+/*
+ * Ejemplo de código:
+ */
+'¡Hola, RunTS! 🌟';
+
+[1, 2, 3].map(x => x * 2); // Duplica los números
+
+475 + 465
+/*
+ * 💡 Tip:
+ * Usa tu API Key para probar el chatbot.
+ *
+ * ¡Disfruta creando con RunTS! 🎉
+ */
+
+`;
 
 export type EditorSettingConfig = {
   label: string;
@@ -68,4 +101,15 @@ export const RADIUS_SIZES: Radius[] = [
   { display: "Medium", size: "0.5" },
   { display: "Smooth", size: "0.75" },
   { display: "Curved", size: "1" },
+];
+
+export const INITIAL_TABS: Tab[] = [
+  {
+    id: "1",
+    name: "main.ts",
+    language: "typescript",
+    code: DEFAULT_CODE,
+    logs: [],
+    logsFormated: "",
+  },
 ];

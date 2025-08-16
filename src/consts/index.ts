@@ -7,39 +7,6 @@ import type { Provider, model } from "@/types/ai";
 import type { SVGProps } from "react";
 export const versionApp = pg.version;
 
-export const DEFAULT_CODE = `
-/*
- * 🌟 Bienvenido a RunTS 🚀
- *
- * Ejecuta TypeScript y JavaScript fácilmente.
- *
- * Características:
- * - Gratis y Open Source. 🆓
- * - Themes. 🎨
- * - auto Refresh. 🔄
- * - Chatbot en desarrollo (Google, OpenAI, Claude).
- *
- * Contribuye al proyecto en GitHub:
- * https://github.com/acbcdev/RunTS
- */
-
-/*
- * Ejemplo de código:
- */
-'¡Hola, RunTS! 🌟';
-
-[1, 2, 3].map(x => x * 2); // Duplica los números
-
-475 + 465
-/*
- * 💡 Tip:
- * Usa tu API Key para probar el chatbot.
- *
- * ¡Disfruta creando con RunTS! 🎉
- */
-
-`;
-
 export const API_PROVIDERS: Provider[] = [
   { name: "openai", url: "https://platform.openai.com/api-keys" },
   { name: "google", url: "https://aistudio.google.com/apikey" },

@@ -1,4 +1,4 @@
-import { DEFAULT_CODE } from "@/consts";
+import { INITIAL_TABS } from "@/consts/config";
 import type { Tab } from "@/types/editor";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
@@ -27,21 +27,11 @@ type TabsStoreActions = {
 };
 
 type TabsStore = TabsStoreState & TabsStoreActions;
-const initialTabs: Tab[] = [
-  {
-    id: "1",
-    name: "main.ts",
-    language: "typescript",
-    code: DEFAULT_CODE,
-    logs: [],
-    logsFormated: "",
-  },
-];
 
 export const useTabsStore = create<TabsStore>()(
   persist(
     (set, get) => ({
-      tabs: initialTabs,
+      tabs: INITIAL_TABS,
       activeTabId: "1",
       getCurrentTab: () =>
         get().tabs.find((tab) => tab.id === get().activeTabId),
