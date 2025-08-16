@@ -18,55 +18,45 @@ export function Editor() {
 	);
 	const {
 		wordWrap,
-		setWordWrap,
 		lineNumbers,
-		setLineNumbers,
 		minimap,
-		setMinimap,
 		whiteSpace,
-		setWhiteSpace,
 		refreshTime,
-		setRefreshTime,
 		lineRenderer,
-		setLineRenderer,
+		updateConfig,
 	} = useConfigStore(
 		useShallow((state) => ({
 			wordWrap: state.wordWrap,
-			setWordWrap: state.setWordWrap,
 			lineNumbers: state.lineNumbers,
-			setLineNumbers: state.setLineNumbers,
 			minimap: state.minimap,
-			setMinimap: state.setMinimap,
 			whiteSpace: state.whiteSpace,
-			setWhiteSpace: state.setWhiteSpace,
 			refreshTime: state.refreshTime,
-			setRefreshTime: state.setRefreshTime,
 			lineRenderer: state.lineRenderer,
-			setLineRenderer: state.setLineRenderer,
+			updateConfig: state.updateConfig,
 		})),
 	);
 	const SettingsEditor = [
 		{
 			label: "Word Wrap",
-			callback: () => setWordWrap(!wordWrap),
+			callback: () => updateConfig({ wordWrap: !wordWrap }),
 			value: wordWrap,
 			description: "Wrap long lines of code",
 		},
 		{
 			label: "Line Numbers",
-			callback: () => setLineNumbers(!lineNumbers),
+			callback: () => updateConfig({ lineNumbers: !lineNumbers }),
 			value: lineNumbers,
 			description: "Show line numbers in the editor",
 		},
 		{
 			label: "Minimap",
-			callback: () => setMinimap(!minimap),
+			callback: () => updateConfig({ minimap: !minimap }),
 			value: minimap,
 			description: "Show minimap in the editor",
 		},
 		{
 			label: "White Space",
-			callback: () => setWhiteSpace(!whiteSpace),
+			callback: () => updateConfig({ whiteSpace: !whiteSpace }),
 			value: whiteSpace,
 			description: "Show white space in the editor",
 		},
@@ -95,7 +85,7 @@ export function Editor() {
 							<Button
 								key={renderline}
 								variant={lineRenderer === renderline ? "border" : "outline"}
-								onClick={() => setLineRenderer(renderline)}
+								onClick={() => updateConfig({ lineRenderer: renderline })}
 							>
 								{renderline}
 							</Button>
@@ -109,7 +99,7 @@ export function Editor() {
 							<Button
 								key={time}
 								variant={refreshTime === value ? "border" : "outline"}
-								onClick={() => setRefreshTime(value)}
+								onClick={() => updateConfig({ refreshTime: value })}
 							>
 								{time}
 							</Button>
