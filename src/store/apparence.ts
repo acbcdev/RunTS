@@ -3,36 +3,45 @@ import type { RadiusSize, TLayout, Theme } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface ApparenceStore {
-  getCurrentTheme: () => Theme;
+interface ApparenceStoreStates {
   theme: keyof typeof themes;
   fontSize: number;
   radius: RadiusSize;
   fontFamily: string;
   layout: TLayout;
-  getOption: <T extends keyof AppearanceOptions>(
-    key: T
-  ) => AppearanceOptions[T];
-  setOption: <T extends keyof AppearanceOptions>(
-    key: T,
-    value: ApparenceStore[T]
-  ) => void;
 }
-export type AppearanceOptions = Pick<
-  ApparenceStore,
-  "theme" | "fontSize" | "radius" | "fontFamily" | "layout"
->;
+interface ApparenceStoreActions {
+  getCurrentTheme: () => Theme;
+  getOption: <T extends keyof ApparenceStoreStates>(
+    key: T
+  ) => ApparenceStoreStates[T];
+  setOption: <T extends keyof ApparenceStoreStates>(
+    key: T,
+    value: ApparenceStoreStates[T]
+  ) => void;
+  updateApparence: (updates: Partial<ApparenceStoreStates>) => void;
+  setApparence: (options: ApparenceStoreStates) => void;
+}
+
+type ApparenceStore = ApparenceStoreStates & ApparenceStoreActions;
+
+const DEFAULT_VALUES: ApparenceStoreStates = {
+  theme: "oneDark",
+  fontSize: 20,
+  radius: "0.5",
+  fontFamily: '"Cascadia Code"',
+  layout: "horizontal",
+};
+
 export const useApparenceStore = create<ApparenceStore>()(
   persist(
     (set, get) => ({
+      ...DEFAULT_VALUES,
       getCurrentTheme: () => themes[get().theme],
-      theme: "oneDark",
-      fontSize: 20,
-      radius: "0.5",
-      fontFamily: '"Cascadia Code"',
-      layout: "horizontal",
       getOption: (key) => get()[key],
       setOption: (key, value) => set({ [key]: value }),
+      updateApparence: (updates) => set((state) => ({ ...state, ...updates })),
+      setApparence: (options) => set(() => options),
     }),
     {
       name: "apparence-store",
