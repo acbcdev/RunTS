@@ -3,8 +3,10 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { TabsContent } from "@/components/ui/tabs";
 import { refreshTimes, renderLines } from "@/consts";
+import { EDITOR_SETTINGS_CONFIG } from "@/consts/config";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
+import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {
@@ -16,15 +18,8 @@ export function Editor() {
 			setAlignLogs: state.setAlignLogs,
 		})),
 	);
-	const {
-		wordWrap,
-		lineNumbers,
-		minimap,
-		whiteSpace,
-		refreshTime,
-		lineRenderer,
-		updateConfig,
-	} = useConfigStore(
+
+	const configState = useConfigStore(
 		useShallow((state) => ({
 			wordWrap: state.wordWrap,
 			lineNumbers: state.lineNumbers,
@@ -35,39 +30,26 @@ export function Editor() {
 			updateConfig: state.updateConfig,
 		})),
 	);
-	const SettingsEditor = [
-		{
-			label: "Word Wrap",
-			callback: () => updateConfig({ wordWrap: !wordWrap }),
-			value: wordWrap,
-			description: "Wrap long lines of code",
-		},
-		{
-			label: "Line Numbers",
-			callback: () => updateConfig({ lineNumbers: !lineNumbers }),
-			value: lineNumbers,
-			description: "Show line numbers in the editor",
-		},
-		{
-			label: "Minimap",
-			callback: () => updateConfig({ minimap: !minimap }),
-			value: minimap,
-			description: "Show minimap in the editor",
-		},
-		{
-			label: "White Space",
-			callback: () => updateConfig({ whiteSpace: !whiteSpace }),
-			value: whiteSpace,
-			description: "Show white space in the editor",
-		},
-	];
+
+	const editorSettings = useMemo(
+		() =>
+			EDITOR_SETTINGS_CONFIG.map((setting) => ({
+				...setting,
+				value: configState[setting.key],
+				callback: () =>
+					configState.updateConfig({
+						[setting.key]: !configState[setting.key],
+					}),
+			})),
+		[configState],
+	);
 	return (
 		<TabsContent value="editor" className="p-6 m-0">
 			<div className="space-y-8">
 				<section>
 					<h3 className="mb-4 text-base font-medium">Editor Behavior</h3>
 					<div className="space-y-4 md:columns-2">
-						{SettingsEditor.map(({ label, description, value, callback }) => (
+						{editorSettings.map(({ label, description, value, callback }) => (
 							<EditorSwitch
 								key={label}
 								label={label}
@@ -84,8 +66,12 @@ export function Editor() {
 						{renderLines.map((renderline) => (
 							<Button
 								key={renderline}
-								variant={lineRenderer === renderline ? "border" : "outline"}
-								onClick={() => updateConfig({ lineRenderer: renderline })}
+								variant={
+									configState.lineRenderer === renderline ? "border" : "outline"
+								}
+								onClick={() =>
+									configState.updateConfig({ lineRenderer: renderline })
+								}
 							>
 								{renderline}
 							</Button>
@@ -98,8 +84,10 @@ export function Editor() {
 						{refreshTimes.map(({ time, value }) => (
 							<Button
 								key={time}
-								variant={refreshTime === value ? "border" : "outline"}
-								onClick={() => updateConfig({ refreshTime: value })}
+								variant={
+									configState.refreshTime === value ? "border" : "outline"
+								}
+								onClick={() => configState.updateConfig({ refreshTime: value })}
 							>
 								{time}
 							</Button>
