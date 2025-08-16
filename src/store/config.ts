@@ -1,43 +1,50 @@
 import type { lineRendererEditor } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-export type ConfigEditor = {
-	wordWrap: boolean;
-	lineNumbers: boolean;
-	whiteSpace: boolean;
-	refreshTime: number;
-	minimap: boolean;
-	updates: boolean;
-	lineRenderer: lineRendererEditor;
-	setWordWrap: (value: boolean) => void;
-	setLineNumbers: (value: boolean) => void;
-	setWhiteSpace: (value: boolean) => void;
-	setRefreshTime: (value: number) => void;
-	setMinimap: (value: boolean) => void;
-	setUpdates: (value: boolean) => void;
-	setLineRenderer: (value: lineRendererEditor) => void;
+export type ConfigEditorState = {
+  wordWrap: boolean;
+  hideUndefined: boolean;
+  lineNumbers: boolean;
+  whiteSpace: boolean;
+  refreshTime: number;
+  minimap: boolean;
+  updates: boolean;
+  lineRenderer: lineRendererEditor;
+};
+
+export type ConfigEditorActions = {
+  updateConfig: (updates: Partial<ConfigEditorState>) => void;
+  setConfigValue: <K extends keyof ConfigEditorState>(
+    key: K,
+    value: ConfigEditorState[K]
+  ) => void;
+  resetConfig: () => void;
+};
+
+type ConfigEditor = ConfigEditorState & ConfigEditorActions;
+
+const DEFAULT_CONFIG: ConfigEditorState = {
+  updates: true,
+  wordWrap: true,
+  lineNumbers: true,
+  whiteSpace: true,
+  refreshTime: 200,
+  minimap: true,
+  lineRenderer: "line",
+  hideUndefined: true,
 };
 
 export const useConfigStore = create<ConfigEditor>()(
-	persist(
-		(set) => ({
-			updates: true,
-			wordWrap: true,
-			lineNumbers: true,
-			whiteSpace: true,
-			refreshTime: 200,
-			minimap: true,
-			lineRenderer: "line",
-			setLineRenderer: (lineRenderer) => set({ lineRenderer }),
-			setWordWrap: (wordWrap) => set({ wordWrap }),
-			setLineNumbers: (lineNumbers) => set({ lineNumbers }),
-			setWhiteSpace: (whiteSpace) => set({ whiteSpace }),
-			setRefreshTime: (refreshTime) => set({ refreshTime }),
-			setMinimap: (minimap) => set({ minimap }),
-			setUpdates: (updates) => set({ updates }),
-		}),
-		{
-			name: "config-editor-store",
-		},
-	),
+  persist(
+    (set) => ({
+      ...DEFAULT_CONFIG,
+      updateConfig: (updates) => set((state) => ({ ...state, ...updates })),
+      setConfigValue: (key, value) =>
+        set((state) => ({ ...state, [key]: value })),
+      resetConfig: () => set(DEFAULT_CONFIG),
+    }),
+    {
+      name: "config-editor-store",
+    }
+  )
 );
