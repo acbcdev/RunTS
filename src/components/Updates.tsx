@@ -11,13 +11,13 @@ export function Updates() {
 	const { updates, setUpdates } = useConfigStore(
 		useShallow((state) => ({
 			updates: state.updates,
-			setUpdates: state.setUpdates,
+			setUpdates: state.updateConfig,
 		})),
 	);
 	return (
 		<>
 			{updates && (
-				<Dialog open onOpenChange={() => setUpdates(false)}>
+				<Dialog open onOpenChange={() => setUpdates({ updates: false })}>
 					<DialogContent className="border-none bg-background text-info ">
 						<DialogHeader>
 							<DialogTitle>New Updates 🚀</DialogTitle>

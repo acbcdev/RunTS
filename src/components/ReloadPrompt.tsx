@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Info, RefreshCw } from "lucide-react";
 import { memo } from "react";
-import { toast } from "sonner";
 
 export const ReloadPrompt = memo(() => {
 	const {
