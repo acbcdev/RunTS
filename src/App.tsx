@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
 import { decode } from "js-base64";
-import { lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { MESSAGE_LOG } from "./consts";
@@ -45,7 +45,9 @@ function App() {
 		<ErrorBoundary>
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 				{/* <ErrorBoundaryTester /> */}
-				<CodeEditor />
+				<Suspense fallback={<div>Loading editor...</div>}>
+					<CodeEditor />
+				</Suspense>
 				<Toaster />
 			</TooltipProvider>
 		</ErrorBoundary>
