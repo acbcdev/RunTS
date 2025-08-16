@@ -4,38 +4,45 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface EditorState {
-	expression: boolean;
-	setExpression: (value: boolean) => void;
-	alignLogs: boolean;
-	setAlignLogs: (value: boolean) => void;
-	monaco: Monaco | null;
-	editorRef: editor.IStandaloneCodeEditor | null;
-	running: boolean;
-	setRunning: (value: boolean) => void;
-	setMonaco: (monaco: Monaco) => void;
-	setEditorRef: (editor: editor.IStandaloneCodeEditor) => void;
+  expression: boolean;
+  alignLogs: boolean;
+  monaco: Monaco | null;
+  editorRef: editor.IStandaloneCodeEditor | null;
+  running: boolean;
 }
+interface EditorActions {
+  updateEditor: (updates: Partial<EditorState>) => void;
+  setEditorValue: <K extends keyof EditorState>(
+    key: K,
+    value: EditorState[K]
+  ) => void;
+  resetEditor: () => void;
+}
+type Editor = EditorState & EditorActions;
 
-export const useEditorStore = create<EditorState>()(
-	persist(
-		(set) => ({
-			alignLogs: true,
-			setAlignLogs: (alignLogs) => set({ alignLogs }),
-			expression: true,
-			setExpression: (expression) => set({ expression }),
-			monaco: null,
-			setMonaco: (monaco) => set({ monaco }),
-			running: false,
-			setRunning: (running) => set({ running }),
-			editorRef: null,
-			setEditorRef: (editor) => set({ editorRef: editor ?? null }),
-		}),
-		{
-			name: "editorV2",
-			partialize: (state) => ({
-				alignLogs: state.alignLogs,
-				expression: state.expression,
-			}),
-		},
-	),
+const DEFAULT_VALUES: EditorState = {
+  expression: true,
+  alignLogs: true,
+  monaco: null,
+  editorRef: null,
+  running: false,
+};
+
+export const useEditorStore = create<Editor>()(
+  persist(
+    (set) => ({
+      ...DEFAULT_VALUES,
+      updateEditor: (updates) => set((state) => ({ ...state, ...updates })),
+      setEditorValue: (key, value) =>
+        set((state) => ({ ...state, [key]: value })),
+      resetEditor: () => set({ ...DEFAULT_VALUES }),
+    }),
+    {
+      name: "editorV2",
+      partialize: (state) => ({
+        alignLogs: state.alignLogs,
+        expression: state.expression,
+      }),
+    }
+  )
 );

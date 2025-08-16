@@ -10,15 +10,11 @@ import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {
-	const { expression, setExpression, setAlignLogs, alignLogs } = useEditorStore(
-		useShallow((state) => ({
-			expression: state.expression,
-			setExpression: state.setExpression,
-			alignLogs: state.alignLogs,
-			setAlignLogs: state.setAlignLogs,
-		})),
+	const expression = useEditorStore(useShallow((state) => state.expression));
+	const alignLogs = useEditorStore(useShallow((state) => state.alignLogs));
+	const updateEditor = useEditorStore(
+		useShallow((state) => state.updateEditor),
 	);
-
 	const configState = useConfigStore(
 		useShallow((state) => ({
 			wordWrap: state.wordWrap,
@@ -101,13 +97,13 @@ export function Editor() {
 							label="Expression Runner"
 							description="Automatically displays the output of expressions in the console without requiring console.log(). Works with any expression, not just console info error and warn."
 							value={expression}
-							callback={() => setExpression(!expression)}
+							callback={() => updateEditor({ expression: !expression })}
 						/>
 						<EditorSwitch
 							label="Align Logs"
 							description="Aligns the logs in the console to the left."
 							value={alignLogs}
-							callback={() => setAlignLogs(!alignLogs)}
+							callback={() => updateEditor({ alignLogs: !alignLogs })}
 						/>
 					</div>
 				</section>

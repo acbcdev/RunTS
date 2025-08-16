@@ -39,8 +39,14 @@ export const useAIConfigStore = create<AIConfigStore>()(
         mistral: "",
       },
       contextFile: true,
-      setContextFile: (contextFile) => set({ contextFile }),
       messages: [],
+      showChat: false,
+      selectedModel: {
+        id: "",
+        provider: null,
+        Icon: undefined,
+      },
+      setContextFile: (contextFile) => set({ contextFile }),
       setMessages: (messages) =>
         set((state) => ({
           messages:
@@ -55,8 +61,6 @@ export const useAIConfigStore = create<AIConfigStore>()(
             [provider]: key,
           },
         })),
-      showChat: false,
-
       toggleChat: (showChat) => {
         if (showChat === undefined) {
           set((state) => ({
@@ -65,11 +69,6 @@ export const useAIConfigStore = create<AIConfigStore>()(
           return;
         }
         set({ showChat });
-      },
-      selectedModel: {
-        id: "",
-        provider: null,
-        Icon: undefined,
       },
 
       changeModel: ({ id, provider, Icon }) => {
@@ -82,7 +81,6 @@ export const useAIConfigStore = create<AIConfigStore>()(
           },
         }));
       },
-
       getProviders: () => {
         const apiKeys = get().apiKeys;
         return models.filter((model) => apiKeys[model.provider as providers]);

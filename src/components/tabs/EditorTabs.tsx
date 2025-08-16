@@ -13,8 +13,6 @@ import { useShallow } from "zustand/react/shallow";
 import { EditorTabsItem } from "@/components/tabs/EditorTabsItem";
 
 export function EditorTabs() {
-	// useEditorStore
-
 	const tabs = useTabsStore(useShallow((state) => state.tabs));
 
 	const newTab = useTabsStore(useShallow((state) => state.newTab));

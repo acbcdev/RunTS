@@ -16,13 +16,11 @@ const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function EditorMain() {
 	const { runCode } = useRun();
-	// useEditorStore
-	const setMonaco = useEditorStore(useShallow((state) => state.setMonaco));
-	const setEditorRef = useEditorStore(
-		useShallow((state) => state.setEditorRef),
+	const updateEditor = useEditorStore(
+		useShallow((state) => state.updateEditor),
 	);
 	const running = useEditorStore(useShallow((state) => state.running));
-	// useConfigStore
+
 	const { wordWrap, lineNumbers, minimap, whiteSpace, lineRenderer } =
 		useConfigStore(
 			useShallow((state) => ({
@@ -148,10 +146,10 @@ export function EditorMain() {
 				}),
 			});
 			monacoInstance.editor.setTheme(theme);
-			setEditorRef(editor);
-			setMonaco(monacoInstance);
+			updateEditor({ editorRef: editor });
+			updateEditor({ monaco: monacoInstance });
 		},
-		[setMonaco, setEditorRef],
+		[updateEditor],
 	);
 
 	return (
