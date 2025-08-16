@@ -5,6 +5,7 @@ import { decode } from "js-base64";
 import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { MESSAGE_LOG } from "./consts";
 
 const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
@@ -12,18 +13,7 @@ function App() {
 	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		console.log(`
-
-		open to contributors ❤️
-
-		repo:	https://github.com/acbcdev/Runts
-		author:	https://acbc.dev
-		license:	Apache-2.0
-
-		This is a JavaScript/TypeScript code runner.
-
-
-			`);
+		console.log(MESSAGE_LOG);
 		const code = new URLSearchParams(window.location.search).get("code");
 		window.history.replaceState(null, "", "/");
 		if (code) {

@@ -17,6 +17,19 @@ export const API_PROVIDERS: Provider[] = [
   },
 ];
 
+export const MESSAGE_LOG = `
+
+		open to contributors ❤️
+
+		repo:	https://github.com/acbcdev/Runts
+		author:	https://acbc.dev
+		license:	Apache-2.0
+
+		This is a JavaScript/TypeScript code runner.
+
+
+			`;
+
 type providerType = "openai" | "google" | "anthropic" | "mistral";
 
 const providers: Record<
