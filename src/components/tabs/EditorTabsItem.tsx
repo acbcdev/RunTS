@@ -1,247 +1,102 @@
 import { Button } from "@/components/ui/button";
-import {
-	ContextMenu,
-	ContextMenuContent,
-	ContextMenuItem,
-	ContextMenuSeparator,
-	ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { Input } from "@/components/ui/input";
-import { useHandler } from "@/hooks/useHandler";
+import { useTabActions } from "@/hooks/useTabActions";
 import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/editor";
-import { useTabsStore } from "@/store/tabs";
 import type { Tab } from "@/types/editor";
-import { Copy, Download, FilePen, Files, Share, Trash, X } from "lucide-react";
-import { useRef } from "react";
-import { toast } from "sonner";
-import { useShallow } from "zustand/react/shallow";
+import { X } from "lucide-react";
+import { TabContextMenu } from "./TabContextMenu";
+import { TabName } from "./TabName";
 
-const TabContextMenuItem = ({
-	children,
-	tabs,
-	tab,
-	removeTab,
-	setEditing,
-	inputRef,
-}: {
-	children: React.ReactNode;
-	tabs: Tab[];
+interface EditorTabsItemProps {
 	tab: Tab;
-	removeTab: (id: string) => void;
-	setEditing: (id: string, value: boolean) => void;
-	inputRef: React.RefObject<HTMLInputElement | null>;
-}) => {
-	const { handleShare, copyCode, downloadCode } = useHandler();
+}
 
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
+export function EditorTabsItem({ tab }: EditorTabsItemProps) {
+	const {
+		tabs,
+		activeTabId,
+		handleActiveTabChange,
+		handleDuplicateTab,
+		handleTabNameEdit,
+		handleStartEditing,
+		handleActivateAndEdit,
+		handleRenameFromContextMenu,
+		handleCopyCode,
+		handleDownloadCode,
+		handleShareCode,
+		handleRemoveTab,
+	} = useTabActions();
 
-	const handleDuplicateTab = (tabId: Tab["id"]) => {
-		const duplicateTab = tabs.find((tab) => tab.id === tabId);
-		if (!duplicateTab) return;
-		addTab({
-			name: `copy-${duplicateTab.name}`,
-			language: duplicateTab.language,
-			code: duplicateTab.code,
-			logs: duplicateTab.logs,
-			logsFormated: duplicateTab.logsFormated,
-		});
-		// handleActiveTabChange(id);
-	};
+	const isActive = activeTabId === tab.id;
 
-	return (
-		<ContextMenu>
-			<ContextMenuTrigger>{children}</ContextMenuTrigger>
-			<ContextMenuContent>
-				<ContextMenuItem
-					onClick={() => {
-						setEditing(tab.id, true);
-						setTimeout(() => {
-							inputRef.current?.focus();
-						}, 150);
-					}}
-				>
-					<FilePen />
-					Rename
-				</ContextMenuItem>
-
-				<ContextMenuItem onClick={() => handleDuplicateTab(tab.id)}>
-					<Files />
-					Duplicate
-				</ContextMenuItem>
-				<ContextMenuSeparator />
-				<ContextMenuItem
-					onClick={() => {
-						copyCode(tab.id);
-					}}
-				>
-					<Copy />
-					Copy
-				</ContextMenuItem>
-				<ContextMenuItem
-					onClick={() => {
-						downloadCode(tab.id);
-					}}
-				>
-					<Download />
-					Download
-				</ContextMenuItem>
-				<ContextMenuItem onClick={() => handleShare(tab.id)}>
-					<Share />
-					Share
-				</ContextMenuItem>
-				<ContextMenuSeparator />
-				<ContextMenuItem
-					className="text-destructive"
-					variant="destructive"
-					onClick={() => removeTab(tab.id)}
-				>
-					<Trash />
-					Delete
-				</ContextMenuItem>
-			</ContextMenuContent>
-		</ContextMenu>
-	);
-};
-
-const EditorTabItemName = ({
-	tab,
-	tabs,
-	inputRef,
-	changeNameTab,
-	activeTabId,
-	setEditing,
-}: {
-	tab: Tab;
-	tabs: Tab[];
-	inputRef: React.RefObject<HTMLInputElement | null>;
-	changeNameTab: (id: string, name: string) => void;
-	activeTabId: string;
-	setEditing: (id: string, value?: boolean) => void;
-}) => {
-	const handleTabEdited = (tabId: string) => {
-		const tab = tabs.find((tab) => tab.id === tabId);
-		if (!tab) return;
-		if (!tab.name.trim()) {
-			changeNameTab(tabId, "code.ts");
-			setEditing(tabId);
-			return;
+	const handleTabClick = () => {
+		if (!tab.editing || !isActive) {
+			handleActiveTabChange(tab.id);
 		}
-		const name = tab.name.trim();
-		const tsFile = name.endsWith(".ts") || name.endsWith(".js");
-		const [nameTab] = name.split(/\.$/);
-		let changeName = nameTab.replace(/\s+/g, "-");
-		if (!tsFile) changeName = `${changeName.slice(0, 20)}.ts`;
-		changeNameTab(activeTabId, changeName);
-		setEditing(tabId, false);
-		toast.success("Tab name changed", { duration: 700 });
 	};
-	return (
-		<>
-			{tab.editing ? (
-				<Input
-					ref={inputRef}
-					value={tab.name}
-					onKeyDown={(e) => {
-						if (e.code === "Enter") {
-							e.preventDefault();
-							handleTabEdited(tab.id);
-						}
-					}}
-					className="border-none  rounded-none outline-none m-0 w-fit  max-w-32 h-full p-0   focus-visible:ring-0"
-					onChange={(e) => changeNameTab(tab.id, e.target.value)}
-					onBlur={() => handleTabEdited(tab.id)}
-				/>
-			) : (
-				<span
-					className={cn(
-						`${tab.id === activeTabId && "underline"} line-clamp-1  `,
-					)}
-					spellCheck="false"
-					onDoubleClick={() => {
-						if (activeTabId === tab.id) {
-							setEditing(tab.id, true);
-							setTimeout(() => {
-								inputRef.current?.focus();
-							}, 100);
-						}
-					}}
-				>
-					{tab.name}
-				</span>
-			)}
-		</>
-	);
-};
 
-export function EditorTabsItem({ tab }: { tab: Tab }) {
-	const inputRef = useRef<HTMLInputElement>(null);
-	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
-	const tabs = useTabsStore(useShallow((state) => state.tabs));
-	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
-	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
-	const setEditing = useTabsStore(useShallow((state) => state.setEditing));
-	const removeTab = useTabsStore(useShallow((state) => state.removeTab));
-	const changeNameTab = useTabsStore(
-		useShallow((state) => state.changeNameTab),
-	);
+	const handleCloseTab = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		handleRemoveTab(tab.id);
+	};
 
-	const updateTabCode = useTabsStore(
-		useShallow((state) => state.updateTabCode),
-	);
+	const handleFinishEditing = (newName: string) => {
+		handleTabNameEdit(tab.id, newName);
+	};
 
-	const handleActiveTabChange = (tabId: Tab["id"]) => {
-		setActiveTab(tabId);
-		updateTabCode(tabId, tabs.find((tab) => tab.id === tabId)?.code || "");
-		editorRef?.focus();
+	const handleStartEditingTab = () => {
+		// Si el tab no está activo, activarlo primero
+		if (!isActive) {
+			handleActivateAndEdit(tab.id);
+		} else {
+			handleStartEditing(tab.id);
+		}
+	};
+
+	const handleRenameFromMenu = () => {
+		// Usar la función específica para context menu que maneja mejor los delays
+		handleRenameFromContextMenu(tab.id);
 	};
 
 	return (
 		<button
 			type="button"
 			title={tab.name}
-			className={`${
-				activeTabId === tab.id && " bg-border/30 grow-2"
-			}  border-r  transition-colors  `}
-			onClick={() => {
-				if (!tab.editing || activeTabId !== tab.id) {
-					handleActiveTabChange(tab.id);
-				}
-			}}
+			aria-selected={isActive}
+			role="tab"
+			className={cn(
+				"border-r transition-colors focus-within:ring-0 focus-within:outline-1 focus-within:-outline-offset-1 focus:outline-ring	",
+				isActive && "bg-border/30 grow-2",
+			)}
+			onClick={handleTabClick}
 		>
-			<TabContextMenuItem
-				tabs={tabs}
-				tab={tab}
-				removeTab={removeTab}
-				setEditing={setEditing}
-				inputRef={inputRef}
+			<TabContextMenu
+				onRename={handleRenameFromMenu}
+				onDuplicate={() => handleDuplicateTab(tab.id)}
+				onCopy={() => handleCopyCode(tab.id)}
+				onDownload={() => handleDownloadCode(tab.id)}
+				onShare={() => handleShareCode(tab.id)}
+				onDelete={() => handleRemoveTab(tab.id)}
 			>
-				<div className={"group/tab flex items-center gap-x-1 px-3 py-1.5     "}>
-					<EditorTabItemName
+				<div className="group/tab flex items-center gap-x-1 px-3 py-1.5">
+					<TabName
 						tab={tab}
-						inputRef={inputRef}
-						tabs={tabs}
-						changeNameTab={changeNameTab}
-						activeTabId={activeTabId}
-						setEditing={setEditing}
+						isActive={isActive}
+						onFinishEditing={handleFinishEditing}
+						onStartEditing={handleStartEditingTab}
 					/>
 					{tabs.length > 1 && (
 						<Button
-							variant="destructive"
+							variant="ghost"
 							size="icon"
 							aria-label="Close tab"
-							translate="no"
-							className="h-5 w-5 p-0 bg-transparent hover:text-foreground rounded-full"
-							onClick={(e) => {
-								e.stopPropagation();
-								removeTab(tab.id);
-							}}
+							className="h-5 w-5  p-0 bg-transparent hover:bg-destructive hover:text-destructive-foreground rounded-full transition-all duration-200 "
+							onClick={handleCloseTab}
 						>
 							<X className="size-3" />
 						</Button>
 					)}
 				</div>
-			</TabContextMenuItem>
+			</TabContextMenu>
 		</button>
 	);
 }

@@ -33,7 +33,7 @@ export function EditorTabs() {
 						variant="ghost"
 						aria-label="New tab"
 						size="icon"
-						className="rounded-full size-8 m-0 "
+						className="rounded-full size-8 m-0 ml-1 "
 						onClick={() => newTab()}
 					>
 						<Plus />
