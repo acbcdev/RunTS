@@ -5,6 +5,12 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import {
+	NEW_TAB,
+	RUN_CODE,
+	TOGGLE_CHAT,
+	UNDO_CLOSE_TAB,
+} from "@/consts/shortcuts";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
 import { updateChangeTheme } from "@/lib/utils";
@@ -51,11 +57,11 @@ export function CodeEditor() {
 			toggleChat: state.toggleChat,
 		})),
 	);
-	useHotkeys("ctrl+r", runCode, { preventDefault: true });
-	useHotkeys("ctrl+b", () => toggleChat(), { preventDefault: true });
-	useHotkeys("ctrl+q", () => newTab(), { preventDefault: true });
+	useHotkeys(RUN_CODE, runCode, { preventDefault: true });
+	useHotkeys(TOGGLE_CHAT, () => toggleChat(), { preventDefault: true });
+	useHotkeys(NEW_TAB, () => newTab(), { preventDefault: true });
 	useHotkeys(
-		"ctrl+shift+q",
+		UNDO_CLOSE_TAB,
 		() => {
 			const tab = undoClose();
 			if (tab) addTab(tab);
