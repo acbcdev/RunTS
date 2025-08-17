@@ -1,5 +1,4 @@
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-// import { ErrorBoundaryTester } from "@/components/ErrorBoundaryTester";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
@@ -12,7 +11,8 @@ import { MESSAGE_LOG } from "./consts";
 const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
 function App() {
-	const { addTab, setActiveTab } = useTabsStore(useShallow((state) => state));
+	const addTab = useTabsStore(useShallow((state) => state.addTab));
+	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
