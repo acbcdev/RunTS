@@ -101,6 +101,7 @@ export const TabName = ({
 		<span
 			className={cn("line-clamp-1 cursor-pointer", isActive && "underline")}
 			spellCheck="false"
+			title={tab.name}
 			onDoubleClick={handleDoubleClick}
 		>
 			{tab.name}

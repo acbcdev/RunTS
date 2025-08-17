@@ -65,7 +65,7 @@ export const EditorTopBar = memo(() => {
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>
-							Run code <Kd>Ctrl + Q</Kd>
+							Run code <Kd>Ctrl + R</Kd>
 						</TooltipContent>
 					</Tooltip>
 

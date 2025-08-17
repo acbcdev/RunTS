@@ -12,7 +12,7 @@ type TabsStoreActions = {
   setActiveTab: (id: Tab["id"]) => void;
   getCurrentTab: () => Tab | undefined;
   removeTab: (id: Tab["id"]) => void;
-  addTab: (tab: Omit<Tab, "id">) => Tab["id"];
+  addTab: (tab: Omit<Tab, "id" | "createdAt" | "updatedAt">) => Tab["id"];
   newTab: (code?: string) => void;
   setEditing: (id: Tab["id"], editing?: boolean) => void;
   changeNameTab: (id: Tab["id"], name: string) => void;
@@ -63,6 +63,8 @@ export const useTabsStore = create<TabsStore>()(
           ...tab,
           name: tab.name.trim(),
           id: nanoid(4),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         };
 
         set((state) => ({

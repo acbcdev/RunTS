@@ -30,6 +30,8 @@ export interface Tab {
   logs: ConsoleOutput[];
   logsFormated: string;
   editing?: boolean;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export type lineRendererEditor = "none" | "gutter" | "line" | "all";

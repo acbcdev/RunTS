@@ -67,14 +67,14 @@ export function EditorMain() {
 				},
 			);
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyG,
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyR,
 				runCode,
 			);
 			editor.addAction({
 				id: "run-code",
 				label: "Run Code",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyR,
 				],
 				run: runCode,
 			});
@@ -91,18 +91,14 @@ export function EditorMain() {
 				run: () => toogleChat(),
 			});
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd |
-					monacoInstance.KeyCode.KeyD |
-					monacoInstance.KeyMod.Shift,
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd |
-						monacoInstance.KeyCode.KeyD |
-						monacoInstance.KeyMod.Shift,
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
 				],
 				run: () => newTab(),
 			});

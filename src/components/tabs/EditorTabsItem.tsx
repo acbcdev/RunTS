@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useTabActions } from "@/hooks/useTabActions";
 import { cn } from "@/lib/utils";
+import { useHistoryTabsStore } from "@/store/history";
 import type { Tab } from "@/types/editor";
 import { X } from "lucide-react";
 import { TabContextMenu } from "./TabContextMenu";
@@ -25,7 +26,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 		handleShareCode,
 		handleRemoveTab,
 	} = useTabActions();
-
+	const addTab = useHistoryTabsStore((state) => state.addTab);
 	const isActive = activeTabId === tab.id;
 
 	const handleTabClick = () => {
@@ -36,6 +37,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 
 	const handleCloseTab = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		if (tab.code.trim() !== "") addTab(tab);
 		handleRemoveTab(tab.id);
 	};
 
@@ -60,11 +62,10 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 	return (
 		<button
 			type="button"
-			title={tab.name}
 			aria-selected={isActive}
 			role="tab"
 			className={cn(
-				"border-r transition-colors focus-within:ring-0 focus-within:outline-1 focus-within:-outline-offset-1 focus:outline-ring	",
+				"border-r transition-colors focus-within:ring-0 focus-within:outline-1 focus-within:-outline-offset-1 focus:outline-border	",
 				isActive && "bg-border/30 grow-2",
 			)}
 			onClick={handleTabClick}
@@ -89,7 +90,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 							variant="ghost"
 							size="icon"
 							aria-label="Close tab"
-							className="h-5 w-5  p-0 bg-transparent hover:bg-destructive hover:text-destructive-foreground rounded-full transition-all duration-200 "
+							className="h-5 w-5  p-0 rounded-full transition-all duration-200 "
 							onClick={handleCloseTab}
 						>
 							<X className="size-3" />

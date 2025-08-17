@@ -11,10 +11,12 @@ import { updateChangeTheme } from "@/lib/utils";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
+import { useHistoryTabsStore } from "@/store/history";
 import { useTabsStore } from "@/store/tabs";
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
@@ -29,6 +31,8 @@ export function CodeEditor() {
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
+	const addTab = useTabsStore(useShallow((state) => state.addTab));
+	const undoClose = useHistoryTabsStore(useShallow((state) => state.undoClose));
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
@@ -48,9 +52,17 @@ export function CodeEditor() {
 			toggleChat: state.toggleChat,
 		})),
 	);
-	useHotkeys("ctrl+q", runCode);
+	useHotkeys("ctrl+r", runCode, { preventDefault: true });
 	useHotkeys("ctrl+b", () => toggleChat(), { preventDefault: true });
-	useHotkeys("ctrl+shift+d", () => newTab(), { preventDefault: true });
+	useHotkeys("ctrl+q", () => newTab(), { preventDefault: true });
+	useHotkeys(
+		"ctrl+shift+q",
+		() => {
+			const tab = undoClose();
+			if (tab) addTab(tab);
+		},
+		{ preventDefault: true },
+	);
 
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);

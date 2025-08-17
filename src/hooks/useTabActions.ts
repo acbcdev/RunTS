@@ -25,7 +25,6 @@ export const useTabActions = () => {
   const handleActiveTabChange = (tabId: Tab["id"]) => {
     const targetTab = tabs.find((tab) => tab.id === tabId);
     if (!targetTab) return;
-
     setActiveTab(tabId);
     updateTabCode(tabId, targetTab.code || "");
     editorRef?.focus();
