@@ -49,7 +49,7 @@ export function CodeEditor() {
 		})),
 	);
 	useHotkeys("ctrl+q", runCode);
-	useHotkeys("ctrl+b", () => toggleChat());
+	useHotkeys("ctrl+b", () => toggleChat(), { preventDefault: true });
 	useHotkeys("ctrl+shift+d", () => newTab(), { preventDefault: true });
 
 	useEffect(() => {
