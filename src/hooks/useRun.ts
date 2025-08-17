@@ -19,12 +19,13 @@ export function useRun() {
 
   async function runCode() {
     if (!activeTab) return;
-    if (!activeTab.code) {
+    if (activeTab.code.trim() === "") {
       updateTabLogFormated(activeTab.id, "");
     }
     const loading = setTimeout(() => {
       updateEditor({ running: true });
     }, 500);
+
     try {
       const name = activeTab?.name;
       const output = await runCodeWorker(activeTab.code, {

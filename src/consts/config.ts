@@ -111,5 +111,8 @@ export const INITIAL_TABS: Tab[] = [
     code: DEFAULT_CODE,
     logs: [],
     logsFormated: "",
+    editing: false,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
 ];

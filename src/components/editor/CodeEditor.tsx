@@ -16,7 +16,6 @@ import { useTabsStore } from "@/store/tabs";
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
