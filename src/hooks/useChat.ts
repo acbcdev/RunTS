@@ -12,11 +12,6 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 
-// function createSystemPrompt(systemPrompt: string, code: string | undefined) {
-//   return `system: ${systemPrompt}  ${
-//     code ? ` this is the code of the current tab: ${code}` : ""
-//   }`;
-// }
 type statusType = "submitted" | "streaming" | "ready" | "error";
 export function useChat() {
   const apiKeys = useAIConfigStore((state) => state.apiKeys);
@@ -34,6 +29,12 @@ export function useChat() {
   const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
 
   const handleStreamText = async (userContent: string) => {
+    if (selectedModel.provider === null) {
+      toast.error("Please select a model before sending a message.", {
+        position: "top-left",
+      });
+      return;
+    }
     if (userContent.trim() === "clear") {
       setMessages([]);
       setInput("");
