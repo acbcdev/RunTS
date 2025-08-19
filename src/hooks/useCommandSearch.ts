@@ -1,5 +1,6 @@
 import type { CommandGroup, CommandItem } from "@/types/command";
 import { useMemo } from "react";
+import { aP } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 
 interface UseCommandSearchOptions {
   commands: CommandItem[];
@@ -106,6 +107,7 @@ function getCategoryHeading(category: string): string {
     config: "Configuration",
     actions: "Actions",
     navigation: "Navigation",
+    apparence: "Appearance",
   };
 
   return headings[category] || category;

@@ -1,9 +1,13 @@
 import { useConfigStore } from "@/store/config";
 import { useHistoryTabsStore } from "@/store/history";
+import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import type { CommandItem } from "@/types/command";
 import {
+  Brush,
   ChevronRight,
+  Cog,
+  Command,
   Eye,
   EyeOff,
   FileText,
@@ -25,7 +29,7 @@ export const useCommandItems = (): CommandItem[] => {
 
   const config = useConfigStore((state) => state);
   const setConfigValue = useConfigStore((state) => state.setConfigValue);
-
+  const toggle = useModalStore((state) => state.toggleModal);
   const commands: CommandItem[] = [];
 
   // 1. ACTION COMMANDS (New Tab)
@@ -37,7 +41,6 @@ export const useCommandItems = (): CommandItem[] => {
     category: "actions",
     keywords: ["new", "nuevo", "create", "crear", "tab", "file", "archivo"],
     action: () => newTab(),
-    forceMount: true,
   });
 
   // 2. ACTIVE TABS
@@ -92,6 +95,53 @@ export const useCommandItems = (): CommandItem[] => {
   // 4. CONFIGURATION COMMANDS
   const configCommands: CommandItem[] = [
     {
+      id: "change-theme",
+      title: "Change Theme",
+      description: "Select a new theme",
+      icon: Brush,
+      category: "apparence",
+      keywords: ["theme", "color", "appearance", "config", "settings"],
+      action: () => {},
+      preventDefault: true,
+      hasSubmenu: true,
+    },
+    {
+      id: "open-settings",
+      title: "Open Settings",
+      description: "Open the settings panel",
+      icon: Cog,
+      category: "config",
+      keywords: [
+        "open",
+        "configuration",
+        "ajustes",
+        "abrir",
+        "config",
+        "settings",
+      ],
+      action: () => {
+        toggle("settings");
+      },
+    },
+    {
+      id: "open-shortcuts",
+      title: "Open Shortcuts",
+      description: "Open the shortcuts panel",
+      icon: Command,
+      category: "config",
+      keywords: [
+        "open",
+        "shortcuts",
+        "comandos",
+        "abrir",
+        "config",
+        "settings",
+      ],
+      action: () => {
+        toggle("shortcuts");
+      },
+    },
+    {
       id: "toggle-word-wrap",
       title: config.wordWrap ? "Disable Word Wrap" : "Enable Word Wrap",
       description: "Toggle line wrapping",
@@ -112,6 +162,7 @@ export const useCommandItems = (): CommandItem[] => {
       action: () => setConfigValue("wordWrap", !config.wordWrap),
       preventDefault: true,
     },
+
     {
       id: "toggle-line-numbers",
       title: config.lineNumbers ? "Hide Line Numbers" : "Show Line Numbers",
