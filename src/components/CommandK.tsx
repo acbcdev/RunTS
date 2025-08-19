@@ -146,9 +146,7 @@ export function CommandK() {
 									{command.shortcut && (
 										<CommandShortcut>{command.shortcut}</CommandShortcut>
 									)}
-									{command.isSelected && (
-										<Check className="text-xs text-primary" />
-									)}
+									{command.isSelected && <Check />}
 								</CommandItem>
 							))}
 						</CommandGroup>
