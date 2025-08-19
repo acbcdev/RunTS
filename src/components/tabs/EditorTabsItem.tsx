@@ -92,6 +92,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 							aria-label="Close tab"
 							className="h-5 w-5  p-0 rounded-full transition-all duration-200 "
 							onClick={handleCloseTab}
+							asChild
 						>
 							<X className="size-3" />
 						</Button>
