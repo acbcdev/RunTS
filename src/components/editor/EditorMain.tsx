@@ -4,6 +4,7 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
+import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
 import type { Monaco } from "@monaco-editor/react";
@@ -19,6 +20,7 @@ export function EditorMain() {
 	const updateEditor = useEditorStore(
 		useShallow((state) => state.updateEditor),
 	);
+	const toggle = useModalStore(useShallow((state) => state.toggleModal));
 	const running = useEditorStore(useShallow((state) => state.running));
 
 	const { wordWrap, lineNumbers, minimap, whiteSpace, lineRenderer } =
@@ -78,6 +80,7 @@ export function EditorMain() {
 				],
 				run: runCode,
 			});
+
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
 				() => toogleChat(),
@@ -108,6 +111,39 @@ export function EditorMain() {
 					noSyntaxValidation: false,
 				},
 			);
+
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Comma,
+				() => {
+					toggle("settings");
+				},
+			);
+			editor.addAction({
+				id: "settings",
+				label: "Open Settings",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Comma,
+				],
+				run: () => {
+					toggle("settings");
+				},
+			});
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
+				() => {
+					toggle("commandK");
+				},
+			);
+			editor.addAction({
+				id: "cmd-k",
+				label: "Open Command Palette",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
+				],
+				run: () => {
+					toggle("commandK");
+				},
+			});
 
 			monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(
 				extraLib,

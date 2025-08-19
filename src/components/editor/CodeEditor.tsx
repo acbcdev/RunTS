@@ -5,23 +5,17 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import {
-	NEW_TAB,
-	RUN_CODE,
-	TOGGLE_CHAT,
-	UNDO_CLOSE_TAB,
-} from "@/consts/shortcuts";
+
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import { updateChangeTheme } from "@/lib/utils";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
-import { useHistoryTabsStore } from "@/store/history";
 import { useTabsStore } from "@/store/tabs";
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, useEffect } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
@@ -29,6 +23,7 @@ const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
 const EditorTopBar = lazy(() => import("@/components/topBar/EditorTopBar"));
 const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
+	useShortcuts();
 	const { runCode } = useRun();
 
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
@@ -36,11 +31,9 @@ export function CodeEditor() {
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
-	const undoClose = useHistoryTabsStore(useShallow((state) => state.undoClose));
+
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 
-	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	const debouncedCode = useDebounce(getCurrentTab()?.code || "", refreshTime);
 	const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
 		useShallow((state) => ({
@@ -51,23 +44,7 @@ export function CodeEditor() {
 		})),
 	);
 
-	const { showChat, toggleChat } = useAIConfigStore(
-		useShallow((state) => ({
-			showChat: state.showChat,
-			toggleChat: state.toggleChat,
-		})),
-	);
-	useHotkeys(RUN_CODE, runCode, { preventDefault: true });
-	useHotkeys(TOGGLE_CHAT, () => toggleChat(), { preventDefault: true });
-	useHotkeys(NEW_TAB, () => newTab(), { preventDefault: true });
-	useHotkeys(
-		UNDO_CLOSE_TAB,
-		() => {
-			const tab = undoClose();
-			if (tab) addTab(tab);
-		},
-		{ preventDefault: true },
-	);
+	const showChat = useAIConfigStore(useShallow((state) => state.showChat));
 
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
@@ -88,6 +65,7 @@ export function CodeEditor() {
 
 	return (
 		<main className="flex flex-col h-screen bg-background/80 " translate="no">
+			<EditorTopBar />
 			<ResizablePanelGroup direction="horizontal">
 				<AnimatePresence mode="wait">
 					{showChat && (
@@ -112,7 +90,6 @@ export function CodeEditor() {
 				</AnimatePresence>
 
 				<ResizablePanel defaultSize={100}>
-					<EditorTopBar />
 					<EditorTabs />
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>
