@@ -1,20 +1,53 @@
 import { REFRESH_TIMES, RENDER_LINES } from "@/consts/config";
+import type {
+  ApparenceStoreActions,
+  ApparenceStoreStates,
+} from "@/store/apparence";
 import type { ConfigEditorState } from "@/store/config";
+import { themes } from "@/themes";
 import type { CommandItem } from "@/types/command";
-import { Hash, Timer } from "lucide-react";
+import { Brush, Hash, Timer } from "lucide-react";
 
-// Tipo para los generadores de submenús
-type SubmenuGenerator = (
-  config: ConfigEditorState,
+// Tipos genéricos para los generadores de submenús
+export type SubmenuContext = Record<string, unknown>;
+
+export type SubmenuActions = Record<string, (...args: never[]) => void>;
+
+export type SubmenuGenerator<
+  TContext = SubmenuContext,
+  TActions = SubmenuActions
+> = (context: TContext, actions: TActions) => CommandItem[];
+
+// Tipos específicos para configuración
+export interface ConfigActions extends SubmenuActions {
   setConfigValue: <K extends keyof ConfigEditorState>(
     key: K,
     value: ConfigEditorState[K]
-  ) => void
-) => CommandItem[];
+  ) => void;
+}
 
-// Objeto con todos los generadores de submenús
-export const submenuGenerators: Record<string, SubmenuGenerator> = {
-  "refresh-time": (config, setConfigValue) =>
+// Tipos específicos para generadores
+type ConfigSubmenuGenerator = SubmenuGenerator<
+  ConfigEditorState,
+  ConfigActions
+>;
+type ApparenceSubmenuGenerator = SubmenuGenerator<
+  ApparenceStoreStates,
+  ApparenceStoreActions["setOption"]
+>;
+
+// Registro de generadores por categoría
+export interface SubmenuRegistry {
+  config: Record<string, ConfigSubmenuGenerator>;
+  // Aquí se pueden agregar más categorías como:
+  // tabs: Record<string, TabSubmenuGenerator>;
+  // ai: Record<string, AISubmenuGenerator>;
+  // etc.
+}
+
+// Generadores específicos de configuración
+const configSubmenuGenerators: Record<string, ConfigSubmenuGenerator> = {
+  "refresh-time": (config, { setConfigValue }) =>
     REFRESH_TIMES.map((time) => ({
       id: `refresh-time-${time.value}`,
       title: time.time,
@@ -30,7 +63,7 @@ export const submenuGenerators: Record<string, SubmenuGenerator> = {
       isSelected: time.value === config.refreshTime,
     })),
 
-  "line-renderer": (config, setConfigValue) =>
+  "line-renderer": (config, { setConfigValue }) =>
     RENDER_LINES.map((mode) => ({
       id: `render-${mode}`,
       title:
@@ -55,8 +88,68 @@ export const submenuGenerators: Record<string, SubmenuGenerator> = {
     })),
 };
 
-// Función helper para generar submenús
-export const generateSubmenu = (
+// Generadores específicos de apariencia
+const apparenceSubmenuGenerators: Record<string, ApparenceSubmenuGenerator> = {
+  "change-theme": (apparence, actions) => {
+    return (Object.keys(themes) as Array<keyof typeof themes>).map(
+      (themeName) => ({
+        id: `theme-${String(themeName)}`,
+        title: String(themeName),
+        description: `Switch to ${String(themeName)} theme`,
+        icon: Brush,
+        category: "apparence" as const,
+        parentId: "change-theme",
+        keywords: [
+          String(themeName),
+          "theme",
+          "color",
+          "appearance",
+          "config",
+          "settings",
+        ],
+        action: () => actions("theme", themeName),
+        isSelected: themeName === apparence.theme,
+        preventDefault: true,
+      })
+    );
+  },
+};
+
+// Registro de generadores por categoría
+export interface SubmenuRegistry {
+  config: Record<string, ConfigSubmenuGenerator>;
+  apparence: Record<string, ApparenceSubmenuGenerator>;
+  // Aquí se pueden agregar más categorías como:
+  // tabs: Record<string, TabSubmenuGenerator>;
+  // ai: Record<string, AISubmenuGenerator>;
+  // etc.
+}
+
+// Registro principal de generadores
+export const submenuRegistry: SubmenuRegistry = {
+  config: configSubmenuGenerators,
+  apparence: apparenceSubmenuGenerators,
+};
+
+// Función helper genérica para generar submenús
+export const generateSubmenu = <TContext, TActions>(
+  category: keyof SubmenuRegistry,
+  commandId: string,
+  context: TContext,
+  action: TActions
+): CommandItem[] => {
+  const categoryGenerators = submenuRegistry[category];
+  if (!categoryGenerators) return [];
+
+  const generator = categoryGenerators[commandId] as SubmenuGenerator<
+    TContext,
+    TActions
+  >;
+  return generator ? generator(context, action) : [];
+};
+
+// Función específica para configuración (backward compatibility)
+export const generateConfigSubmenu = (
   commandId: string,
   config: ConfigEditorState,
   setConfigValue: <K extends keyof ConfigEditorState>(
@@ -64,6 +157,14 @@ export const generateSubmenu = (
     value: ConfigEditorState[K]
   ) => void
 ): CommandItem[] => {
-  const generator = submenuGenerators[commandId];
-  return generator ? generator(config, setConfigValue) : [];
+  return generateSubmenu("config", commandId, config, { setConfigValue });
+};
+
+// Función específica para apariencia
+export const generateApparenceSubmenu = (
+  commandId: string,
+  apparence: ApparenceStoreStates,
+  apparenceActions: ApparenceStoreActions["setOption"]
+): CommandItem[] => {
+  return generateSubmenu("apparence", commandId, apparence, apparenceActions);
 };
