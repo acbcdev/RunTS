@@ -37,6 +37,7 @@ export const useCommandItems = (): CommandItem[] => {
     category: "actions",
     keywords: ["new", "nuevo", "create", "crear", "tab", "file", "archivo"],
     action: () => newTab(),
+    forceMount: true,
   });
 
   // 2. ACTIVE TABS

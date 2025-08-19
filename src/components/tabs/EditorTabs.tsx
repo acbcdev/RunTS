@@ -7,11 +7,11 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
+import { isTauri } from "@tauri-apps/api/core";
 import { Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 
 import { EditorTabsItem } from "@/components/tabs/EditorTabsItem";
-
 export function EditorTabs() {
 	const tabs = useTabsStore(useShallow((state) => state.tabs));
 
@@ -40,7 +40,7 @@ export function EditorTabs() {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					New tab <Kd>Ctrl + Q</Kd>
+					New tab <Kd>{isTauri() ? "Ctrl + T" : "Ctrl + Q"}</Kd>
 				</TooltipContent>
 			</Tooltip>
 		</div>

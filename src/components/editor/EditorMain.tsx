@@ -8,11 +8,13 @@ import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
 import type { Monaco } from "@monaco-editor/react";
+import { isTauri } from "@tauri-apps/api/core";
 import { Loader } from "lucide-react";
 import { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
 import { Suspense, lazy, useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
+
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
 export function EditorMain() {
@@ -56,6 +58,7 @@ export function EditorMain() {
 	const handleEditorDidMount = useCallback(
 		async (editor: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
 			// Define all themes
+			const isApp = isTauri();
 			for (const [key, value] of Object.entries(themes)) {
 				monacoInstance.editor.defineTheme(key, value.monaco);
 			}
@@ -93,15 +96,18 @@ export function EditorMain() {
 				],
 				run: () => toogleChat(),
 			});
+
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
+				monacoInstance.KeyMod.CtrlCmd |
+					(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
+					monacoInstance.KeyMod.CtrlCmd |
+						(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
 				],
 				run: () => newTab(),
 			});

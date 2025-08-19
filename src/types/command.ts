@@ -13,6 +13,7 @@ export interface CommandItem {
   hasSubmenu?: boolean;
   parentId?: string; // Para comandos de submenú
   isSelected?: boolean; // Para marcar el valor actual en submenús
+  forceMount?: boolean;
 }
 
 export interface NavigationState {
@@ -31,4 +32,5 @@ export type CommandCategory =
 export interface CommandGroup {
   heading: string;
   items: CommandItem[];
+  forceMount?: boolean;
 }

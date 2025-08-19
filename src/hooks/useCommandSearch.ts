@@ -80,6 +80,9 @@ function calculateScore(command: CommandItem, query: string): number {
   if (command.description?.toLowerCase().includes(query)) {
     score += 30;
   }
+  if (command.forceMount) {
+    score += 40;
+  }
 
   // Match in keywords
   if (command.keywords) {
