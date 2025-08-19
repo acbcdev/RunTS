@@ -65,8 +65,8 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 			aria-selected={isActive}
 			role="tab"
 			className={cn(
-				"border-r transition-colors focus-within:ring-0 focus-within:outline-1 focus-within:-outline-offset-1 focus:outline-border	",
-				isActive && "bg-border/30 grow-2",
+				"border-r transition-colors focus:ring-0 focus:outline-1 focus:-outline-offset-1 focus:outline-ring	",
+				isActive && "bg-border/80 grow-2",
 			)}
 			onClick={handleTabClick}
 		>

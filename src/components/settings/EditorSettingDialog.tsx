@@ -19,15 +19,23 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { versionApp } from "@/consts";
+import { useModalStore } from "@/store/modal";
 import { BrainCog, Brush, Cog, MonitorCog } from "lucide-react";
+import { Kd } from "../ui/kd";
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },
 	{ name: "AI", Icon: BrainCog },
 ];
 export function EditorSettingsDialog() {
+	const open = useModalStore((state) => state.settings);
+	const toggle = useModalStore((state) => state.toggleModal);
 	return (
-		<Dialog aria-description="Editor settings">
+		<Dialog
+			open={open}
+			onOpenChange={() => toggle("settings")}
+			aria-description="Editor settings"
+		>
 			<Tooltip>
 				<DialogTrigger asChild>
 					<TooltipTrigger asChild>
@@ -42,7 +50,9 @@ export function EditorSettingsDialog() {
 						</Button>
 					</TooltipTrigger>
 				</DialogTrigger>
-				<TooltipContent>Editor settings</TooltipContent>
+				<TooltipContent>
+					Editor settings <Kd>Ctrl + ,</Kd>
+				</TooltipContent>
 			</Tooltip>
 
 			<DialogContent
