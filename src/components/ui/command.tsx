@@ -27,6 +27,22 @@ function Command({
 	);
 }
 
+function CommandLoading({
+	className,
+	...props
+}: React.ComponentProps<typeof CommandPrimitive.Loading>) {
+	return (
+		<CommandPrimitive.Loading
+			data-slot="command-loading"
+			className={cn(
+				"flex h-full w-full items-center justify-center",
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
+
 function CommandDialog({
 	title = "Command Palette",
 	description = "Search for a command to run...",
@@ -50,7 +66,10 @@ function CommandDialog({
 				className={cn("overflow-hidden p-0", className)}
 				// showCloseButton={showCloseButton}
 			>
-				<Command className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+				<Command
+					className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+					loop
+				>
 					{children}
 				</Command>
 			</DialogContent>
@@ -88,7 +107,7 @@ function CommandList({
 		<CommandPrimitive.List
 			data-slot="command-list"
 			className={cn(
-				"max-h-[400px] scroll-py-1 overflow-x-hidden overflow-y-auto scroll",
+				"min-h-[400px] max-h-[400px]  scroll-py-1 overflow-x-hidden overflow-y-auto scroll",
 				className,
 			)}
 			{...props}
@@ -173,6 +192,7 @@ export {
 	Command,
 	CommandDialog,
 	CommandInput,
+	CommandLoading,
 	CommandList,
 	CommandEmpty,
 	CommandGroup,
