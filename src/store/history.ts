@@ -16,7 +16,8 @@ export const useHistoryTabsStore = create<HistoryTabsStore>()(
   persist(
     (set, get) => ({
       tabs: [],
-      addTab: (tab) => set((state) => ({ tabs: [...state.tabs, tab] })),
+      addTab: (tab) =>
+        set((state) => ({ tabs: [...state.tabs.slice(-10), tab] })),
       removeTab: (tabId) =>
         set((state) => ({
           tabs: state.tabs.filter((tab) => tab.id !== tabId),
