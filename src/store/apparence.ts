@@ -3,14 +3,14 @@ import type { RadiusSize, TLayout, Theme } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface ApparenceStoreStates {
+export interface ApparenceStoreStates {
   theme: keyof typeof themes;
   fontSize: number;
   radius: RadiusSize;
   fontFamily: string;
   layout: TLayout;
 }
-interface ApparenceStoreActions {
+export interface ApparenceStoreActions {
   getCurrentTheme: () => Theme;
   getOption: <T extends keyof ApparenceStoreStates>(
     key: T

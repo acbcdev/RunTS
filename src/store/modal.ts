@@ -3,6 +3,7 @@ import { create } from "zustand";
 type ModalStoreStates = {
   commandK: boolean;
   settings: boolean;
+  shortcuts: boolean;
 };
 
 type ModalStoreActions = {
@@ -16,6 +17,7 @@ type ModalStore = ModalStoreStates & ModalStoreActions;
 const DEFAULT_STATES = {
   commandK: false,
   settings: false,
+  shortcuts: false,
 } satisfies ModalStoreStates;
 
 export const useModalStore = create<ModalStore>((set) => ({
