@@ -6,8 +6,8 @@ import { decode } from "js-base64";
 import { Suspense, lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { CommandK } from "./components/CommandK";
 import { MESSAGE_LOG } from "./consts";
-
 const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
 function App() {
@@ -45,6 +45,7 @@ function App() {
 		<ErrorBoundary>
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 				{/* <ErrorBoundaryTester /> */}
+				<CommandK />
 				<Suspense fallback={<div>Loading editor...</div>}>
 					<CodeEditor />
 				</Suspense>
