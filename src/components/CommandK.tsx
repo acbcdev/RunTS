@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
-
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -13,14 +10,21 @@ import {
 import { TOGGLE_COMMAND } from "@/consts/shortcuts";
 import { useCommandItems } from "@/hooks/useCommandItems";
 import { useCommandSearch } from "@/hooks/useCommandSearch";
-import { generateSubmenu } from "@/lib/submenuGenerators";
+import {
+	generateApparenceSubmenu,
+	generateConfigSubmenu,
+} from "@/lib/submenuGenerators";
+import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useModalStore } from "@/store/modal";
 import type { NavigationState } from "@/types/command";
 import { Check } from "lucide-react";
+import { useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export function CommandK() {
 	const [query, setQuery] = useState("");
+
 	const [navigationState, setNavigationState] = useState<NavigationState>({
 		activeSubmenu: null,
 		breadcrumbs: [],
@@ -32,12 +36,38 @@ export function CommandK() {
 	const config = useConfigStore((state) => state);
 	const setConfigValue = useConfigStore((state) => state.setConfigValue);
 
+	const apparence = useApparenceStore((state) => state);
+	const setOption = useApparenceStore((state) => state.setOption);
+
 	const mainCommands = useCommandItems();
 
-	// Generate submenu commands if we're in a submenu
-	const submenuCommands = navigationState.activeSubmenu
-		? generateSubmenu(navigationState.activeSubmenu, config, setConfigValue)
-		: [];
+	// Generate submenu commands based on the command category
+	const submenuCommands = (() => {
+		if (!navigationState.activeSubmenu) return [];
+
+		// Find the parent command to determine its category
+		const parentCommand = mainCommands.find(
+			(cmd) => cmd.id === navigationState.activeSubmenu,
+		);
+		if (!parentCommand) return [];
+
+		switch (parentCommand.category) {
+			case "config":
+				return generateConfigSubmenu(
+					navigationState.activeSubmenu,
+					config,
+					setConfigValue,
+				);
+			case "apparence":
+				return generateApparenceSubmenu(
+					navigationState.activeSubmenu,
+					apparence,
+					setOption,
+				);
+			default:
+				return [];
+		}
+	})();
 
 	// Use main commands or submenu commands based on navigation state
 	const currentCommands = navigationState.activeSubmenu
@@ -119,7 +149,6 @@ export function CommandK() {
 				onValueChange={setQuery}
 				onKeyDown={handleInputKeyDown}
 			/>
-
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
 				{commandGroups.map((group) => (
