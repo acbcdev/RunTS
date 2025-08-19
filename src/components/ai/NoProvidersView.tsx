@@ -1,5 +1,5 @@
 import { API_PROVIDERS } from "@/consts";
-import { Plug, Settings, Zap } from "lucide-react";
+import { Key, Settings, Zap } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
@@ -21,7 +21,7 @@ export function NoProvidersView() {
 	return (
 		<section className="flex flex-col items-center justify-center h-full p-8 space-y-8 border-r">
 			{/* Hero Section */}
-			<Plug size={40} strokeWidth={1.5} />
+			<Key size={40} strokeWidth={1.5} />
 			<header className="text-center space-y-4">
 				<div className="space-y-2">
 					<h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
