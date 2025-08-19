@@ -7,6 +7,7 @@ import { persist } from "zustand/middleware";
 interface TabsStoreState {
   tabs: Tab[];
   activeTabId: Tab["id"];
+  activeTabHistory: Tab["id"][];
 }
 type TabsStoreActions = {
   setActiveTab: (id: Tab["id"]) => void;
@@ -24,6 +25,7 @@ type TabsStoreActions = {
   ) => void;
   clearConsole: VoidFunction;
   getTab: (id: Tab["id"]) => Tab | undefined;
+  setActiveTabHistory: (id: Tab["id"]) => void;
 };
 
 type TabsStore = TabsStoreState & TabsStoreActions;
@@ -33,6 +35,12 @@ export const useTabsStore = create<TabsStore>()(
     (set, get) => ({
       tabs: INITIAL_TABS,
       activeTabId: "1",
+      activeTabHistory: [],
+      setActiveTabHistory: (id) => {
+        set((state) => ({
+          activeTabHistory: [id, ...state.activeTabHistory.slice(0, 10)],
+        }));
+      },
       getCurrentTab: () =>
         get().tabs.find((tab) => tab.id === get().activeTabId),
       newTab: (code) => {
@@ -88,16 +96,23 @@ export const useTabsStore = create<TabsStore>()(
       removeTab: (id) => {
         set((state) => {
           const newTabs = state.tabs.filter((tab) => tab.id !== id);
+          const activeTabsHistory = state.activeTabHistory.filter(
+            (tabId) => tabId !== id
+          );
           return {
             tabs: newTabs,
+            activeTabsHistory,
             activeTabId:
               id === state.activeTabId
-                ? newTabs[0]?.id || ""
+                ? activeTabsHistory[0] || newTabs[0]?.id
                 : state.activeTabId,
           };
         });
       },
-      setActiveTab: (activeTabId) => set({ activeTabId }),
+      setActiveTab: (activeTabId) => {
+        get().setActiveTabHistory(activeTabId);
+        set({ activeTabId });
+      },
       updateTabCode: (id, code) => {
         set((state) => {
           const index = state.tabs.findIndex((tab) => tab.id === id);
