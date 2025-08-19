@@ -25,16 +25,23 @@ export function EditorMain() {
 	const toggle = useModalStore(useShallow((state) => state.toggleModal));
 	const running = useEditorStore(useShallow((state) => state.running));
 
-	const { wordWrap, lineNumbers, minimap, whiteSpace, lineRenderer } =
-		useConfigStore(
-			useShallow((state) => ({
-				wordWrap: state.wordWrap,
-				lineNumbers: state.lineNumbers,
-				minimap: state.minimap,
-				whiteSpace: state.whiteSpace,
-				lineRenderer: state.lineRenderer,
-			})),
-		);
+	const {
+		wordWrap,
+		lineNumbers,
+		minimap,
+		whiteSpace,
+		lineRenderer,
+		toggleConfig,
+	} = useConfigStore(
+		useShallow((state) => ({
+			wordWrap: state.wordWrap,
+			lineNumbers: state.lineNumbers,
+			minimap: state.minimap,
+			whiteSpace: state.whiteSpace,
+			lineRenderer: state.lineRenderer,
+			toggleConfig: state.toggleConfig,
+		})),
+	);
 	// useTabsStore
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 	const updateTabCode = useTabsStore(
@@ -138,6 +145,12 @@ export function EditorMain() {
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
 				() => {
 					toggle("commandK");
+				},
+			);
+			editor.addCommand(
+				monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyZ,
+				() => {
+					toggleConfig("wordWrap");
 				},
 			);
 			editor.addAction({
