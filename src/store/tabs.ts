@@ -26,6 +26,7 @@ type TabsStoreActions = {
   clearConsole: VoidFunction;
   getTab: (id: Tab["id"]) => Tab | undefined;
   setActiveTabHistory: (id: Tab["id"]) => void;
+  handleTab: (dir: 1 | -1) => void;
 };
 
 type TabsStore = TabsStoreState & TabsStoreActions;
@@ -44,13 +45,14 @@ export const useTabsStore = create<TabsStore>()(
       getCurrentTab: () =>
         get().tabs.find((tab) => tab.id === get().activeTabId),
       newTab: (code) => {
-        get().addTab({
+        const id = get().addTab({
           name: `untitled-${Date.now().toString().slice(-4)}.ts`,
           language: "typescript",
           code: code || "",
           logsFormated: "",
           logs: [],
         });
+        get().setActiveTab(id);
       },
       getTab: (id) => get().tabs.find((tab) => tab.id === id),
       setEditing: (id, editing = false) => {
@@ -104,7 +106,7 @@ export const useTabsStore = create<TabsStore>()(
             activeTabsHistory,
             activeTabId:
               id === state.activeTabId
-                ? activeTabsHistory[0] || newTabs[0]?.id
+                ? activeTabsHistory[0] || newTabs.at(-1)?.id
                 : state.activeTabId,
           };
         });
@@ -113,6 +115,7 @@ export const useTabsStore = create<TabsStore>()(
         get().setActiveTabHistory(activeTabId);
         set({ activeTabId });
       },
+
       updateTabCode: (id, code) => {
         set((state) => {
           const index = state.tabs.findIndex((tab) => tab.id === id);
@@ -152,10 +155,21 @@ export const useTabsStore = create<TabsStore>()(
           const index = state.tabs.findIndex(
             (tab) => tab.id === get().activeTabId
           );
-          if (index === -1) return state; // Si no encuentra la pestaña, no realiza cambios
+          if (index === -1) return { ...state }; // Si no encuentra la pestaña, no realiza cambios
           return {
             tabs: state.tabs.with(index, { ...state.tabs[index], logs: [] }),
           };
+        });
+      },
+      handleTab: (dir) => {
+        set((state) => {
+          const index = state.tabs.findIndex(
+            (tab) => tab.id === state.activeTabId
+          );
+          if (index === -1) return { ...state };
+          const newIndex = (index + dir) % state.tabs.length;
+          get().setActiveTab(state.tabs[newIndex].id);
+          return state;
         });
       },
     }),
