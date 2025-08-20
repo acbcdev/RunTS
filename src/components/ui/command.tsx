@@ -107,7 +107,7 @@ function CommandList({
 		<CommandPrimitive.List
 			data-slot="command-list"
 			className={cn(
-				"min-h-[400px] max-h-[400px]  scroll-py-1 overflow-x-hidden overflow-y-auto scroll",
+				"max-h-[400px]  scroll-py-1 overflow-x-hidden overflow-y-auto scroll",
 				className,
 			)}
 			{...props}
