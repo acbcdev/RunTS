@@ -1,14 +1,11 @@
 {
   "identifier": "desktop-capability",
-  "platforms": [
-    "macOS",
-    "windows",
-    "linux"
-  ],
-  "windows": [
-    "main"
-  ],
+  "platforms": ["macOS", "windows", "linux"],
+  "windows": ["main"],
   "permissions": [
-    "window-state:default"
+    "window-state:default",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-close"
   ]
 }
