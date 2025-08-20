@@ -71,17 +71,20 @@ export function CodeEditor() {
 					{showChat && (
 						<motion.div
 							key="chat"
-							initial={{ opacity: 0, x: -200, width: 0 }}
+							initial={{ opacity: 0, x: -300, width: 0, scaleX: 0.5 }}
 							animate={{
 								opacity: 1,
+								scaleX: 1,
 								x: 0,
 								width: "auto",
 							}}
 							exit={{
-								x: -200,
+								x: -300,
 								width: 0,
 								opacity: 0,
+								scaleX: 0.5,
 							}}
+							transition={{ duration: 0.2, ease: "easeInOut" }}
 							className="h-full"
 						>
 							<Chat />
