@@ -88,6 +88,7 @@ export function Appearance() {
 								key={value.size}
 								variant={radius === value.size ? "border" : "outline"}
 								onClick={() => setOption("radius", value.size)}
+								style={{ borderRadius: `${value.size}rem` }}
 							>
 								{value.display}
 							</Button>

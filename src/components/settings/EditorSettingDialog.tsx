@@ -109,7 +109,7 @@ export function EditorSettingsDialog() {
 					<TabsList className="h-12 px-6 justify-start">
 						{Trigers.map(({ name, Icon }) => (
 							<TabsTrigger key={name} value={name.toLowerCase()}>
-								<Icon className="size-4 mr-1" /> {name}
+								<Icon className="size-4 mr-2" /> {name}
 							</TabsTrigger>
 						))}
 					</TabsList>
