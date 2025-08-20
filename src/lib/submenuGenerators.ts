@@ -91,27 +91,25 @@ const configSubmenuGenerators: Record<string, ConfigSubmenuGenerator> = {
 // Generadores específicos de apariencia
 const apparenceSubmenuGenerators: Record<string, ApparenceSubmenuGenerator> = {
   "change-theme": (apparence, actions) => {
-    return (Object.keys(themes) as Array<keyof typeof themes>).map(
-      (themeName) => ({
-        id: `theme-${String(themeName)}`,
-        title: String(themeName),
-        description: `Switch to ${String(themeName)} theme`,
-        icon: Brush,
-        category: "apparence" as const,
-        parentId: "change-theme",
-        keywords: [
-          String(themeName),
-          "theme",
-          "color",
-          "appearance",
-          "config",
-          "settings",
-        ],
-        action: () => actions("theme", themeName),
-        isSelected: themeName === apparence.theme,
-        preventDefault: true,
-      })
-    );
+    return Object.entries(themes).map(([themeName, value]) => ({
+      id: `theme-${String(themeName)}`,
+      title: value.name,
+      description: `Switch to ${value.name} theme`,
+      icon: Brush,
+      category: "apparence" as const,
+      parentId: "change-theme",
+      keywords: [
+        String(themeName),
+        "theme",
+        "color",
+        "appearance",
+        "config",
+        "settings",
+      ],
+      action: () => actions("theme", themeName),
+      isSelected: themeName === apparence.theme,
+      preventDefault: true,
+    }));
   },
 };
 
