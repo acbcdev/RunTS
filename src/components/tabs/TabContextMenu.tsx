@@ -36,39 +36,36 @@ export const TabContextMenu = ({
 						onRename();
 					}}
 				>
-					<FilePen className="mr-2 h-4 w-4" />
+					<FilePen className="size-4" />
 					Rename
 				</ContextMenuItem>
 
 				<ContextMenuItem onClick={onDuplicate}>
-					<Files className="mr-2 h-4 w-4" />
+					<Files className="size-4" />
 					Duplicate
 				</ContextMenuItem>
 
 				<ContextMenuSeparator />
 
 				<ContextMenuItem onClick={onCopy}>
-					<Copy className="mr-2 h-4 w-4" />
+					<Copy className="size-4" />
 					Copy
 				</ContextMenuItem>
 
 				<ContextMenuItem onClick={onDownload}>
-					<Download className="mr-2 h-4 w-4" />
+					<Download className="size-4" />
 					Download
 				</ContextMenuItem>
 
 				<ContextMenuItem onClick={onShare}>
-					<Share className="mr-2 h-4 w-4" />
+					<Share className="size-4" />
 					Share
 				</ContextMenuItem>
 
 				<ContextMenuSeparator />
 
-				<ContextMenuItem
-					className="text-destructive focus:text-destructive"
-					onClick={onDelete}
-				>
-					<Trash className="mr-2 h-4 w-4" />
+				<ContextMenuItem variant="destructive" onClick={onDelete}>
+					<Trash className="size-4" />
 					Delete
 				</ContextMenuItem>
 			</ContextMenuContent>
