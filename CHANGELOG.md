@@ -1,5 +1,40 @@
 # Changelog
 
+## Version 1.6.0 – Agu 19, 2025
+
+### Highlights
+
+#### New Features
+
+- Global Error Boundary: Added error boundary and tester for improved app stability.
+- Command Palette: Introduced CommandK component with dynamic command management, loading state, and submenu generation.
+- Keyboard Shortcuts: Added ShortCutsModal and shortcut management hooks for better accessibility and workflow.
+- Tab Management: Implemented tab history, undo tab close, tab context menu, and enhanced tab navigation.
+- Editor Settings: New configuration commands for theme, word wrap, and settings management.
+
+#### Improvements
+
+- Enhanced chat animation and smoother transitions in CodeEditor.
+- Improved theme switching and appearance submenu generators.
+- Updated icon sizes and accessibility for tab controls.
+- Better command item scoring and Tauri compatibility for shortcuts.
+- Enhanced modal management and keyboard shortcuts for settings and command palette.
+- Improved Monaco editor word wrap toggle and config actions.
+
+#### Fixes
+
+- Fixed close tab button and command palette layout issues.
+- Corrected desktop capabilities permissions and JSON formatting.
+- Improved error handling in chat and code editor.
+- Fixed default behavior for chat toggle hotkey.
+
+#### Refactors
+
+- Centralized config constants and streamlined editor state management.
+- Reorganized apparence store types and actions for clarity.
+- Simplified formatter, runCode, and tooltip provider logic.
+- Cleaned up imports, removed unused code, and improved maintainability.
+
 ## Version 1.5.6 – Agu 13, 2025
 
 ### AI Models Organization
