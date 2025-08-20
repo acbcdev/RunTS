@@ -137,7 +137,7 @@ export function CommandK() {
 		<CommandDialog
 			open={open}
 			onOpenChange={handleOpenChange}
-			className="max-w-[640px] w-full"
+			className="min-w-[600px]"
 		>
 			<CommandInput
 				placeholder={
@@ -149,7 +149,7 @@ export function CommandK() {
 				onValueChange={setQuery}
 				onKeyDown={handleInputKeyDown}
 			/>
-			<CommandList>
+			<CommandList className="h-[500px] ">
 				<CommandEmpty>No results found.</CommandEmpty>
 				{commandGroups.map((group) => (
 					<div key={group.heading}>
