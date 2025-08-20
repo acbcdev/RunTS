@@ -4,6 +4,7 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
+import { useHistoryTabsStore } from "@/store/history";
 import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
@@ -24,7 +25,6 @@ export function EditorMain() {
 	);
 	const toggle = useModalStore(useShallow((state) => state.toggleModal));
 	const running = useEditorStore(useShallow((state) => state.running));
-
 	const {
 		wordWrap,
 		lineNumbers,
@@ -48,6 +48,16 @@ export function EditorMain() {
 		useShallow((state) => state.updateTabCode),
 	);
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
+	// const moveTab = useTabsStore(useShallow((state) => state.handleTab));
+	// const removeTab = useTabsStore(useShallow((state) => state.removeTab));
+
+	const undo = useHistoryTabsStore(useShallow((state) => state.undoClose));
+	// const addTabHistory = useHistoryTabsStore(
+	// 	useShallow((state) => state.addTab),
+	// );
+
+	const addTab = useTabsStore(useShallow((state) => state.addTab));
+
 	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
@@ -65,7 +75,6 @@ export function EditorMain() {
 	const handleEditorDidMount = useCallback(
 		async (editor: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
 			// Define all themes
-			const isApp = isTauri();
 			for (const [key, value] of Object.entries(themes)) {
 				monacoInstance.editor.defineTheme(key, value.monaco);
 			}
@@ -78,10 +87,45 @@ export function EditorMain() {
 					lib: ["esnext", "dom"],
 				},
 			);
+			monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
+				{
+					noSemanticValidation: false,
+					noSyntaxValidation: false,
+				},
+			);
+			const isApp = isTauri();
+			// if (isApp) {
+			// 	editor.addCommand(
+			// 		monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Tab,
+			// 		() => {
+			// 			moveTab(1);
+			// 		},
+			// 	);
+			// 	editor.addCommand(
+			// 		monacoInstance.KeyMod.CtrlCmd |
+			// 			monacoInstance.KeyMod.Shift |
+			// 			monacoInstance.KeyCode.Tab,
+			// 		() => {
+			// 			moveTab(-1);
+			// 		},
+			// 	);
+			// 	editor.addCommand(
+			// 		monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyW,
+			// 		() => {
+			// 			const currentActiveTab = getCurrentTab();
+			// 			if (currentActiveTab && currentActiveTab?.code.trim() !== "") {
+			// 				addTabHistory(currentActiveTab);
+			// 				removeTab(currentActiveTab.id);
+			// 			}
+			// 		},
+			// 	);
+			// }
+
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyR,
 				runCode,
 			);
+
 			editor.addAction({
 				id: "run-code",
 				label: "Run Code",
@@ -118,12 +162,29 @@ export function EditorMain() {
 				],
 				run: () => newTab(),
 			});
-			monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
-				{
-					noSemanticValidation: false,
-					noSyntaxValidation: false,
+
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd |
+					monacoInstance.KeyCode.Shift |
+					(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+				() => {
+					const tab = undo();
+					if (tab) addTab(tab);
 				},
 			);
+			editor.addAction({
+				id: "undo-tab-close-action",
+				label: "Undo Tab Close",
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd |
+						monacoInstance.KeyCode.Shift |
+						(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+				],
+				run: () => {
+					const tab = undo();
+					if (tab) addTab(tab);
+				},
+			});
 
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Comma,
