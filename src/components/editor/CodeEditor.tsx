@@ -11,7 +11,7 @@ import { useRun } from "@/hooks/useRun";
 import { useShortcuts } from "@/hooks/useShortcuts";
 import { updateChangeTheme } from "@/lib/utils";
 import { useAIConfigStore } from "@/store/aiConfig";
-import { useApparenceStore } from "@/store/apparence";
+import { SIDES, useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useTabsStore } from "@/store/tabs";
 import { AnimatePresence, motion } from "motion/react";
@@ -20,7 +20,7 @@ import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
-const EditorTopBar = lazy(() => import("@/components/topBar/EditorTopBar"));
+const EditorActions = lazy(() => import("@/components/topBar/EditorActions"));
 const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
 	useShortcuts();
@@ -43,7 +43,7 @@ export function CodeEditor() {
 			getCurrentTheme: state.getCurrentTheme,
 		})),
 	);
-
+	const side = useApparenceStore(useShallow((state) => state.side));
 	const showChat = useAIConfigStore(useShallow((state) => state.showChat));
 
 	useEffect(() => {
@@ -64,8 +64,18 @@ export function CodeEditor() {
 	}
 
 	return (
-		<main className="flex flex-col h-screen bg-background/80 " translate="no">
-			<EditorTopBar />
+		<main
+			className={`flex h-screen bg-background/80 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
+			translate="no"
+		>
+			{(side === SIDES.LEFT || side === SIDES.TOP) && (
+				<EditorActions
+					direction={side === SIDES.LEFT ? "column" : "row"}
+					className={side === SIDES.LEFT ? "border-l" : "border-t"}
+					tooltipSide={side === SIDES.LEFT ? "right" : "bottom"}
+				/>
+			)}
+
 			<ResizablePanelGroup direction="horizontal">
 				<AnimatePresence mode="wait">
 					{showChat && (
@@ -105,6 +115,13 @@ export function CodeEditor() {
 					</ResizablePanelGroup>
 				</ResizablePanel>
 			</ResizablePanelGroup>
+			{(side === SIDES.RIGHT || side === SIDES.BOTTOM) && (
+				<EditorActions
+					direction={side === SIDES.RIGHT ? "column" : "row"}
+					className={side === SIDES.RIGHT ? "border-l" : "border-t"}
+					tooltipSide={side === SIDES.RIGHT ? "left" : "top"}
+				/>
+			)}
 
 			{/* <Updates /> */}
 			<ReloadPrompt />
