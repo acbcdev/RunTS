@@ -1,3 +1,4 @@
+import { EDITOR_CONFIG } from "@/consts/editor";
 import { extraLib } from "@/consts/extraLib";
 import { useRun } from "@/hooks/useRun";
 import { useAIConfigStore } from "@/store/aiConfig";
@@ -276,105 +277,19 @@ export function EditorMain() {
 					onMount={handleEditorDidMount}
 					theme={theme}
 					options={{
+						// Theme
+						theme,
 						// Editor Core Configuration
-						automaticLayout: true,
 						fontSize,
 						fontFamily,
-						fontLigatures: true,
-						tabSize: 2,
-						trimAutoWhitespace: true,
-						glyphMargin: true,
 						wordWrap: wordWrap ? "on" : "off",
-						fixedOverflowWidgets: true,
-						occurrencesHighlight: "singleFile",
-						// Auto-formatting & Indentation
-						autoIndent: "full",
-						formatOnPaste: true,
-						formatOnType: true,
-						guides: {
-							bracketPairs: true,
-							indentation: true,
-						},
-						autoClosingBrackets: "always",
-						autoClosingQuotes: "always",
-						// Code Intelligence
-						codeLens: true,
-						lightbulb: {
-							enabled: editor.ShowLightbulbIconMode.On,
-						},
-						inlineSuggest: { enabled: true },
-						suggest: {
-							showMethods: true,
-							showFunctions: true,
-							showConstructors: true,
-							showDeprecated: true,
-							showSnippets: true,
-							showConstants: true,
-							showVariables: true,
-							showInterfaces: true,
-							showKeywords: true,
-						},
-						quickSuggestions: true,
-						suggestOnTriggerCharacters: true,
-						acceptSuggestionOnEnter: "on",
-
-						// Navigation & References
-						links: true,
-						gotoLocation: {
-							multipleDeclarations: "goto",
-							multipleImplementations: "goto",
-							multipleDefinitions: "goto",
-						},
-
-						// Visual Indicators
-						showDeprecated: true,
-						showUnused: true,
-						colorDecorators: true,
-						showFoldingControls: "always",
-						bracketPairColorization: {
-							enabled: true,
-						},
-						renderControlCharacters: true,
 						renderLineHighlight: lineRenderer,
-						renderValidationDecorations: "on",
-						renderWhitespace: whiteSpace ? "all" : "selection",
-						"semanticHighlighting.enabled": true,
-
-						// Editor UI Features
 						minimap: {
 							enabled: minimap,
 						},
+						renderWhitespace: whiteSpace ? "all" : "selection",
 						lineNumbers: lineNumbers ? "on" : "off",
-						padding: {
-							top: 20,
-							bottom: 12,
-						},
-						scrollbar: {
-							vertical: "auto",
-							horizontal: "auto",
-							useShadows: false,
-
-							verticalHasArrows: false,
-							horizontalHasArrows: false,
-							horizontalScrollbarSize: 10,
-							verticalScrollbarSize: 10,
-						},
-						scrollBeyondLastLine: false,
-						lineNumbersMinChars: 2,
-						lineDecorationsWidth: 0,
-						// Editor Behavior
-						contextmenu: true,
-						dragAndDrop: true,
-						copyWithSyntaxHighlighting: true,
-						autoClosingComments: "always",
-						folding: true,
-						cursorStyle: "line",
-						cursorWidth: 2,
-						cursorBlinking: "expand",
-						smoothScrolling: true,
-						mouseWheelZoom: true,
-						// Theme
-						theme,
+						...EDITOR_CONFIG,
 					}}
 				/>
 			</Suspense>

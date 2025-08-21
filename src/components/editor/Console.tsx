@@ -1,3 +1,4 @@
+import { CONSOLE_EDITOR_CONFIG } from "@/consts/editor";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useTabsStore } from "@/store/tabs";
@@ -62,40 +63,9 @@ export function Console() {
 					theme={theme}
 					options={{
 						lineNumbers: lineNumbers ? "on" : "off",
-						language: "javascript",
-						scrollbar: {
-							horizontal: "visible",
-							vertical: "auto",
-						},
-						minimap: { enabled: false },
-						readOnly: true,
-						wordWrap: "on",
-						padding: {
-							top: 20,
-							bottom: 12,
-						},
-
 						fontSize,
-						automaticLayout: true,
 						fontFamily,
-						fontLigatures: true,
-						glyphMargin: false,
-						scrollBeyondLastLine: false,
-						folding: true,
-
-						bracketPairColorization: {
-							enabled: false,
-						},
-						cursorStyle: "block",
-						cursorBlinking: "phase",
-						codeLens: false,
-						multiCursorLimit: 0,
-						lineDecorationsWidth: 0,
-						lineNumbersMinChars: 2,
-						renderWhitespace: "selection",
-
-						renderLineHighlight: "none",
-						selectionHighlight: false,
+						...CONSOLE_EDITOR_CONFIG,
 					}}
 				/>
 			</Suspense>
