@@ -9,7 +9,6 @@ import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
 import type { Monaco } from "@monaco-editor/react";
-import { isTauri } from "@tauri-apps/api/core";
 import { Loader } from "lucide-react";
 import { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
@@ -50,11 +49,11 @@ export function EditorMain() {
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	// const moveTab = useTabsStore(useShallow((state) => state.handleTab));
 	// const removeTab = useTabsStore(useShallow((state) => state.removeTab));
-
-	const undo = useHistoryTabsStore(useShallow((state) => state.undoClose));
 	// const addTabHistory = useHistoryTabsStore(
 	// 	useShallow((state) => state.addTab),
 	// );
+
+	const undo = useHistoryTabsStore(useShallow((state) => state.undoClose));
 
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
 
@@ -93,33 +92,28 @@ export function EditorMain() {
 					noSyntaxValidation: false,
 				},
 			);
-			const isApp = isTauri();
-			// if (isApp) {
-			// 	editor.addCommand(
-			// 		monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Tab,
-			// 		() => {
-			// 			moveTab(1);
-			// 		},
-			// 	);
-			// 	editor.addCommand(
-			// 		monacoInstance.KeyMod.CtrlCmd |
-			// 			monacoInstance.KeyMod.Shift |
-			// 			monacoInstance.KeyCode.Tab,
-			// 		() => {
-			// 			moveTab(-1);
-			// 		},
-			// 	);
-			// 	editor.addCommand(
-			// 		monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyW,
-			// 		() => {
-			// 			const currentActiveTab = getCurrentTab();
-			// 			if (currentActiveTab && currentActiveTab?.code.trim() !== "") {
-			// 				addTabHistory(currentActiveTab);
-			// 				removeTab(currentActiveTab.id);
-			// 			}
-			// 		},
-			// 	);
-			// }
+			// editor.addCommand(
+			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.RightArrow,
+			// 	() => {
+			// 		moveTab(1);
+			// 	},
+			// );
+			// editor.addCommand(
+			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.LeftArrow,
+			// 	() => {
+			// 		moveTab(-1);
+			// 	},
+			// );
+			// editor.addCommand(
+			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyW,
+			// 	() => {
+			// 		const currentActiveTab = getCurrentTab();
+			// 		if (currentActiveTab && currentActiveTab?.code.trim() !== "") {
+			// 			addTabHistory(currentActiveTab);
+			// 			removeTab(currentActiveTab.id);
+			// 		}
+			// 	},
+			// );
 
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyR,
@@ -149,16 +143,14 @@ export function EditorMain() {
 			});
 
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd |
-					(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd |
-						(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyQ,
 				],
 				run: () => newTab(),
 			});
@@ -166,7 +158,7 @@ export function EditorMain() {
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd |
 					monacoInstance.KeyCode.Shift |
-					(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+					monacoInstance.KeyCode.KeyQ,
 				() => {
 					const tab = undo();
 					if (tab) addTab(tab);
@@ -178,7 +170,7 @@ export function EditorMain() {
 				keybindings: [
 					monacoInstance.KeyMod.CtrlCmd |
 						monacoInstance.KeyCode.Shift |
-						(isApp ? monacoInstance.KeyCode.KeyT : monacoInstance.KeyCode.KeyQ),
+						monacoInstance.KeyCode.KeyQ,
 				],
 				run: () => {
 					const tab = undo();
