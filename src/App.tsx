@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { CommandK } from "./components/CommandK";
 import { ShortCutsModal } from "./components/ShortCuts";
+import { EditorSettingsDialog } from "./components/settings/EditorSettingDialog";
 import { MESSAGE_LOG } from "./consts";
 const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
@@ -47,6 +48,7 @@ function App() {
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 				{/* <ErrorBoundaryTester /> */}
 				<CommandK />
+				<EditorSettingsDialog />
 				<ShortCutsModal />
 				<Suspense fallback={<div>Loading editor...</div>}>
 					<CodeEditor />

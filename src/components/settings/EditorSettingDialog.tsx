@@ -2,26 +2,20 @@ import { GithubStars } from "@/components/settings/GithubStars";
 import { AI } from "@/components/settings/sections/ai";
 import { Appearance } from "@/components/settings/sections/appearance";
 import { Editor } from "@/components/settings/sections/editor";
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { versionApp } from "@/consts";
 import { useModalStore } from "@/store/modal";
-import { BrainCog, Brush, Cog, MonitorCog } from "lucide-react";
-import { Kd } from "../ui/kd";
+import { BrainCog, Brush, MonitorCog } from "lucide-react";
+
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },
@@ -36,25 +30,6 @@ export function EditorSettingsDialog() {
 			onOpenChange={() => toggle("settings")}
 			aria-description="Editor settings"
 		>
-			<Tooltip>
-				<DialogTrigger asChild>
-					<TooltipTrigger asChild>
-						<Button
-							variant="ghost"
-							size="icon"
-							aria-label="Editor settings"
-							className="size-8"
-							translate="no"
-						>
-							<Cog />
-						</Button>
-					</TooltipTrigger>
-				</DialogTrigger>
-				<TooltipContent>
-					Editor settings <Kd>Ctrl + ,</Kd>
-				</TooltipContent>
-			</Tooltip>
-
 			<DialogContent
 				aria-describedby="editor-settings-dialog-description"
 				aria-description="Editor settings"
