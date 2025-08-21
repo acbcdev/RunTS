@@ -7,12 +7,12 @@ import {
 	RADIUS_SIZES,
 } from "@/consts/config";
 import { cn } from "@/lib/utils";
-import { useApparenceStore } from "@/store/apparence";
+import { SIDES, useApparenceStore } from "@/store/apparence";
 import { themes } from "@/themes";
 import { useShallow } from "zustand/react/shallow";
 
 export function Appearance() {
-	const { fontSize, fontFamily, radius, theme, layout, setOption } =
+	const { fontSize, fontFamily, radius, theme, layout, setOption, side } =
 		useApparenceStore(
 			useShallow((state) => ({
 				fontFamily: state.fontFamily,
@@ -20,6 +20,7 @@ export function Appearance() {
 				radius: state.radius,
 				theme: state.theme,
 				layout: state.layout,
+				side: state.side,
 				setOption: state.setOption,
 			})),
 		);
@@ -77,6 +78,21 @@ export function Appearance() {
 							</button>
 						))}
 						{/* <CreateTheme /> */}
+					</div>
+				</section>
+				<section>
+					<h3 className="mb-4 text-base font-medium">Actions Position</h3>
+					<div className="grid grid-cols-5 gap-2 md:grid-cols-10">
+						{Object.entries(SIDES).map(([key, value]) => (
+							<Button
+								translate="no"
+								key={key}
+								variant={side === value ? "border" : "outline"}
+								onClick={() => setOption("side", value)}
+							>
+								{key}
+							</Button>
+						))}
 					</div>
 				</section>
 				<section>
