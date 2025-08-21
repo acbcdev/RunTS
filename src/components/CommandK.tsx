@@ -10,93 +10,58 @@ import {
 import { TOGGLE_COMMAND } from "@/consts/shortcuts";
 import { useCommandItems } from "@/hooks/useCommandItems";
 import { useCommandSearch } from "@/hooks/useCommandSearch";
-import {
-	generateApparenceSubmenu,
-	generateConfigSubmenu,
-} from "@/lib/submenuGenerators";
-import { useApparenceStore } from "@/store/apparence";
-import { useConfigStore } from "@/store/config";
 import { useModalStore } from "@/store/modal";
-import type { NavigationState } from "@/types/command";
+import type { CommandOption as TCommandItem } from "@/types/command";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Badge } from "./ui/badge";
 
 export function CommandK() {
 	const [query, setQuery] = useState("");
-
-	const [navigationState, setNavigationState] = useState<NavigationState>({
-		activeSubmenu: null,
-		breadcrumbs: [],
-	});
-
+	const [pages, setPages] = useState<TCommandItem[][]>([]);
+	const [routes, setRoutes] = useState<string[]>(["Home"]);
 	const open = useModalStore((state) => state.commandK);
 	const setOpen = useModalStore((state) => state.toggleModal);
 
-	const config = useConfigStore((state) => state);
-	const setConfigValue = useConfigStore((state) => state.setConfigValue);
-
-	const apparence = useApparenceStore((state) => state);
-	const setOption = useApparenceStore((state) => state.setOption);
-
 	const mainCommands = useCommandItems();
 
-	// Generate submenu commands based on the command category
-	const submenuCommands = (() => {
-		if (!navigationState.activeSubmenu) return [];
-
-		// Find the parent command to determine its category
-		const parentCommand = mainCommands.find(
-			(cmd) => cmd.id === navigationState.activeSubmenu,
-		);
-		if (!parentCommand) return [];
-
-		switch (parentCommand.category) {
-			case "config":
-				return generateConfigSubmenu(
-					navigationState.activeSubmenu,
-					config,
-					setConfigValue,
-				);
-			case "apparence":
-				return generateApparenceSubmenu(
-					navigationState.activeSubmenu,
-					apparence,
-					setOption,
-				);
-			default:
-				return [];
-		}
-	})();
-
-	// Use main commands or submenu commands based on navigation state
-	const currentCommands = navigationState.activeSubmenu
-		? submenuCommands
-		: mainCommands;
+	// Get current page commands or main commands
+	const currentCommands =
+		pages.length > 0 ? pages[pages.length - 1] : mainCommands;
 	const commandGroups = useCommandSearch({ commands: currentCommands, query });
 
 	useHotkeys(TOGGLE_COMMAND, () => setOpen("commandK"), {
 		preventDefault: true,
 	});
 
+	const pushPage = (commands: TCommandItem[], name: string) => {
+		setPages((prev) => [...prev, commands]);
+		setRoutes((prev) => [...prev, name]);
+	};
+
+	const popPage = () => {
+		setPages((prev) => prev.slice(0, -1));
+		setRoutes((prev) => prev.slice(0, -1));
+	};
+
+	const goHome = () => {
+		setPages([]);
+		setRoutes(["Home"]);
+	};
+
 	const handleSelect = (commandId: string) => {
 		const command = currentCommands.find((cmd) => cmd.id === commandId);
 		if (command) {
-			if (command.hasSubmenu) {
-				// Navigate to submenu
-				setNavigationState({
-					activeSubmenu: command.id,
-					breadcrumbs: [
-						...navigationState.breadcrumbs,
-						{ id: command.id, title: command.title },
-					],
-				});
+			if (command.children && command.children.length > 0) {
+				// Navigate to children page
+				pushPage(command.children, command.route || command.category);
 				setQuery(""); // Clear search when entering submenu
 			} else {
 				// Execute command action
 				command.action();
 				if (!command.preventDefault) {
-					setNavigationState({ activeSubmenu: null, breadcrumbs: [] }); // Reset navigation
+					goHome(); // Reset navigation
 					setOpen("commandK"); // Close modal
 					setQuery(""); // Clear search
 				}
@@ -104,20 +69,13 @@ export function CommandK() {
 		}
 	};
 
-	const handleGoBack = () => {
-		setNavigationState({
-			activeSubmenu: null,
-			breadcrumbs: [],
-		});
-	};
-
 	const handleInputKeyDown = (e: React.KeyboardEvent) => {
 		if ((e.key === "Backspace" || e.key === "Delete") && query === "") {
 			e.preventDefault();
 
-			if (navigationState.activeSubmenu) {
-				// Go back from submenu to main menu
-				handleGoBack();
+			if (pages.length > 0) {
+				// Go back to previous page
+				popPage();
 			} else {
 				// Close modal from main menu
 				setOpen("commandK");
@@ -130,7 +88,7 @@ export function CommandK() {
 		setOpen("commandK");
 		// Reset state when closing
 		setQuery("");
-		setNavigationState({ activeSubmenu: null, breadcrumbs: [] });
+		goHome();
 	};
 
 	return (
@@ -141,7 +99,7 @@ export function CommandK() {
 		>
 			<CommandInput
 				placeholder={
-					navigationState.activeSubmenu
+					pages.length > 0
 						? "Search options..."
 						: "Search commands, tabs, configuration..."
 				}
@@ -149,6 +107,15 @@ export function CommandK() {
 				onValueChange={setQuery}
 				onKeyDown={handleInputKeyDown}
 			/>
+			<div className="flex items-center mt-1.5 mb-2 gap-x-1 px-3">
+				{routes.map((route, index) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+					<Badge key={index} variant={"secondary"} className="rounded-md">
+						{route}
+						{/* {index < routes.length - 1 && " > "} */}
+					</Badge>
+				))}
+			</div>
 			<CommandList className="h-[500px] ">
 				<CommandEmpty>No results found.</CommandEmpty>
 				{commandGroups.map((group) => (
