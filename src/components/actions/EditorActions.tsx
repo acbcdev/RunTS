@@ -17,6 +17,7 @@ import {
 	Cog,
 	Download,
 	Play,
+	Search,
 	Share2,
 	Sparkles,
 	SquareSplitHorizontal,
@@ -82,6 +83,7 @@ export const EditorActions = memo<EditorActionsProps>(
 				position: "start",
 				active: true,
 			},
+
 			{
 				id: "run",
 				icon: <Play />,
@@ -123,8 +125,21 @@ export const EditorActions = memo<EditorActionsProps>(
 				position: "start",
 				active: true,
 				className: showChat
-					? "bg-linear-to-br from-accent from-30% to-destructive"
+					? "bg-linear-to-br from-accent from-30% to-destructive hover:text-foreground"
 					: "",
+			},
+			{
+				id: "search",
+				icon: <Search />,
+				label: "Search",
+				onClick: () => toggle("commandK"),
+				tooltip: (
+					<>
+						Search <Kd>Ctrl + K</Kd>
+					</>
+				),
+				position: "start",
+				active: true,
 			},
 			{
 				id: "share",
