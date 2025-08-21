@@ -1,36 +1,36 @@
 import type { LucideIcon } from "lucide-react";
 
 export interface CommandItem {
-  id: string;
-  title: string;
-  description?: string;
-  icon: LucideIcon;
-  shortcut?: string;
-  category: CommandCategory;
-  action: () => void;
-  keywords?: string[]; // Para mejorar la búsqueda
-  preventDefault?: boolean;
-  hasSubmenu?: boolean;
-  parentId?: string; // Para comandos de submenú
-  isSelected?: boolean; // Para marcar el valor actual en submenús
-  forceMount?: boolean;
+	id: string;
+	title: string;
+	description?: string;
+	icon: LucideIcon;
+	shortcut?: string;
+	category: CommandCategory;
+	action: () => void;
+	keywords?: string[]; // Para mejorar la búsqueda
+	preventDefault?: boolean;
+	hasSubmenu?: boolean;
+	parentId?: string; // Para comandos de submenú
+	isSelected?: boolean; // Para marcar el valor actual en submenús
+	forceMount?: boolean;
 }
 
 export interface NavigationState {
-  activeSubmenu: string | null;
-  breadcrumbs: { id: string; title: string }[];
+	activeSubmenu: string | null;
+	breadcrumbs: { id: string; title: string }[];
 }
 
 export type CommandCategory =
-  | "tabs"
-  | "history"
-  | "config"
-  | "actions"
-  | "navigation"
-  | string;
+	| "tabs"
+	| "history"
+	| "config"
+	| "actions"
+	| "navigation"
+	| string;
 
 export interface CommandGroup {
-  heading: string;
-  items: CommandItem[];
-  forceMount?: boolean;
+	heading: string;
+	items: CommandItem[];
+	forceMount?: boolean;
 }
