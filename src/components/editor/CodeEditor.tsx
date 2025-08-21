@@ -20,7 +20,7 @@ import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
-const EditorActions = lazy(() => import("@/components/topBar/EditorActions"));
+const EditorActions = lazy(() => import("@/components/actions/EditorActions"));
 const Console = lazy(() => import("@/components/editor/Console"));
 export function CodeEditor() {
 	useShortcuts();
