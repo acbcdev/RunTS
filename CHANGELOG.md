@@ -1,5 +1,29 @@
 # Changelog
 
+## Version 1.6.1 – Agu 21, 2025
+
+### Highlights
+
+#### New Features
+
+- **Customizable Editor Actions Position:** Now you can move editor actions (e.g., Play) to top, bottom, left, or right via settings or Command Palette.
+- **Enhanced Appearance Configuration:** Command Palette (CMK) refactored for simplicity and now allows modifying appearance settings such as border radius, font size, and font family.
+
+#### Improvements
+
+- **Chat View Robustness:** Chat view now uses PromptKit and a new ChatContainer for improved structure and reliability.
+- **ScrollButton Integration:** Added ScrollButton for better navigation in chat.
+- **EditorActions Refactor:** EditorActions component is now more composable and supports dynamic layout.
+
+#### Refactors
+
+- **Command Palette (CMK):** Internal logic simplified for maintainability and extensibility.
+- **Appearance Settings:** More options exposed and easier to manage via CMK and settings.
+
+#### Fixes
+
+- Various UI and layout fixes for chat and editor actions.
+
 ## Version 1.6.0 – Agu 19, 2025
 
 ### Highlights
