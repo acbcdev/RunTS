@@ -11,7 +11,7 @@ import { TOGGLE_COMMAND } from "@/consts/shortcuts";
 import { useCommandItems } from "@/hooks/useCommandItems";
 import { useCommandSearch } from "@/hooks/useCommandSearch";
 import { useModalStore } from "@/store/modal";
-import type { CommandOption as TCommandItem } from "@/types/command";
+import type { CommandOptionChild } from "@/types/command";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -19,7 +19,7 @@ import { Badge } from "./ui/badge";
 
 export function CommandK() {
 	const [query, setQuery] = useState("");
-	const [pages, setPages] = useState<TCommandItem[][]>([]);
+	const [pages, setPages] = useState<CommandOptionChild[][]>([]);
 	const [routes, setRoutes] = useState<string[]>(["Home"]);
 	const open = useModalStore((state) => state.commandK);
 	const setOpen = useModalStore((state) => state.toggleModal);
@@ -35,7 +35,7 @@ export function CommandK() {
 		preventDefault: true,
 	});
 
-	const pushPage = (commands: TCommandItem[], name: string) => {
+	const pushPage = (commands: CommandOptionChild[], name: string) => {
 		setPages((prev) => [...prev, commands]);
 		setRoutes((prev) => [...prev, name]);
 	};
@@ -64,6 +64,7 @@ export function CommandK() {
 					goHome(); // Reset navigation
 					setOpen("commandK"); // Close modal
 					setQuery(""); // Clear search
+					return;
 				}
 			}
 		}

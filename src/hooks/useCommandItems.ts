@@ -46,12 +46,20 @@ export const useCommandItems = (): CommandOption[] => {
   const historyTabs = useHistoryTabsStore((state) => state.tabs);
   const undoClose = useHistoryTabsStore((state) => state.undoClose);
 
-  const config = useConfigStore((state) => state);
+  const config = useConfigStore((state) => ({
+    wordWrap: state.wordWrap,
+    lineNumbers: state.lineNumbers,
+    refreshTime: state.refreshTime,
+    minimap: state.minimap,
+    whiteSpace: state.whiteSpace,
+    lineRenderer: state.lineRenderer,
+  }));
   const setConfigValue = useConfigStore((state) => state.setConfigValue);
   const toggle = useModalStore((state) => state.toggleModal);
   const commands: CommandOption[] = [];
-
   const layout = useApparenceStore((state) => state.layout);
+  const theme = useApparenceStore((state) => state.theme);
+
   const setOption = useApparenceStore((state) => state.setOption);
 
   // 1. ACTION COMMANDS (New Tab)
@@ -129,9 +137,11 @@ export const useCommandItems = (): CommandOption[] => {
       children: Object.entries(themes).map(([themeName, value]) => ({
         id: `theme-${String(themeName)}`,
         title: value.name,
+        parentId: "change-theme",
         description: `Switch to ${value.name} theme`,
         icon: Brush,
-        category: "apparence" as const,
+        // isSelected: themeName === theme,
+        category: "apparence",
         keywords: [
           String(themeName),
           "theme",
@@ -158,6 +168,7 @@ export const useCommandItems = (): CommandOption[] => {
       children: FONT_FAMILIES.map((font) => ({
         id: `font-${font.value}`,
         title: font.name,
+        parentId: "change-font-family",
         description: `Switch to ${font.name} font`,
         icon: Type,
         category: "apparence",
@@ -193,6 +204,7 @@ export const useCommandItems = (): CommandOption[] => {
       children: FONT_SIZES.map((font) => ({
         id: `font-${font}`,
         title: String(font),
+        parentId: "change-font-size",
         // description: `Switch to ${font} font`,
         icon: LetterText,
         category: "apparence",
@@ -221,6 +233,7 @@ export const useCommandItems = (): CommandOption[] => {
       children: RADIUS_SIZES.map((radius) => ({
         id: `border-radius-${radius.size}`,
         title: radius.display,
+        parentId: "change-border-radius",
         description: `Switch to ${radius.size}rem border radius`,
         icon: Square,
         category: "apparence",
@@ -301,6 +314,7 @@ export const useCommandItems = (): CommandOption[] => {
       children: Object.entries(SIDES).map(([sideName, value]) => ({
         id: `side-${sideName}`,
         title: `${sideName.toLowerCase()} side`,
+        parentId: "side-actions-position",
         // description: `Position actions on the ${sideName.toLowerCase()} side`,
         icon:
           value === SIDES.BOTTOM
@@ -439,6 +453,7 @@ export const useCommandItems = (): CommandOption[] => {
       route: "Refresh",
       children: REFRESH_TIMES.map((time) => ({
         id: `refresh-time-${time.value}`,
+        parentId: "refresh-time",
         title: time.time,
         description: `Set refresh time to ${time.time}`,
         icon: ChevronRight,
@@ -471,6 +486,7 @@ export const useCommandItems = (): CommandOption[] => {
       route: "Render Line",
       children: RENDER_LINES.map((mode) => ({
         id: `render-${mode}`,
+        parentId: "line-renderer",
         title:
           mode === "line"
             ? "Line Mode"
