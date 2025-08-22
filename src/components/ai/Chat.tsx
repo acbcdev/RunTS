@@ -21,7 +21,6 @@ export function Chat() {
 		setInput,
 		setMessages,
 		isLoading,
-		streamingContent,
 		handleSubmit,
 		stop,
 		reload,
@@ -49,13 +48,12 @@ export function Chat() {
 			) : (
 				<Messages
 					messages={messages}
-					streamingContent={streamingContent}
 					isLoading={isLoading}
 					reload={reload}
 					error={error}
 				/>
 			)}
-			<section className="flex flex-col gap-2 p-4">
+			<section className="flex flex-col gap-2 p-4 sticky bottom-0 left-0 right-0  backdrop-blur-md pt-2">
 				<Prompt
 					value={input}
 					onValueChange={setInput}

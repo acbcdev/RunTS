@@ -23,7 +23,7 @@ const components = {
 
 		const match = /language-(\w+)/.exec(className || "");
 		const code = String(children).trim();
-		const height = code.split("\n").length * 22;
+		const height = code.split("\n").length * 19 + 8 * 2;
 		const [copied, setCopied] = useState(false);
 		const copyToClipboard = () => {
 			navigator.clipboard.writeText(code);
@@ -35,20 +35,21 @@ const components = {
 			: match?.[1];
 
 		return match ? (
-			<section className=" group/code-block bg-background overflow-hidden  my-2  rounded-sm ">
-				<header className="flex z-50 items-center justify-between bg-header py-1 px-2">
-					<span className="px-5 text-foreground/90">{match[1]}</span>
-					<nav>
+			<section className=" group/code-block bg-background  my-2 h-full  rounded-sm ">
+				<div className="relative h-full">
+					<header className="flex z-50 absolute items-center top-0 right-2 rounded-md opacity-0 group-hover/code-block:opacity-100 translate-y-[-50%] bg-header gap-x-1 p-0.5">
+						{/* <span className="px-5 text-foreground/90">{match[1]}</span> */}
 						<TooltipProvider delayDuration={0} skipDelayDuration={0}>
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<Button
 										variant={"ghost"}
-										size={"sm"}
+										size={"icon"}
+										className="size-7"
 										aria-label="New tab with this code"
 										onClick={() => newTab(code)}
 									>
-										<FilePlus2 />
+										<FilePlus2 className="size-4" />
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>New Tab</TooltipContent>
@@ -57,50 +58,60 @@ const components = {
 								<TooltipTrigger asChild>
 									<Button
 										variant={"ghost"}
-										size={"sm"}
+										size={"icon"}
+										className="size-7"
 										aria-label="Copy code"
 										onClick={copyToClipboard}
 									>
-										{copied ? <CopyCheck /> : <Copy />}
+										{copied ? (
+											<CopyCheck className="size-4" />
+										) : (
+											<Copy className="size-4" />
+										)}
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>Copy code</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
-					</nav>
-				</header>
-				<div className="relative">
-					<Editor
-						language={lang}
-						height={height}
-						theme={theme}
-						value={`\n${code.trim()}\n`}
-						options={{
-							readOnly: true,
-							renderLineHighlight: "none",
-							minimap: {
-								enabled: false,
-							},
-							wordWrap: "off",
-							fontFamily: fontFamily,
-							lineNumbers: "off",
-							overviewRulerLanes: 0,
-							automaticLayout: true,
-							scrollBeyondLastLine: false,
-							contextmenu: false,
-							mouseWheelZoom: false,
-							fontLigatures: true,
-							scrollbar: {
-								// scrollByPage: false,
-								verticalScrollbarSize: 8,
-								horizontalScrollbarSize: 8,
-
-								handleMouseWheel: false,
-								horizontal: "auto",
-								vertical: "auto",
-							},
-						}}
-					/>
+					</header>
+					<section className="rounded-md overflow-hidden">
+						<Editor
+							language={lang}
+							height={height}
+							theme={theme}
+							value={`${code.trim()}`}
+							options={{
+								readOnly: true,
+								renderLineHighlight: "none",
+								minimap: {
+									enabled: false,
+								},
+								wordWrap: "off",
+								fontFamily: fontFamily,
+								lineNumbers: "off",
+								overviewRulerLanes: 0,
+								automaticLayout: true,
+								scrollBeyondLastLine: false,
+								contextmenu: false,
+								mouseWheelZoom: false,
+								fontLigatures: true,
+								lineDecorationsWidth: 0,
+								lineNumbersMinChars: 0,
+								padding: {
+									top: 6,
+									bottom: 6,
+								},
+								scrollbar: {
+									// scrollByPage: false,
+									verticalScrollbarSize: 8,
+									horizontalScrollbarSize: 10,
+									handleMouseWheel: false,
+									horizontal: "auto",
+									vertical: "auto",
+								},
+							}}
+						/>
+					</section>
 				</div>
 			</section>
 		) : (

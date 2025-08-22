@@ -67,7 +67,7 @@ export function Prompt({
 					<Button
 						variant={"currentFile"}
 						type="button"
-						size={"sm"}
+						// size={"sm"}
 						className={`${!contextFile && "border-dashed"} `}
 						onClick={() => setContextFile(!contextFile)}
 					>
