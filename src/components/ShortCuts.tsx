@@ -1,4 +1,4 @@
-import { useShortcutsList } from "@/hooks/useShortcutsList";
+import { SHORTCUTS } from "@/consts/shortcuts";
 import { useModalStore } from "@/store/modal";
 import { useMemo } from "react";
 import {
@@ -13,13 +13,11 @@ import { ScrollArea } from "./ui/scroll-area";
 export function ShortCutsModal() {
 	const shortcuts = useModalStore((state) => state.shortcuts);
 	const toggle = useModalStore((state) => state.toggleModal);
-	const shortcutsList = useShortcutsList();
 
 	// Group shortcuts by category
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const groupedShortcuts = useMemo(
 		() =>
-			shortcutsList.reduce(
+			SHORTCUTS.reduce(
 				(groups, shortcut) => {
 					const category = shortcut.category;
 					if (!groups[category]) {
@@ -28,7 +26,7 @@ export function ShortCutsModal() {
 					groups[category].push(shortcut);
 					return groups;
 				},
-				{} as Record<string, typeof shortcutsList>,
+				{} as Record<string, typeof SHORTCUTS>,
 			),
 		[],
 	);
