@@ -71,7 +71,7 @@ export function CodeEditor() {
 			{(side === SIDES.LEFT || side === SIDES.TOP) && (
 				<EditorActions
 					direction={side === SIDES.LEFT ? "column" : "row"}
-					className={side === SIDES.LEFT ? "border-l" : "border-t"}
+					className={side === SIDES.LEFT ? "border-r" : "border-b"}
 					tooltipSide={side === SIDES.LEFT ? "right" : "bottom"}
 				/>
 			)}
