@@ -3,7 +3,7 @@ import type { RadiusSize, TLayout, Theme } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type sides = 0 | 1 | 2 | 3;
+export type sides = 0 | 1 | 2 | 3;
 
 type sidePositions = "RIGHT" | "LEFT" | "TOP" | "BOTTOM";
 export const SIDES: Record<sidePositions, sides> = {

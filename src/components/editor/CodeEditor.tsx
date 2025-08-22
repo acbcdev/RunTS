@@ -15,13 +15,26 @@ import { SIDES, useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useTabsStore } from "@/store/tabs";
 import { AnimatePresence, motion } from "motion/react";
-import { lazy, useEffect } from "react";
+import { lazy, useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
 const EditorActions = lazy(() => import("@/components/actions/EditorActions"));
 const Console = lazy(() => import("@/components/editor/Console"));
+
+type positionSettings = {
+	tooltip: "left" | "right" | "top" | "bottom";
+	className: string;
+};
+
+const SettingsBySide: Record<number, positionSettings> = {
+	[SIDES.LEFT]: { tooltip: "right", className: "border-r" },
+	[SIDES.RIGHT]: { tooltip: "left", className: "border-l order-2" },
+	[SIDES.TOP]: { tooltip: "bottom", className: "border-b" },
+	[SIDES.BOTTOM]: { tooltip: "top", className: "border-t order-2" },
+};
+
 export function CodeEditor() {
 	useShortcuts();
 	const { runCode } = useRun();
@@ -63,18 +76,26 @@ export function CodeEditor() {
 		return null;
 	}
 
+	const direction = useMemo(() => {
+		return side === SIDES.LEFT || side === SIDES.RIGHT ? "column" : "row";
+	}, [side]);
+
+	const tooltipSide = useMemo(() => {
+		return SettingsBySide[side].tooltip;
+	}, [side]);
+	const className = useMemo(() => {
+		return SettingsBySide[side].className;
+	}, [side]);
 	return (
 		<main
 			className={`flex h-screen bg-background/80 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
 			translate="no"
 		>
-			{(side === SIDES.LEFT || side === SIDES.TOP) && (
-				<EditorActions
-					direction={side === SIDES.LEFT ? "column" : "row"}
-					className={side === SIDES.LEFT ? "border-r" : "border-b"}
-					tooltipSide={side === SIDES.LEFT ? "right" : "bottom"}
-				/>
-			)}
+			<EditorActions
+				direction={direction}
+				className={className}
+				tooltipSide={tooltipSide}
+			/>
 
 			<ResizablePanelGroup direction="horizontal">
 				<AnimatePresence mode="wait">
@@ -95,7 +116,6 @@ export function CodeEditor() {
 								scaleX: 0.5,
 							}}
 							transition={{ duration: 0.2, ease: "easeInOut" }}
-							className="h-full"
 						>
 							<Chat />
 						</motion.div>
@@ -115,13 +135,6 @@ export function CodeEditor() {
 					</ResizablePanelGroup>
 				</ResizablePanel>
 			</ResizablePanelGroup>
-			{(side === SIDES.RIGHT || side === SIDES.BOTTOM) && (
-				<EditorActions
-					direction={side === SIDES.RIGHT ? "column" : "row"}
-					className={side === SIDES.RIGHT ? "border-l" : "border-t"}
-					tooltipSide={side === SIDES.RIGHT ? "left" : "top"}
-				/>
-			)}
 
 			{/* <Updates /> */}
 			<ReloadPrompt />
