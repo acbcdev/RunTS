@@ -89,8 +89,9 @@ export function Appearance() {
 								key={key}
 								variant={side === value ? "border" : "outline"}
 								onClick={() => setOption("side", value)}
+								className="capitalize"
 							>
-								{key}
+								{key.toLowerCase()}
 							</Button>
 						))}
 					</div>
