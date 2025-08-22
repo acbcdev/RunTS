@@ -58,7 +58,6 @@ export const useCommandItems = (): CommandOption[] => {
   const toggle = useModalStore((state) => state.toggleModal);
   const commands: CommandOption[] = [];
   const layout = useApparenceStore((state) => state.layout);
-  const theme = useApparenceStore((state) => state.theme);
 
   const setOption = useApparenceStore((state) => state.setOption);
 
