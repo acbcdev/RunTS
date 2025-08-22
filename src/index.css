@@ -98,6 +98,15 @@
 .scroll {
 	scrollbar-color: var(--border) var(--color-background);
 }
+.scroll-chat {
+	scrollbar-color: var(--border) transparent;
+}
+.scroll-chat::-webkit-scrollbar-thumb {
+	background: transparent;
+}
+textarea::-webkit-scrollbar-track {
+	background: var(--border);
+}
 
 textarea {
 	--sb-track-color: transparent;
