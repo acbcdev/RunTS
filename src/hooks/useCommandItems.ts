@@ -21,6 +21,10 @@ import {
   Command,
   FileText,
   LetterText,
+  PanelBottom,
+  PanelLeft,
+  PanelRight,
+  PanelTop,
   Plus,
   RotateCcw,
   Square,
@@ -296,11 +300,27 @@ export const useCommandItems = (): CommandOption[] => {
       route: "Side",
       children: Object.entries(SIDES).map(([sideName, value]) => ({
         id: `side-${sideName}`,
-        title: `${sideName.toLowerCase()} Side`,
-        description: `Position actions on the ${sideName.toLowerCase()} side`,
-        icon: Columns3CogIcon,
+        title: `${sideName.toLowerCase()} side`,
+        // description: `Position actions on the ${sideName.toLowerCase()} side`,
+        icon:
+          value === SIDES.BOTTOM
+            ? PanelBottom
+            : value === SIDES.TOP
+            ? PanelTop
+            : value === SIDES.LEFT
+            ? PanelLeft
+            : PanelRight,
         category: "apparence",
-        keywords: [sideName, "side", "position", "layout"],
+        keywords: [
+          sideName,
+          "side",
+          "position",
+          "layout",
+          "top",
+          "bottom",
+          "left",
+          "right",
+        ],
         action: () => setOption("side", value),
         preventDefault: true,
       })),
