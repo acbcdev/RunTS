@@ -112,7 +112,6 @@ export function CommandK() {
 					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 					<Badge key={index} variant={"secondary"} className="rounded-md">
 						{route}
-						{/* {index < routes.length - 1 && " > "} */}
 					</Badge>
 				))}
 			</div>
@@ -130,7 +129,9 @@ export function CommandK() {
 								>
 									<command.icon className="size-5" />
 									<div className="flex flex-col flex-1">
-										<span className={command.isSelected ? "font-medium" : ""}>
+										<span
+											className={`${command.isSelected ? "font-medium" : ""} capitalize`}
+										>
 											{command.title}
 										</span>
 										{command.description && (
