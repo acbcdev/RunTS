@@ -199,16 +199,16 @@ export const EditorActions = memo<EditorActionsProps>(
 				: "flex flex-col items-center gap-y-2";
 
 		return (
-			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-				<div className={cn(`${containerClasses} p-2  bg-header `, className)}>
+			<div className={cn(`${containerClasses} p-2  bg-header `, className)}>
+				<TooltipProvider delayDuration={500} skipDelayDuration={100}>
 					<div className={groupClasses}>
 						{startActions.map(renderActionButton)}
 					</div>
 					<div className={groupClasses}>
 						{endActions.map(renderActionButton)}
 					</div>
-				</div>
-			</TooltipProvider>
+				</TooltipProvider>
+			</div>
 		);
 	},
 );
