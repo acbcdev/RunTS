@@ -11,7 +11,7 @@ describe("injectLogsIntoCode - Comment cases", () => {
 
 	it("injects log for an expression with an inline comment", () => {
 		const input = "1 + /* inline comment */ 2;";
-		const expected = "console.log(1 + /* inline comment */ 2)";
+		const expected = "console.log(1 + /* inline comment */ 2);";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		expect(result.lines).toEqual([1]);
@@ -21,7 +21,7 @@ describe("injectLogsIntoCode - Comment cases", () => {
 		const input = `// Pre-expression comment
 1 + 1;`;
 		const expected = `// Pre-expression comment
-console.log(1 + 1)`;
+console.log(1 + 1);`;
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		// The transformed expression is on the second line.
@@ -32,7 +32,7 @@ console.log(1 + 1)`;
 		const input = "1 + 1; // addition comment";
 		// El ExpressionStatement abarca solo "1 + 1;", de modo que la inyección se hace en esa porción.
 		// El comentario permanece intacto luego del reemplazo.
-		const expected = "console.log(1 + 1) // addition comment";
+		const expected = "console.log(1 + 1); // addition comment";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		expect(result.code).toBe(expected);
 		expect(result.lines).toEqual([1]);
