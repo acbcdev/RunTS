@@ -1,5 +1,5 @@
-import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { describe, expect, it } from "vitest";
+import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 
 describe("injectLogsIntoCode - Suma cases", () => {
 	it("injects log for a simple addition", () => {

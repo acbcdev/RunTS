@@ -1,15 +1,16 @@
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { useTabsStore } from "@/store/tabs";
 import { decode } from "js-base64";
 import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { useTabsStore } from "@/store/tabs";
 import { CommandK } from "./components/CommandK";
 import { ShortCutsModal } from "./components/ShortCuts";
 import { EditorSettingsDialog } from "./components/settings/EditorSettingDialog";
 import { MESSAGE_LOG } from "./consts";
+
 const CodeEditor = lazy(() => import("@/components/editor/CodeEditor"));
 
 function App() {

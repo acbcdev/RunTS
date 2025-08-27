@@ -1,6 +1,6 @@
+import { useMemo } from "react";
 import { SHORTCUTS } from "@/consts/shortcuts";
 import { useModalStore } from "@/store/modal";
-import { useMemo } from "react";
 import {
 	Dialog,
 	DialogContent,

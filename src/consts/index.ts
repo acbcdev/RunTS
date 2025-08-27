@@ -1,10 +1,10 @@
+import type { SVGProps } from "react";
 import pg from "@/../package.json";
 import { claude } from "@/svg/claude";
 import { gemini } from "@/svg/gemini";
 import mistral from "@/svg/mistral";
 import { openai } from "@/svg/openai";
-import type { Provider, model } from "@/types/ai";
-import type { SVGProps } from "react";
+import type { model, Provider } from "@/types/ai";
 export const versionApp = pg.version;
 
 export const API_PROVIDERS: Provider[] = [

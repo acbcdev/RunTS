@@ -1,8 +1,8 @@
-import { INITIAL_TABS } from "@/consts/config";
-import type { Tab } from "@/types/editor";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { INITIAL_TABS } from "@/consts/config";
+import type { Tab } from "@/types/editor";
 
 interface TabsStoreState {
 	tabs: Tab[];

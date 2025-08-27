@@ -1,5 +1,5 @@
-import { Formatter } from "@/lib/formatter";
 import { describe, expect, it } from "vitest";
+import { Formatter } from "@/lib/formatter";
 
 describe("Formatter", () => {
 	it("should format a simple number", () => {

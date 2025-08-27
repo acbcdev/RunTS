@@ -1,4 +1,4 @@
-import type { SupportedModel, providers } from "@/types/ai";
+import type { providers, SupportedModel } from "@/types/ai";
 
 // map each model ID to its provider
 const MODEL_PROVIDER_MAP: Record<SupportedModel, providers> = {

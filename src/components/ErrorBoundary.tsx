@@ -1,3 +1,6 @@
+import { AlertTriangle, Bug, RefreshCw } from "lucide-react";
+import { Component, type ReactNode } from "react";
+import { toast } from "sonner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +16,6 @@ import {
 // 	CollapsibleTrigger,
 // } from "@/components/ui/collapsible";
 import type { ErrorBoundaryState, ErrorInfo } from "@/types/error";
-import { AlertTriangle, Bug, RefreshCw } from "lucide-react";
-import { Component, type ReactNode } from "react";
-import { toast } from "sonner";
 
 interface ErrorBoundaryProps {
 	children: ReactNode;

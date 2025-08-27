@@ -1,16 +1,16 @@
-import { systemPrompt } from "@/consts/prompt";
-import { createProvider } from "@/lib/ai/providers";
-import { useAIConfigStore } from "@/store/aiConfig";
-import { useTabsStore } from "@/store/tabs";
 import {
-	type UIMessage,
 	convertToModelMessages,
 	smoothStream,
 	streamText,
+	type UIMessage,
 } from "ai";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { systemPrompt } from "@/consts/prompt";
+import { createProvider } from "@/lib/ai/providers";
+import { useAIConfigStore } from "@/store/aiConfig";
+import { useTabsStore } from "@/store/tabs";
 
 type statusType = "submitted" | "streaming" | "ready" | "error";
 export function useChat() {

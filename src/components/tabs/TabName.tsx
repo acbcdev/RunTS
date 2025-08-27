@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Tab } from "@/types/editor";
-import { useEffect, useRef, useState } from "react";
 
 interface TabNameProps {
 	tab: Tab;

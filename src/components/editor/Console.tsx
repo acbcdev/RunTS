@@ -1,11 +1,11 @@
+import { Terminal } from "lucide-react";
+import { lazy } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { CONSOLE_EDITOR_CONFIG } from "@/consts/editor";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
-import { Tab } from "@/types/editor";
-import { lazy } from "react";
-import { useShallow } from "zustand/react/shallow";
+import type { Tab } from "@/types/editor";
 import { Loading } from "./Loading";
-import { Terminal } from "lucide-react";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 

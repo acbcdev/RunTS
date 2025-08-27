@@ -1,3 +1,4 @@
+import { BrainCog, Brush, MonitorCog } from "lucide-react";
 import { GithubStars } from "@/components/settings/GithubStars";
 import { AI } from "@/components/settings/sections/ai";
 import { Appearance } from "@/components/settings/sections/appearance";
@@ -11,10 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import { versionApp } from "@/consts";
 import { useModalStore } from "@/store/modal";
-import { BrainCog, Brush, MonitorCog } from "lucide-react";
 
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },

@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import {
@@ -9,7 +10,6 @@ import {
 import { cn } from "@/lib/utils";
 import { SIDES, useApparenceStore } from "@/store/apparence";
 import { themes } from "@/themes";
-import { useShallow } from "zustand/react/shallow";
 
 export function Appearance() {
 	const { fontSize, fontFamily, radius, theme, layout, setOption, side } =

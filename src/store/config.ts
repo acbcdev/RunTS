@@ -1,6 +1,6 @@
-import type { lineRendererEditor } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { lineRendererEditor } from "@/types/editor";
 export type ConfigEditorState = {
 	wordWrap: boolean;
 	hideUndefined: boolean;

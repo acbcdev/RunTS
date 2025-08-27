@@ -1,11 +1,11 @@
-import { useTabsStore } from "@/store/tabs";
-import type { Tab } from "@/types/editor";
 import { isTauri } from "@tauri-apps/api/core";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { save } from "@tauri-apps/plugin-dialog";
 import { encode } from "js-base64";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { useTabsStore } from "@/store/tabs";
+import type { Tab } from "@/types/editor";
 
 export function useHandler() {
 	const getCurrentTab = useTabsStore(

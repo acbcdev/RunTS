@@ -1,3 +1,5 @@
+import { useHotkeys } from "react-hotkeys-hook";
+import { useShallow } from "zustand/react/shallow";
 import {
 	NEW_TAB,
 	RUN_CODE,
@@ -9,8 +11,6 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { useHistoryTabsStore } from "@/store/history";
 import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
-import { useHotkeys } from "react-hotkeys-hook";
-import { useShallow } from "zustand/react/shallow";
 import { useRun } from "./useRun";
 
 export function useShortcuts() {

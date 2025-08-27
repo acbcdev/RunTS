@@ -1,5 +1,5 @@
-import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { describe, expect, it } from "vitest";
+import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 
 describe("injectLogsIntoCode - Function execution cases", () => {
 	it("transforms a top-level function call after an arrow function declaration", () => {

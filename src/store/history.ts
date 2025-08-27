@@ -1,6 +1,6 @@
-import type { Tab } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { Tab } from "@/types/editor";
 
 type HistoryTabsStoreStates = {
 	tabs: Tab[];

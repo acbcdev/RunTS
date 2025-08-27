@@ -1,8 +1,8 @@
+import { useShallow } from "zustand/react/shallow";
 import { ajuestLogs } from "@/lib/ajuestLogs";
 import { runCodeWorker } from "@/lib/runCode";
 import { useEditorStore } from "@/store/editor";
 import { useTabsStore } from "@/store/tabs";
-import { useShallow } from "zustand/react/shallow";
 
 export function useRun() {
 	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));

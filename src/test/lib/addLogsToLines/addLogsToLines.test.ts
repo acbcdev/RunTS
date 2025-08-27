@@ -1,5 +1,6 @@
-import { injectLogsIntoCode } from "@/lib/addLogsToLines";
 import { describe, expect, it } from "vitest";
+import { injectLogsIntoCode } from "@/lib/addLogsToLines";
+
 describe("injectLogsIntoCode", () => {
 	it("injects log for a simple top-level expression", () => {
 		const input = "1 + 1;";

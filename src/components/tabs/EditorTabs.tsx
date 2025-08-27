@@ -1,3 +1,7 @@
+import { isTauri } from "@tauri-apps/api/core";
+import { Plus } from "lucide-react";
+import { useShallow } from "zustand/react/shallow";
+import { EditorTabsItem } from "@/components/tabs/EditorTabsItem";
 import { Button } from "@/components/ui/button";
 import { Kd } from "@/components/ui/kd";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -7,11 +11,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
-import { isTauri } from "@tauri-apps/api/core";
-import { Plus } from "lucide-react";
-import { useShallow } from "zustand/react/shallow";
-
-import { EditorTabsItem } from "@/components/tabs/EditorTabsItem";
 export function EditorTabs() {
 	const tabs = useTabsStore(useShallow((state) => state.tabs));
 

@@ -1,4 +1,6 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
+import { Info, RefreshCw } from "lucide-react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -7,8 +9,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Info, RefreshCw } from "lucide-react";
-import { memo } from "react";
 
 export const ReloadPrompt = memo(() => {
 	const {

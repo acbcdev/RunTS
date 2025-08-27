@@ -1,7 +1,7 @@
-import { themes } from "@/themes";
-import type { RadiusSize, TLayout, Theme } from "@/types/editor";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { themes } from "@/themes";
+import type { RadiusSize, Theme, TLayout } from "@/types/editor";
 
 export type sides = 0 | 1 | 2 | 3;
 

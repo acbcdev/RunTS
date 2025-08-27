@@ -1,5 +1,8 @@
 "use client";
 
+import { ArrowUp, Eye, EyeOff, Square } from "lucide-react";
+import { useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import {
 	PromptInput,
@@ -9,9 +12,6 @@ import {
 } from "@/components/ui/prompt-input";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useTabsStore } from "@/store/tabs";
-import { ArrowUp, Eye, EyeOff, Square } from "lucide-react";
-import { useMemo } from "react";
-import { useShallow } from "zustand/react/shallow";
 import { ComboboxSelect } from "./ComboxSelector";
 
 type PromptInputProps = {

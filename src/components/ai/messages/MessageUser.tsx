@@ -1,5 +1,5 @@
-import Markdown from "@/components/ai/messages/Markdown";
 import type { UIMessage } from "ai";
+import Markdown from "@/components/ai/messages/Markdown";
 
 type MessageUserProps = {
 	message: UIMessage;

@@ -1,9 +1,9 @@
+import { useMemo } from "react";
 import type {
 	CommandGroup,
 	CommandOption,
 	CommandOptionChild,
 } from "@/types/command";
-import { useMemo } from "react";
 
 interface UseCommandSearchOptions {
 	commands: CommandOption[] | CommandOptionChild[];

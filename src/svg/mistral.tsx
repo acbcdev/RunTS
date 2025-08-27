@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+
 const MistralAI = (props: SVGProps<SVGSVGElement>) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg

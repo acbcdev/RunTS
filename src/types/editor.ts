@@ -1,6 +1,5 @@
 // EditorState.ts
 import type { editor } from "monaco-editor";
-import type { ConsoleOutput } from "./worker";
 
 export interface Theme {
 	name: string;

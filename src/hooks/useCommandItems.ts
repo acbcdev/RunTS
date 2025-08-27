@@ -1,18 +1,4 @@
 import {
-	FONT_FAMILIES,
-	FONT_SIZES,
-	RADIUS_SIZES,
-	REFRESH_TIMES,
-	RENDER_LINES,
-} from "@/consts/config";
-import { SIDES, useApparenceStore } from "@/store/apparence";
-import { useConfigStore } from "@/store/config";
-import { useHistoryTabsStore } from "@/store/history";
-import { useModalStore } from "@/store/modal";
-import { useTabsStore } from "@/store/tabs";
-import { themes } from "@/themes";
-import type { CommandOption } from "@/types/command";
-import {
 	ALargeSmall,
 	Brush,
 	ChevronRight,
@@ -36,6 +22,20 @@ import {
 	Type,
 	TypeOutline,
 } from "lucide-react";
+import {
+	FONT_FAMILIES,
+	FONT_SIZES,
+	RADIUS_SIZES,
+	REFRESH_TIMES,
+	RENDER_LINES,
+} from "@/consts/config";
+import { SIDES, useApparenceStore } from "@/store/apparence";
+import { useConfigStore } from "@/store/config";
+import { useHistoryTabsStore } from "@/store/history";
+import { useModalStore } from "@/store/modal";
+import { useTabsStore } from "@/store/tabs";
+import { themes } from "@/themes";
+import type { CommandOption } from "@/types/command";
 
 export const useCommandItems = (): CommandOption[] => {
 	const tabs = useTabsStore((state) => state.tabs);

@@ -1,5 +1,6 @@
-import { Plus, Command, MessageCircleIcon } from "lucide-react";
+import { Command, MessageCircleIcon, Plus } from "lucide-react";
 import { Kd } from "../ui/kd";
+
 const commands = [
 	{
 		icon: <Plus className="size-5" />,

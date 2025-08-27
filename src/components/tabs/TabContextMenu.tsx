@@ -1,3 +1,4 @@
+import { Copy, Download, FilePen, Files, Share, Trash } from "lucide-react";
 import {
 	ContextMenu,
 	ContextMenuContent,
@@ -5,7 +6,6 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Copy, Download, FilePen, Files, Share, Trash } from "lucide-react";
 
 interface TabContextMenuProps {
 	children: React.ReactNode;

@@ -1,9 +1,9 @@
+import { toast } from "sonner";
+import { useShallow } from "zustand/react/shallow";
 import { useHandler } from "@/hooks/useHandler";
 import { useEditorStore } from "@/store/editor";
 import { useTabsStore } from "@/store/tabs";
 import type { Tab } from "@/types/editor";
-import { toast } from "sonner";
-import { useShallow } from "zustand/react/shallow";
 
 export const useTabActions = () => {
 	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
@@ -38,8 +38,7 @@ export const useTabActions = () => {
 			name: `copy-${duplicateTab.name}`,
 			language: duplicateTab.language,
 			code: duplicateTab.code,
-			logs: duplicateTab.logs,
-			logsFormated: duplicateTab.logsFormated,
+			log: duplicateTab.log,
 		});
 	};
 

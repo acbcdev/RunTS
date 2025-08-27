@@ -1,10 +1,9 @@
+import { Input } from "@/components/ui/input";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-
-import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 
 export default function CreateTheme() {

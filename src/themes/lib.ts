@@ -1,5 +1,5 @@
-import type { Theme } from "@/types/editor";
 import type { editor } from "monaco-editor";
+import type { Theme } from "@/types/editor";
 
 type ThemeProps = {
 	name: string;

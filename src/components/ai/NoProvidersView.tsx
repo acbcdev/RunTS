@@ -1,5 +1,5 @@
-import { API_PROVIDERS } from "@/consts";
 import { Key, Settings, Zap } from "lucide-react";
+import { API_PROVIDERS } from "@/consts";
 import { Button } from "../ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 

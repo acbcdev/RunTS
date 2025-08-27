@@ -1,3 +1,9 @@
+import type { Monaco } from "@monaco-editor/react";
+import { Code2 } from "lucide-react";
+import type { editor } from "monaco-editor";
+import * as monaco from "monaco-editor";
+import { lazy, useCallback } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { EDITOR_CONFIG } from "@/consts/editor";
 import { extraLib } from "@/consts/extraLib";
 import { useRun } from "@/hooks/useRun";
@@ -9,15 +15,9 @@ import { useHistoryTabsStore } from "@/store/history";
 import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
-import { Tab } from "@/types/editor";
-import type { Monaco } from "@monaco-editor/react";
-import { Code2 } from "lucide-react";
-import { editor } from "monaco-editor";
-import * as monaco from "monaco-editor";
-import { lazy, useCallback } from "react";
-import { useShallow } from "zustand/react/shallow";
-import Loading from "./Loading";
+import type { Tab } from "@/types/editor";
 import { Loader } from "../ui/loader";
+import Loading from "./Loading";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {

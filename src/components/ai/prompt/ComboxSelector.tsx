@@ -1,4 +1,7 @@
 "use client";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -16,9 +19,6 @@ import {
 import { models } from "@/consts";
 import { useAIConfigStore } from "@/store/aiConfig";
 import type { providers } from "@/types/ai";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
-import { useShallow } from "zustand/react/shallow";
 
 export function ComboboxSelect() {
 	const [open, setOpen] = useState(false);

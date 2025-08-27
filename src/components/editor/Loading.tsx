@@ -1,4 +1,4 @@
-import { LoaderIcon } from "lucide-react";
+import type { LoaderIcon } from "lucide-react";
 
 interface EditorLoaderProps {
 	text: string;

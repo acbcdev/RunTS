@@ -1,5 +1,5 @@
 import type { ConfigEditorState } from "@/store/config";
-import type { Radius, Tab, lineRendererEditor } from "@/types/editor";
+import type { lineRendererEditor, Radius, Tab } from "@/types/editor";
 
 export const DEFAULT_CODE = `
 /*
@@ -109,8 +109,7 @@ export const INITIAL_TABS: Tab[] = [
 		name: "main.ts",
 		language: "typescript",
 		code: DEFAULT_CODE,
-		logs: [],
-		logsFormated: "",
+		log: "",
 		editing: false,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),

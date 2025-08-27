@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TabsContent } from "@/components/ui/tabs";
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/tooltip";
 import { API_PROVIDERS } from "@/consts";
 import { useAIConfigStore } from "@/store/aiConfig";
-import { ExternalLink } from "lucide-react";
 
 export function AI() {
 	const apiKeys = useAIConfigStore((state) => state.apiKeys);

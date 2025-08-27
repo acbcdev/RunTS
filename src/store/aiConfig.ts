@@ -1,8 +1,8 @@
-import { models } from "@/consts";
-import type { providers } from "@/types/ai";
 import type { UIMessage } from "ai";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { models } from "@/consts";
+import type { providers } from "@/types/ai";
 
 interface AIConfigStore {
 	apiKeys: {

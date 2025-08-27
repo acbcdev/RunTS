@@ -1,3 +1,10 @@
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { Textarea } from "@/components/ui/textarea";
 import {
 	Tooltip,
@@ -6,13 +13,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
 
 type PromptInputContextType = {
 	isLoading: boolean;

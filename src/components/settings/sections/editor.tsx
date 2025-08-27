@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -9,8 +11,6 @@ import {
 } from "@/consts/config";
 import { useConfigStore } from "@/store/config";
 import { useEditorStore } from "@/store/editor";
-import { useMemo } from "react";
-import { useShallow } from "zustand/react/shallow";
 
 export function Editor() {
 	const expression = useEditorStore(useShallow((state) => state.expression));

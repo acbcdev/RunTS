@@ -1,11 +1,10 @@
-import { useChat } from "@/hooks/useChat";
-
-import { useAIConfigStore } from "@/store/aiConfig";
 import { useShallow } from "zustand/react/shallow";
+import { useChat } from "@/hooks/useChat";
+import { useAIConfigStore } from "@/store/aiConfig";
 import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
-import { NoProvidersView } from "./NoProvidersView";
 import { Messages } from "./messages/Messages";
+import { NoProvidersView } from "./NoProvidersView";
 import { Prompt } from "./prompt/PrompInput";
 export function Chat() {
 	const { getProviders, showChat } = useAIConfigStore(

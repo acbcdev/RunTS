@@ -1,3 +1,16 @@
+import { isTauri } from "@tauri-apps/api/core";
+import {
+	Cog,
+	Download,
+	Play,
+	Search,
+	Share2,
+	Sparkles,
+	SquareSplitHorizontal,
+	SquareSplitVertical,
+} from "lucide-react";
+import { type JSX, memo, type ReactNode } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/components/ui/button";
 import { Kd } from "@/components/ui/kd";
 import {
@@ -12,19 +25,6 @@ import { cn } from "@/lib/utils";
 import { useAIConfigStore } from "@/store/aiConfig";
 import { useApparenceStore } from "@/store/apparence";
 import { useModalStore } from "@/store/modal";
-import { isTauri } from "@tauri-apps/api/core";
-import {
-	Cog,
-	Download,
-	Play,
-	Search,
-	Share2,
-	Sparkles,
-	SquareSplitHorizontal,
-	SquareSplitVertical,
-} from "lucide-react";
-import { type JSX, type ReactNode, memo } from "react";
-import { useShallow } from "zustand/react/shallow";
 
 type ActionPosition = "start" | "end";
 type ActionDirection = "row" | "column";

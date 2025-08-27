@@ -1,11 +1,13 @@
-import { ReloadPrompt } from "@/components/ReloadPrompt";
+import { AnimatePresence, motion } from "motion/react";
+import { lazy, useEffect, useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Chat } from "@/components/ai/Chat";
+import { ReloadPrompt } from "@/components/ReloadPrompt";
 import {
 	ResizableHandle,
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
-
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRun } from "@/hooks/useRun";
 import { useShortcuts } from "@/hooks/useShortcuts";
@@ -14,9 +16,6 @@ import { useAIConfigStore } from "@/store/aiConfig";
 import { SIDES, useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
 import { useTabsStore } from "@/store/tabs";
-import { AnimatePresence, motion } from "motion/react";
-import { lazy, useEffect, useMemo } from "react";
-import { useShallow } from "zustand/react/shallow";
 
 const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));

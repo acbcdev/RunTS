@@ -1,3 +1,5 @@
+import { Copy, CopyCheck } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
@@ -5,8 +7,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Copy, CopyCheck } from "lucide-react";
-import { useState } from "react";
 
 export default function ActionButtons({
 	content,

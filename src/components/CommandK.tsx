@@ -1,3 +1,6 @@
+import { Check } from "lucide-react";
+import { useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -12,9 +15,6 @@ import { useCommandItems } from "@/hooks/useCommandItems";
 import { useCommandSearch } from "@/hooks/useCommandSearch";
 import { useModalStore } from "@/store/modal";
 import type { CommandOptionChild } from "@/types/command";
-import { Check } from "lucide-react";
-import { useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { Badge } from "./ui/badge";
 
 export function CommandK() {

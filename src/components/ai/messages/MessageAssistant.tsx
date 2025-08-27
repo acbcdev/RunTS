@@ -1,6 +1,6 @@
+import type { UIMessage } from "ai";
 import ActionButtons from "@/components/ai/messages/ActionButtons";
 import Markdown from "@/components/ai/messages/Markdown";
-import type { UIMessage } from "ai";
 
 type MessageAssistantProps = {
 	message: UIMessage;
