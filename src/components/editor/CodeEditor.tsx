@@ -71,7 +71,6 @@ export function CodeEditor() {
 		runCode();
 	}, [debouncedCode]);
 
-
 	const direction = useMemo(() => {
 		return side === SIDES.LEFT || side === SIDES.RIGHT ? "column" : "row";
 	}, [side]);
@@ -82,7 +81,6 @@ export function CodeEditor() {
 	const className = useMemo(() => {
 		return SettingsBySide[side].className;
 	}, [side]);
-
 
 	return (
 		<main
