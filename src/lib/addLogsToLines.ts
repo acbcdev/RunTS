@@ -1,102 +1,124 @@
-import { type ExpressionStatement, parse } from "acorn";
-import { ancestor } from "acorn-walk";
+import { type Expression, type ExpressionStatement, parse } from "acorn";
+import { ancestor, simple } from "acorn-walk";
 
 type InjectLogsIntoCodeOptions = {
-	injectLogs: boolean;
+  injectLogs: boolean;
 };
 
 type ReplacementPoint = {
-	start: number;
-	end: number;
-	expr: string;
-	line: number;
+  start: number;
+  end: number;
+  expr: string;
+  line: number;
+  type: Expression["type"];
 };
+
 function countLines(str: string): number {
-	return str.split("\n").length;
+  return str.split("\n").length;
 }
 
 export function injectLogsIntoCode(
-	code: string,
-	options?: InjectLogsIntoCodeOptions,
+  code: string,
+  options: InjectLogsIntoCodeOptions = { injectLogs: false }
 ): { code: string; lines: number[] } {
-	const numsOfToTrim = countLines(code);
-	const codeTrimmed = code.trim();
-	const logLines: number[] = [];
-	const diference = numsOfToTrim - countLines(codeTrimmed);
-	let newCode = code;
-	try {
-		const ast = parse(codeTrimmed, {
-			ecmaVersion: "latest",
-			sourceType: "module",
-			locations: true,
-			ranges: true,
-		});
+  const numsOfToTrim = countLines(code);
+  const trimmedCode = code.trim();
+  const diference = numsOfToTrim - countLines(trimmedCode);
 
-		const replacements: ReplacementPoint[] = [];
+  const logLines: number[] = [];
 
-		ancestor(ast, {
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			ExpressionStatement(node, ancestors: any[]) {
-				if (!node.loc) return;
-				// Solo transformar statements de nivel superior.
-				const parent = ancestors[ancestors.length - 2];
-				if (parent && parent.type !== "Program") return;
+  if (!options.injectLogs) {
+    try {
+      const ast = parse(code, {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        locations: true,
+      });
+      simple(ast, {
+        ExpressionStatement(node) {
+          if (node.loc && isConsoleLogCall(node.expression)) {
+            logLines.push(node.loc.start.line + diference);
+          }
+        },
+      });
+    } catch (e) {
+      // Ignore parsing errors if we're just counting logs
+    }
+    return { code, lines: logLines };
+  }
 
-				// Evitar transformar si ya es un console.log
-				if (isConsoleLogCall(node.expression)) {
-					logLines.push(node.loc.start.line);
-					return;
-				}
+  try {
+    const ast = parse(trimmedCode, {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      locations: true,
+      ranges: true,
+    });
 
-				let exprText = code.slice(node.start, node.end).trim();
-				exprText = exprText.trim();
-				if (!exprText) return;
-				if (exprText.endsWith(";")) {
-					exprText = exprText.slice(0, -1);
-				}
-				// Colapsar expresiones multilínea en una sola línea.
-				exprText = exprText.replace(/\n\s*/g, " ");
-				if (!exprText) return;
+    const replacements: ReplacementPoint[] = [];
 
-				replacements.push({
-					start: node.start,
-					end: node.end,
-					expr: exprText.trim(),
-					line: node.loc.start.line,
-				});
-				logLines.push(node.loc.start.line + diference);
-			},
-		});
+    ancestor(ast, {
+      ExpressionStatement(node, _, ancestors) {
+        if (!node.loc || !node.range) return;
 
-		// Reemplazar de atrás hacia adelante.
-		replacements.sort((a, b) => b.start - a.start);
-		if (options?.injectLogs) {
-			for (const { start, end, expr } of replacements) {
-				newCode = `${newCode.slice(
-					0,
-					start,
-				)}console.log(${expr})${newCode.slice(end)}`.trim();
-			}
-		}
-	} catch (error) {
-		console.error("Error al parsear el código:", error);
-	}
+        const parent = ancestors[ancestors.length - 2];
+        if (parent && parent.type !== "Program") return;
 
-	return { code: newCode, lines: logLines };
+        if (isConsoleLogCall(node.expression)) {
+          logLines.push(node.loc.start.line);
+          return;
+        }
+
+        const [start, end] = node.expression.range ?? [];
+        const exprText = trimmedCode.slice(start, end);
+
+        replacements.push({
+          start: node.range[0],
+          end: node.range[1],
+          expr: exprText,
+          line: node.loc.start.line,
+          type: node.expression.type,
+        });
+        logLines.push(node.loc.start.line + diference);
+      },
+    });
+
+    let newCode = trimmedCode;
+    replacements.sort((a, b) => b.start - a.start);
+
+    for (const { start, end, expr, type } of replacements) {
+      let finalExpr = expr.replace(/\s*\n\s*/g, " ");
+      if (type === "ObjectExpression") {
+        finalExpr = `(${finalExpr})`;
+      }
+
+      const originalStatement = trimmedCode.slice(start, end);
+      const hasSemicolon = originalStatement.trim().endsWith(";");
+
+      const replacementText = `console.log(${finalExpr})${
+        hasSemicolon ? ";" : ""
+      }`;
+      newCode = newCode.slice(0, start) + replacementText + newCode.slice(end);
+    }
+
+    return { code: newCode, lines: logLines.sort((a, b) => a - b) };
+  } catch (error) {
+    console.error("Error parsing or transforming code:", error);
+    return { code: trimmedCode, lines: logLines };
+  }
 }
 
 function isConsoleLogCall(
-	expression: ExpressionStatement["expression"],
+  expression: ExpressionStatement["expression"]
 ): boolean {
-	if (expression.type !== "CallExpression") return false;
-	const callExpr = expression;
-	const callee = callExpr.callee;
-	return (
-		callee &&
-		callee.type === "MemberExpression" &&
-		callee.object?.type === "Identifier" &&
-		callee.object.name === "console" &&
-		callee.property?.type === "Identifier" &&
-		callee.property.name === "log"
-	);
+  if (expression.type !== "CallExpression") return false;
+
+  const callee = expression.callee;
+  return (
+    callee.type === "MemberExpression" &&
+    callee.object.type === "Identifier" &&
+    callee.object.name === "console" &&
+    callee.property.type === "Identifier" &&
+    callee.property.name === "log"
+  );
 }
