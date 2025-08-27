@@ -1,14 +1,6 @@
 import { Plus, Command, MessageCircleIcon } from "lucide-react";
 import { Kd } from "../ui/kd";
-interface CommandItem {
-	icon: React.ReactNode;
-	title: string;
-	description: string;
-	shortcut: string;
-}
-
-
-	const commands: CommandItem[] = [
+	const commands = [
 		{
 			icon: <Plus className="size-5" />,
 			title: "Create New Tab",
