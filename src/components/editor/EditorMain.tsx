@@ -73,7 +73,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 		})),
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	const handleEditorDidMount = useCallback(
 		async (editor: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
 			// Define all themes
