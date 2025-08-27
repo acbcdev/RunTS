@@ -11,11 +11,13 @@ import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
 import { Tab } from "@/types/editor";
 import type { Monaco } from "@monaco-editor/react";
-import { Loader } from "lucide-react";
+import { Code2 } from "lucide-react";
 import { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
-import { Suspense, lazy, useCallback } from "react";
+import { lazy, useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
+import Loading from "./Loading";
+import { Loader } from "../ui/loader";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {
@@ -253,17 +255,12 @@ export function EditorMain({ tab }: EditorMainProps) {
 
 	return (
 		<div className="relative h-full" translate="no">
-			<Suspense
-				fallback={
-					<div className="flex items-center justify-center h-full bg-background animate-pulse">
-						<div className="text-lg animate-pulse">Loading editor...</div>
-					</div>
-				}
-			>
+		
 				{running && (
-					<Loader className="absolute z-10 text-accent animate-spin right-6 top-2 size-10" />
+					<Loader className="absolute z-10 right-6 top-2" />
 				)}
 				<MonacoEditor
+					loading={<Loading Icon={Code2} text="Loading Editor..."  description="Please wait while we load the editor." />}
 					height="100%"
 					defaultLanguage="typescript"
 					value={tab?.code}
@@ -286,8 +283,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 						...EDITOR_CONFIG,
 					}}
 				/>
-			</Suspense>
-		</div>
+			</div>
 	);
 }
 
