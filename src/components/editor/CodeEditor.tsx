@@ -22,6 +22,7 @@ const EditorMain = lazy(() => import("@/components/editor/EditorMain"));
 const EditorTabs = lazy(() => import("@/components/tabs/EditorTabs"));
 const EditorActions = lazy(() => import("@/components/actions/EditorActions"));
 const Console = lazy(() => import("@/components/editor/Console"));
+const EmptyState = lazy(() => import("@/components/editor/EmptyState"));
 
 type positionSettings = {
 	tooltip: "left" | "right" | "top" | "bottom";
@@ -38,16 +39,17 @@ const SettingsBySide: Record<number, positionSettings> = {
 export function CodeEditor() {
 	useShortcuts();
 	const { runCode } = useRun();
-
-	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
-	// useTabsStore
-	const getCurrentTab = useTabsStore(
+		const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
+	const tab = getCurrentTab();
+	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
+	// useTabsStore
+
 
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 
-	const debouncedCode = useDebounce(getCurrentTab()?.code || "", refreshTime);
+	const debouncedCode = useDebounce(tab?.code || "", refreshTime);
 	const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
 		useShallow((state) => ({
 			radius: state.radius,
@@ -124,15 +126,21 @@ export function CodeEditor() {
 
 				<ResizablePanel defaultSize={100}>
 					<EditorTabs />
+					{tab ? (
+
 					<ResizablePanelGroup direction={layout}>
 						<ResizablePanel defaultSize={60}>
-							<EditorMain />
+							<EditorMain tab={tab}/>
 						</ResizablePanel>
 						<ResizableHandle withHandle className="w-1" />
 						<ResizablePanel defaultSize={40}>
-							<Console />
+							<Console tab={tab} />
 						</ResizablePanel>
 					</ResizablePanelGroup>
+					) : (
+						<EmptyState />
+					)}
+
 				</ResizablePanel>
 			</ResizablePanelGroup>
 

@@ -1,18 +1,19 @@
 import { CONSOLE_EDITOR_CONFIG } from "@/consts/editor";
 import { useApparenceStore } from "@/store/apparence";
 import { useConfigStore } from "@/store/config";
-import { useTabsStore } from "@/store/tabs";
+import { Tab } from "@/types/editor";
 import { Suspense, lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
-export function Console() {
+type ConsoleProps = {
+	tab: Tab;
+};
+export function Console({tab}: ConsoleProps) {
 	// useTabsStore
 	const lineNumbers = useConfigStore(useShallow((state) => state.lineNumbers));
-	const getCurrentTab = useTabsStore(
-		useShallow((state) => state.getCurrentTab),
-	);
+
 	const { fontSize, fontFamily, theme } = useApparenceStore(
 		useShallow((state) => ({
 			fontSize: state.fontSize,
@@ -58,7 +59,7 @@ export function Console() {
 				</Tooltip> */}
 
 				<MonacoEditor
-					value={getCurrentTab()?.logsFormated ?? ""}
+					value={tab.log}
 					language="javascript"
 					theme={theme}
 					options={{

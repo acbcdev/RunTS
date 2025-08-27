@@ -9,6 +9,7 @@ import { useHistoryTabsStore } from "@/store/history";
 import { useModalStore } from "@/store/modal";
 import { useTabsStore } from "@/store/tabs";
 import { themes } from "@/themes";
+import { Tab } from "@/types/editor";
 import type { Monaco } from "@monaco-editor/react";
 import { Loader } from "lucide-react";
 import { editor } from "monaco-editor";
@@ -17,8 +18,10 @@ import { Suspense, lazy, useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
-
-export function EditorMain() {
+type EditorMainProps = {
+  tab: Tab;
+};
+export function EditorMain({ tab }: EditorMainProps) {
 	const { runCode } = useRun();
 	const updateEditor = useEditorStore(
 		useShallow((state) => state.updateEditor),
@@ -58,9 +61,6 @@ export function EditorMain() {
 
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
 
-	const getCurrentTab = useTabsStore(
-		useShallow((state) => state.getCurrentTab),
-	);
 	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
 	// useApparenceStore
 	const { theme, fontFamily, fontSize } = useApparenceStore(
@@ -266,7 +266,7 @@ export function EditorMain() {
 				<MonacoEditor
 					height="100%"
 					defaultLanguage="typescript"
-					value={getCurrentTab()?.code}
+					value={tab?.code}
 					onChange={(value) => updateTabCode(activeTabId, value || "")}
 					onMount={handleEditorDidMount}
 					theme={theme}
