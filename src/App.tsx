@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTabsStore } from "@/store/tabs";
 import { decode } from "js-base64";
-import {  lazy, useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { CommandK } from "./components/CommandK";
@@ -28,7 +28,7 @@ function App() {
 					name: "shared.ts",
 					language: "typescript",
 					code: decodedCode,
-					log:""
+					log: "",
 				});
 				setActiveTab(id);
 				toast.success("Code loaded", {
@@ -51,7 +51,7 @@ function App() {
 				<ShortCutsModal />
 				{/* <Suspense fallback={<Loader text="Loading workspace..." />}> */}
 				{/* <AppLoader/> */}
-					<CodeEditor />
+				<CodeEditor />
 				{/* </Suspense> */}
 				<Toaster />
 			</TooltipProvider>

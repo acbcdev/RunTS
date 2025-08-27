@@ -39,13 +39,12 @@ const SettingsBySide: Record<number, positionSettings> = {
 export function CodeEditor() {
 	useShortcuts();
 	const { runCode } = useRun();
-		const getCurrentTab = useTabsStore(
+	const getCurrentTab = useTabsStore(
 		useShallow((state) => state.getCurrentTab),
 	);
 	const tab = getCurrentTab();
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
 	// useTabsStore
-
 
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
 
@@ -127,20 +126,18 @@ export function CodeEditor() {
 				<ResizablePanel defaultSize={100}>
 					<EditorTabs />
 					{tab ? (
-
-					<ResizablePanelGroup direction={layout}>
-						<ResizablePanel defaultSize={60}>
-							<EditorMain tab={tab}/>
-						</ResizablePanel>
-						<ResizableHandle withHandle className="w-1" />
-						<ResizablePanel defaultSize={40}>
-							<Console tab={tab} />
-						</ResizablePanel>
-					</ResizablePanelGroup>
+						<ResizablePanelGroup direction={layout}>
+							<ResizablePanel defaultSize={60}>
+								<EditorMain tab={tab} />
+							</ResizablePanel>
+							<ResizableHandle withHandle className="w-1" />
+							<ResizablePanel defaultSize={40}>
+								<Console tab={tab} />
+							</ResizablePanel>
+						</ResizablePanelGroup>
 					) : (
 						<EmptyState />
 					)}
-
 				</ResizablePanel>
 			</ResizablePanelGroup>
 

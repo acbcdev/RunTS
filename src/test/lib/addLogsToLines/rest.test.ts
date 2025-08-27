@@ -43,7 +43,8 @@ describe("injectLogsIntoCode - Resta cases", () => {
 	});
 
 	it("does not inject log for subtraction inside a function (non top-level)", () => {
-		const input = "\n      function subtract() {\n        return 10 - 5;\n      }\n    ";
+		const input =
+			"\n      function subtract() {\n        return 10 - 5;\n      }\n    ";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		// La resta dentro de la función no debe transformarse.
 		expect(result.code).toContain("10 - 5");

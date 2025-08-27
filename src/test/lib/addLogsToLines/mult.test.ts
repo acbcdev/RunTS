@@ -43,7 +43,8 @@ describe("injectLogsIntoCode - Multiplication cases", () => {
 	});
 
 	it("does not inject log for multiplication inside a function (non top-level)", () => {
-		const input = "\n      function multiply() {\n        return 3 * 4;\n      }\n    ";
+		const input =
+			"\n      function multiply() {\n        return 3 * 4;\n      }\n    ";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		// La multiplicación dentro de la función no debe transformarse.
 		expect(result.code).toContain("3 * 4");
@@ -53,7 +54,7 @@ describe("injectLogsIntoCode - Multiplication cases", () => {
 	it("does not inject log if multiplication is already wrapped in console.log", () => {
 		const input = "console.log(6 * 7);";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
-		expect(result.code).toBe("console.log(6 * 7);" );
+		expect(result.code).toBe("console.log(6 * 7);");
 		expect(result.lines).toEqual([1]);
 	});
 });

@@ -44,7 +44,8 @@ describe("injectLogsIntoCode - Suma cases", () => {
 	});
 
 	it("does not inject log for addition inside a function (non top-level)", () => {
-		const input = "\n      function add() {\n        return 1 + 1;\n      }\n    ";
+		const input =
+			"\n      function add() {\n        return 1 + 1;\n      }\n    ";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
 		// La suma dentro de la función no debe transformarse.
 		expect(result.code).toContain("1 + 1");
@@ -54,7 +55,7 @@ describe("injectLogsIntoCode - Suma cases", () => {
 	it("does not inject log if addition is already wrapped in console.log", () => {
 		const input = "console.log(2 + 2);";
 		const result = injectLogsIntoCode(input, { injectLogs: true });
-		expect(result.code).toBe("console.log(2 + 2);" );
+		expect(result.code).toBe("console.log(2 + 2);");
 		expect(result.lines).toEqual([1]);
 	});
 });

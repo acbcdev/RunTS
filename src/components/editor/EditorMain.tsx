@@ -21,7 +21,7 @@ import { Loader } from "../ui/loader";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {
-  tab: Tab;
+	tab: Tab;
 };
 export function EditorMain({ tab }: EditorMainProps) {
 	const { runCode } = useRun();
@@ -146,14 +146,18 @@ export function EditorMain({ tab }: EditorMainProps) {
 			});
 
 			editor.addCommand(
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyD,
+				monacoInstance.KeyMod.CtrlCmd |
+					monacoInstance.KeyMod.Shift |
+					monacoInstance.KeyCode.KeyD,
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyD,
+					monacoInstance.KeyMod.CtrlCmd |
+						monacoInstance.KeyMod.Shift |
+						monacoInstance.KeyCode.KeyD,
 				],
 				run: () => newTab(),
 			});
@@ -255,35 +259,38 @@ export function EditorMain({ tab }: EditorMainProps) {
 
 	return (
 		<div className="relative h-full" translate="no">
-		
-				{running && (
-					<Loader className="absolute z-10 right-6 top-2" />
-				)}
-				<MonacoEditor
-					loading={<Loading Icon={Code2} text="Loading Editor..."  description="Please wait while we load the editor." />}
-					height="100%"
-					defaultLanguage="typescript"
-					value={tab?.code}
-					onChange={(value) => updateTabCode(activeTabId, value || "")}
-					onMount={handleEditorDidMount}
-					theme={theme}
-					options={{
-						// Theme
-						theme,
-						// Editor Core Configuration
-						fontSize,
-						fontFamily,
-						wordWrap: wordWrap ? "on" : "off",
-						renderLineHighlight: lineRenderer,
-						minimap: {
-							enabled: minimap,
-						},
-						renderWhitespace: whiteSpace ? "all" : "selection",
-						lineNumbers: lineNumbers ? "on" : "off",
-						...EDITOR_CONFIG,
-					}}
-				/>
-			</div>
+			{running && <Loader className="absolute z-10 right-6 top-2" />}
+			<MonacoEditor
+				loading={
+					<Loading
+						Icon={Code2}
+						text="Loading Editor..."
+						description="Please wait while we load the editor."
+					/>
+				}
+				height="100%"
+				defaultLanguage="typescript"
+				value={tab?.code}
+				onChange={(value) => updateTabCode(activeTabId, value || "")}
+				onMount={handleEditorDidMount}
+				theme={theme}
+				options={{
+					// Theme
+					theme,
+					// Editor Core Configuration
+					fontSize,
+					fontFamily,
+					wordWrap: wordWrap ? "on" : "off",
+					renderLineHighlight: lineRenderer,
+					minimap: {
+						enabled: minimap,
+					},
+					renderWhitespace: whiteSpace ? "all" : "selection",
+					lineNumbers: lineNumbers ? "on" : "off",
+					...EDITOR_CONFIG,
+				}}
+			/>
+		</div>
 	);
 }
 
