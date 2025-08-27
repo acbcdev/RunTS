@@ -18,15 +18,12 @@ type TabsStoreActions = {
   setEditing: (id: Tab["id"], editing?: boolean) => void;
   changeNameTab: (id: Tab["id"], name: string) => void;
   updateTabCode: (id: Tab["id"], code: string) => void;
-  updateTabLog: (id: Tab["id"], logs: Tab["logs"]) => void;
-  updateTabLogFormated: (
-    id: Tab["id"],
-    logsFormated: Tab["logsFormated"]
-  ) => void;
+  updateTabLog: (id: Tab["id"], logsFormated: Tab["log"]) => void;
   clearConsole: VoidFunction;
   getTab: (id: Tab["id"]) => Tab | undefined;
   setActiveTabHistory: (id: Tab["id"]) => void;
   handleTab: (dir: 1 | -1) => void;
+  updateTab: (id: Tab["id"], updates: Partial<Tab>) => void;
 };
 
 type TabsStore = TabsStoreState & TabsStoreActions;
@@ -37,6 +34,16 @@ export const useTabsStore = create<TabsStore>()(
       tabs: INITIAL_TABS,
       activeTabId: "1",
       activeTabHistory: [],
+      updateTab: (id, updates) => {
+        set((state) => {
+          const index = state.tabs.findIndex((tab) => tab.id === id);
+          if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
+          return {
+            tabs: state.tabs.with(index, { ...state.tabs[index], ...updates }),
+          };
+        });
+      },
+
       setActiveTabHistory: (id) => {
         set((state) => ({
           activeTabHistory: [id, ...state.activeTabHistory.slice(0, 10)],
@@ -49,8 +56,7 @@ export const useTabsStore = create<TabsStore>()(
           name: `untitled-${Date.now().toString().slice(-4)}.ts`,
           language: "typescript",
           code: code || "",
-          logsFormated: "",
-          logs: [],
+          log: "",
         });
         get().setActiveTab(id);
       },
@@ -72,7 +78,7 @@ export const useTabsStore = create<TabsStore>()(
         const newTab = {
           ...tab,
           name: tab.name.trim(),
-          id: nanoid(4),
+          id: nanoid(7),
           createdAt: Date.now(),
           updatedAt: Date.now(),
         };
@@ -126,26 +132,14 @@ export const useTabsStore = create<TabsStore>()(
           };
         });
       },
-      updateTabLog: (id, logs) => {
+      updateTabLog: (id, log) => {
         set((state) => {
           const index = state.tabs.findIndex((tab) => tab.id === id);
           if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
           return {
             tabs: state.tabs.with(index, {
               ...state.tabs[index],
-              logs,
-            }),
-          };
-        });
-      },
-      updateTabLogFormated: (id, logsFormated) => {
-        set((state) => {
-          const index = state.tabs.findIndex((tab) => tab.id === id);
-          if (index === -1) return state; // Si no encuentra la pestaña, no se realiza ningún cambio
-          return {
-            tabs: state.tabs.with(index, {
-              ...state.tabs[index],
-              logsFormated,
+              log,
             }),
           };
         });
@@ -157,7 +151,7 @@ export const useTabsStore = create<TabsStore>()(
           );
           if (index === -1) return { ...state }; // Si no encuentra la pestaña, no realiza cambios
           return {
-            tabs: state.tabs.with(index, { ...state.tabs[index], logs: [] }),
+            tabs: state.tabs.with(index, { ...state.tabs[index], log: "" }),
           };
         });
       },
