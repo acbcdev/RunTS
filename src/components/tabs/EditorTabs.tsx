@@ -40,7 +40,7 @@ export function EditorTabs() {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					New tab <Kd>{isTauri() ? "Ctrl + T" : "Ctrl + D"}</Kd>
+					New tab <Kd>{isTauri() ? "Ctrl + T" : "Ctrl + Shift + D"}</Kd>
 				</TooltipContent>
 			</Tooltip>
 		</div>

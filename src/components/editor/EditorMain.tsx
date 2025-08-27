@@ -144,14 +144,14 @@ export function EditorMain() {
 			});
 
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyD,
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyD,
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyD,
 				],
 				run: () => newTab(),
 			});
