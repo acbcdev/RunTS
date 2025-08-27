@@ -45,8 +45,6 @@ export function CodeEditor() {
 	const refreshTime = useConfigStore(useShallow((state) => state.refreshTime));
 	// useTabsStore
 
-	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
-
 	const debouncedCode = useDebounce(tab?.code || "", refreshTime);
 	const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
 		useShallow((state) => ({
@@ -72,9 +70,7 @@ export function CodeEditor() {
 	useEffect(() => {
 		runCode();
 	}, [debouncedCode]);
-	if (!activeTabId) {
-		return null;
-	}
+
 
 	const direction = useMemo(() => {
 		return side === SIDES.LEFT || side === SIDES.RIGHT ? "column" : "row";
@@ -86,6 +82,8 @@ export function CodeEditor() {
 	const className = useMemo(() => {
 		return SettingsBySide[side].className;
 	}, [side]);
+
+
 	return (
 		<main
 			className={`flex h-screen bg-background/80 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
