@@ -1,5 +1,28 @@
 # Changelog
 
+## Version 1.6.2 – Agu 26, 2025
+
+### Highlights
+
+#### Improvements
+
+- **Dependencies Update:** Updated all dependencies to their latest versions for better performance and security.
+- **Code Quality:** Enhanced code readability and performance in `injectLogsIntoCode` function.
+- **Test Suite Improvements:** Simplified test cases for `ajuestLogs` by using `createMockLog` function for better maintainability.
+
+#### Refactors
+
+- **Test Refactoring:** Improved test cases for `injectLogsIntoCode` to ensure consistent formatting and better readability.
+- **Code Optimization:** Simplified and optimized internal code structures for better performance.
+
+#### Fixes
+
+- **Dependency Management:** Fixed dependency versions to ensure compatibility and stability.
+
+#### Documentation
+
+- **Gemini Integration:** Added Gemini.md documentation for AI provider integration.
+
 ## Version 1.6.1 – Agu 21, 2025
 
 ### Highlights
