@@ -13,7 +13,6 @@ export function Chat() {
 			showChat: state.showChat,
 		})),
 	);
-
 	const {
 		input,
 		messages,
@@ -25,11 +24,11 @@ export function Chat() {
 		reload,
 		error,
 	} = useChat();
-
 	const handleNewChat = () => {
 		setMessages([]);
 		setInput("");
 	};
+
 	if (getProviders().length === 0) {
 		return <NoProvidersView />;
 	}
@@ -39,7 +38,9 @@ export function Chat() {
 	return (
 		<aside
 			data-state={showChat}
-			className="relative flex bg-border/10 border-r flex-col h-full w-dvw lg:w-[500px] chat rounded-none shadow-none"
+			className={
+				"relative flex bg-border/10 border-r flex-col h-full w-dvw lg:w-[65ch] chat rounded-none shadow-none"
+			}
 		>
 			<ChatHeader onNewChat={handleNewChat} />
 			{isEmpty ? (

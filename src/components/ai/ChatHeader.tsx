@@ -13,7 +13,6 @@ export function ChatHeader({ onNewChat }: ChatHeaderProps) {
 				<MessageCircleIcon size={20} />
 				<p>Chat</p>
 			</div>
-
 			<Button variant="ghost" size="icon" onClick={onNewChat}>
 				<Plus />
 			</Button>
