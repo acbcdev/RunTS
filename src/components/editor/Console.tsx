@@ -15,6 +15,7 @@ type ConsoleProps = {
 export function Console({ tab }: ConsoleProps) {
 	// useTabsStore
 	const lineNumbers = useConfigStore(useShallow((state) => state.lineNumbers));
+	const minimap = useConfigStore(useShallow((state) => state.minimap));
 
 	const { fontSize, fontFamily, theme } = useApparenceStore(
 		useShallow((state) => ({
@@ -49,6 +50,9 @@ export function Console({ tab }: ConsoleProps) {
 					lineNumbers: lineNumbers ? "on" : "off",
 					fontSize,
 					fontFamily,
+					minimap: {
+						enabled: minimap,
+					},
 					...CONSOLE_EDITOR_CONFIG,
 				}}
 			/>
