@@ -84,7 +84,7 @@ export function CodeEditor() {
 
 	return (
 		<main
-			className={`flex h-screen bg-background/80 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
+			className={`flex h-screen bg-background/85 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
 			translate="no"
 		>
 			<EditorActions
