@@ -14,39 +14,37 @@ import { TOGGLE_COMMAND } from "@/consts/shortcuts";
 import { useCommandItems } from "@/hooks/useCommandItems";
 import { useCommandSearch } from "@/hooks/useCommandSearch";
 import { useModalStore } from "@/store/modal";
-import type { CommandOptionChild } from "@/types/command";
 import { Badge } from "./ui/badge";
 
 export function CommandK() {
 	const [query, setQuery] = useState("");
-	const [pages, setPages] = useState<CommandOptionChild[][]>([]);
+	const [pages, setPages] = useState<string | null>(null);
 	const [routes, setRoutes] = useState<string[]>(["Home"]);
 	const open = useModalStore((state) => state.commandK);
 	const setOpen = useModalStore((state) => state.toggleModal);
 
-	const mainCommands = useCommandItems();
+	const { commands, subCommands } = useCommandItems();
 
 	// Get current page commands or main commands
-	const currentCommands =
-		pages.length > 0 ? pages[pages.length - 1] : mainCommands;
+	const currentCommands = pages ? subCommands[pages] : commands;
 	const commandGroups = useCommandSearch({ commands: currentCommands, query });
 
 	useHotkeys(TOGGLE_COMMAND, () => setOpen("commandK"), {
 		preventDefault: true,
 	});
 
-	const pushPage = (commands: CommandOptionChild[], name: string) => {
-		setPages((prev) => [...prev, commands]);
+	const pushPage = (id: string, name: string) => {
+		setPages(id);
 		setRoutes((prev) => [...prev, name]);
 	};
 
 	const popPage = () => {
-		setPages((prev) => prev.slice(0, -1));
+		setPages(null);
 		setRoutes((prev) => prev.slice(0, -1));
 	};
 
 	const goHome = () => {
-		setPages([]);
+		setPages(null);
 		setRoutes(["Home"]);
 	};
 
@@ -74,7 +72,7 @@ export function CommandK() {
 		if ((e.key === "Backspace" || e.key === "Delete") && query === "") {
 			e.preventDefault();
 
-			if (pages.length > 0) {
+			if (pages) {
 				// Go back to previous page
 				popPage();
 			} else {
@@ -100,7 +98,7 @@ export function CommandK() {
 		>
 			<CommandInput
 				placeholder={
-					pages.length > 0
+					pages
 						? "Search options..."
 						: "Search commands, tabs, configuration..."
 				}
@@ -109,9 +107,8 @@ export function CommandK() {
 				onKeyDown={handleInputKeyDown}
 			/>
 			<div className="flex items-center mt-1.5 mb-2 gap-x-1 px-3">
-				{routes.map((route, index) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<Badge key={index} variant={"secondary"} className="rounded-md">
+				{routes.map((route) => (
+					<Badge key={route} variant={"secondary"} className="rounded-md">
 						{route}
 					</Badge>
 				))}
