@@ -1,5 +1,27 @@
 # Changelog
 
+## Version 1.6.3 – Agu 27, 2025
+
+### Highlights
+
+#### Improvements
+
+- **Command System Enhancement:** Enhanced command structure with subCommands for improved functionality and organization.
+- **Editor Configuration:** Added minimap configuration to Console component for enhanced editor experience.
+- **Visual Consistency:** Adjusted background opacity in CodeEditor and improved header transitions for better visual consistency.
+- **Code Quality:** Standardized code formatting, improved readability, and enhanced consistency across components.
+
+#### Refactors
+
+- **Command Palette (CMK):** Updated key assignment and improved command retrieval logic for better consistency.
+- **Chat Components:** Cleaned up whitespace, adjusted component width, and improved overall structure.
+- **State Management:** Simplified page state management and optimized internal code structures.
+- **Editor Components:** Enhanced CodeEditor, Console, and EmptyState components for improved performance and maintainability.
+
+#### Fixes
+
+- **Package Manager:** Updated packageManager to bun@1.2.21 in package.json for better compatibility.
+
 ## Version 1.6.2 – Agu 26, 2025
 
 ### Highlights
