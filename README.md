@@ -1,4 +1,4 @@
-![Captura de pantalla en ordenador](/public/runts.webp)
+![Captura de pantalla en ordenador](/public/og.jpg)
 
 <div align='center'>
    
