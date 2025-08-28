@@ -39,8 +39,11 @@ export const EmptyState = () => (
 			</header>
 
 			<ul className="  rounded-lg p-2 space-y-1">
-				{commands.map((command, index) => (
-					<li key={index} className="w-full flex items-center gap-2 px-3 py-3 ">
+				{commands.map((command) => (
+					<li
+						key={command.title}
+						className="w-full flex items-center gap-2 px-3 py-3 "
+					>
 						<div className="text-muted-foreground mr-1.5 border p-2 bg-border rounded-xl">
 							{command.icon}
 						</div>
