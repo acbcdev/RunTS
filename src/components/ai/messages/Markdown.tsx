@@ -38,7 +38,7 @@ const components = {
 		return match ? (
 			<section className=" group/code-block bg-background  my-2 h-full  rounded-sm ">
 				<div className="relative h-full">
-					<header className="flex z-50 absolute items-center top-0 right-2 rounded-md opacity-0 group-hover/code-block:opacity-100 translate-y-[-50%] bg-header gap-x-1 p-0.5">
+					<header className="flex z-50 duration-300 absolute items-center top-0 right-2 rounded-md opacity-0 group-hover/code-block:opacity-100 translate-y-[-50%] bg-header gap-x-1 p-0.5">
 						{/* <span className="px-5 text-foreground/90">{match[1]}</span> */}
 						<TooltipProvider delayDuration={0} skipDelayDuration={0}>
 							<Tooltip>
@@ -124,7 +124,7 @@ const components = {
 	pre: ({ children }) => <>{children}</>,
 	p: ({ node, children, ...props }) => {
 		return (
-			<p className="leading-6 text-sm" {...props}>
+			<p className="leading-7 text-base" {...props}>
 				{children}
 			</p>
 		);
