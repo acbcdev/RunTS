@@ -1,5 +1,5 @@
 import { decode } from "js-base64";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -46,14 +46,12 @@ function App() {
 	return (
 		<ErrorBoundary>
 			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-				{/* <ErrorBoundaryTester /> */}
 				<CommandK />
 				<EditorSettingsDialog />
 				<ShortCutsModal />
-				{/* <Suspense fallback={<Loader text="Loading workspace..." />}> */}
-				{/* <AppLoader/> */}
-				<CodeEditor />
-				{/* </Suspense> */}
+				<Suspense fallback={<div>Loading editor...</div>}>
+					<CodeEditor />
+				</Suspense>
 				<Toaster />
 			</TooltipProvider>
 		</ErrorBoundary>
