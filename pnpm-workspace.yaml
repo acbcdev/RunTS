@@ -1,1 +1,6 @@
 minimumReleaseAge: 5000
+
+onlyBuiltDependencies:
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - esbuild
