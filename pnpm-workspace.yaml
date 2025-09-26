@@ -1,4 +1,4 @@
-minimumReleaseAge: 5000
+minimumReleaseAge: 1440
 
 onlyBuiltDependencies:
   - '@swc/core'
