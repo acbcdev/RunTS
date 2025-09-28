@@ -1,8 +1,8 @@
 import type { VariantProps } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
 import { useStickToBottomContext } from "use-stick-to-bottom";
+import { cn } from "@/features/lib/cn";
 import { Button, type buttonVariants } from "@/features/ui/button";
-import { cn } from "@/lib/utils";
 
 export type ScrollButtonProps = {
 	className?: string;
