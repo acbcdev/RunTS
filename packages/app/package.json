@@ -1,20 +1,20 @@
 {
-  "name": "runts-app",
+  "name": "app",
   "private": true,
   "version": "1.6.3",
   "type": "module",
   "scripts": {
-    "dev": "vite --config packages/app/vite.config.ts",
-    "build": "tsc -b packages/app && vite build --config packages/app/vite.config.ts",
-    "lint": "eslint packages/app",
-    "preview": "vite preview --config packages/app/vite.config.ts",
-    "test": "cd packages/app && vitest",
-    "test:ui": "cd packages/app && vitest --ui",
-    "format": "biome format --write ./packages/app/src",
-    "lint:biome": "biome lint --write ./packages/app/src",
-    "check": "biome check --write ./packages/app/src",
-    "tauri:dev": "cd packages/app && tauri dev",
-    "tauri:build": "cd packages/app && tauri build"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "format": "biome format --write ./src",
+    "lint:biome": "biome lint --write ./src",
+    "check": "biome check --write ./src",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "2.0.1",

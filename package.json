@@ -1,13 +1,23 @@
 {
-  "name": "RunTS",
+  "name": "runts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter app dev",
+    "build": "pnpm --filter app build",
+    "preview": "pnpm --filter app preview",
+    "lint": "pnpm --filter app lint",
+    "test": "pnpm --filter app test",
+    "test:ui": "pnpm --filter app test:ui",
+    "format": "pnpm --filter app format",
+    "lint:biome": "pnpm --filter app lint:biome",
+    "check": "pnpm --filter app check",
+    "tauri:dev": "pnpm --filter app tauri:dev",
+    "tauri:build": "pnpm --filter app tauri:build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.17.0"
+  "packageManager": "pnpm@10.17.1"
 }
