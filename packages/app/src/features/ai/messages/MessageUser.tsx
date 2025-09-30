@@ -5,7 +5,7 @@ type MessageUserProps = {
 	message: UIMessage;
 };
 
-function MessageUser({ message }: MessageUserProps) {
+export function MessageUser({ message }: MessageUserProps) {
 	return (
 		<div className="flex justify-end">
 			<div className="rounded-lg px-4 py-1 bg-background/90 text-primary-foreground">

@@ -8,7 +8,7 @@ import {
 	TooltipTrigger,
 } from "../../ui/tooltip";
 
-export default function ActionButtons({
+export function ActionButtons({
 	content,
 }: {
 	content: string;
@@ -44,3 +44,4 @@ export default function ActionButtons({
 		</div>
 	);
 }
+export default ActionButtons;

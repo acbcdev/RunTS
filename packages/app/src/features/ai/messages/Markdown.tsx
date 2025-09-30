@@ -286,7 +286,7 @@ const components = {
 	},
 } satisfies Components;
 
-export default function Markdown({ children }: { children: string }) {
+export function Markdown({ children }: { children: string }) {
 	return (
 		<ReactMarkdown
 			className="prose text-wrap dark:prose-invert "
@@ -297,3 +297,5 @@ export default function Markdown({ children }: { children: string }) {
 		</ReactMarkdown>
 	);
 }
+
+export default Markdown;

@@ -7,7 +7,7 @@ type MessageAssistantProps = {
 	reload: () => void;
 };
 
-function MessageAssistant({ message, reload }: MessageAssistantProps) {
+export function MessageAssistant({ message, reload }: MessageAssistantProps) {
 	return (
 		<div className="flex justify-start">
 			<div className="rounded-lg px-4 py-1">
