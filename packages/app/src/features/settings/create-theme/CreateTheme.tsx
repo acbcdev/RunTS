@@ -1,10 +1,6 @@
-import { Input } from "@/features/ui/input";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/features/ui/popover";
-import { Label } from "../ui/label";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 
 export default function CreateTheme() {
 	return (

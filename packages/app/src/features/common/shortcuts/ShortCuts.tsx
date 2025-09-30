@@ -1,14 +1,14 @@
 import { useMemo } from "react";
-import { SHORTCUTS } from "@/features/common/utils/shortcuts";
-import { useModalStore } from "@/features/common/store/modal";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogTitle,
-} from "@/features/ui/dialog";
-import { Kd } from "@/features/ui/kd";
-import { ScrollArea } from "@/features/ui/scroll-area";
+} from "../../ui/dialog";
+import { Kd } from "../../ui/kd";
+import { ScrollArea } from "../../ui/scroll-area";
+import { useModalStore } from "../modal/modal";
+import { SHORTCUTS } from "../utils/shortcuts";
 
 export function ShortCutsModal() {
 	const shortcuts = useModalStore((state) => state.shortcuts);

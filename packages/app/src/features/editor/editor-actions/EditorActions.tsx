@@ -11,20 +11,20 @@ import {
 } from "lucide-react";
 import { type JSX, memo, type ReactNode } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
-import { Kd } from "@/features/ui/kd";
+import { useAIConfigStore } from "../../ai/store/aiConfig";
+import { useModalStore } from "../../common/modal/modal";
+import { useHandler } from "../../common/utils/useHandler";
+import { cn } from "../../common/utils/utils";
+import { useApparenceStore } from "../../settings/appearance-store/apparence";
+import { Button } from "../../ui/button";
+import { Kd } from "../../ui/kd";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/features/ui/tooltip";
-import { useHandler } from "@/features/common/utils/useHandler";
-import { useRun } from "@/features/editor/use-run/useRun";
-import { cn } from "@/features/common/utils/utils";
-import { useAIConfigStore } from "@/store/aiConfig";
-import { useApparenceStore } from "@/features/settings/store/apparence";
-import { useModalStore } from "@/features/common/store/modal";
+} from "../../ui/tooltip";
+import { useRun } from "../use-run/useRun";
 
 type ActionPosition = "start" | "end";
 type ActionDirection = "row" | "column";

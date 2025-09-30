@@ -1,19 +1,19 @@
 import { BrainCog, Brush, MonitorCog } from "lucide-react";
-import { GithubStars } from "@/features/settings/GithubStars";
-import { AI } from "@/features/settings/sections/ai";
-import { Appearance } from "@/features/settings/sections/appearance";
-import { Editor } from "@/features/settings/sections/editor";
+import { useModalStore } from "../../common/modal/modal";
+import { versionApp } from "../../common/utils/index";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-} from "@/features/ui/dialog";
-import { ScrollArea } from "@/features/ui/scroll-area";
-import { Tabs, TabsList, TabsTrigger } from "@/features/ui/tabs";
-import { versionApp } from "@/consts";
-import { useModalStore } from "@/store/modal";
+} from "../../ui/dialog";
+import { ScrollArea } from "../../ui/scroll-area";
+import { Tabs, TabsList, TabsTrigger } from "../../ui/tabs";
+import { GithubStars } from "../github-stars/GithubStars";
+import { AI } from "../sections/ai";
+import { Appearance } from "../sections/appearance";
+import { Editor } from "../sections/editor";
 
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },

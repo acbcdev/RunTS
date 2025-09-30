@@ -1,5 +1,5 @@
-import { cn } from "@/features/common/utils/utils";
-import { Loader } from "@/features/ui/loader";
+import { Loader } from "../../ui/loader";
+import { cn } from "../utils/utils";
 
 interface LoaderProps {
 	text?: string;

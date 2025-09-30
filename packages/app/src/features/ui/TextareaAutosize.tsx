@@ -1,8 +1,8 @@
 "use client";
 
 import { type ChangeEvent, type ComponentProps, useId, useRef } from "react";
-import { cn } from "@/features/lib/cn";
-import { Textarea } from "@/features/ui/textarea";
+import { cn } from "../lib/cn";
+import { Textarea } from "./textarea";
 
 interface TextareaAutosizeProps extends ComponentProps<"textarea"> {
 	onChangeValue: (e: string) => void;

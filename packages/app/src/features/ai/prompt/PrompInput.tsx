@@ -3,15 +3,15 @@
 import { ArrowUp, Eye, EyeOff, Square } from "lucide-react";
 import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
+import { useTabsStore } from "../../tabs/tabs-store/tabs";
+import { Button } from "../../ui/button";
 import {
 	PromptInput,
 	PromptInputAction,
 	PromptInputActions,
 	PromptInputTextarea,
-} from "@/features/ui/prompt-input";
-import { useAIConfigStore } from "@/features/ai/store/aiConfig";
-import { useTabsStore } from "@/store/tabs";
+} from "../../ui/prompt-input";
+import { useAIConfigStore } from "../store/aiConfig";
 import { ComboboxSelect } from "./ComboxSelector";
 
 type PromptInputProps = {

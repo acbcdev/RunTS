@@ -1,7 +1,7 @@
 import { Key, Settings, Zap } from "lucide-react";
-import { API_PROVIDERS } from "@/consts";
-import { Button } from "../ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { API_PROVIDERS } from "../../common/utils/index";
+import { Button } from "../../ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 
 export function NoProvidersView() {
 	const getProviderLabel = (name: string) => {

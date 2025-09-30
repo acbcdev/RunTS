@@ -5,14 +5,14 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { cn } from "@/features/lib/cn";
-import { Textarea } from "@/features/ui/textarea";
+import { cn } from "../lib/cn";
+import { Textarea } from "./textarea";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/features/ui/tooltip";
+} from "./tooltip";
 
 type PromptInputContextType = {
 	isLoading: boolean;

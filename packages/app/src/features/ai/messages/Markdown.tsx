@@ -4,15 +4,15 @@ import { useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
+import { useApparenceStore } from "../../settings/appearance-store/apparence";
+import { useTabsStore } from "../../tabs/tabs-store/tabs";
+import { Button } from "../../ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/features/ui/tooltip";
-import { useApparenceStore } from "@/store/apparence";
-import { useTabsStore } from "@/store/tabs";
+} from "../../ui/tooltip";
 
 const components = {
 	code: ({ className, children }) => {

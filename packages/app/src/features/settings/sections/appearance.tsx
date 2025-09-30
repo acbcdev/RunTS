@@ -1,15 +1,15 @@
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
-import { TabsContent } from "@/features/ui/tabs";
+import { themes } from "../../common/themes";
+import { cn } from "../../common/utils/utils";
+import { Button } from "../../ui/button";
+import { TabsContent } from "../../ui/tabs";
+import { SIDES, useApparenceStore } from "../appearance-store/apparence";
 import {
 	FONT_FAMILIES,
 	FONT_SIZES,
 	LAYOUTS,
 	RADIUS_SIZES,
-} from "@/features/common/utils/config";
-import { cn } from "@/features/common/utils/utils";
-import { SIDES, useApparenceStore } from "@/features/settings/store/apparence";
-import { themes } from "@/features/common/themes";
+} from "../config-consts/config";
 
 export function Appearance() {
 	const { fontSize, fontFamily, radius, theme, layout, setOption, side } =

@@ -1,11 +1,11 @@
 import { useShallow } from "zustand/react/shallow";
-import { useChat } from "@/features/ai/use-chat/useChat";
-import { useAIConfigStore } from "@/features/ai/store/aiConfig";
+import { Messages } from "../messages/Messages";
+import { Prompt } from "../prompt/PrompInput";
+import { useAIConfigStore } from "../store/aiConfig";
+import { useChat } from "../use-chat/useChat";
 import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
-import { Messages } from "../messages/Messages";
 import { NoProvidersView } from "./NoProvidersView";
-import { Prompt } from "../prompt/PrompInput";
 export function Chat() {
 	const { getProviders, showChat } = useAIConfigStore(
 		useShallow((state) => ({

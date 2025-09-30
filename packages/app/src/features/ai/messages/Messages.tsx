@@ -1,16 +1,16 @@
 import type { UIMessage } from "ai";
 import { RefreshCw } from "lucide-react";
 import { memo, useRef } from "react";
-import Markdown from "./Markdown";
-import MessageAssistant from "./MessageAssistant";
-import MessageUser from "./MessageUser";
-import { Button } from "@/features/ui/button";
+import { Button } from "../../ui/button";
 import {
 	ChatContainerContent,
 	ChatContainerRoot,
 	ChatContainerScrollAnchor,
-} from "@/features/ui/chat-container";
-import { ScrollButton } from "@/features/ui/scroll-button";
+} from "../../ui/chat-container";
+import { ScrollButton } from "../../ui/scroll-button";
+import Markdown from "./Markdown";
+import MessageAssistant from "./MessageAssistant";
+import MessageUser from "./MessageUser";
 
 type PureMessagesProps = {
 	messages: UIMessage[];

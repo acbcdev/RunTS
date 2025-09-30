@@ -2,7 +2,8 @@
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
+import { models } from "../../common/utils/index";
+import { Button } from "../../ui/button";
 import {
 	Command,
 	CommandEmpty,
@@ -10,15 +11,10 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-} from "@/features/ui/command";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/features/ui/popover";
-import { models } from "@/consts";
-import { useAIConfigStore } from "@/features/ai/store/aiConfig";
-import type { providers } from "@/features/ai/types";
+} from "../../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+import { useAIConfigStore } from "../store/aiConfig";
+import type { providers } from "../types";
 
 export function ComboboxSelect() {
 	const [open, setOpen] = useState(false);

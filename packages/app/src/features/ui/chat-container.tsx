@@ -1,5 +1,5 @@
 import { StickToBottom } from "use-stick-to-bottom";
-import { cn } from "@/features/lib/cn";
+import { cn } from "../lib/cn";
 
 export type ChatContainerRootProps = {
 	children: React.ReactNode;

@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Badge } from "../../ui/badge";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -9,12 +10,11 @@ import {
 	CommandItem,
 	CommandList,
 	CommandShortcut,
-} from "@/features/ui/command";
-import { TOGGLE_COMMAND } from "@/features/common/utils/shortcuts";
-import { useCommandItems } from "@/features/common/command/useCommandItems";
-import { useCommandSearch } from "@/features/common/command/useCommandSearch";
-import { useModalStore } from "@/features/common/store/modal";
-import { Badge } from "@/features/ui/badge";
+} from "../../ui/command";
+import { useModalStore } from "../modal/modal";
+import { TOGGLE_COMMAND } from "../utils/shortcuts";
+import { useCommandItems } from "./useCommandItems";
+import { useCommandSearch } from "./useCommandSearch";
 
 export function CommandK() {
 	const [query, setQuery] = useState("");
