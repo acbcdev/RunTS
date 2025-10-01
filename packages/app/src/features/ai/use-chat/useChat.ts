@@ -7,8 +7,8 @@ import {
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { systemPrompt } from "../../common/utils/prompt";
-import { useTabsStore } from "../../tabs/tabs-store/tabs";
+import { systemPrompt } from "@/features/common/utils/prompt";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { createProvider } from "../lib/providers";
 import { useAIConfigStore } from "../store/aiConfig";
 

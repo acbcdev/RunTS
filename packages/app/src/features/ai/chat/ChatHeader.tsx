@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
-import { Button } from "../../ui/button";
-import { MessageCircleIcon } from "../../ui/message-circle";
+import { Button } from "@/features/ui/button";
+import { MessageCircleIcon } from "@/features/ui/message-circle";
 import type { ChatHeaderProps } from "./types";
 
 export function ChatHeader({ onNewChat }: ChatHeaderProps) {

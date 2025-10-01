@@ -1,4 +1,4 @@
-import { Loader } from "../../ui/loader";
+import { Loader } from "@/features/ui/loader";
 import { cn } from "../utils/utils";
 
 interface LoaderProps {

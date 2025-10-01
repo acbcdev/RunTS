@@ -1,15 +1,15 @@
 import { decode } from "js-base64";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
+import { CommandK } from "@/features/common/command/CommandK";
 import { ErrorBoundary } from "@/features/common/error/ErrorBoundary";
+import { ShortCutsModal } from "@/features/common/shortcuts/ShortCuts";
+import { MESSAGE_LOG } from "@/features/common/utils";
+import { EditorSettingsDialog } from "@/features/settings/editor-setting-dialog/EditorSettingDialog";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Toaster } from "@/features/ui/sonner";
 import { TooltipProvider } from "@/features/ui/tooltip";
-import { CommandK } from "./features/common/command/CommandK";
-import { ShortCutsModal } from "./features/common/shortcuts/ShortCuts";
-import { MESSAGE_LOG } from "./features/common/utils";
-import { EditorSettingsDialog } from "./features/settings/editor-setting-dialog/EditorSettingDialog";
 
 const CodeEditor = lazy(
 	() => import("@/features/editor/code-editor/CodeEditor"),
@@ -51,9 +51,9 @@ function App() {
 				<CommandK />
 				<EditorSettingsDialog />
 				<ShortCutsModal />
-				<Suspense fallback={<div>Loading editor...</div>}>
-					<CodeEditor />
-				</Suspense>
+				{/* <Suspense fallba/ck={<div>Loading editor...</div>}> */}
+				<CodeEditor />
+				{/* </Suspense> */}
 				<Toaster />
 			</TooltipProvider>
 		</ErrorBoundary>

@@ -1,8 +1,8 @@
 import { useShallow } from "zustand/react/shallow";
-import { Messages } from "../messages/Messages";
-import { Prompt } from "../prompt/PrompInput";
-import { useAIConfigStore } from "../store/aiConfig";
-import { useChat } from "../use-chat/useChat";
+import { Messages } from "../messages";
+import { Prompt } from "../prompt";
+import { useAIConfigStore } from "../store";
+import { useChat } from "../use-chat";
 import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
 import { NoProvidersView } from "./NoProvidersView";
