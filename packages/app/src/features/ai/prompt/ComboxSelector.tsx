@@ -2,8 +2,8 @@
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { models } from "../../common/utils/index";
-import { Button } from "../../ui/button";
+import { models } from "@/features/common/utils/index";
+import { Button } from "@/features/ui/button";
 import {
 	Command,
 	CommandEmpty,
@@ -11,8 +11,8 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-} from "../../ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+} from "@/features/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/features/ui/popover";
 import { useAIConfigStore } from "../store/aiConfig";
 import type { providers } from "../types";
 

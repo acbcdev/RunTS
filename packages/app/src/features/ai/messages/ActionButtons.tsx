@@ -1,12 +1,12 @@
 import { Copy, CopyCheck } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/features/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "../../ui/tooltip";
+} from "@/features/ui/tooltip";
 
 export function ActionButtons({
 	content,

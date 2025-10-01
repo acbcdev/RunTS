@@ -1,7 +1,7 @@
 import type { UIMessage } from "ai";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { models } from "../../common/utils/index";
+import { models } from "@/features/common/utils/index";
 import type { providers } from "../types";
 
 interface AIConfigStore {
