@@ -1,16 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Tab } from "../../editor/types";
-
-type HistoryTabsStoreStates = {
-  tabs: Tab[];
-};
-type HistoryTabsStoreActions = {
-  addTab: (tab: Tab) => void;
-  removeTab: (tabId: Tab["id"]) => void;
-  undoClose: () => Tab | undefined;
-};
-type HistoryTabsStore = HistoryTabsStoreStates & HistoryTabsStoreActions;
+import type { HistoryTabsStore } from "./types";
 
 export const useHistoryTabsStore = create<HistoryTabsStore>()(
   persist(
