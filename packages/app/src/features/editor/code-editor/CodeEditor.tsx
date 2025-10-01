@@ -3,9 +3,9 @@ import { lazy, useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { Chat } from "../../ai/chat/Chat";
 import { useAIConfigStore } from "../../ai/store/aiConfig";
+import { useDebounce } from "../../common/hooks/useDebounce";
 import { ReloadPrompt } from "../../common/loader/ReloadPrompt";
 import { useShortcuts } from "../../common/shortcuts/useShortcuts";
-import { useDebounce } from "../../common/utils/useDebounce";
 import { updateChangeTheme } from "../../common/utils/utils";
 import {
 	SIDES,

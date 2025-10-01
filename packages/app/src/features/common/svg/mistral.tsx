@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-const MistralAI = (props: SVGProps<SVGSVGElement>) => (
+export const MistralAI = (props: SVGProps<SVGSVGElement>) => (
 	// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

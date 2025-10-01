@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { useHandler } from "../../common/utils/useHandler";
+import { useHandler } from "../../common/hooks/useHandler";
 import { useEditorStore } from "../../editor/editor-store/editor";
 import type { Tab } from "../../editor/types";
 import { useTabsStore } from "../tabs-store/tabs";

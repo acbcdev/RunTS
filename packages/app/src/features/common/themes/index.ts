@@ -1,4 +1,4 @@
-import type { Theme } from "../../editor/types";
+import type { Theme } from "@/features/editor/types";
 import { createTheme } from "./lib";
 
 export const themes: Record<string, Theme> = {

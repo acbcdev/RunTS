@@ -12,8 +12,8 @@ import {
 import { type JSX, memo, type ReactNode } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useAIConfigStore } from "../../ai/store/aiConfig";
+import { useHandler } from "../../common/hooks/useHandler";
 import { useModalStore } from "../../common/modal/modal";
-import { useHandler } from "../../common/utils/useHandler";
 import { cn } from "../../common/utils/utils";
 import { useApparenceStore } from "../../settings/appearance-store/apparence";
 import { Button } from "../../ui/button";

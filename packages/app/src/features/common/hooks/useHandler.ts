@@ -4,8 +4,8 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { encode } from "js-base64";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import type { Tab } from "../../editor/types";
-import { useTabsStore } from "../../tabs/tabs-store/tabs";
+import type { Tab } from "@/features/editor/types";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 
 export function useHandler() {
   const getCurrentTab = useTabsStore(
@@ -34,7 +34,7 @@ export function useHandler() {
         )}... has been copied to your clipboard.`,
         duration: 2000,
       });
-    } catch (e) {
+    } catch {
       toast.error("Error creating link", {
         description: "The link could not be created.",
         duration: 2000,
