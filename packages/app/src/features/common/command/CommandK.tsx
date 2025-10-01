@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { Badge } from "../../ui/badge";
+import { Badge } from "@/features/ui/badge";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -10,7 +10,7 @@ import {
 	CommandItem,
 	CommandList,
 	CommandShortcut,
-} from "../../ui/command";
+} from "@/features/ui/command";
 import { useModalStore } from "../modal/modal";
 import { TOGGLE_COMMAND } from "../utils/shortcuts";
 import { useCommandItems } from "./useCommandItems";

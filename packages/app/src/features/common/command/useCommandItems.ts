@@ -25,39 +25,20 @@ import {
 import {
   SIDES,
   useApparenceStore,
-} from "../../settings/appearance-store/apparence";
+} from "@/features/settings/appearance-store/apparence";
 import {
   FONT_FAMILIES,
   FONT_SIZES,
   RADIUS_SIZES,
   REFRESH_TIMES,
   RENDER_LINES,
-} from "../../settings/config-consts/config";
-import { useConfigStore } from "../../settings/config-store/config";
-import { useTabsStore } from "../../tabs/tabs-store/tabs";
+} from "@/features/settings/config-consts/config";
+import { useConfigStore } from "@/features/settings/config-store/config";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useHistoryTabsStore } from "../history/history";
 import { useModalStore } from "../modal/modal";
 import { themes } from "../themes";
-
-export type CommandOptionChild = CommandOption & {
-  parentId: string;
-};
-
-export interface CommandOption {
-  id: string;
-  title: string;
-  description?: string;
-  icon: React.FC<{ className?: string }>;
-  shortcut?: string;
-  category: string;
-  action: () => void;
-  keywords?: string[];
-  preventDefault?: boolean;
-  route?: string;
-  children?: string;
-  isSelected?: boolean;
-  forceMount?: boolean;
-}
+import type { CommandOption, CommandOptionChild } from "./types";
 
 export const useCommandItems = (): {
   commands: CommandOption[];

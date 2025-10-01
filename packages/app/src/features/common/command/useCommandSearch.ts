@@ -1,30 +1,5 @@
 import { useMemo } from "react";
-
-export type CommandOptionChild = CommandOption & {
-  parentId: string;
-};
-
-export interface CommandOption {
-  id: string;
-  title: string;
-  description?: string;
-  icon: React.FC<{ className?: string }>;
-  shortcut?: string;
-  category: string;
-  action: () => void;
-  keywords?: string[];
-  preventDefault?: boolean;
-  route?: string;
-  children?: string;
-  isSelected?: boolean;
-  forceMount?: boolean;
-}
-
-export interface CommandGroup {
-  heading: string;
-  items: CommandOption[] | CommandOptionChild[];
-  forceMount?: boolean;
-}
+import type { CommandGroup, CommandOption, CommandOptionChild } from "./types";
 
 interface UseCommandSearchOptions {
   commands: CommandOption[] | CommandOptionChild[];
