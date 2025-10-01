@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "@/features/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "../../ui/card";
+} from "@/features/ui/card";
 
 /**
  * Component for testing error boundary functionality

@@ -1,40 +1,25 @@
 import { AlertTriangle, Bug, RefreshCw } from "lucide-react";
 import { Component, type ReactNode } from "react";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "../../ui/alert";
-import { Button } from "../../ui/button";
+import { Alert, AlertDescription } from "@/features/ui/alert";
+import { Button } from "@/features/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "../../ui/card";
+} from "@/features/ui/card";
+import type {
+	ErrorBoundaryProps,
+	ErrorBoundaryState,
+	ErrorInfo,
+} from "./types";
 // import {
 // 	Collapsible,
 // 	CollapsibleContent,
 // 	CollapsibleTrigger,
-// } from "../../ui/collapsible";
-export interface ErrorInfo {
-	error: Error;
-	errorInfo: {
-		componentStack: string;
-	};
-	timestamp: number;
-	userAgent: string;
-	url: string;
-}
-
-export interface ErrorBoundaryState {
-	hasError: boolean;
-	error: Error | null;
-	errorInfo: ErrorInfo | null;
-}
-
-interface ErrorBoundaryProps {
-	children: ReactNode;
-	fallback?: (error: ErrorInfo) => ReactNode;
-}
+// } from "@/features/ui/collapsible";
 
 export class ErrorBoundary extends Component<
 	ErrorBoundaryProps,
