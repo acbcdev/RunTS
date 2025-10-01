@@ -1,12 +1,12 @@
 import { useShallow } from "zustand/react/shallow";
-import { useConfigStore } from "../../settings/config-store/config";
+import { useConfigStore } from "@/features/settings/config-store/config";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-} from "../../ui/dialog";
+} from "@/features/ui/dialog";
 export function Updates() {
 	const { updates, setUpdates } = useConfigStore(
 		useShallow((state) => ({
