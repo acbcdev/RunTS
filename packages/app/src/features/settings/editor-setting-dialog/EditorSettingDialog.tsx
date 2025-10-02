@@ -1,6 +1,6 @@
 import { BrainCog, Brush, MonitorCog } from "lucide-react";
 import { useModalStore } from "../../common/modal/modal";
-import { versionApp } from "../../common/utils/index";
+import { versionApp } from "../../common/utils/const";
 import {
 	Dialog,
 	DialogContent,

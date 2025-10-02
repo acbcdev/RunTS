@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { useAIConfigStore } from "../../ai/store/aiConfig";
-import { API_PROVIDERS } from "../../common/utils/index";
+import { API_PROVIDERS } from "../../common/utils/const";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { TabsContent } from "../../ui/tabs";

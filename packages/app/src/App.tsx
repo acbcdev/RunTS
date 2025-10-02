@@ -5,7 +5,7 @@ import { useShallow } from "zustand/react/shallow";
 import { CommandK } from "@/features/common/command/CommandK";
 import { ErrorBoundary } from "@/features/common/error/ErrorBoundary";
 import { ShortCutsModal } from "@/features/common/shortcuts/ShortCuts";
-import { MESSAGE_LOG } from "@/features/common/utils";
+import { MESSAGE_LOG } from "@/features/common/utils/const";
 import { EditorSettingsDialog } from "@/features/settings/editor-setting-dialog/EditorSettingDialog";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Toaster } from "@/features/ui/sonner";
