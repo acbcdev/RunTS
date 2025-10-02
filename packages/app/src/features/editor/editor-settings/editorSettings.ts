@@ -1,7 +1,7 @@
 import type {
   ConfigEditorActions,
   ConfigEditorState,
-} from "../../settings/config-store/config";
+} from "@/features/settings/config-store/config";
 
 export type EditorSettingItem = {
   label: string;

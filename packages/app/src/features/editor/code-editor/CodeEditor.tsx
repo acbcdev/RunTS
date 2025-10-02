@@ -1,27 +1,27 @@
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { Chat } from "../../ai/chat/Chat";
-import { useAIConfigStore } from "../../ai/store/aiConfig";
-import { useDebounce } from "../../common/hooks/useDebounce";
-import { ReloadPrompt } from "../../common/loader/ReloadPrompt";
-import { useShortcuts } from "../../common/shortcuts/useShortcuts";
-import { updateChangeTheme } from "../../common/utils/utils";
+import { Chat } from "@/features/ai/chat/Chat";
+import { useAIConfigStore } from "@/features/ai/store/aiConfig";
+import { useDebounce } from "@/features/common/hooks/useDebounce";
+import { ReloadPrompt } from "@/features/common/loader/ReloadPrompt";
+import { useShortcuts } from "@/features/common/shortcuts/useShortcuts";
+import { updateChangeTheme } from "@/features/common/utils/utils";
 import {
 	SIDES,
 	useApparenceStore,
-} from "../../settings/appearance-store/apparence";
-import { useConfigStore } from "../../settings/config-store/config";
-import { useTabsStore } from "../../tabs/tabs-store/tabs";
+} from "@/features/settings/appearance-store/apparence";
+import { useConfigStore } from "@/features/settings/config-store/config";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import {
 	ResizableHandle,
 	ResizablePanel,
 	ResizablePanelGroup,
-} from "../../ui/resizable";
+} from "@/features/ui/resizable";
 import { useRun } from "../use-run/useRun";
 
 const EditorMain = lazy(() => import("../editor-main/EditorMain"));
-const EditorTabs = lazy(() => import("../../tabs/editor-tabs/EditorTabs"));
+const EditorTabs = lazy(() => import("@/features/tabs/editor-tabs/EditorTabs"));
 const EditorActions = lazy(() => import("../editor-actions/EditorActions"));
 const Console = lazy(() => import("../console/Console"));
 const EmptyState = lazy(() => import("../editor-main/EmptyState"));

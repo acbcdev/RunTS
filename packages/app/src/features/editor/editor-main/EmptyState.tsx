@@ -1,5 +1,5 @@
 import { Command, MessageCircleIcon, Plus } from "lucide-react";
-import { Kd } from "../../ui/kd";
+import { Kd } from "@/features/ui/kd";
 
 const commands = [
 	{

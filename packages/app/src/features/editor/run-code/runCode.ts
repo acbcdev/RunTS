@@ -1,17 +1,4 @@
-export interface ConsoleOutput {
-  type: "log";
-  content: string;
-  line: number;
-  column: number;
-  timestamp: number;
-}
-
-type RunCodeOptions = {
-  injectLogs: boolean;
-  name: string;
-  timeoutWorker: number;
-  hideUndefined: boolean;
-};
+import type { ConsoleOutput, RunCodeOptions } from "./types";
 
 export function runCodeWorker(
   code: string,

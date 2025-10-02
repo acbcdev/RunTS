@@ -1,6 +1,8 @@
-import { injectLogsIntoCode } from "../../common/utils/addLogsToLines";
-import { Formatter } from "../../common/utils/formatter";
-import { transform } from "../../common/utils/transform";
+import {
+  Formatter,
+  injectLogsIntoCode,
+  transform,
+} from "@/features/common/utils/";
 
 export interface ConsoleOutput {
   type: "log" | "error" | "warn";
