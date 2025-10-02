@@ -1,9 +1,9 @@
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { useHandler } from "../../common/hooks/useHandler";
-import { useEditorStore } from "../../editor/editor-store/editor";
-import type { Tab } from "../../editor/types";
-import { useTabsStore } from "../tabs-store/tabs";
+import { useHandler } from "@/features/common/hooks";
+import { useEditorStore } from "@/features/editor/editor-store";
+import type { Tab } from "@/features/editor/types";
+import { useTabsStore } from "../tabs-store";
 
 export const useTabActions = () => {
   const editorRef = useEditorStore(useShallow((state) => state.editorRef));

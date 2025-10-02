@@ -5,7 +5,7 @@ import {
 	ContextMenuItem,
 	ContextMenuSeparator,
 	ContextMenuTrigger,
-} from "../../ui/context-menu";
+} from "@/features/ui/context-menu";
 
 interface TabContextMenuProps {
 	children: React.ReactNode;

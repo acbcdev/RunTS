@@ -1,0 +1,1 @@
+export { useTabsStore } from "./tabs";
