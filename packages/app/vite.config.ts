@@ -1,6 +1,6 @@
 import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 // https://vite.dev/config/
@@ -57,11 +57,11 @@ export default defineConfig({
   ],
   worker: {
     format: "es",
-    plugins: () => [],
   },
   resolve: {
     alias: {
       "@": path.resolve("./src"),
+      "@features": path.resolve("./src/features"),
     },
   },
 });
