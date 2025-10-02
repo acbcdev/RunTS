@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
-import { useHistoryTabsStore } from "@/features/common/history/history";
 import type { Tab } from "@/features/editor/types";
 import { cn } from "@/features/lib/cn";
+import { useHistoryTabsStore } from "@/features/tabs/history/history";
 import { Button } from "@/features/ui/button";
 import { useTabActions } from "../use-tab-actions/useTabActions";
 import { TabContextMenu } from "./TabContextMenu";

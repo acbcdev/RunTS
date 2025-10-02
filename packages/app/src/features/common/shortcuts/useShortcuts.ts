@@ -2,8 +2,8 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { useShallow } from "zustand/react/shallow";
 import { useAIConfigStore } from "../../ai/store/aiConfig";
 import { useRun } from "../../editor/use-run/useRun";
+import { useHistoryTabsStore } from "../../tabs/history/history";
 import { useTabsStore } from "../../tabs/tabs-store/tabs";
-import { useHistoryTabsStore } from "../history/history";
 import { useModalStore } from "../modal/modal";
 import {
   NEW_TAB,

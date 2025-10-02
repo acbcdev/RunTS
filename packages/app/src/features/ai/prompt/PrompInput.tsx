@@ -13,14 +13,8 @@ import {
 } from "@/features/ui/prompt-input";
 import { useAIConfigStore } from "../store/aiConfig";
 import { ComboboxSelect } from "./ComboxSelector";
+import type { PromptInputProps } from "./types";
 
-type PromptInputProps = {
-	value: string;
-	onValueChange: (value: string) => void;
-	isLoading: boolean;
-	onSubmit: () => void;
-	stop: () => void;
-};
 export function Prompt({
 	value,
 	onValueChange,

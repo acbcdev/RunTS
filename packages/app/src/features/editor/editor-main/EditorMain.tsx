@@ -5,13 +5,13 @@ import * as monaco from "monaco-editor";
 import { lazy, useCallback } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
-import { useHistoryTabsStore } from "@/features/common/history/history";
 import { useModalStore } from "@/features/common/modal/modal";
 import { themes } from "@/features/common/themes";
 import { EDITOR_CONFIG } from "@/features/common/utils/editor";
 import { extraLib } from "@/features/common/utils/extraLib";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useConfigStore } from "@/features/settings/config-store/config";
+import { useHistoryTabsStore } from "@/features/tabs/history/history";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Loader } from "@/features/ui/loader";
 import { useEditorStore } from "../editor-store/editor";
@@ -253,7 +253,17 @@ export function EditorMain({ tab }: EditorMainProps) {
 			updateEditor({ editorRef: editor });
 			updateEditor({ monaco: monacoInstance });
 		},
-		[updateEditor],
+		[
+			theme,
+			updateEditor,
+			addTab,
+			newTab,
+			runCode,
+			toggle,
+			toggleConfig,
+			toogleChat,
+			undo,
+		],
 	);
 
 	return (

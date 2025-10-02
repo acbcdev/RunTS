@@ -35,7 +35,7 @@ import {
 } from "@/features/settings/config-consts/config";
 import { useConfigStore } from "@/features/settings/config-store/config";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
-import { useHistoryTabsStore } from "../history/history";
+import { useHistoryTabsStore } from "../../tabs/history/history";
 import { useModalStore } from "../modal/modal";
 import { themes } from "../themes";
 import type { CommandOption, CommandOptionChild } from "./types";

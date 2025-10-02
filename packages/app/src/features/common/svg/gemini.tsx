@@ -2,7 +2,6 @@ import type { SVGProps } from "react";
 
 export function gemini(props: SVGProps<SVGSVGElement>) {
 	return (
-		// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="256"
@@ -11,9 +10,10 @@ export function gemini(props: SVGProps<SVGSVGElement>) {
 			viewBox="0 0 256 258"
 			{...props}
 		>
+			<title>Gemini</title>
 			<defs>
 				<radialGradient
-					id="a"
+					id={"a"}
 					cx="78.302%"
 					cy="55.52%"
 					r="78.115%"
@@ -29,7 +29,7 @@ export function gemini(props: SVGProps<SVGSVGElement>) {
 					<stop offset="100%" stop-color="#F49C46" />
 				</radialGradient>
 				<radialGradient
-					id="b"
+					id={"b"}
 					cx="-3.409%"
 					cy="-54.219%"
 					r="169.363%"
