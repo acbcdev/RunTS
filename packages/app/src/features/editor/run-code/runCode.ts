@@ -5,7 +5,7 @@ export function runCodeWorker(
   options: Partial<RunCodeOptions>
 ): Promise<ConsoleOutput[]> {
   return new Promise((resolve, reject) => {
-    const worker = new Worker(new URL("./worker.ts", import.meta.url), {
+    const worker = new Worker(new URL("./worker.ts?worker", import.meta.url), {
       type: "module",
       name: "runCode",
     });
