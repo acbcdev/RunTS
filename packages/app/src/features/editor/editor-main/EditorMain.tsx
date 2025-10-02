@@ -10,7 +10,7 @@ import { useModalStore } from "@/features/common/modal/modal";
 import { themes } from "@/features/common/themes";
 import { EDITOR_CONFIG } from "@/features/common/utils/editor";
 import { extraLib } from "@/features/common/utils/extraLib";
-import { useApparenceStore } from "@/features/settings/appearance-store/apparence";
+import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useConfigStore } from "@/features/settings/config-store/config";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Loader } from "@/features/ui/loader";

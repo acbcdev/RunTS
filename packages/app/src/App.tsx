@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { decode } from "js-base64";
 import { lazy, useEffect } from "react";
 import { toast } from "sonner";
@@ -14,6 +15,8 @@ import { TooltipProvider } from "@/features/ui/tooltip";
 const CodeEditor = lazy(
 	() => import("@/features/editor/code-editor/CodeEditor"),
 );
+
+const queryClient = new QueryClient();
 
 function App() {
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
@@ -46,17 +49,19 @@ function App() {
 		}
 	}, []);
 	return (
-		<ErrorBoundary>
-			<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-				<CommandK />
-				<EditorSettingsDialog />
-				<ShortCutsModal />
-				{/* <Suspense fallba/ck={<div>Loading editor...</div>}> */}
-				<CodeEditor />
-				{/* </Suspense> */}
-				<Toaster />
-			</TooltipProvider>
-		</ErrorBoundary>
+		<QueryClientProvider client={queryClient}>
+			<ErrorBoundary>
+				<TooltipProvider delayDuration={500} skipDelayDuration={100}>
+					<CommandK />
+					<EditorSettingsDialog />
+					<ShortCutsModal />
+					{/* <Suspense fallba/ck={<div>Loading editor...</div>}> */}
+					<CodeEditor />
+					{/* </Suspense> */}
+					<Toaster />
+				</TooltipProvider>
+			</ErrorBoundary>
+		</QueryClientProvider>
 	);
 }
 export default App;

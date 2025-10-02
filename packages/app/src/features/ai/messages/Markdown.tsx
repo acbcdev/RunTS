@@ -4,7 +4,7 @@ import { useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useShallow } from "zustand/react/shallow";
-import { useApparenceStore } from "@/features/settings/appearance-store/apparence";
+import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Button } from "@/features/ui/button";
 import {

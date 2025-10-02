@@ -3,7 +3,7 @@ import { themes } from "../../common/themes";
 import { cn } from "../../common/utils/utils";
 import { Button } from "../../ui/button";
 import { TabsContent } from "../../ui/tabs";
-import { SIDES, useApparenceStore } from "../appearance-store/apparence";
+import { SIDES, useApparenceStore } from "../appearance-store/appearance";
 import {
 	FONT_FAMILIES,
 	FONT_SIZES,

@@ -1,8 +1,8 @@
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+import { Input } from "@/features/ui/input";
+import { Label } from "@/features/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/features/ui/popover";
 
-export default function CreateTheme() {
+export function CreateTheme() {
 	return (
 		<Popover>
 			<PopoverTrigger>
@@ -32,51 +32,51 @@ function CreateThemeForm() {
 			<section className="grid grid-cols-2 gap-4  ">
 				<div>
 					<Label htmlFor="background">Background</Label>
-					<Input className="my-2" id="background" />
+					<Input className="my-2" id={"background"} />
 				</div>
 				<div>
 					<Label htmlFor="foreground">Foreground</Label>
-					<Input className="my-2" id="foreground" />
+					<Input className="my-2" id={"foreground"} />
 				</div>
 				<div>
 					<Label htmlFor="border">Border</Label>
-					<Input className="my-2" id="border" />
+					<Input className="my-2" id={"border"} />
 				</div>
 				<div>
 					<Label htmlFor="accent">Accent</Label>
-					<Input className="my-2" id="accent" />
+					<Input className="my-2" id={"accent"} />
 				</div>
 				<div>
 					<Label htmlFor="selection">Selection</Label>
-					<Input className="my-2" id="selection" />
+					<Input className="my-2" id={"selection"} />
 				</div>
 				<div>
 					<Label htmlFor="header">Header</Label>
-					<Input className="my-2" id="header" />
+					<Input className="my-2" id={"header"} />
 				</div>
 				<div>
 					<Label htmlFor="hover">Hover</Label>
-					<Input className="my-2" id="hover" />
+					<Input className="my-2" id={"hover"} />
 				</div>
 				<div>
 					<Label htmlFor="muted">Muted</Label>
-					<Input className="my-2" id="muted" />
+					<Input className="my-2" id={"muted"} />
 				</div>
 				<div>
 					<Label htmlFor="success">Success</Label>
-					<Input className="my-2" id="success" />
+					<Input className="my-2" id={"success"} />
 				</div>
 				<div>
 					<Label htmlFor="warning">Warning</Label>
-					<Input className="my-2" id="warning" />
+					<Input className="my-2" id={"warning"} />
 				</div>
 				<div>
 					<Label htmlFor="error">Error</Label>
-					<Input className="my-2" id="error" />
+					<Input className="my-2" id={"error"} />
 				</div>
 				<div>
 					<Label htmlFor="info">Info</Label>
-					<Input className="my-2" id="info" />
+					<Input className="my-2" id={"info"} />
 				</div>
 			</section>
 		</>

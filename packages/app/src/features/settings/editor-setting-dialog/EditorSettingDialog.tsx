@@ -1,15 +1,15 @@
 import { BrainCog, Brush, MonitorCog } from "lucide-react";
-import { useModalStore } from "../../common/modal/modal";
-import { versionApp } from "../../common/utils/const";
+import { useModalStore } from "@/features/common/modal/modal";
+import { versionApp } from "@/features/common/utils/const";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-} from "../../ui/dialog";
-import { ScrollArea } from "../../ui/scroll-area";
-import { Tabs, TabsList, TabsTrigger } from "../../ui/tabs";
+} from "@/features/ui/dialog";
+import { ScrollArea } from "@/features/ui/scroll-area";
+import { Tabs, TabsList, TabsTrigger } from "@/features/ui/tabs";
 import { GithubStars } from "../github-stars/GithubStars";
 import { AI } from "../sections/ai";
 import { Appearance } from "../sections/appearance";

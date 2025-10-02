@@ -15,7 +15,7 @@ import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useHandler } from "@/features/common/hooks/useHandler";
 import { useModalStore } from "@/features/common/modal/modal";
 import { cn } from "@/features/common/utils/utils";
-import { useApparenceStore } from "@/features/settings/appearance-store/apparence";
+import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { Button } from "@/features/ui/button";
 import { Kd } from "@/features/ui/kd";
 import {

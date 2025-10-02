@@ -1,5 +1,5 @@
-import type { lineRendererEditor, Radius, Tab } from "../../editor/types";
-import type { ConfigEditorState } from "../config-store/config";
+import type { lineRendererEditor, Radius, Tab } from "@/features/editor/types";
+import type { EditorSettingConfig } from "./types";
 
 export const DEFAULT_CODE = `
 /*
@@ -33,15 +33,6 @@ export const DEFAULT_CODE = `
  */
 
 `;
-
-export type EditorSettingConfig = {
-  label: string;
-  key: keyof Pick<
-    ConfigEditorState,
-    "wordWrap" | "lineNumbers" | "minimap" | "whiteSpace"
-  >;
-  description: string;
-};
 
 export const EDITOR_SETTINGS_CONFIG: EditorSettingConfig[] = [
   {

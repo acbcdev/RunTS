@@ -10,7 +10,7 @@ import { updateChangeTheme } from "@/features/common/utils/utils";
 import {
 	SIDES,
 	useApparenceStore,
-} from "@/features/settings/appearance-store/apparence";
+} from "@/features/settings/appearance-store/appearance";
 import { useConfigStore } from "@/features/settings/config-store/config";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import {

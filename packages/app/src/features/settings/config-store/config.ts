@@ -1,33 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { lineRendererEditor } from "../../editor/types";
-export type ConfigEditorState = {
-  wordWrap: boolean;
-  hideUndefined: boolean;
-  lineNumbers: boolean;
-  whiteSpace: boolean;
-  refreshTime: number;
-  minimap: boolean;
-  updates: boolean;
-  lineRenderer: lineRendererEditor;
-};
-
-export type ConfigEditorActions = {
-  updateConfig: (updates: Partial<ConfigEditorState>) => void;
-  setConfigValue: <K extends keyof ConfigEditorState>(
-    key: K,
-    value: ConfigEditorState[K]
-  ) => void;
-  resetConfig: () => void;
-  toggleConfig: (
-    key: keyof Pick<
-      ConfigEditorState,
-      "wordWrap" | "lineNumbers" | "whiteSpace" | "minimap" | "hideUndefined"
-    >
-  ) => void;
-};
-
-type ConfigEditor = ConfigEditorState & ConfigEditorActions;
+import type { ConfigEditor, ConfigEditorState } from "./types";
 
 const DEFAULT_CONFIG: ConfigEditorState = {
   updates: true,

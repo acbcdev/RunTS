@@ -25,7 +25,7 @@ import {
 import {
   SIDES,
   useApparenceStore,
-} from "@/features/settings/appearance-store/apparence";
+} from "@/features/settings/appearance-store/appearance";
 import {
   FONT_FAMILIES,
   FONT_SIZES,
