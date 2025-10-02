@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useEditorStore } from "../../editor/editor-store/editor";
-import { Button } from "../../ui/button";
-import { Label } from "../../ui/label";
-import { Switch } from "../../ui/switch";
-import { TabsContent } from "../../ui/tabs";
+import { useEditorStore } from "@/features/editor/editor-store/editor";
+import { Button } from "@/features/ui/button";
+import { Label } from "@/features/ui/label";
+import { Switch } from "@/features/ui/switch";
+import { TabsContent } from "@/features/ui/tabs";
 import {
 	EDITOR_SETTINGS_CONFIG,
 	REFRESH_TIMES,

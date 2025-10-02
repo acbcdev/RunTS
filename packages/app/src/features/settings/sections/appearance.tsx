@@ -1,8 +1,8 @@
 import { useShallow } from "zustand/react/shallow";
-import { themes } from "../../common/themes";
-import { cn } from "../../common/utils/utils";
-import { Button } from "../../ui/button";
-import { TabsContent } from "../../ui/tabs";
+import { themes } from "@/features/common/themes";
+import { cn } from "@/features/common/utils/utils";
+import { Button } from "@/features/ui/button";
+import { TabsContent } from "@/features/ui/tabs";
 import { SIDES, useApparenceStore } from "../appearance-store/appearance";
 import {
 	FONT_FAMILIES,

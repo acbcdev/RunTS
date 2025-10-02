@@ -1,15 +1,15 @@
 import { ExternalLink } from "lucide-react";
-import { useAIConfigStore } from "../../ai/store/aiConfig";
-import { API_PROVIDERS } from "../../common/utils/const";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { TabsContent } from "../../ui/tabs";
+import { useAIConfigStore } from "@/features/ai/store/aiConfig";
+import { API_PROVIDERS } from "@/features/common/utils/const";
+import { Input } from "@/features/ui/input";
+import { Label } from "@/features/ui/label";
+import { TabsContent } from "@/features/ui/tabs";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "../../ui/tooltip";
+} from "@/features/ui/tooltip";
 
 export function AI() {
 	const apiKeys = useAIConfigStore((state) => state.apiKeys);
