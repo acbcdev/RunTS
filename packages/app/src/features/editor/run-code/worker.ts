@@ -5,11 +5,6 @@ import {
 } from "@/features/common/utils";
 import type { ConsoleOutput } from "./types";
 
-// Disable hot reload for worker to prevent React refresh issues
-if (import.meta.hot) {
-  (import.meta.hot as any).decline();
-}
-
 self.onmessage = async (event: MessageEvent) => {
   const { activeTabCode, name, injectLogs } = event.data;
   let output: ConsoleOutput[] = [];
@@ -156,56 +151,3 @@ self.onmessage = async (event: MessageEvent) => {
     finishExecution();
   }
 };
-
-// interface InjectLogsState {
-//   logs: number[];
-// }
-
-// // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-// function injectLogsPlugin({ types: t }: any): PluginObj<InjectLogsState> {
-//   return {
-//     visitor: {
-//       Program: {
-//         exit(_, state) {
-//           // Inicializa la metadata para almacenar las líneas de log
-//           if (!state.file.metadata.injectLogs) {
-//             state.file.metadata.injectLogs = [];
-//           }
-//         },
-//       },
-//       ExpressionStatement(path, state) {
-//         // Solo transformar si es top-level (su padre es Program)
-//         if (!t.isProgram(path.parent)) return;
-
-//         // Si ya es un console.log, registrar la línea y omitir
-//         if (t.isCallExpression(path.node.expression)) {
-//           const callExpr = path.node.expression;
-//           if (
-//             t.isMemberExpression(callExpr.callee) &&
-//             t.isIdentifier(callExpr.callee.object, { name: "console" }) &&
-//             t.isIdentifier(callExpr.callee.property, { name: "log" })
-//           ) {
-//             if (path.node.loc) {
-//               state.file.metadata.injectLogs.push(path.node.loc.start.line);
-//             }
-//             return;
-//           }
-//         }
-
-//         // Extraer la expresión original
-//         const originalExpr = path.node.expression;
-//         // Crear la llamada: console.log(originalExpr)
-//         const logCall = t.callExpression(
-//           t.memberExpression(t.identifier("console"), t.identifier("log")),
-//           [originalExpr]
-//         );
-//         // Reemplazar el statement por el console.log(...)
-//         path.replaceWith(t.expressionStatement(logCall));
-
-//         if (path.node.loc) {
-//           state.file.metadata.injectLogs.push(path.node.loc.start.line);
-//         }
-//       },
-//     },
-//   };
-// }
