@@ -49,7 +49,7 @@ export default defineConfig({
       // },
       workbox: {
         navigateFallback: "/",
-        maximumFileSizeToCacheInBytes: 1024 * 1024 * 5,
+        maximumFileSizeToCacheInBytes: 1024 * 1024 * 8,
         globPatterns: ["**/*.{js,css,html,woff2}", "**/*.{png,jpg,svg,webp}"],
       },
     }),
@@ -57,6 +57,7 @@ export default defineConfig({
   ],
   worker: {
     format: "es",
+    plugins: () => [],
   },
   resolve: {
     alias: {

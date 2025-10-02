@@ -2,14 +2,12 @@ import {
   Formatter,
   injectLogsIntoCode,
   transform,
-} from "@/features/common/utils/";
+} from "@/features/common/utils";
+import type { ConsoleOutput } from "./types";
 
-export interface ConsoleOutput {
-  type: "log" | "error" | "warn";
-  content: string;
-  line: number;
-  column: number;
-  timestamp: number;
+// Disable hot reload for worker to prevent React refresh issues
+if (import.meta.hot) {
+  (import.meta.hot as any).decline();
 }
 
 self.onmessage = async (event: MessageEvent) => {
@@ -67,7 +65,7 @@ self.onmessage = async (event: MessageEvent) => {
     if (output.length >= 4000) {
       if (!outputLimitReached) {
         output.push({
-          type: "warn",
+          type: "log",
           content:
             "Output limit reached: No more logs will be recorded. max 4000",
           line: 0,
@@ -148,7 +146,7 @@ self.onmessage = async (event: MessageEvent) => {
   } catch (error) {
     if (!outputLimitReached) {
       output.push({
-        type: "error",
+        type: "log",
         content: `Runtime Error: ${error ?? "Unknown error"}`,
         line: 0,
         column: 0,
