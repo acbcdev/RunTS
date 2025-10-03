@@ -7,13 +7,13 @@ export { extraLib } from "./extraLib";
 export { Formatter } from "./formatter";
 export { systemPrompt } from "./prompt";
 export {
-  NEW_TAB,
-  RUN_CODE,
-  SHORTCUTS,
-  TOGGLE_CHAT,
-  TOGGLE_COMMAND,
-  TOGGLE_CONFIG,
-  UNDO_CLOSE_TAB,
+	NEW_TAB,
+	RUN_CODE,
+	SHORTCUTS,
+	TOGGLE_CHAT,
+	TOGGLE_COMMAND,
+	TOGGLE_CONFIG,
+	UNDO_CLOSE_TAB,
 } from "./shortcuts";
 export { transform } from "./transform";
 export { cn, updateChangeTheme } from "./utils";

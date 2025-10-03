@@ -1,11 +1,11 @@
 import type { Tab } from "@/features/editor/types";
 
 export type HistoryTabsStoreStates = {
-  tabs: Tab[];
+	tabs: Tab[];
 };
 export type HistoryTabsStoreActions = {
-  addTab: (tab: Tab) => void;
-  removeTab: (tabId: Tab["id"]) => void;
-  undoClose: () => Tab | undefined;
+	addTab: (tab: Tab) => void;
+	removeTab: (tabId: Tab["id"]) => void;
+	undoClose: () => Tab | undefined;
 };
 export type HistoryTabsStore = HistoryTabsStoreStates & HistoryTabsStoreActions;

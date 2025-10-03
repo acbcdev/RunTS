@@ -22,11 +22,12 @@ export default function TextareaAutosize({
 		const textarea = e.target;
 		textarea.style.height = "auto";
 		const style = window.getComputedStyle(textarea);
-		const borderHeight = Number.parseInt(style.borderBottomWidth);
+		const borderHeight = Number.parseInt(style.borderBottomWidth, 10);
 		const paddingHeight =
-			Number.parseInt(style.paddingTop) + Number.parseInt(style.paddingBottom);
+			Number.parseInt(style.paddingTop, 10) +
+			Number.parseInt(style.paddingBottom, 10);
 
-		const lineHeight = Number.parseInt(style.lineHeight);
+		const lineHeight = Number.parseInt(style.lineHeight, 10);
 		const maxHeight = maxRows
 			? lineHeight * maxRows + borderHeight + paddingHeight
 			: Number.POSITIVE_INFINITY;

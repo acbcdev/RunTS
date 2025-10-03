@@ -22,7 +22,7 @@ function App() {
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies
 	useEffect(() => {
 		console.log(MESSAGE_LOG);
 		const code = new URLSearchParams(window.location.search).get("code");

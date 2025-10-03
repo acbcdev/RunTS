@@ -1,3 +1,3 @@
 export interface ChatHeaderProps {
-  onNewChat: () => void;
+	onNewChat: () => void;
 }

@@ -63,13 +63,13 @@ export function CodeEditor() {
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
 	}, [radius]);
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies
 	useEffect(() => {
 		const currentTheme = getCurrentTheme();
 		updateChangeTheme(currentTheme);
 	}, [theme]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies
 	useEffect(() => {
 		runCode();
 	}, [debouncedCode]);
