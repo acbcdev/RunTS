@@ -1,8 +1,6 @@
-import {
-	Formatter,
-	injectLogsIntoCode,
-	transform,
-} from "@/features/common/utils";
+import { Formatter } from "@/features/common/utils/formatter";
+import { injectLogsIntoCode } from "@/features/common/utils/addLogsToLines";
+import { transform } from "@/features/common/utils/transform";
 import type { ConsoleOutput } from "./types";
 
 self.onmessage = async (event: MessageEvent) => {
