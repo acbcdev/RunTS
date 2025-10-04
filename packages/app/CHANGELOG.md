@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 1.6.4 – Oct 3, 2025
+
+### Highlights
+
+#### New Features
+
+- **New Theme:** Introduced a fresh application theme that modernizes the look and improves contrast.
+
+#### Improvements
+
+- **Repository Structure:** Reorganized the folder structure to better align features, shared utilities, and UI components.
+
+
 ## Version 1.6.3 – Agu 27, 2025
 
 ### Highlights
