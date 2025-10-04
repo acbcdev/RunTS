@@ -28,10 +28,11 @@ export function runCodeWorker(
 		};
 
 		// Manejar errores del Worker
-		// worker.onerror = (error: ErrorEvent) => {
-		//   clearTimeout(timeout);
-		//   worker.terminate();
-		//   reject(new Error(`Worker error: ${error.message}`));
-		// };
+		worker.onerror = (error: ErrorEvent) => {
+			error.preventDefault();
+			clearTimeout(timeout);
+			worker.terminate();
+			reject(new Error(`Worker error: ${error.message}`));
+		};
 	});
 }

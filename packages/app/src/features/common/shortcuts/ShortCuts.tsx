@@ -4,9 +4,9 @@ import {
 	DialogContent,
 	DialogDescription,
 	DialogTitle,
-} from "../../ui/dialog";
-import { Kd } from "../../ui/kd";
-import { ScrollArea } from "../../ui/scroll-area";
+} from "@/features/ui/dialog";
+import { Kbd, KbdGroup } from "@/features/ui/kbd";
+import { ScrollArea } from "@/features/ui/scroll-area";
 import { useModalStore } from "../modal/modal";
 import { SHORTCUTS } from "../utils/shortcuts";
 
@@ -34,8 +34,7 @@ export function ShortCutsModal() {
 	const formatKeys = (keys: string) => {
 		return keys
 			.split("+")
-			.map((key) => key.charAt(0).toUpperCase() + key.slice(1))
-			.join(" + ");
+			.map((key) => key.charAt(0).toUpperCase() + key.slice(1));
 	};
 
 	return (
@@ -69,7 +68,14 @@ export function ShortCutsModal() {
 												{shortcut.description}
 											</span>
 											<div className="flex-shrink-0">
-												<Kd>{formatKeys(shortcut.keys)}</Kd>
+												<KbdGroup>
+													{formatKeys(shortcut.keys).map((key, index, arr) => (
+														<>
+															<Kbd key={key}>{key}</Kbd>
+															{index < arr.length - 1 && "+"}
+														</>
+													))}
+												</KbdGroup>
 											</div>
 										</div>
 									))}

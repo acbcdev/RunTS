@@ -1,25 +1,25 @@
 import { Command, MessageCircleIcon, Plus } from "lucide-react";
-import { Kd } from "@/features/ui/kd";
+import { Kbd, KbdGroup } from "@/features/ui/kbd";
 
 const commands = [
 	{
 		icon: <Plus className="size-5" />,
 		title: "Create New Tab",
 		description: "Start coding with JavaScript or TypeScript",
-		shortcut: "Ctrl + Shift + D",
+		shortcut: ["Ctrl", "Shift", "D"],
 	},
 
 	{
 		icon: <Command className="size-5" />,
 		title: "Show All Commands",
 		description: "Open command palette",
-		shortcut: "Ctrl + K",
+		shortcut: ["Ctrl", "K"],
 	},
 	{
 		icon: <MessageCircleIcon className="size-5" />,
 		title: "Open Chat",
 		description: "Open chat with AI",
-		shortcut: "Ctrl + B",
+		shortcut: ["Ctrl", "B"],
 	},
 ];
 
@@ -53,7 +53,14 @@ export const EmptyState = () => (
 								{command.description}
 							</div>
 						</div>
-						<Kd>{command.shortcut}</Kd>
+						<KbdGroup>
+							{command.shortcut.map((key, index) => (
+								<>
+									<Kbd key={key}>{key}</Kbd>
+									{index < command.shortcut.length - 1 && "+"}
+								</>
+							))}
+						</KbdGroup>
 					</li>
 				))}
 			</ul>

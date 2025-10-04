@@ -17,7 +17,7 @@ import { useModalStore } from "@/features/common/modal/modal";
 import { cn } from "@/features/common/utils/utils";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { Button } from "@/features/ui/button";
-import { Kd } from "@/features/ui/kd";
+import { Kbd, KbdGroup } from "@/features/ui/kbd";
 import {
 	Tooltip,
 	TooltipContent,
@@ -76,9 +76,9 @@ export const EditorActions = memo<EditorActionsProps>(
 				label: "Editor settings",
 				onClick: () => toggle("settings"),
 				tooltip: (
-					<>
-						Settings <Kd>Ctrl + ,</Kd>
-					</>
+					<KbdGroup>
+						Settings <Kbd>Ctrl</Kbd> + <Kbd>,</Kbd>
+					</KbdGroup>
 				),
 				position: "start",
 				active: true,
@@ -91,9 +91,9 @@ export const EditorActions = memo<EditorActionsProps>(
 				className: "text-accent",
 				onClick: runCode,
 				tooltip: (
-					<>
-						Run code <Kd>Ctrl + R</Kd>
-					</>
+					<KbdGroup>
+						Run code <Kbd>Ctrl</Kbd> + <Kbd>R</Kbd>
+					</KbdGroup>
 				),
 				position: "start",
 				active: true,
@@ -118,9 +118,9 @@ export const EditorActions = memo<EditorActionsProps>(
 				label: "Show Chat",
 				onClick: toggleChat,
 				tooltip: (
-					<>
-						Show Chat <Kd>Ctrl + B</Kd>
-					</>
+					<KbdGroup>
+						Show Chat <Kbd>Ctrl</Kbd> + <Kbd>B</Kbd>
+					</KbdGroup>
 				),
 				position: "start",
 				active: true,
@@ -134,9 +134,9 @@ export const EditorActions = memo<EditorActionsProps>(
 				label: "Search",
 				onClick: () => toggle("commandK"),
 				tooltip: (
-					<>
-						Search <Kd>Ctrl + K</Kd>
-					</>
+					<KbdGroup>
+						Search <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+					</KbdGroup>
 				),
 				position: "start",
 				active: true,
