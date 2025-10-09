@@ -11,7 +11,7 @@ import {
 import { ScrollArea } from "@/features/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/features/ui/tabs";
 import { GithubStars } from "../github-stars/GithubStars";
-import { AI, Appearance, Editor } from "../sections/";
+import { AI, Appearance, Editor } from "../sections";
 
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
