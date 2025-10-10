@@ -48,6 +48,8 @@ const providers: Record<
       { id: "gpt-5-mini", name: "GPT-5 mini" },
       { id: "gpt-5", name: "GPT-5" },
       { id: "gpt-5-nano", name: "GPT-5 nano" },
+      { id: "gpt-5-pro", name: "GPT-5 pro" },
+      { id: "gpt-5-codex", name: "GPT-5 Codex" },
     ],
     active: true,
     Icon: openai,
@@ -65,11 +67,9 @@ const providers: Record<
   },
   anthropic: {
     models: [
-      { id: "claude-3-sonnet-20240229", name: "Claude Sonnet 3 " },
-      { id: "claude-3-5-haiku-latest", name: "Claude Haiku 3.5 " },
-      { id: "claude-3-7-sonnet-20250219", name: "Claude Sonnet 3.7" },
       { id: "claude-opus-4-20250514", name: "Claude Opus 4" },
       { id: "claude-sonnet-4-20250514", name: "Claude Sonnet 4" },
+      { id: "claude-sonnet-4-5", name: "Claude Sonnet 4.5" },
     ],
     active: true,
     Icon: claude,
