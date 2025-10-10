@@ -1,4 +1,4 @@
-![Captura de pantalla en ordenador](/public/og.jpg)
+![Captura de pantalla en ordenador](/packages/app/public/og.jpg)
 
 <div align='center'>
    
