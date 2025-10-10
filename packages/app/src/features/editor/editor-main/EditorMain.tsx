@@ -2,8 +2,10 @@ import type { Monaco } from "@monaco-editor/react";
 import { Code2 } from "lucide-react";
 import type { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
-import { lazy, useCallback } from "react";
+import { lazy, useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { createGenerateCodeWidget } from "@/features/ai/generate-code-widget";
+import { getAICompletion } from "@/features/ai/lib/completion";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useModalStore } from "@/features/common/modal/modal";
 import { themes } from "@/features/common/themes";
@@ -24,7 +26,11 @@ type EditorMainProps = {
 	tab: Tab;
 };
 export function EditorMain({ tab }: EditorMainProps) {
+	const generateCodeWidgetRef = useRef<ReturnType<
+		typeof createGenerateCodeWidget
+	> | null>(null);
 	const { runCode } = useRun();
+	const [generateCodeWidgetOpen, setGenerateCodeWidgetOpen] = useState(false);
 	const updateEditor = useEditorStore(
 		useShallow((state) => state.updateEditor),
 	);
@@ -79,6 +85,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 			for (const [key, value] of Object.entries(themes)) {
 				monacoInstance.editor.defineTheme(key, value.monaco);
 			}
+
 			monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions(
 				{
 					target: monacoInstance.languages.typescript.ScriptTarget.Latest,
@@ -88,6 +95,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 					lib: ["esnext", "dom"],
 				},
 			);
+
 			monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions(
 				{
 					noSemanticValidation: false,
@@ -194,6 +202,38 @@ export function EditorMain({ tab }: EditorMainProps) {
 					toggle("settings");
 				},
 			});
+
+			editor.addCommand(
+				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyI,
+				() => {
+					if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
+						setGenerateCodeWidgetOpen(true);
+						generateCodeWidgetRef.current.show(handleGenerateCode);
+					} else {
+						setGenerateCodeWidgetOpen(false);
+						generateCodeWidgetRef.current?.hide();
+					}
+				},
+			);
+
+			editor.addAction({
+				id: "generate-code",
+				label: "Generate Code with AI",
+				contextMenuGroupId: "ai",
+				contextMenuOrder: 2,
+				keybindings: [
+					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyI,
+				],
+				run: () => {
+					if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
+						setGenerateCodeWidgetOpen(true);
+						generateCodeWidgetRef.current.show(handleGenerateCode);
+					} else {
+						setGenerateCodeWidgetOpen(false);
+						generateCodeWidgetRef.current?.hide();
+					}
+				},
+			});
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
 				() => {
@@ -249,6 +289,53 @@ export function EditorMain({ tab }: EditorMainProps) {
 					],
 				}),
 			});
+
+			// AI-powered completion provider
+			monacoInstance.languages.registerCompletionItemProvider("typescript", {
+				triggerCharacters: ["@"],
+				provideCompletionItems: async (model, position) => {
+					const word = model.getWordUntilPosition(position);
+					const range = {
+						startLineNumber: position.lineNumber,
+						endLineNumber: position.lineNumber,
+						startColumn: word.startColumn,
+						endColumn: position.column,
+					};
+
+					const fullText = model.getValue();
+					const prefix = fullText.substring(0, model.getOffsetAt(position));
+					const suffix = fullText.substring(model.getOffsetAt(position));
+
+					try {
+						const completion = await getAICompletion(
+							prefix,
+							suffix,
+							"typescript",
+						);
+						if (completion) {
+							return {
+								suggestions: [
+									{
+										label: "AI Completion",
+										kind: monaco.languages.CompletionItemKind.Text,
+										documentation: "AI-generated code completion",
+										insertText: completion,
+										range,
+									},
+								],
+							};
+						}
+					} catch (error) {
+						console.error("AI completion error:", error);
+					}
+
+					return { suggestions: [] };
+				},
+			});
+
+			// Initialize AI code generation widget
+			generateCodeWidgetRef.current = createGenerateCodeWidget(editor);
+
 			monacoInstance.editor.setTheme(theme);
 			updateEditor({ editorRef: editor });
 			updateEditor({ monaco: monacoInstance });
@@ -263,8 +350,38 @@ export function EditorMain({ tab }: EditorMainProps) {
 			toggleConfig,
 			toogleChat,
 			undo,
+			generateCodeWidgetOpen,
 		],
 	);
+
+	useEffect(() => {
+		return () => {
+			if (generateCodeWidgetRef.current) {
+				generateCodeWidgetRef.current.dispose();
+			}
+		};
+	}, []);
+
+	const handleGenerateCode = useCallback((code: string) => {
+		const editorState = useEditorStore.getState();
+		const editorInstance = editorState.editorRef;
+		if (!editorInstance) return;
+
+		const position = editorInstance.getPosition();
+		if (!position) return;
+
+		editorInstance.executeEdits("generate", [
+			{
+				range: new monaco.Range(
+					position.lineNumber,
+					position.column,
+					position.lineNumber,
+					position.column,
+				),
+				text: code,
+			},
+		]);
+	}, []);
 
 	return (
 		<div className="relative h-full" translate="no">
