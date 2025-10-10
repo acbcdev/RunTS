@@ -12,6 +12,7 @@
     "lint": "pnpm --filter app lint",
     "test": "pnpm --filter app test",
     "test:ui": "pnpm --filter app test:ui",
+    "filter": "pnpm --filter",
     "format": "pnpm --filter app format",
     "lint:biome": "pnpm --filter app lint:biome",
     "check": "pnpm --filter app check",

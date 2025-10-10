@@ -4,7 +4,7 @@ import type { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
 import { lazy, useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { createGenerateCodeWidget } from "@/features/ai/generate-code-widget";
+import { createGenerateCodeWidget } from "@/features/ai/code-widget";
 import { getAICompletion } from "@/features/ai/lib/completion";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useModalStore } from "@/features/common/modal/modal";
