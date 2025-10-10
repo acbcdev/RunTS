@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.6.5 – Oct 10, 2025
+
+### New Features
+
+- **AI-Powered Code Generation:** Added AI-powered code generation widget and completion to Monaco editor.
+- **New AI Models:** Added new GPT-5-Codex and Pro and Claude 4.5
+
 ## Version 1.6.4 – Oct 3, 2025
 
 ### Highlights
@@ -11,7 +18,6 @@
 #### Improvements
 
 - **Repository Structure:** Reorganized the folder structure to better align features, shared utilities, and UI components.
-
 
 ## Version 1.6.3 – Agu 27, 2025
 
