@@ -5,7 +5,6 @@ import * as monaco from "monaco-editor";
 import { lazy, useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { createGenerateCodeWidget } from "@/features/ai/code-widget";
-import { getAICompletion } from "@/features/ai/lib/completion";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useModalStore } from "@/features/common/modal/modal";
 import { themes } from "@/features/common/themes";
@@ -288,49 +287,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 						},
 					],
 				}),
-			});
-
-			// AI-powered completion provider
-			monacoInstance.languages.registerCompletionItemProvider("typescript", {
-				triggerCharacters: ["@"],
-				provideCompletionItems: async (model, position) => {
-					const word = model.getWordUntilPosition(position);
-					const range = {
-						startLineNumber: position.lineNumber,
-						endLineNumber: position.lineNumber,
-						startColumn: word.startColumn,
-						endColumn: position.column,
-					};
-
-					const fullText = model.getValue();
-					const prefix = fullText.substring(0, model.getOffsetAt(position));
-					const suffix = fullText.substring(model.getOffsetAt(position));
-
-					try {
-						const completion = await getAICompletion(
-							prefix,
-							suffix,
-							"typescript",
-						);
-						if (completion) {
-							return {
-								suggestions: [
-									{
-										label: "AI Completion",
-										kind: monaco.languages.CompletionItemKind.Text,
-										documentation: "AI-generated code completion",
-										insertText: completion,
-										range,
-									},
-								],
-							};
-						}
-					} catch (error) {
-						console.error("AI completion error:", error);
-					}
-
-					return { suggestions: [] };
-				},
 			});
 
 			// Initialize AI code generation widget
