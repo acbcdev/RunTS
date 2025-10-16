@@ -1,41 +1,22 @@
-import type { providers, SupportedModel } from "../types";
+// This file is now deprecated - use getProviderForModel from constants.ts instead
+// Kept for backward compatibility only
 
-// map each model ID to its provider
-const MODEL_PROVIDER_MAP: Record<SupportedModel, providers> = {
-  "gpt-5": "openai",
-  "gpt-5-mini": "openai",
-  "gpt-5-nano": "openai",
-  "gpt-5-codex": "openai",
-  "gpt-5-pro": "openai",
-  // Mistral
-  "mistral-large-latest": "mistral",
-  "mistral-small-latest": "mistral",
-  "pixtral-large-latest": "mistral",
+import type { providers, SupportedModel } from "./constants";
+import { getProviderForModel as getProvider } from "./constants";
 
-  // Google
-  "gemini-2.5-pro": "google",
-  "gemini-2.5-flash": "google",
-  "gemini-2.5-flash-lite": "google",
-  "gemma-3-12b-it": "google",
-  "gemma-3-27b-it": "google",
-  // Anthropic
-  "claude-3-sonnet-20240229": "anthropic",
-  "claude-3-5-haiku-latest": "anthropic",
-  "claude-3-7-sonnet-20250219": "anthropic",
-  "claude-opus-4-20250514": "anthropic",
-  "claude-sonnet-4-20250514": "anthropic",
-  "claude-sonnet-4-5": "anthropic",
-};
-
+/**
+ * @deprecated Use getProviderForModel from constants.ts instead
+ * Get provider name from model ID
+ */
 export function getProviderForModel(
   model: SupportedModel,
   showError = true
 ): providers {
-  const provider = MODEL_PROVIDER_MAP[model];
+  const provider = getProvider(model);
 
   if (!provider && showError) {
     throw new Error(`Unknown provider for model: ${model}`);
   }
 
-  return provider;
+  return provider as providers;
 }
