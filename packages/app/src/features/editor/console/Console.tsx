@@ -1,7 +1,7 @@
 import { Terminal } from "lucide-react";
 import { lazy } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { CONSOLE_EDITOR_CONFIG } from "@/features/common/utils/editor";
+import { CONSOLE_EDITOR_CONFIG } from "../utils/config";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useConfigStore } from "@/features/settings/config-store/config";
 import { Loading } from "../editor-main/Loading";

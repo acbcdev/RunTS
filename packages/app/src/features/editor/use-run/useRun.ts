@@ -1,5 +1,5 @@
 import { useShallow } from "zustand/react/shallow";
-import { ajuestLogs } from "@/features/common/utils/ajuestLogs";
+import { ajuestLogs } from "./ajuestLogs";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useEditorStore } from "../editor-store";
 import { runCodeWorker } from "../run-code";

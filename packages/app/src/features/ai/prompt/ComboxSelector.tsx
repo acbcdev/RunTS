@@ -2,7 +2,7 @@
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { models } from "@/features/common/utils/const";
+import { models } from "../lib/constants";
 import { Button } from "@/features/ui/button";
 import {
 	Command,

@@ -1,5 +1,5 @@
 import { Key, Settings, Zap } from "lucide-react";
-import { API_PROVIDERS } from "@/features/common/utils/const";
+import { API_PROVIDERS } from "../lib/constants";
 import { Button } from "@/features/ui/button";
 import {
 	Card,
