@@ -2,7 +2,9 @@ packages:
   - 'packages/*'
 
 minimumReleaseAge: 1440
-
+minimumReleaseAgeExclude:
+  - 'ai'
+  - '@ai-sdk/*'
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tailwindcss/oxide'
