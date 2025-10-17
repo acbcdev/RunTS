@@ -1,13 +1,13 @@
 import { isTauri } from "@tauri-apps/api/core";
 import {
-	Cog,
-	Download,
-	Play,
-	Search,
-	Share2,
-	Sparkles,
-	SquareSplitHorizontal,
-	SquareSplitVertical,
+  Cog,
+  Download,
+  Play,
+  Search,
+  Share2,
+  Sparkles,
+  SquareSplitHorizontal,
+  SquareSplitVertical,
 } from "lucide-react";
 import { type JSX, memo, type ReactNode } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -15,14 +15,15 @@ import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useHandler } from "@/features/common/hooks/useHandler";
 import { useModalStore } from "@/features/common/modal/modal";
 import { cn } from "@/features/common/utils/utils";
+import { getModifierKey } from "@/features/common/utils/shortcuts";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { Button } from "@/features/ui/button";
 import { Kbd, KbdGroup } from "@/features/ui/kbd";
 import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/features/ui/tooltip";
 import { useRun } from "../use-run/useRun";
 
@@ -30,187 +31,187 @@ type ActionPosition = "start" | "end";
 type ActionDirection = "row" | "column";
 
 type Action = {
-	id: string;
-	icon: JSX.Element;
-	label: string;
-	onClick: () => void;
-	tooltip: ReactNode;
-	position: ActionPosition;
-	active?: boolean;
-	disabled?: boolean;
-	className?: string;
+  id: string;
+  icon: JSX.Element;
+  label: string;
+  onClick: () => void;
+  tooltip: ReactNode;
+  position: ActionPosition;
+  active?: boolean;
+  disabled?: boolean;
+  className?: string;
 };
 
 interface EditorActionsProps {
-	direction?: ActionDirection;
-	className?: string;
-	tooltipSide?: "left" | "right" | "top" | "bottom";
+  direction?: ActionDirection;
+  className?: string;
+  tooltipSide?: "left" | "right" | "top" | "bottom";
 }
 
 export const EditorActions = memo<EditorActionsProps>(
-	({ direction = "row", className = "", tooltipSide }) => {
-		const { layout, setOption } = useApparenceStore(
-			useShallow((state) => ({
-				layout: state.layout,
-				setOption: state.setOption,
-			})),
-		);
-		const toggle = useModalStore((state) => state.toggleModal);
-		const { runCode } = useRun();
-		const { handleShare, downloadCode } = useHandler();
-		const { toggleChat, showChat } = useAIConfigStore(
-			useShallow((state) => ({
-				toggleChat: state.toggleChat,
-				showChat: state.showChat,
-			})),
-		);
+  ({ direction = "row", className = "", tooltipSide }) => {
+    const { layout, setOption } = useApparenceStore(
+      useShallow((state) => ({
+        layout: state.layout,
+        setOption: state.setOption,
+      }))
+    );
+    const toggle = useModalStore((state) => state.toggleModal);
+    const { runCode } = useRun();
+    const { handleShare, downloadCode } = useHandler();
+    const { toggleChat, showChat } = useAIConfigStore(
+      useShallow((state) => ({
+        toggleChat: state.toggleChat,
+        showChat: state.showChat,
+      }))
+    );
 
-		const toggleLayout = () => {
-			setOption("layout", layout === "horizontal" ? "vertical" : "horizontal");
-		};
+    const toggleLayout = () => {
+      setOption("layout", layout === "horizontal" ? "vertical" : "horizontal");
+    };
 
-		const actions: Action[] = [
-			{
-				id: "settings",
-				icon: <Cog />,
-				label: "Editor settings",
-				onClick: () => toggle("settings"),
-				tooltip: (
-					<KbdGroup>
-						Settings <Kbd>Ctrl</Kbd> + <Kbd>,</Kbd>
-					</KbdGroup>
-				),
-				position: "start",
-				active: true,
-			},
+    const actions: Action[] = [
+      {
+        id: "settings",
+        icon: <Cog />,
+        label: "Editor settings",
+        onClick: () => toggle("settings"),
+        tooltip: (
+          <KbdGroup>
+            Settings <Kbd>{getModifierKey()}</Kbd> + <Kbd>,</Kbd>
+          </KbdGroup>
+        ),
+        position: "start",
+        active: true,
+      },
 
-			{
-				id: "run",
-				icon: <Play />,
-				label: "Run code",
-				className: "text-accent",
-				onClick: runCode,
-				tooltip: (
-					<KbdGroup>
-						Run code <Kbd>Ctrl</Kbd> + <Kbd>R</Kbd>
-					</KbdGroup>
-				),
-				position: "start",
-				active: true,
-			},
-			{
-				id: "layout",
-				icon:
-					layout === "horizontal" ? (
-						<SquareSplitHorizontal />
-					) : (
-						<SquareSplitVertical />
-					),
-				label: "Toggle layout",
-				tooltip: "Toggle layout",
-				onClick: toggleLayout,
-				position: "start",
-				active: true,
-			},
-			{
-				id: "chat",
-				icon: <Sparkles />,
-				label: "Show Chat",
-				onClick: toggleChat,
-				tooltip: (
-					<KbdGroup>
-						Show Chat <Kbd>Ctrl</Kbd> + <Kbd>B</Kbd>
-					</KbdGroup>
-				),
-				position: "start",
-				active: true,
-				className: showChat
-					? "bg-linear-to-br from-accent from-30% to-destructive hover:text-foreground"
-					: "",
-			},
-			{
-				id: "search",
-				icon: <Search />,
-				label: "Search",
-				onClick: () => toggle("commandK"),
-				tooltip: (
-					<KbdGroup>
-						Search <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
-					</KbdGroup>
-				),
-				position: "start",
-				active: true,
-			},
-			{
-				id: "share",
-				icon: <Share2 />,
-				label: "Share code",
-				onClick: handleShare,
-				tooltip: "Share code current tab",
-				position: "end",
-				active: !isTauri(),
-				className: "text-accent",
-			},
-			{
-				id: "download",
-				icon: <Download />,
-				label: "Download code",
-				onClick: downloadCode,
-				tooltip: "Download code",
-				position: "end",
-				active: true,
-			},
-		];
+      {
+        id: "run",
+        icon: <Play />,
+        label: "Run code",
+        className: "text-accent",
+        onClick: runCode,
+        tooltip: (
+          <KbdGroup>
+            Run code <Kbd>{getModifierKey()}</Kbd> + <Kbd>R</Kbd>
+          </KbdGroup>
+        ),
+        position: "start",
+        active: true,
+      },
+      {
+        id: "layout",
+        icon:
+          layout === "horizontal" ? (
+            <SquareSplitHorizontal />
+          ) : (
+            <SquareSplitVertical />
+          ),
+        label: "Toggle layout",
+        tooltip: "Toggle layout",
+        onClick: toggleLayout,
+        position: "start",
+        active: true,
+      },
+      {
+        id: "chat",
+        icon: <Sparkles />,
+        label: "Show Chat",
+        onClick: toggleChat,
+        tooltip: (
+          <KbdGroup>
+            Show Chat <Kbd>{getModifierKey()}</Kbd> + <Kbd>B</Kbd>
+          </KbdGroup>
+        ),
+        position: "start",
+        active: true,
+        className: showChat
+          ? "bg-linear-to-br from-accent from-30% to-destructive hover:text-foreground"
+          : "",
+      },
+      {
+        id: "search",
+        icon: <Search />,
+        label: "Search",
+        onClick: () => toggle("commandK"),
+        tooltip: (
+          <KbdGroup>
+            Search <Kbd>{getModifierKey()}</Kbd> + <Kbd>K</Kbd>
+          </KbdGroup>
+        ),
+        position: "start",
+        active: true,
+      },
+      {
+        id: "share",
+        icon: <Share2 />,
+        label: "Share code",
+        onClick: handleShare,
+        tooltip: "Share code current tab",
+        position: "end",
+        active: !isTauri(),
+        className: "text-accent",
+      },
+      {
+        id: "download",
+        icon: <Download />,
+        label: "Download code",
+        onClick: downloadCode,
+        tooltip: "Download code",
+        position: "end",
+        active: true,
+      },
+    ];
 
-		const activeActions = actions.filter((action) => action.active);
-		const startActions = activeActions.filter(
-			(action) => action.position === "start",
-		);
-		const endActions = activeActions.filter(
-			(action) => action.position === "end",
-		);
+    const activeActions = actions.filter((action) => action.active);
+    const startActions = activeActions.filter(
+      (action) => action.position === "start"
+    );
+    const endActions = activeActions.filter(
+      (action) => action.position === "end"
+    );
 
-		const renderActionButton = (action: Action) => (
-			<Tooltip key={action.id}>
-				<TooltipTrigger asChild>
-					<Button
-						variant="ghost"
-						size="icon"
-						aria-label={action.label}
-						className={`size-8 ${action.className || ""}`}
-						onClick={() => action.onClick()}
-						disabled={action.disabled}
-					>
-						{action.icon}
-					</Button>
-				</TooltipTrigger>
-				<TooltipContent side={tooltipSide}>{action.tooltip}</TooltipContent>
-			</Tooltip>
-		);
+    const renderActionButton = (action: Action) => (
+      <Tooltip key={action.id}>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={action.label}
+            className={`size-8 ${action.className || ""}`}
+            onClick={() => action.onClick()}
+            disabled={action.disabled}
+          >
+            {action.icon}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side={tooltipSide}>{action.tooltip}</TooltipContent>
+      </Tooltip>
+    );
 
-		const containerClasses =
-			direction === "row"
-				? "flex items-center justify-between"
-				: "flex flex-col items-center justify-between";
+    const containerClasses =
+      direction === "row"
+        ? "flex items-center justify-between"
+        : "flex flex-col items-center justify-between";
 
-		const groupClasses =
-			direction === "row"
-				? "flex items-center gap-x-2"
-				: "flex flex-col items-center gap-y-2";
+    const groupClasses =
+      direction === "row"
+        ? "flex items-center gap-x-2"
+        : "flex flex-col items-center gap-y-2";
 
-		return (
-			<div className={cn(`${containerClasses} p-2  bg-header `, className)}>
-				<TooltipProvider delayDuration={500} skipDelayDuration={100}>
-					<div className={groupClasses}>
-						{startActions.map(renderActionButton)}
-					</div>
-					<div className={groupClasses}>
-						{endActions.map(renderActionButton)}
-					</div>
-				</TooltipProvider>
-			</div>
-		);
-	},
+    return (
+      <div className={cn(`${containerClasses} p-2  bg-header `, className)}>
+        <TooltipProvider delayDuration={500} skipDelayDuration={100}>
+          <div className={groupClasses}>
+            {startActions.map(renderActionButton)}
+          </div>
+          <div className={groupClasses}>
+            {endActions.map(renderActionButton)}
+          </div>
+        </TooltipProvider>
+      </div>
+    );
+  }
 );
 
 EditorActions.displayName = "EditorActions";
