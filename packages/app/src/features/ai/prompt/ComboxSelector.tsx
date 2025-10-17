@@ -2,7 +2,6 @@
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { models } from "../lib/constants";
 import { Button } from "@/features/ui/button";
 import {
 	Command,
@@ -13,6 +12,7 @@ import {
 	CommandList,
 } from "@/features/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/features/ui/popover";
+import { models } from "../lib/constants";
 import { useAIConfigStore } from "../store/aiConfig";
 import type { providers } from "../types";
 

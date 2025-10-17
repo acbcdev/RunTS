@@ -8,8 +8,6 @@ import { createGenerateCodeWidget } from "@/features/ai/code-widget";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { useModalStore } from "@/features/common/modal/modal";
 import { themes } from "@/features/common/themes";
-import { EDITOR_CONFIG } from "../utils/config";
-import { extraLib } from "./extraLib";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useConfigStore } from "@/features/settings/config-store/config";
 import { useHistoryTabsStore } from "@/features/tabs/history/history";
@@ -18,6 +16,8 @@ import { Loader } from "@/features/ui/loader";
 import { useEditorStore } from "../editor-store/editor";
 import type { Tab } from "../types";
 import { useRun } from "../use-run/useRun";
+import { EDITOR_CONFIG } from "../utils/config";
+import { extraLib } from "./extraLib";
 import Loading from "./Loading";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));

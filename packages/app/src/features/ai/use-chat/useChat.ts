@@ -7,10 +7,10 @@ import {
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { systemPrompt } from "./prompt";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { createProvider } from "../lib/providers";
 import { useAIConfigStore } from "../store/aiConfig";
+import { systemPrompt } from "./prompt";
 
 type statusType = "submitted" | "streaming" | "ready" | "error";
 export function useChat() {

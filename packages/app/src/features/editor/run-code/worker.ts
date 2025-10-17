@@ -1,5 +1,5 @@
-import { Formatter } from "./formatter";
 import { injectLogsIntoCode } from "./addLogsToLines";
+import { Formatter } from "./formatter";
 import { transform } from "./transform";
 import type { ConsoleOutput } from "./types";
 

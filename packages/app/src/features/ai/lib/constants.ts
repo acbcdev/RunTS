@@ -1,71 +1,90 @@
+import type { anthropic as anthropicProvider } from "@ai-sdk/anthropic";
+import type { google as googleProvider } from "@ai-sdk/google";
+import type { mistral as mistralProvider } from "@ai-sdk/mistral";
+import type { openai as openaiProvider } from "@ai-sdk/openai";
+import type { JSX, SVGProps } from "react";
 import { claude, gemini, mistral, openai } from "@/features/common/svg/";
 
-// ============================================================================
-// SIMPLE MODEL CONFIGURATION - Only edit this section to add/remove models
-// All types are auto-generated from this config for perfect autocomplete!
-// ============================================================================
+type OpenAIModelId = Parameters<typeof openaiProvider>[0];
+type AnthropicModelId = Parameters<typeof anthropicProvider>[0];
+type GoogleModelId = Parameters<typeof googleProvider>[0];
+type MistralModelId = Parameters<typeof mistralProvider>[0];
+
+type supportedModelIds =
+  | OpenAIModelId
+  | AnthropicModelId
+  | GoogleModelId
+  | MistralModelId;
+
+type ModelConfigEntry = {
+  id: supportedModelIds;
+  name: string;
+};
+
+type ProvidersConfig = {
+  name: string;
+  apiKeyUrl: string;
+  icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  models: ModelConfigEntry[];
+};
 
 export const PROVIDER_CONFIG = {
   openai: {
-    name: "OpenAI" as const,
-    apiKeyUrl: "https://platform.openai.com/api-keys" as const,
+    name: "OpenAI",
+    apiKeyUrl: "https://platform.openai.com/api-keys",
     icon: openai,
-    models: {
-      "gpt-5": { name: "GPT-5" },
-      "gpt-5-mini": { name: "GPT-5 Mini" },
-      "gpt-5-nano": { name: "GPT-5 Nano" },
-      "gpt-5-codex": { name: "GPT-5 Codex" },
-      "gpt-5-pro": { name: "GPT-5 Pro" },
-    },
+    models: [
+      { id: "gpt-5", name: "GPT-5" },
+      { id: "gpt-5-mini", name: "GPT-5 Mini" },
+      { id: "gpt-5-codex", name: "GPT-5 Codex" },
+      { id: "gpt-5-nano", name: "GPT-5 Nano" },
+      { id: "gpt-5-pro", name: "GPT-5 Pro" },
+    ],
   },
   anthropic: {
-    name: "Anthropic" as const,
-    apiKeyUrl: "https://console.anthropic.com/settings/keys" as const,
+    name: "Anthropic",
+    apiKeyUrl: "https://console.anthropic.com/settings/keys",
     icon: claude,
-    models: {
-      "claude-sonnet-4-5": { name: "Claude Sonnet 4.5" },
-      "claude-4-5-haiku": { name: "Claude Haiku 4.5" },
-    },
+    models: [
+      { id: "claude-sonnet-4-5", name: "Claude Sonnet 4.5" },
+      { id: "claude-haiku-4-5", name: "Claude Haiku 4.5" },
+    ],
   },
   google: {
-    name: "Google" as const,
-    apiKeyUrl: "https://aistudio.google.com/apikey" as const,
+    name: "Google",
+    apiKeyUrl: "https://aistudio.google.com/apikey",
     icon: gemini,
-    models: {
-      "gemini-2.5-pro": { name: "Gemini 2.5 Pro" },
-      "gemini-2.5-flash": { name: "Gemini 2.5 Flash" },
-      "gemini-2.5-flash-lite": { name: "Gemini 2.5 Flash Lite" },
-      "gemma-3-12b-it": { name: "Gemma 3 12B" },
-      "gemma-3-27b-it": { name: "Gemma 3 27B" },
-    },
+    models: [
+      { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro" },
+      { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash" },
+      { id: "gemini-2.5-flash-lite", name: "Gemini 2.5 Flash Lite" },
+      { id: "gemma-3-27b-it", name: "Gemma 3.27B" },
+      { id: "gemma-3-8b-it", name: "Gemma 3.8B" },
+    ],
   },
   mistral: {
-    name: "Mistral" as const,
-    apiKeyUrl: "https://console.mistral.ai/api-keys" as const,
+    name: "Mistral",
+    apiKeyUrl: "https://console.mistral.ai/api-keys",
     icon: mistral,
-    models: {
-      "mistral-large-latest": { name: "Mistral Large" },
-      "mistral-small-latest": { name: "Mistral Small" },
-      "pixtral-large-latest": { name: "Pixtral Large" },
-    },
+    models: [
+      { id: "mistral-large-latest", name: "Mistral Large" },
+      { id: "mistral-small-latest", name: "Mistral Small" },
+      { id: "pixtral-large-latest", name: "Pixtral Large" },
+    ],
   },
-} as const;
-
-// ============================================================================
-// Auto-generated types (DO NOT EDIT) - Perfect autocomplete & type safety!
-// ============================================================================
+} satisfies Record<string, ProvidersConfig>;
 
 // Provider names: "openai" | "anthropic" | "google" | "mistral"
 export type ProviderName = keyof typeof PROVIDER_CONFIG;
 export type providers = ProviderName;
 
-// All model IDs across all providers with full type safety
-export type OpenAIModel = keyof (typeof PROVIDER_CONFIG)["openai"]["models"];
-export type AnthropicModel =
-  keyof (typeof PROVIDER_CONFIG)["anthropic"]["models"];
-export type GoogleModel = keyof (typeof PROVIDER_CONFIG)["google"]["models"];
-export type MistralModel = keyof (typeof PROVIDER_CONFIG)["mistral"]["models"];
+// Model ID types inferred from AI SDK providers
+export type OpenAIModel = OpenAIModelId;
+export type AnthropicModel = AnthropicModelId;
+export type GoogleModel = GoogleModelId;
+export type MistralModel = MistralModelId;
 
+// Union of all supported model IDs
 export type SupportedModel =
   | OpenAIModel
   | AnthropicModel
@@ -85,10 +104,6 @@ export type Provider = {
   url: string;
 };
 
-// ============================================================================
-// Runtime exports for UI components
-// ============================================================================
-
 // API Providers list for settings UI
 export const API_PROVIDERS: Provider[] = (
   Object.entries(PROVIDER_CONFIG) as [
@@ -107,10 +122,10 @@ export const models = (
     (typeof PROVIDER_CONFIG)[ProviderName]
   ][]
 ).flatMap(([provider, config]) =>
-  Object.entries(config.models).map(([id, modelData]) => ({
+  config.models.map((modelConfig) => ({
     provider,
-    id,
-    name: modelData.name,
+    id: modelConfig.id,
+    name: modelConfig.name,
     Icon: config.icon,
     active: true,
   }))
@@ -130,7 +145,7 @@ export function getProviderForModel(modelId: string): providers | null {
     ProviderName,
     (typeof PROVIDER_CONFIG)[ProviderName]
   ][]) {
-    if (modelId in config.models) {
+    if (config.models.some((model) => model.id === modelId)) {
       return provider;
     }
   }
@@ -155,6 +170,6 @@ export function getModelName(modelId: SupportedModel): string {
   if (!provider) return modelId;
 
   const config = PROVIDER_CONFIG[provider];
-  const modelData = config.models[modelId as keyof typeof config.models];
+  const modelData = config.models.find((model) => model.id === modelId);
   return modelData?.name ?? modelId;
 }

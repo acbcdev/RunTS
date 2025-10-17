@@ -5,11 +5,11 @@ import { createOpenAI } from "@ai-sdk/openai";
 import type { providers } from "../types";
 
 const generativeAIProviders = {
-	openai: createOpenAI,
-	google: createGoogleGenerativeAI,
-	anthropic: createAnthropic,
-	mistral: createMistral,
+  openai: createOpenAI,
+  google: createGoogleGenerativeAI,
+  anthropic: createAnthropic,
+  mistral: createMistral,
 };
 export function createProvider(provider: providers, apiKey: string) {
-	return generativeAIProviders[provider]({ apiKey });
+  return generativeAIProviders[provider]({ apiKey });
 }

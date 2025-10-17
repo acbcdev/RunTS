@@ -17,12 +17,12 @@
  * ```
  */
 export function cleanCodeResponse(text: string): string {
-  // Remove markdown code blocks
-  const codeBlockRegex = /```(?:\w+)?\n?([\s\S]*?)```/g;
-  const match = codeBlockRegex.exec(text);
-  if (match) {
-    return match[1].trim();
-  }
-  // If no code block, return trimmed text
-  return text.trim();
+	// Remove markdown code blocks
+	const codeBlockRegex = /```(?:\w+)?\n?([\s\S]*?)```/g;
+	const match = codeBlockRegex.exec(text);
+	if (match) {
+		return match[1].trim();
+	}
+	// If no code block, return trimmed text
+	return text.trim();
 }

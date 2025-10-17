@@ -9,14 +9,14 @@ import { getProviderForModel as getProvider } from "./constants";
  * Get provider name from model ID
  */
 export function getProviderForModel(
-  model: SupportedModel,
-  showError = true
+	model: SupportedModel,
+	showError = true,
 ): providers {
-  const provider = getProvider(model);
+	const provider = getProvider(model);
 
-  if (!provider && showError) {
-    throw new Error(`Unknown provider for model: ${model}`);
-  }
+	if (!provider && showError) {
+		throw new Error(`Unknown provider for model: ${model}`);
+	}
 
-  return provider as providers;
+	return provider as providers;
 }
