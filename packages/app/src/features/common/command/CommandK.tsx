@@ -12,7 +12,7 @@ import {
 	CommandShortcut,
 } from "@/features/ui/command";
 import { useModalStore } from "../modal/modal";
-import { TOGGLE_COMMAND } from "../utils/shortcuts";
+import { TOGGLE_COMMAND, isMac } from "../utils/shortcuts";
 import { useCommandItems } from "./useCommandItems";
 import { useCommandSearch } from "./useCommandSearch";
 
@@ -80,6 +80,12 @@ export function CommandK() {
 				setOpen("commandK");
 				setQuery("");
 			}
+		}
+		if (e.key === "k" && (isMac() ? e.metaKey : e.ctrlKey)) {
+			e.preventDefault();
+			setOpen("commandK");
+			setQuery("");
+			goHome();
 		}
 	};
 
