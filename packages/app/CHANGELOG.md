@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.6.6 – Oct 20, 2025
+
+### Refactors
+
+- **Shortcuts Enhancement:** Extracted platform utilities and updated tab shortcuts for better organization.
+- **Command Shortcuts:** Enhanced keyboard shortcut handling and formatting for improved user experience.
+
 ## Version 1.6.5 – Oct 10, 2025
 
 ### New Features
