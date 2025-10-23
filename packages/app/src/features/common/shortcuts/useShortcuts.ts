@@ -1,11 +1,15 @@
+import { useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useShallow } from "zustand/react/shallow";
-import { useAIConfigStore } from "../../ai/store/aiConfig";
-import { useRun } from "../../editor/use-run/useRun";
-import { useHistoryTabsStore } from "../../tabs/history/history";
-import { useTabsStore } from "../../tabs/tabs-store/tabs";
+import { useAIConfigStore } from "@/features/ai/store/aiConfig";
+import { useRun } from "@/features/editor/use-run/useRun";
+import { useHistoryTabsStore } from "@/features/tabs/history/history";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useModalStore } from "../modal/modal";
 import {
+  GENERATE_CODE,
+  isMac,
+  isPWA,
   NEW_TAB,
   RUN_CODE,
   TOGGLE_CHAT,
@@ -40,4 +44,30 @@ export function useShortcuts() {
       preventDefault: true,
     }
   );
+
+  // PWA-specific shortcuts
+  useEffect(() => {
+    if (isPWA()) {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        // Check for Cmd/Ctrl+T (without Shift or Alt)
+        const modificador = isMac() ? event.metaKey : event.ctrlKey;
+        const isModT =
+          modificador && event.key === "t" && !event.shiftKey && !event.altKey;
+        if (isModT) {
+          event.preventDefault();
+          newTab();
+        }
+        const isModShiftT =
+          modificador && event.key === "T" && event.shiftKey && !event.altKey;
+        if (isModShiftT) {
+          event.preventDefault();
+          const tab = undoClose();
+          if (tab) addTab(tab);
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [newTab, addTab, undoClose]);
 }
