@@ -28,17 +28,17 @@ export function ShortCutsModal() {
     []
   );
 
-  const formatKeys = (keys: string | { mac: string; win: string }) => {
+  const formatKeys = (keys: string | { mac: string; win: string }): string[][] => {
     if (typeof keys === "string") {
       // Para shortcuts de Monaco Editor que mantienen formato string
       // Detectar si estamos en macOS para mostrar ⌥ en lugar de Alt
       const isMac = navigator.userAgent.toUpperCase().indexOf("MAC") >= 0;
-      return keys.split("+").map((key) => {
+      return [keys.split("+").map((key) => {
         if (isMac && key.toLowerCase() === "alt") {
           return "⌥";
         }
         return key.charAt(0).toUpperCase() + key.slice(1);
-      });
+      })];
     }
 
     // Para shortcuts personalizados, mostrar solo la versión actual del OS
@@ -46,7 +46,11 @@ export function ShortCutsModal() {
     const isMac = navigator.userAgent.toUpperCase().indexOf("MAC") >= 0;
     const currentKeys = isMac ? keys.mac : keys.win;
 
-    return currentKeys.split("+");
+    // Handle multiple shortcut options separated by " / "
+    // Return as array of arrays, each representing one shortcut combination
+    return currentKeys.split(" / ").map((shortcut) =>
+      shortcut.split("+")
+    );
   };
 
   return (
@@ -86,17 +90,24 @@ export function ShortCutsModal() {
                         <span className="text-base font-medium text-foreground flex-1 pr-4">
                           {shortcut.description}
                         </span>
-                        <div className="flex-shrink-0">
-                          <KbdGroup>
-                            {formattedKeys.map(
-                              (key: string, index: number, arr: string[]) => (
-                                <>
-                                  <Kbd key={key}>{key}</Kbd>
-                                  {index < arr.length - 1 && "+"}
-                                </>
-                              )
-                            )}
-                          </KbdGroup>
+                        <div className="flex-shrink-0 flex items-center gap-2">
+                          {formattedKeys.map((keyCombination, comboIndex) => (
+                            <>
+                              <KbdGroup key={`combo-${comboIndex}`}>
+                                {keyCombination.map(
+                                  (key: string, keyIndex: number) => (
+                                    <>
+                                      <Kbd key={`${key}-${keyIndex}`}>{key}</Kbd>
+                                      {keyIndex < keyCombination.length - 1 && "+"}
+                                    </>
+                                  )
+                                )}
+                              </KbdGroup>
+                              {comboIndex < formattedKeys.length - 1 && (
+                                <span className="text-muted-foreground text-sm">or</span>
+                              )}
+                            </>
+                          ))}
                         </div>
                       </div>
                     );

@@ -1,6 +1,7 @@
 import { isTauri } from "@tauri-apps/api/core";
 import { Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
+import { getModifierKey } from "@/features/common/utils/shortcuts";
 import { Button } from "@/features/ui/button";
 import { Kbd, KbdGroup } from "@/features/ui/kbd";
 import { ScrollArea } from "@/features/ui/scroll-area";
@@ -35,16 +36,8 @@ export function EditorTabs() {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					New tab{" "}
 					<KbdGroup>
-						{(isTauri() ? "Ctrl + T" : "Ctrl + Shift + D")
-							.split(" + ")
-							.map((key, index, arr) => (
-								<>
-									<Kbd key={key}>{key}</Kbd>
-									{index < arr.length - 1 && "+"}
-								</>
-							))}
+						New tab <Kbd>{getModifierKey()}</Kbd> + <Kbd>Alt</Kbd> + <Kbd>T</Kbd>
 					</KbdGroup>
 				</TooltipContent>
 			</Tooltip>

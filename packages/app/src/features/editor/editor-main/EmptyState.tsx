@@ -1,25 +1,26 @@
 import { Command, MessageCircleIcon, Plus } from "lucide-react";
 import { Kbd, KbdGroup } from "@/features/ui/kbd";
+import { getModifierKey, isMac } from "@/features/common/utils/shortcuts";
 
 const commands = [
 	{
 		icon: <Plus className="size-5" />,
 		title: "Create New Tab",
 		description: "Start coding with JavaScript or TypeScript",
-		shortcut: ["Ctrl", "Shift", "D"],
+		shortcut: [getModifierKey(), "Alt", "T"],
 	},
 
 	{
 		icon: <Command className="size-5" />,
 		title: "Show All Commands",
 		description: "Open command palette",
-		shortcut: ["Ctrl", "K"],
+		shortcut: [getModifierKey(), "K"],
 	},
 	{
 		icon: <MessageCircleIcon className="size-5" />,
 		title: "Open Chat",
 		description: "Open chat with AI",
-		shortcut: ["Ctrl", "B"],
+		shortcut: [getModifierKey(), "B"],
 	},
 ];
 
