@@ -1,5 +1,5 @@
 // Re-export platform utilities for convenience
-export { isMac, isWindows, isLinux, getModifierKey } from "./platform";
+export { getModifierKey, isLinux, isMac, isPWA, isWindows } from "./platform";
 
 // Shortcuts personalizados de la app usando el modificador 'mod'
 // El modificador 'mod' se traduce automáticamente a:
@@ -7,10 +7,11 @@ export { isMac, isWindows, isLinux, getModifierKey } from "./platform";
 // - Ctrl en Windows/Linux
 export const RUN_CODE = "mod+r";
 export const TOGGLE_CHAT = "mod+b";
-export const NEW_TAB = "mod+n";
-export const UNDO_CLOSE_TAB = "mod+shift+t";
+export const NEW_TAB = "mod+alt+t";
+export const UNDO_CLOSE_TAB = "mod+alt+shift+t";
 export const TOGGLE_CONFIG = "mod+,";
 export const TOGGLE_COMMAND = "mod+k";
+export const GENERATE_CODE = "mod+i";
 
 export const SHORTCUTS = [
   {
@@ -27,13 +28,16 @@ export const SHORTCUTS = [
   },
   {
     id: "new-tab",
-    keys: { mac: "⌘+N", win: "Ctrl+N" },
+    keys: { mac: "⌘+Alt+T", win: "Ctrl+Alt+T" },
     description: "Create a new tab",
     category: "Tabs",
   },
   {
     id: "undo-close-tab",
-    keys: { mac: "⌘+Shift+T", win: "Ctrl+Shift+T" },
+    keys: {
+      mac: "⌘+Shift+T / ⌘+Alt+Shift+T",
+      win: "Ctrl+Shift+T / Ctrl+Alt+Shift+T",
+    },
     description: "Restore last closed tab",
     category: "Tabs",
   },
@@ -43,12 +47,18 @@ export const SHORTCUTS = [
     description: "Open settings",
     category: "Settings",
   },
-  {
-    id: "toggle-command",
-    keys: { mac: "⌘+K", win: "Ctrl+K" },
-    description: "Open command palette",
-    category: "Commands",
-  },
+   {
+     id: "toggle-command",
+     keys: { mac: "⌘+K", win: "Ctrl+K" },
+     description: "Open command palette",
+     category: "Commands",
+   },
+   {
+     id: "generate-code",
+     keys: { mac: "⌘+I", win: "Ctrl+I" },
+     description: "Generate code with AI",
+     category: "AI",
+   },
   // Monaco Editor shortcuts
 
   {

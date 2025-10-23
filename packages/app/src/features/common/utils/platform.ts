@@ -80,3 +80,21 @@ export const isLinux = (): boolean => {
 export const getModifierKey = (): string => {
   return isMac() ? "⌘" : "Ctrl";
 };
+
+/**
+ * Detects if the app is running as a Progressive Web App (PWA)
+ * @returns true if running in PWA mode, false otherwise
+ */
+export const isPWA = (): boolean => {
+  // Check for standalone mode (PWA indicator)
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    return true;
+  }
+
+  // Check for iOS standalone mode
+  if ("standalone" in navigator && navigator.standalone === true) {
+    return true;
+  }
+
+  return false;
+};
