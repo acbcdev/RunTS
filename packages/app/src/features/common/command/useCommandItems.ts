@@ -38,6 +38,7 @@ import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useHistoryTabsStore } from "../../tabs/history/history";
 import { useModalStore } from "../modal/modal";
 import { themes } from "../themes";
+import { getModifierKey, isMac } from "../utils/shortcuts";
 import type { CommandOption, CommandOptionChild } from "./types";
 
 export const useCommandItems = (): {
@@ -71,16 +72,17 @@ export const useCommandItems = (): {
 	const fontSize = useApparenceStore((state) => state.fontSize);
 	const radius = useApparenceStore((state) => state.radius);
 	const side = useApparenceStore((state) => state.side);
-	// 1. ACTION COMMANDS (New Tab)
-	commands.push({
-		id: "new-tab",
-		title: "New Tab",
-		description: "Create a new tab",
-		icon: Plus,
-		category: "actions",
-		keywords: ["new", "nuevo", "create", "crear", "tab", "file", "archivo"],
-		action: () => newTab(),
-	});
+  // 1. ACTION COMMANDS (New Tab)
+  commands.push({
+    id: "new-tab",
+    title: "New Tab",
+    description: "Create a new tab",
+    icon: Plus,
+    category: "actions",
+    keywords: ["new", "nuevo", "create", "crear", "tab", "file", "archivo"],
+    shortcut: `${getModifierKey()}+Alt+T`,
+    action: () => newTab(),
+  });
 
 	// 2. ACTIVE TABS
 	for (const tab of tabs) {
@@ -320,42 +322,44 @@ export const useCommandItems = (): {
 			route: "Border Radius",
 			children: "radius",
 		},
-		{
-			id: "open-settings",
-			title: "Open Settings",
-			description: "Open the settings panel",
-			icon: Cog,
-			category: "config",
-			keywords: [
-				"open",
-				"configuration",
-				"ajustes",
-				"abrir",
-				"config",
-				"settings",
-			],
-			action: () => {
-				toggle("settings");
-			},
-		},
-		{
-			id: "open-shortcuts",
-			title: "Open Shortcuts",
-			description: "Open the shortcuts panel",
-			icon: Command,
-			category: "config",
-			keywords: [
-				"open",
-				"shortcuts",
-				"comandos",
-				"abrir",
-				"config",
-				"settings",
-			],
-			action: () => {
-				toggle("shortcuts");
-			},
-		},
+        {
+          id: "open-settings",
+          title: "Open Settings",
+          description: "Open the settings panel",
+          icon: Cog,
+          category: "config",
+          keywords: [
+            "open",
+            "configuration",
+            "ajustes",
+            "abrir",
+            "config",
+            "settings",
+          ],
+          shortcut: `${getModifierKey()}+,`,
+          action: () => {
+            toggle("settings");
+          },
+        },
+        {
+          id: "open-shortcuts",
+          title: "Open Shortcuts",
+          description: "Open the shortcuts panel",
+          icon: Command,
+          category: "config",
+          keywords: [
+            "open",
+            "shortcuts",
+            "comandos",
+            "abrir",
+            "config",
+            "settings",
+          ],
+          shortcut: `${getModifierKey()}+K`,
+          action: () => {
+            toggle("shortcuts");
+          },
+        },
 		{
 			id: "toggle-layout",
 			title: "Toggle Layout",
