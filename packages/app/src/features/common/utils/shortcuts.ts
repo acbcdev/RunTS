@@ -1,5 +1,3 @@
-import { isTauri } from "@tauri-apps/api/core";
-
 // Re-export platform utilities for convenience
 export { isMac, isWindows, isLinux, getModifierKey } from "./platform";
 
@@ -9,8 +7,8 @@ export { isMac, isWindows, isLinux, getModifierKey } from "./platform";
 // - Ctrl en Windows/Linux
 export const RUN_CODE = "mod+r";
 export const TOGGLE_CHAT = "mod+b";
-export const NEW_TAB = isTauri() ? "mod+t" : "mod+d";
-export const UNDO_CLOSE_TAB = isTauri() ? "mod+shift+t" : "mod+shift+d";
+export const NEW_TAB = "mod+n";
+export const UNDO_CLOSE_TAB = "mod+shift+t";
 export const TOGGLE_CONFIG = "mod+,";
 export const TOGGLE_COMMAND = "mod+k";
 
@@ -29,17 +27,13 @@ export const SHORTCUTS = [
   },
   {
     id: "new-tab",
-    keys: isTauri()
-      ? { mac: "⌘+T", win: "Ctrl+T" }
-      : { mac: "⌘+D", win: "Ctrl+D" },
+    keys: { mac: "⌘+N", win: "Ctrl+N" },
     description: "Create a new tab",
     category: "Tabs",
   },
   {
     id: "undo-close-tab",
-    keys: isTauri()
-      ? { mac: "⌘+Shift+T", win: "Ctrl+Shift+T" }
-      : { mac: "⌘+D", win: "Ctrl+D" },
+    keys: { mac: "⌘+Shift+T", win: "Ctrl+Shift+T" },
     description: "Restore last closed tab",
     category: "Tabs",
   },
