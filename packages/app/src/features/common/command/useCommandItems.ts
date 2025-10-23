@@ -355,7 +355,6 @@ export const useCommandItems = (): {
             "config",
             "settings",
           ],
-          shortcut: `${getModifierKey()}+K`,
           action: () => {
             toggle("shortcuts");
           },
