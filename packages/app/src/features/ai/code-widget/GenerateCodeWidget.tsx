@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import {
 	InputGroup,
+	InputGroupAddon,
 	InputGroupButton,
 	InputGroupInput,
 } from "@/features/ui/input-group";
@@ -95,7 +96,7 @@ function GenerateCodeWidgetContent({
 				maxWidth: editorWidth - 40, // Responsive to editor size
 			}}
 		>
-			<InputGroup>
+			<InputGroup className="dark:bg-input">
 				<InputGroupInput
 					ref={inputRef}
 					id={inputId}
@@ -104,42 +105,47 @@ function GenerateCodeWidgetContent({
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 					onKeyDown={handleKeyDown}
-					className="text-sm"
+					className="text-sm focus-visible:ring-0 focus-visible:border-0"
 					disabled={isLoading}
 				/>
 
-				<ModelSelect />
+				<InputGroupAddon>
+					<ModelSelect />
+				</InputGroupAddon>
+				<InputGroupAddon>
+					<InputGroupButton
+						size="icon-sm"
+						variant="ghost"
+						onClick={handleGenerate}
+						disabled={isLoading || !description.trim() || !selectedModel.id}
+						title={isLoading ? "Generating..." : "Generate code (Enter)"}
+					>
+						{isLoading ? (
+							<Loader2 className="size-3 animate-spin" />
+						) : (
+							<Send className="size-3" />
+						)}
+					</InputGroupButton>
+				</InputGroupAddon>
 
-				<InputGroupButton
-					size="icon-sm"
-					variant="ghost"
-					onClick={handleGenerate}
-					disabled={isLoading || !description.trim() || !selectedModel.id}
-					title={isLoading ? "Generating..." : "Generate code (Enter)"}
-				>
-					{isLoading ? (
-						<Loader2 className="size-3 animate-spin" />
-					) : (
-						<Send className="size-3" />
-					)}
-				</InputGroupButton>
-
-				<InputGroupButton
-					size="icon-sm"
-					variant="ghost"
-					onClick={onClose}
-					disabled={isLoading}
-					title="Close (Esc)"
-				>
-					<X className="size-3" />
-				</InputGroupButton>
+				<InputGroupAddon>
+					<InputGroupButton
+						size="icon-sm"
+						variant="ghost"
+						onClick={onClose}
+						disabled={isLoading}
+						title="Close (Esc)"
+					>
+						<X className="size-3" />
+					</InputGroupButton>
+				</InputGroupAddon>
 			</InputGroup>
 		</div>
 	);
 }
 
 // Simplified functional approach for better focus handling
-export function createGenerateCodeWidget(editor: Editor) {
+export function ccreateGenerateCodeWidget(editor: Editor) {
 	let isVisible = false;
 	let domNode: HTMLElement | null = null;
 	let root: Root | null = null;

@@ -1,8 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/features/ui/button";
 import { Label } from "@/features/ui/label";
-import { Switch } from "@/features/ui/switch";
-import { TabsContent } from "@/features/ui/tabs";
 import {
 	Select,
 	SelectContent,
@@ -10,10 +8,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/ui/select";
+import { Switch } from "@/features/ui/switch";
+import { TabsContent } from "@/features/ui/tabs";
 import {
-	TAB_SIZES,
-	PRINT_WIDTHS,
 	AUTO_INDENT_OPTIONS,
+	PRINT_WIDTHS,
+	TAB_SIZES,
 } from "../config-consts/config";
 import { useConfigStore } from "../config-store/config";
 

@@ -1,7 +1,7 @@
-import prettier from "prettier/standalone";
-import typescriptParser from "prettier/plugins/typescript";
-import estreeParser from "prettier/plugins/estree";
 import babelParser from "prettier/plugins/babel";
+import estreeParser from "prettier/plugins/estree";
+import typescriptParser from "prettier/plugins/typescript";
+import prettier from "prettier/standalone";
 
 export interface PrettierFormatOptions {
 	printWidth: number;

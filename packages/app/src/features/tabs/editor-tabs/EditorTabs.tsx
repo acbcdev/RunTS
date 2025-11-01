@@ -37,7 +37,8 @@ export function EditorTabs() {
 				</TooltipTrigger>
 				<TooltipContent>
 					<KbdGroup>
-						New tab <Kbd>{getModifierKey()}</Kbd> + <Kbd>Alt</Kbd> + <Kbd>T</Kbd>
+						New tab <Kbd>{getModifierKey()}</Kbd> + <Kbd>Alt</Kbd> +{" "}
+						<Kbd>T</Kbd>
 					</KbdGroup>
 				</TooltipContent>
 			</Tooltip>

@@ -163,20 +163,27 @@ export function EditorMain({ tab }: EditorMainProps) {
 			});
 
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyT,
+				monacoInstance.KeyMod.CtrlCmd |
+					monacoInstance.KeyMod.Alt |
+					monacoInstance.KeyCode.KeyT,
 				() => newTab(),
 			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyT,
+					monacoInstance.KeyMod.CtrlCmd |
+						monacoInstance.KeyMod.Alt |
+						monacoInstance.KeyCode.KeyT,
 				],
 				run: () => newTab(),
 			});
 
 			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Alt | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyT,
+				monacoInstance.KeyMod.CtrlCmd |
+					monacoInstance.KeyMod.Alt |
+					monacoInstance.KeyMod.Shift |
+					monacoInstance.KeyCode.KeyT,
 				() => {
 					const tab = undo();
 					if (tab) addTab(tab);
@@ -187,7 +194,10 @@ export function EditorMain({ tab }: EditorMainProps) {
 				label: "Undo Tab Close",
 				contextMenuGroupId: "undo-tab-close-editor",
 				keybindings: [
-					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyMod.Alt | monacoInstance.KeyMod.Shift | monacoInstance.KeyCode.KeyT,
+					monacoInstance.KeyMod.CtrlCmd |
+						monacoInstance.KeyMod.Alt |
+						monacoInstance.KeyMod.Shift |
+						monacoInstance.KeyCode.KeyT,
 				],
 				run: () => {
 					const tab = undo();
