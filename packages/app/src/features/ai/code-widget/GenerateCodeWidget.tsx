@@ -96,7 +96,7 @@ function GenerateCodeWidgetContent({
 				maxWidth: editorWidth - 40, // Responsive to editor size
 			}}
 		>
-			<InputGroup className="dark:bg-input">
+			<InputGroup className="shadow-lg dark:bg-background/95 backdrop-blur-sm border-border/50">
 				<InputGroupInput
 					ref={inputRef}
 					id={inputId}
@@ -105,14 +105,14 @@ function GenerateCodeWidgetContent({
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 					onKeyDown={handleKeyDown}
-					className="text-sm focus-visible:ring-0 focus-visible:border-0"
+					className="text-sm placeholder:text-muted-foreground/60 [&:focus]:!outline-none [&:focus]:!ring-0 [&:focus]:!border-0 "
 					disabled={isLoading}
 				/>
 
-				<InputGroupAddon>
+				<InputGroupAddon align="inline-end">
 					<ModelSelect />
 				</InputGroupAddon>
-				<InputGroupAddon>
+				<InputGroupAddon align="inline-end">
 					<InputGroupButton
 						size="icon-sm"
 						variant="ghost"
@@ -128,7 +128,7 @@ function GenerateCodeWidgetContent({
 					</InputGroupButton>
 				</InputGroupAddon>
 
-				<InputGroupAddon>
+				<InputGroupAddon align="inline-end">
 					<InputGroupButton
 						size="icon-sm"
 						variant="ghost"
@@ -145,7 +145,7 @@ function GenerateCodeWidgetContent({
 }
 
 // Simplified functional approach for better focus handling
-export function ccreateGenerateCodeWidget(editor: Editor) {
+export function createGenerateCodeWidget(editor: Editor) {
 	let isVisible = false;
 	let domNode: HTMLElement | null = null;
 	let root: Root | null = null;
