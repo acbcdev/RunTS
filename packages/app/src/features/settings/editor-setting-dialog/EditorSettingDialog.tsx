@@ -1,4 +1,4 @@
-import { BrainCog, Brush, MonitorCog } from "lucide-react";
+import { BrainCog, Brush, MonitorCog, FileCode2 } from "lucide-react";
 import { useModalStore } from "@/features/common/modal/modal";
 import { versionApp } from "@/features/common/utils/const";
 import {
@@ -11,11 +11,12 @@ import {
 import { ScrollArea } from "@/features/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/features/ui/tabs";
 import { GithubStars } from "../github-stars/GithubStars";
-import { AI, Appearance, Editor } from "../sections";
+import { AI, Appearance, Editor, Formatting } from "../sections";
 
 const Trigers = [
 	{ name: "Appearance", Icon: Brush },
 	{ name: "Editor", Icon: MonitorCog },
+	{ name: "Formatting", Icon: FileCode2 },
 	{ name: "AI", Icon: BrainCog },
 ];
 export function EditorSettingsDialog() {
@@ -88,6 +89,7 @@ export function EditorSettingsDialog() {
 					<ScrollArea className="max-h-[85dvh] h-[60dvh] ">
 						<Appearance />
 						<Editor />
+						<Formatting />
 						<AI />
 					</ScrollArea>
 				</Tabs>

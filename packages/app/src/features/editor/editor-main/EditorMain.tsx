@@ -17,6 +17,7 @@ import { useEditorStore } from "../editor-store/editor";
 import type { Tab } from "../types";
 import { useRun } from "../use-run/useRun";
 import { EDITOR_CONFIG } from "../utils/config";
+import { formatCode } from "../utils/prettier-formatter";
 import { extraLib } from "./extraLib";
 import Loading from "./Loading";
 
@@ -42,6 +43,11 @@ export function EditorMain({ tab }: EditorMainProps) {
 		whiteSpace,
 		lineRenderer,
 		toggleConfig,
+		tabSize,
+		insertSpaces,
+		formatOnPaste,
+		formatOnType,
+		autoIndent,
 	} = useConfigStore(
 		useShallow((state) => ({
 			wordWrap: state.wordWrap,
@@ -50,6 +56,11 @@ export function EditorMain({ tab }: EditorMainProps) {
 			whiteSpace: state.whiteSpace,
 			lineRenderer: state.lineRenderer,
 			toggleConfig: state.toggleConfig,
+			tabSize: state.tabSize,
+			insertSpaces: state.insertSpaces,
+			formatOnPaste: state.formatOnPaste,
+			formatOnType: state.formatOnType,
+			autoIndent: state.autoIndent,
 		})),
 	);
 	// useTabsStore
@@ -198,6 +209,64 @@ export function EditorMain({ tab }: EditorMainProps) {
 				],
 				run: () => {
 					toggle("settings");
+				},
+			});
+
+			// Override default format action with Prettier
+			editor.addCommand(
+				monacoInstance.KeyMod.Shift |
+					monacoInstance.KeyMod.Alt |
+					monacoInstance.KeyCode.KeyF,
+				async () => {
+					const model = editor.getModel();
+					if (!model) return;
+
+					const code = model.getValue();
+					const configState = useConfigStore.getState();
+					const formatted = await formatCode(code, {
+						printWidth: configState.printWidth,
+						tabWidth: configState.tabSize,
+						useTabs: configState.insertSpaces,
+					});
+
+					if (formatted !== code) {
+						editor.executeEdits("prettier-format", [
+							{
+								range: model.getFullModelRange(),
+								text: formatted,
+							},
+						]);
+					}
+				},
+			);
+			editor.addAction({
+				id: "format-code-prettier",
+				label: "Format Code (Prettier)",
+				keybindings: [
+					monacoInstance.KeyMod.Shift |
+						monacoInstance.KeyMod.Alt |
+						monacoInstance.KeyCode.KeyF,
+				],
+				run: async () => {
+					const model = editor.getModel();
+					if (!model) return;
+
+					const code = model.getValue();
+					const configState = useConfigStore.getState();
+					const formatted = await formatCode(code, {
+						printWidth: configState.printWidth,
+						tabWidth: configState.tabSize,
+						useTabs: configState.insertSpaces,
+					});
+
+					if (formatted !== code) {
+						editor.executeEdits("prettier-format", [
+							{
+								range: model.getFullModelRange(),
+								text: formatted,
+							},
+						]);
+					}
 				},
 			});
 
@@ -368,6 +437,12 @@ export function EditorMain({ tab }: EditorMainProps) {
 					},
 					renderWhitespace: whiteSpace ? "all" : "selection",
 					lineNumbers: lineNumbers ? "on" : "off",
+					// Formatting configuration from store
+					tabSize,
+					insertSpaces,
+					formatOnPaste,
+					formatOnType,
+					autoIndent,
 					...EDITOR_CONFIG,
 				}}
 			/>

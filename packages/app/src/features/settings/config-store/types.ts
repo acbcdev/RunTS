@@ -26,4 +26,10 @@ export type ConfigEditorState = {
 	minimap: boolean;
 	updates: boolean;
 	lineRenderer: lineRendererEditor;
+	tabSize: number;
+	insertSpaces: boolean;
+	formatOnPaste: boolean;
+	formatOnType: boolean;
+	autoIndent: "none" | "keep" | "brackets" | "advanced" | "full";
+	printWidth: number;
 };

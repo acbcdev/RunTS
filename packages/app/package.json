@@ -55,6 +55,7 @@
     "lucide-react": "0.545.0",
     "motion": "12.23.12",
     "nanoid": "5.1.5",
+    "prettier": "3.6.2",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-hook-form": "7.62.0",

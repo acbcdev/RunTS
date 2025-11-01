@@ -106,3 +106,15 @@ export const INITIAL_TABS: Tab[] = [
 		updatedAt: Date.now(),
 	},
 ];
+
+export const TAB_SIZES = [2, 4, 8];
+
+export const PRINT_WIDTHS = [80, 100, 120];
+
+export const AUTO_INDENT_OPTIONS = [
+	{ value: "none", label: "None" },
+	{ value: "keep", label: "Keep" },
+	{ value: "brackets", label: "Brackets" },
+	{ value: "advanced", label: "Advanced" },
+	{ value: "full", label: "Full" },
+] as const;

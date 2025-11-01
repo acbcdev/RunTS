@@ -1,10 +1,8 @@
 import { editor } from "monaco-editor";
 
 export const EDITOR_CONFIG = {
-	// To Config
-	tabSize: 2,
+	// Formatting options now come from config store
 	detectIndentation: false,
-	insertSpaces: true,
 
 	cursorStyle: "line",
 	cursorWidth: 2,
@@ -14,10 +12,7 @@ export const EDITOR_CONFIG = {
 	"semanticHighlighting.enabled": true,
 	fontLigatures: true,
 	fixedOverflowWidgets: true,
-	autoIndent: "full",
 	glyphMargin: true,
-	formatOnPaste: true,
-	formatOnType: true,
 	guides: {
 		bracketPairs: true,
 		indentation: true,
@@ -125,12 +120,12 @@ export const CONSOLE_EDITOR_CONFIG = {
 	fontLigatures: true,
 	padding: {
 		top: 4,
-		bottom: 20,
+		bottom: 200,
 	},
 
 	glyphMargin: false,
 	automaticLayout: true,
-	scrollBeyondLastLine: false,
+	scrollBeyondLastLine: true,
 
 	bracketPairColorization: {
 		enabled: false,

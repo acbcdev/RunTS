@@ -11,6 +11,12 @@ const DEFAULT_CONFIG: ConfigEditorState = {
 	hideUndefined: true,
 	refreshTime: 200,
 	lineRenderer: "line",
+	tabSize: 2,
+	insertSpaces: true,
+	formatOnPaste: true,
+	formatOnType: true,
+	autoIndent: "full",
+	printWidth: 80,
 };
 
 export const useConfigStore = create<ConfigEditor>()(
