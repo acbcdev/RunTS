@@ -1,6 +1,9 @@
 import { editor } from "monaco-editor";
 
 export const EDITOR_CONFIG = {
+	// To Config
+	tabSize: 2,
+	insertSpaces: true,
 	// Formatting options now come from config store
 	detectIndentation: false,
 
