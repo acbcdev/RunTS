@@ -3,6 +3,8 @@ import { editor } from "monaco-editor";
 export const EDITOR_CONFIG = {
 	// To Config
 	tabSize: 2,
+	detectIndentation: false,
+	insertSpaces: true,
 
 	cursorStyle: "line",
 	cursorWidth: 2,
