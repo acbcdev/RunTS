@@ -64,4 +64,61 @@ export default defineConfig({
       "@features": path.resolve("./src/features"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Monaco Editor - separate chunks
+          "monaco-editor-core": ["monaco-editor"],
+          "monaco-react": ["@monaco-editor/react"],
+
+          // Prettier - separate chunk for formatting
+          prettier: [
+            "prettier/standalone",
+            "prettier/plugins/typescript",
+            "prettier/plugins/babel",
+            "prettier/plugins/estree",
+          ],
+
+          // AI SDK - split by provider
+          "ai-core": ["ai"],
+          "ai-openai": ["@ai-sdk/openai"],
+          "ai-anthropic": ["@ai-sdk/anthropic"],
+          "ai-google": ["@ai-sdk/google"],
+          "ai-mistral": ["@ai-sdk/mistral"],
+
+          // React Markdown
+          markdown: ["react-markdown", "remark-gfm"],
+
+          // Motion animations
+          motion: ["motion"],
+
+          // Radix UI - group together
+          "radix-ui": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-select",
+            "@radix-ui/react-tabs",
+            "@radix-ui/react-tooltip",
+            "@radix-ui/react-popover",
+            "@radix-ui/react-scroll-area",
+            "@radix-ui/react-context-menu",
+            "@radix-ui/react-collapsible",
+            "@radix-ui/react-label",
+            "@radix-ui/react-switch",
+            "@radix-ui/react-slot",
+            "@radix-ui/react-toast",
+          ],
+
+          // Zustand state management
+          zustand: ["zustand"],
+
+          // Other utilities
+          utils: ["clsx", "tailwind-merge", "class-variance-authority", "nanoid"],
+        },
+      },
+    },
+    // Increase chunk size warning limit for Monaco
+    chunkSizeWarningLimit: 1000,
+  },
 });

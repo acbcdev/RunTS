@@ -17,7 +17,6 @@ import { useEditorStore } from "../editor-store/editor";
 import type { Tab } from "../types";
 import { useRun } from "../use-run/useRun";
 import { EDITOR_CONFIG } from "../utils/config";
-import { formatCode } from "../utils/prettier-formatter";
 import { extraLib } from "./extraLib";
 import Loading from "./Loading";
 
@@ -222,7 +221,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				},
 			});
 
-			// Override default format action with Prettier
+			// Override default format action with Prettier (dynamically loaded)
 			editor.addCommand(
 				monacoInstance.KeyMod.Shift |
 					monacoInstance.KeyMod.Alt |
@@ -233,6 +232,9 @@ export function EditorMain({ tab }: EditorMainProps) {
 
 					const code = model.getValue();
 					const configState = useConfigStore.getState();
+
+					// Dynamically import Prettier to reduce initial bundle size
+					const { formatCode } = await import("../utils/prettier-formatter");
 					const formatted = await formatCode(code, {
 						printWidth: configState.printWidth,
 						tabWidth: configState.tabSize,
@@ -263,6 +265,9 @@ export function EditorMain({ tab }: EditorMainProps) {
 
 					const code = model.getValue();
 					const configState = useConfigStore.getState();
+
+					// Dynamically import Prettier to reduce initial bundle size
+					const { formatCode } = await import("../utils/prettier-formatter");
 					const formatted = await formatCode(code, {
 						printWidth: configState.printWidth,
 						tabWidth: configState.tabSize,

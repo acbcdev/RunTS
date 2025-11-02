@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/correctness/useExhaustiveDependencies: <explanation> */
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { decode } from "js-base64";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { CommandK } from "@/features/common/command/CommandK";
@@ -55,9 +55,9 @@ function App() {
 					<CommandK />
 					<EditorSettingsDialog />
 					<ShortCutsModal />
-					{/* <Suspense fallba/ck={<div>Loading editor...</div>}> */}
-					<CodeEditor />
-					{/* </Suspense> */}
+					<Suspense fallback={<div>Loading editor...</div>}>
+						<CodeEditor />
+					</Suspense>
 					<Toaster />
 				</TooltipProvider>
 			</ErrorBoundary>
