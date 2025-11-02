@@ -1,13 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
 import { Button } from "@/features/ui/button";
 import { Label } from "@/features/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/features/ui/select";
 import { Switch } from "@/features/ui/switch";
 import { TabsContent } from "@/features/ui/tabs";
 import {
@@ -38,7 +31,7 @@ export function Formatting() {
 					<div className="space-y-4">
 						<div className="space-y-2">
 							<Label className="text-sm font-medium">Tab Size</Label>
-							<div className="grid grid-cols-3 gap-2">
+							<div className="grid grid-cols-8 gap-2">
 								{TAB_SIZES.map((size) => (
 									<Button
 										key={size}
@@ -92,32 +85,31 @@ export function Formatting() {
 				</section>
 
 				<section>
-					<h3 className="mb-4 text-base font-medium">Advanced</h3>
+					<h3 className="mb-4 text-base font-medium  ">Advanced</h3>
 					<div className="space-y-4">
-						<div className="space-y-2">
-							<Label className="text-sm font-medium">Auto Indent</Label>
+						<div>
+							<Label className="text-sm font-medium">Auto Format</Label>
 							<p className="text-sm font-medium opacity-60">
-								Controls how aggressive auto-indentation is
+								Controls how aggressive auto-formatting is
 							</p>
-							<Select
-								value={configState.autoIndent}
-								onValueChange={(value) =>
-									configState.updateConfig({
-										autoIndent: value as typeof configState.autoIndent,
-									})
-								}
-							>
-								<SelectTrigger className="w-full">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{AUTO_INDENT_OPTIONS.map((option) => (
-										<SelectItem key={option.value} value={option.value}>
-											{option.label}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
+						</div>
+						<div className="grid grid-cols-8 gap-2">
+							{AUTO_INDENT_OPTIONS.map((option) => (
+								<Button
+									key={option.value}
+									value={option.value}
+									onClick={() => {
+										configState.updateConfig({ autoIndent: option.value });
+									}}
+									variant={
+										option.value === configState.autoIndent
+											? "border"
+											: "outline"
+									}
+								>
+									{option.label}
+								</Button>
+							))}
 						</div>
 
 						<div className="space-y-2">
@@ -125,7 +117,7 @@ export function Formatting() {
 							<p className="text-sm font-medium opacity-60">
 								Maximum line length for code formatting (Prettier)
 							</p>
-							<div className="grid grid-cols-3 gap-2">
+							<div className="grid grid-cols-8 gap-2">
 								{PRINT_WIDTHS.map((width) => (
 									<Button
 										key={width}
