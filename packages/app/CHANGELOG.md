@@ -1,5 +1,41 @@
 # Changelog
 
+## Version 1.6.7 – Nov 2, 2025
+
+### New Features
+
+- **Encrypted Storage:** Implemented secure encrypted storage for API keys and sensitive data
+- **Code Formatting with Prettier:** Added Prettier integration for automatic code formatting
+- **Enhanced Formatting Options:** New formatting settings section with customizable options
+  - Configurable tab size (2, 4, or 8 spaces)
+  - Auto format toggle (renamed from "Auto Indent")
+  - Button-based UI for better user experience
+
+### Improvements
+
+- **Bundle Size Optimization:** Manual code splitting and dynamic imports significantly reduce initial bundle size
+- **AI Code Generation Widget:** Improved styling and integration with Monaco editor
+- **Security:** Added comprehensive test coverage for encryption utilities
+- **Settings UI:** Updated tab size grid to 8 columns for better layout organization
+
+### Refactors
+
+- **AI Configuration Store:** Enhanced with encryption support for secure API key management
+- **useChat Hook:** Improved error handling and encryption integration
+- **Vite Configuration:** Optimized build configuration with better chunk splitting strategy
+
+### Fixes
+
+- **Tab Indentation:** Enforced consistent tab indentation with 2 spaces across the editor
+- **Code Quality:** Standardized formatting with Biome
+
+### Technical
+
+- Added `encryptedStorage.ts` with secure localStorage wrapper
+- Added `crypt.ts` utilities for encryption/decryption operations
+- Comprehensive unit tests for cryptographic functions
+- Dynamic import strategy for heavy components
+
 ## Version 1.6.6 – Oct 20, 2025
 
 ### Refactors
