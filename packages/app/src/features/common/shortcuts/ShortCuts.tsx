@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <statics IDS> */
 import { useMemo } from "react";
 import {
 	Dialog,

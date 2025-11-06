@@ -81,6 +81,8 @@ function PromptInput({
 					textareaRef,
 				}}
 			>
+				{/** biome-ignore lint/a11y/noStaticElementInteractions: <container> */}
+				{/** biome-ignore lint/a11y/useKeyWithClickEvents: <container> */}
 				<div
 					className={cn(
 						"bg-background/80 cursor-text rounded-xl p-2 shadow-xs",
@@ -107,7 +109,7 @@ function PromptInputTextarea({
 }: PromptInputTextareaProps) {
 	const { value, setValue, maxHeight, onSubmit, disabled, textareaRef } =
 		usePromptInput();
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <reduce>
 	useEffect(() => {
 		if (disableAutosize) return;
 

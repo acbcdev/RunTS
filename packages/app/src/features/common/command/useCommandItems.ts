@@ -38,7 +38,7 @@ import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useHistoryTabsStore } from "../../tabs/history/history";
 import { useModalStore } from "../modal/modal";
 import { themes } from "../themes";
-import { getModifierKey, isMac } from "../utils/shortcuts";
+import { getModifierKey } from "../utils/shortcuts";
 import type { CommandOption, CommandOptionChild } from "./types";
 
 export const useCommandItems = (): {

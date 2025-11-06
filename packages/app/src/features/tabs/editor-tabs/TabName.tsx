@@ -1,5 +1,5 @@
-/** biome-ignore-all lint/a11y/noStaticElementInteractions */
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies */
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <:fix> */
+/** biome-ignore-all lint/a11y/noStaticElementInteractions: <are showend> */
 import { useEffect, useRef, useState } from "react";
 import type { Tab } from "@/features/editor/types";
 import { cn } from "@/features/lib/cn";

@@ -76,6 +76,7 @@ const MessageCircleIcon = forwardRef<
 	);
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: <view>
 		<div
 			className={cn(className)}
 			onMouseEnter={handleMouseEnter}

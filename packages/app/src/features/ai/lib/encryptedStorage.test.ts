@@ -127,7 +127,7 @@ describe("Encrypted Storage Adapter", () => {
 
 			const retrieved = await storage.getItem("aiConfigStore-v2");
 			expect(retrieved).toBeDefined();
-			expect(JSON.parse(retrieved!)).toEqual(mockState);
+			expect(JSON.parse(retrieved ?? "")).toEqual(mockState);
 		});
 
 		it("should handle Zustand state with messages array", async () => {
@@ -153,7 +153,7 @@ describe("Encrypted Storage Adapter", () => {
 			await storage.setItem("test-state", serialized);
 
 			const retrieved = await storage.getItem("test-state");
-			const parsed = JSON.parse(retrieved!);
+			const parsed = JSON.parse(retrieved ?? "");
 
 			expect(parsed.state.messages).toHaveLength(2);
 			expect(parsed.state.messages[0].content).toBe("Hello");
@@ -194,10 +194,10 @@ describe("Encrypted Storage Adapter", () => {
 			const largeState = {
 				state: {
 					apiKeys: {
-						openai: "sk-" + "x".repeat(1000),
-						anthropic: "sk-" + "y".repeat(1000),
-						google: "AIza" + "z".repeat(1000),
-						mistral: "mstr-" + "w".repeat(1000),
+						openai: `sk-${"x".repeat(1000)}`,
+						anthropic: `sk-${"y".repeat(1000)}`,
+						google: `AIza${"z".repeat(1000)}`,
+						mistral: `mstr-${"w".repeat(1000)}`,
 					},
 					messages: Array.from({ length: 100 }, (_, i) => ({
 						id: `msg-${i}`,
@@ -211,7 +211,7 @@ describe("Encrypted Storage Adapter", () => {
 			await storage.setItem("large-state", serialized);
 
 			const retrieved = await storage.getItem("large-state");
-			expect(JSON.parse(retrieved!)).toEqual(largeState);
+			expect(JSON.parse(retrieved ?? "")).toEqual(largeState);
 		});
 
 		it("should handle special characters in state", async () => {
@@ -231,7 +231,7 @@ describe("Encrypted Storage Adapter", () => {
 			await storage.setItem("special-chars", serialized);
 
 			const retrieved = await storage.getItem("special-chars");
-			expect(JSON.parse(retrieved!)).toEqual(mockState);
+			expect(JSON.parse(retrieved ?? "")).toEqual(mockState);
 		});
 
 		it("should maintain referential consistency across operations", async () => {
@@ -378,7 +378,7 @@ describe("Encrypted Storage Sync Wrapper", () => {
 			await storage.setItem("zustand-test", serialized);
 
 			const retrieved = await storage.getItem("zustand-test");
-			expect(JSON.parse(retrieved!)).toEqual(mockState);
+			expect(JSON.parse(retrieved ?? "")).toEqual(mockState);
 		});
 
 		it("should handle removeItem synchronously", () => {

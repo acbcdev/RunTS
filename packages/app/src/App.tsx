@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <explanation> */
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { decode } from "js-base64";
 import { lazy, Suspense, useEffect } from "react";
@@ -23,6 +22,7 @@ function App() {
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <this must be run one time>
 	useEffect(() => {
 		console.log(MESSAGE_LOG);
 		const code = new URLSearchParams(window.location.search).get("code");

@@ -1,5 +1,5 @@
 import type { editor } from "monaco-editor";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAIConfigStore } from "../store/aiConfig";
 import { useCodeGeneration } from "./useCodeGeneration";
 

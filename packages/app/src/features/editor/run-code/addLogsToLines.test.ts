@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: <test> */
 import { describe, expect, it } from "vitest";
 import { injectLogsIntoCode } from "./addLogsToLines";
 

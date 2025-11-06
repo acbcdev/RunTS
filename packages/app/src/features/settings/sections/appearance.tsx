@@ -2,7 +2,6 @@ import { useShallow } from "zustand/react/shallow";
 import { themes } from "@/features/common/themes";
 import { cn } from "@/features/common/utils/utils";
 import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
-import { Button } from "@/features/ui/button";
 import { TabsContent } from "@/features/ui/tabs";
 import { SIDES, useApparenceStore } from "../appearance-store/appearance";
 import {
@@ -84,7 +83,7 @@ export function Appearance() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Actions Position</h3>
 					<SettingButtonGroup
-						options={Object.entries(SIDES).map(([key, value]) => value)}
+						options={Object.entries(SIDES).map(([_, value]) => value)}
 						value={side}
 						onChange={(value) => setOption("side", value)}
 						renderLabel={(value) => {

@@ -7,7 +7,6 @@ import { useHistoryTabsStore } from "@/features/tabs/history/history";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useModalStore } from "../modal/modal";
 import {
-	GENERATE_CODE,
 	isMac,
 	isPWA,
 	NEW_TAB,

@@ -1,4 +1,3 @@
-import { isTauri } from "@tauri-apps/api/core";
 import { Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { getModifierKey } from "@/features/common/utils/shortcuts";
