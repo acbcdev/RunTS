@@ -51,7 +51,7 @@ export function Prompt({
 			className="w-full max-w-(--breakpoint-md)  "
 		>
 			<PromptInputTextarea
-				className="max-h-32"
+				className="max-h-32 dark:bg-transparent"
 				placeholder="Ask me anything..."
 			/>
 
