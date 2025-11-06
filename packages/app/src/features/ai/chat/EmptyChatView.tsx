@@ -1,13 +1,13 @@
 import { MessageCircleDashed } from "lucide-react";
+import { EmptyStateView } from "@/features/common/components/EmptyStateView";
 
 export function EmptyChatView() {
 	return (
-		<div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-4">
-			<MessageCircleDashed size={64} strokeWidth={1.5} />
-			<p className="text-lg font-medium">There are no messages yet</p>
-			<p className="text-sm text-center max-w-md">
-				Start a conversation by typing below!
-			</p>
-		</div>
+		<EmptyStateView
+			icon={<MessageCircleDashed size={64} strokeWidth={1.5} />}
+			title="There are no messages yet"
+			description="Start a conversation by typing below!"
+			className="text-muted-foreground"
+		/>
 	);
 }

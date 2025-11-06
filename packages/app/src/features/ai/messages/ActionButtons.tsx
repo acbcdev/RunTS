@@ -1,6 +1,6 @@
 import { Copy, CopyCheck } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/features/ui/button";
+import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
 import {
 	Tooltip,
 	TooltipContent,
@@ -14,18 +14,13 @@ export function ActionButtons({
 	content: string;
 	reload: () => void;
 }) {
-	const [copied, setCopied] = useState(false);
-	const copyToClipboard = () => {
-		navigator.clipboard.writeText(content);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	};
+	const { copy, copied } = useCopyToClipboard();
 	return (
 		<div>
 			<TooltipProvider delayDuration={0}>
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<Button onClick={copyToClipboard} size={"icon"} variant={"ghost"}>
+						<Button onClick={() => copy(content)} size={"icon"} variant={"ghost"}>
 							{copied ? <CopyCheck /> : <Copy />}
 						</Button>
 					</TooltipTrigger>

@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
-import { Button } from "@/features/ui/button";
+import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
+import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
 import { Label } from "@/features/ui/label";
-import { Switch } from "@/features/ui/switch";
 import { TabsContent } from "@/features/ui/tabs";
 import {
 	AUTO_INDENT_OPTIONS,
@@ -31,21 +31,15 @@ export function Formatting() {
 					<div className="space-y-4">
 						<div className="space-y-2">
 							<Label className="text-sm font-medium">Tab Size</Label>
-							<div className="grid grid-cols-8 gap-2">
-								{TAB_SIZES.map((size) => (
-									<Button
-										key={size}
-										variant={
-											configState.tabSize === size ? "border" : "outline"
-										}
-										onClick={() => configState.updateConfig({ tabSize: size })}
-									>
-										{size} spaces
-									</Button>
-								))}
-							</div>
+							<SettingButtonGroup
+								options={TAB_SIZES}
+								value={configState.tabSize}
+								onChange={(size) => configState.updateConfig({ tabSize: size })}
+								renderLabel={(size) => `${size} spaces`}
+								className="grid grid-cols-8 gap-2"
+							/>
 						</div>
-						<FormattingSwitch
+						<SettingSwitch
 							label="Insert Spaces"
 							description="Use spaces instead of tabs for indentation"
 							value={configState.insertSpaces}
@@ -61,7 +55,7 @@ export function Formatting() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Auto-Formatting</h3>
 					<div className="space-y-4">
-						<FormattingSwitch
+						<SettingSwitch
 							label="Format On Paste"
 							description="Automatically format code when pasting"
 							value={configState.formatOnPaste}
@@ -71,7 +65,7 @@ export function Formatting() {
 								})
 							}
 						/>
-						<FormattingSwitch
+						<SettingSwitch
 							label="Format On Type"
 							description="Automatically format code as you type"
 							value={configState.formatOnType}
@@ -93,73 +87,29 @@ export function Formatting() {
 								Controls how aggressive auto-formatting is
 							</p>
 						</div>
-						<div className="grid grid-cols-8 gap-2">
-							{AUTO_INDENT_OPTIONS.map((option) => (
-								<Button
-									key={option.value}
-									value={option.value}
-									onClick={() => {
-										configState.updateConfig({ autoIndent: option.value });
-									}}
-									variant={
-										option.value === configState.autoIndent
-											? "border"
-											: "outline"
-									}
-								>
-									{option.label}
-								</Button>
-							))}
-						</div>
+						<SettingButtonGroup
+							options={AUTO_INDENT_OPTIONS}
+							value={configState.autoIndent}
+							onChange={(option) => configState.updateConfig({ autoIndent: option.value })}
+							renderLabel={(option) => option.label}
+							className="grid grid-cols-8 gap-2"
+						/>
 
 						<div className="space-y-2">
 							<Label className="text-sm font-medium">Print Width</Label>
 							<p className="text-sm font-medium opacity-60">
 								Maximum line length for code formatting (Prettier)
 							</p>
-							<div className="grid grid-cols-8 gap-2">
-								{PRINT_WIDTHS.map((width) => (
-									<Button
-										key={width}
-										variant={
-											configState.printWidth === width ? "border" : "outline"
-										}
-										onClick={() =>
-											configState.updateConfig({ printWidth: width })
-										}
-									>
-										{width}
-									</Button>
-								))}
-							</div>
+							<SettingButtonGroup
+								options={PRINT_WIDTHS}
+								value={configState.printWidth}
+								onChange={(width) => configState.updateConfig({ printWidth: width })}
+								className="grid grid-cols-8 gap-2"
+							/>
 						</div>
 					</div>
 				</section>
 			</div>
 		</TabsContent>
-	);
-}
-
-type FormattingSwitchProps = {
-	label: string;
-	description: string;
-	value: boolean;
-	callback: () => void;
-};
-
-function FormattingSwitch({
-	label,
-	description,
-	value,
-	callback,
-}: FormattingSwitchProps) {
-	return (
-		<Label className="flex border items-center justify-between p-3 md:gap-x-4 rounded-lg ">
-			<div className="space-y-1">
-				<h3 className="font-bold  ">{label}</h3>
-				<p className="text-sm font-medium opacity-60">{description}</p>
-			</div>
-			<Switch checked={value} onCheckedChange={callback} />
-		</Label>
 	);
 }

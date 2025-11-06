@@ -1,9 +1,8 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/features/editor/editor-store/editor";
-import { Button } from "@/features/ui/button";
-import { Label } from "@/features/ui/label";
-import { Switch } from "@/features/ui/switch";
+import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
+import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
 import { TabsContent } from "@/features/ui/tabs";
 import {
 	EDITOR_SETTINGS_CONFIG,
@@ -49,7 +48,7 @@ export function Editor() {
 					<h3 className="mb-4 text-base font-medium">Editor Behavior</h3>
 					<div className="space-y-4 md:columns-2">
 						{editorSettings.map(({ label, description, value, callback }) => (
-							<EditorSwitch
+							<SettingSwitch
 								key={label}
 								label={label}
 								description={description}
@@ -61,48 +60,33 @@ export function Editor() {
 				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Line Renderer</h3>
-					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
-						{RENDER_LINES.map((renderline) => (
-							<Button
-								key={renderline}
-								variant={
-									configState.lineRenderer === renderline ? "border" : "outline"
-								}
-								onClick={() =>
-									configState.updateConfig({ lineRenderer: renderline })
-								}
-							>
-								{renderline}
-							</Button>
-						))}
-					</div>
+					<SettingButtonGroup
+						options={RENDER_LINES}
+						value={configState.lineRenderer}
+						onChange={(value) => configState.updateConfig({ lineRenderer: value })}
+						className="grid grid-cols-6 gap-2 md:grid-cols-8"
+					/>
 				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Refresh Time</h3>
-					<div className="grid grid-cols-6 gap-2 md:grid-cols-8">
-						{REFRESH_TIMES.map(({ time, value }) => (
-							<Button
-								key={time}
-								variant={
-									configState.refreshTime === value ? "border" : "outline"
-								}
-								onClick={() => configState.updateConfig({ refreshTime: value })}
-							>
-								{time}
-							</Button>
-						))}
-					</div>
+					<SettingButtonGroup
+						options={REFRESH_TIMES}
+						value={configState.refreshTime}
+						onChange={(option) => configState.updateConfig({ refreshTime: option.value })}
+						renderLabel={(option) => option.time}
+						className="grid grid-cols-6 gap-2 md:grid-cols-8"
+					/>
 				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Advanced</h3>
 					<div className="space-y-4">
-						<EditorSwitch
+						<SettingSwitch
 							label="Expression Runner"
 							description="Automatically displays the output of expressions in the console without requiring console.log(). Works with any expression, not just console info error and warn."
 							value={expression}
 							callback={() => updateEditor({ expression: !expression })}
 						/>
-						<EditorSwitch
+						<SettingSwitch
 							label="Align Logs"
 							description="Aligns the logs in the console to the left."
 							value={alignLogs}
@@ -112,30 +96,5 @@ export function Editor() {
 				</section>
 			</div>
 		</TabsContent>
-	);
-}
-type EditorSwitchProps = {
-	label: string;
-	description: string;
-	value: boolean;
-	callback: () => void;
-};
-function EditorSwitch({
-	label,
-	description,
-	value,
-	callback,
-}: EditorSwitchProps) {
-	return (
-		<Label
-			key={label}
-			className="flex border items-center justify-between p-3 md:gap-x-4 rounded-lg "
-		>
-			<div className="space-y-1">
-				<h3 className="font-bold  ">{label}</h3>
-				<p className="text-sm font-medium opacity-60">{description}</p>
-			</div>
-			<Switch checked={value} onCheckedChange={callback} />
-		</Label>
 	);
 }

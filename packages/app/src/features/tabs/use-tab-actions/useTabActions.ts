@@ -100,18 +100,6 @@ export const useTabActions = () => {
 		}, 100);
 	};
 
-	const handleCopyCode = (tabId: string) => {
-		copyCode(tabId);
-	};
-
-	const handleDownloadCode = (tabId: string) => {
-		downloadCode(tabId);
-	};
-
-	const handleShareCode = (tabId: string) => {
-		handleShare(tabId);
-	};
-
 	const handleRemoveTab = (tabId: string) => {
 		removeTab(tabId);
 	};
@@ -125,9 +113,9 @@ export const useTabActions = () => {
 		handleStartEditing,
 		handleActivateAndEdit,
 		handleRenameFromContextMenu,
-		handleCopyCode,
-		handleDownloadCode,
-		handleShareCode,
+		handleCopyCode: copyCode,
+		handleDownloadCode: downloadCode,
+		handleShareCode: handleShare,
 		handleRemoveTab,
 		setEditing,
 		changeNameTab,

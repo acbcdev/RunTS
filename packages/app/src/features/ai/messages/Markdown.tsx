@@ -1,11 +1,11 @@
 import { Editor } from "@monaco-editor/react";
 import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
-import { useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useShallow } from "zustand/react/shallow";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
+import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
 import { Button } from "@/features/ui/button";
 import {
 	Tooltip,
@@ -21,16 +21,11 @@ const components = {
 			useShallow((state) => state.fontFamily),
 		);
 		const newTab = useTabsStore(useShallow((state) => state.newTab));
+		const { copy, copied } = useCopyToClipboard();
 
 		const match = /language-(\w+)/.exec(className || "");
 		const code = String(children).trim();
 		const height = code.split("\n").length * 19 + 8 * 2;
-		const [copied, setCopied] = useState(false);
-		const copyToClipboard = () => {
-			navigator.clipboard.writeText(code);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		};
 		const lang = ["tsx", "jsx"].includes(match?.[1] ?? "")
 			? "javascript"
 			: match?.[1];
@@ -62,7 +57,7 @@ const components = {
 										size={"icon"}
 										className="size-7"
 										aria-label="Copy code"
-										onClick={copyToClipboard}
+										onClick={() => copy(code)}
 									>
 										{copied ? (
 											<CopyCheck className="size-4" />

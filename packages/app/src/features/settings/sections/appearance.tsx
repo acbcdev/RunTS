@@ -1,6 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { themes } from "@/features/common/themes";
 import { cn } from "@/features/common/utils/utils";
+import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
 import { Button } from "@/features/ui/button";
 import { TabsContent } from "@/features/ui/tabs";
 import { SIDES, useApparenceStore } from "../appearance-store/appearance";
@@ -82,52 +83,38 @@ export function Appearance() {
 				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Actions Position</h3>
-					<div className="grid grid-cols-5 gap-2 md:grid-cols-10">
-						{Object.entries(SIDES).map(([key, value]) => (
-							<Button
-								translate="no"
-								key={key}
-								variant={side === value ? "border" : "outline"}
-								onClick={() => setOption("side", value)}
-								className="capitalize"
-							>
-								{key.toLowerCase()}
-							</Button>
-						))}
-					</div>
+					<SettingButtonGroup
+						options={Object.entries(SIDES).map(([key, value]) => value)}
+						value={side}
+						onChange={(value) => setOption("side", value)}
+						renderLabel={(value) => {
+							const key = Object.entries(SIDES).find(([_, v]) => v === value)?.[0];
+							return key?.toLowerCase() || "";
+						}}
+						className="grid grid-cols-5 gap-2 md:grid-cols-10"
+					/>
 				</section>
 				<section>
 					<h3 className="mb-4 text-base font-medium">Border Radius</h3>
-					<div className="grid grid-cols-5 gap-2 md:grid-cols-10">
-						{RADIUS_SIZES.map((value) => (
-							<Button
-								translate="no"
-								key={value.size}
-								variant={radius === value.size ? "border" : "outline"}
-								onClick={() => setOption("radius", value.size)}
-								style={{ borderRadius: `${value.size}rem` }}
-							>
-								{value.display}
-							</Button>
-						))}
-					</div>
+					<SettingButtonGroup
+						options={RADIUS_SIZES}
+						value={RADIUS_SIZES.find((r) => r.size === radius) || RADIUS_SIZES[0]}
+						onChange={(value) => setOption("radius", value.size)}
+						renderLabel={(value) => value.display}
+						buttonStyle={(value) => ({ borderRadius: `${value.size}rem` })}
+						className="grid grid-cols-5 gap-2 md:grid-cols-10"
+					/>
 				</section>
 				<section>
 					<h3 translate="no" className="mb-4 text-base font-medium">
 						EditLayout
 					</h3>
-					<div className="grid grid-cols-2 gap-2">
-						{LAYOUTS.map((direction) => (
-							<Button
-								variant={layout === direction ? "border" : "outline"}
-								key={direction}
-								translate="no"
-								onClick={() => setOption("layout", direction)}
-							>
-								{direction}
-							</Button>
-						))}
-					</div>
+					<SettingButtonGroup
+						options={LAYOUTS}
+						value={layout}
+						onChange={(direction) => setOption("layout", direction)}
+						className="grid grid-cols-2 gap-2"
+					/>
 				</section>
 				<section>
 					<h3 translate="no" className="mb-4 text-base font-medium">
@@ -138,37 +125,27 @@ export function Appearance() {
 							<h4 translate="no" className="block mb-2 text-sm">
 								Font Size
 							</h4>
-							<div className="grid grid-cols-8 gap-2 md:grid-cols-10">
-								{FONT_SIZES.map((size) => (
-									<Button
-										translate="no"
-										key={size}
-										variant={fontSize === size ? "border" : "outline"}
-										onClick={() => setOption("fontSize", size)}
-									>
-										{size}px
-									</Button>
-								))}
-							</div>
+							<SettingButtonGroup
+								options={FONT_SIZES}
+								value={fontSize}
+								onChange={(size) => setOption("fontSize", size)}
+								renderLabel={(size) => `${size}px`}
+								className="grid grid-cols-8 gap-2 md:grid-cols-10"
+							/>
 						</div>
 
 						<div>
 							<h4 translate="no" className="block mb-2 text-sm">
 								Font Family
 							</h4>
-							<div className="grid grid-cols-2 gap-2">
-								{FONT_FAMILIES.map((font) => (
-									<Button
-										key={font.name}
-										variant={fontFamily === font.value ? "border" : "outline"}
-										translate="no"
-										onClick={() => setOption("fontFamily", font.value)}
-										style={{ fontFamily: font.value }}
-									>
-										{font.name}
-									</Button>
-								))}
-							</div>
+							<SettingButtonGroup
+								options={FONT_FAMILIES}
+								value={FONT_FAMILIES.find((f) => f.value === fontFamily) || FONT_FAMILIES[0]}
+								onChange={(font) => setOption("fontFamily", font.value)}
+								renderLabel={(font) => font.name}
+								buttonStyle={(font) => ({ fontFamily: font.value })}
+								className="grid grid-cols-2 gap-2"
+							/>
 						</div>
 					</div>
 				</section>

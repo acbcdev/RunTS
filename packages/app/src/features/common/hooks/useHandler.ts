@@ -6,6 +6,13 @@ import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import type { Tab } from "@/features/editor/types";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
+import {
+	EMPTY_CODE_MESSAGES,
+	CODE_ACTIONS,
+	LINK_MESSAGES,
+	getLinkCreatedMessage,
+	getDownloadMessage,
+} from "@/features/common/constants/toastMessages";
 
 export function useHandler() {
 	const getCurrentTab = useTabsStore(
@@ -17,38 +24,23 @@ export function useHandler() {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 		const url = new URL(window.location.href);
 		if (tab?.code.trim() === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to share.",
-				duration: 2000,
-			});
+			toast.error(EMPTY_CODE_MESSAGES.share);
 			return;
 		}
 		try {
 			const encodedCode = encode(tab?.code.trim() ?? "");
 			const link = `${url.origin}/?code=${encodedCode}`;
 			navigator.clipboard.writeText(link);
-			toast.success("Link Created", {
-				description: `The ${link.slice(
-					0,
-					30,
-				)}... has been copied to your clipboard.`,
-				duration: 2000,
-			});
+			toast.success(getLinkCreatedMessage(link.slice(0, 30)));
 		} catch {
-			toast.error("Error creating link", {
-				description: "The link could not be created.",
-				duration: 2000,
-			});
+			toast.error(LINK_MESSAGES.createError);
 		}
 	};
 
 	const copyCode = (tabId?: Tab["id"]) => {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 		if (tab?.code.trim() === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to copy.",
-				duration: 2000,
-			});
+			toast.error(EMPTY_CODE_MESSAGES.copy);
 			return;
 		}
 
@@ -58,20 +50,14 @@ export function useHandler() {
 			navigator.clipboard.writeText(tab?.code ?? "");
 		}
 
-		toast.success("Code copied!", {
-			description: "The code has been copied to your clipboard.",
-			duration: 2000,
-		});
+		toast.success(CODE_ACTIONS.copySuccess);
 	};
 
 	const downloadCode = (tabId?: Tab["id"]) => {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 
 		if (!tab || tab?.code.trim() === "") {
-			toast.error("Empty Code", {
-				description: "The code is empty, nothing to download.",
-				duration: 2000,
-			});
+			toast.error(EMPTY_CODE_MESSAGES.download);
 			return;
 		}
 
@@ -81,10 +67,7 @@ export function useHandler() {
 				defaultPath: tab?.name || "code.ts",
 			}).then((path) => {
 				if (path) {
-					toast.success("Code downloaded!", {
-						description: `The code has been downloaded to '${path}'`,
-						duration: 2000,
-					});
+					toast.success(getDownloadMessage(path));
 				}
 			});
 		} else {
@@ -99,10 +82,7 @@ export function useHandler() {
 			a.click();
 			document.body.removeChild(a);
 			URL.revokeObjectURL(url);
-			toast.success("Code downloaded!", {
-				description: "The code has been downloaded as 'code.js'",
-				duration: 2000,
-			});
+			toast.success(CODE_ACTIONS.downloadSuccess);
 		}
 	};
 
