@@ -11,7 +11,7 @@ export interface UseCopyToClipboardReturn {
 }
 
 export function useCopyToClipboard(
-	options: UseCopyToClipboardOptions = {}
+	options: UseCopyToClipboardOptions = {},
 ): UseCopyToClipboardReturn {
 	const { timeout = 2000 } = options;
 	const [copied, setCopied] = useState(false);

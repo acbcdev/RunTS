@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/features/editor/editor-store/editor";
-import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
 import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
+import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
 import { TabsContent } from "@/features/ui/tabs";
 import {
 	EDITOR_SETTINGS_CONFIG,
@@ -63,7 +63,9 @@ export function Editor() {
 					<SettingButtonGroup
 						options={RENDER_LINES}
 						value={configState.lineRenderer}
-						onChange={(value) => configState.updateConfig({ lineRenderer: value })}
+						onChange={(value) =>
+							configState.updateConfig({ lineRenderer: value })
+						}
 						className="grid grid-cols-6 gap-2 md:grid-cols-8"
 					/>
 				</section>
@@ -72,7 +74,9 @@ export function Editor() {
 					<SettingButtonGroup
 						options={REFRESH_TIMES}
 						value={configState.refreshTime}
-						onChange={(option) => configState.updateConfig({ refreshTime: option.value })}
+						onChange={(option) =>
+							configState.updateConfig({ refreshTime: option.value })
+						}
 						renderLabel={(option) => option.time}
 						className="grid grid-cols-6 gap-2 md:grid-cols-8"
 					/>

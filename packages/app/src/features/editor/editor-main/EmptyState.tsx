@@ -1,6 +1,6 @@
 import { Command, MessageCircleIcon, Plus } from "lucide-react";
-import { Kbd, KbdGroup } from "@/features/ui/kbd";
 import { getModifierKey, isMac } from "@/features/common/utils/shortcuts";
+import { Kbd, KbdGroup } from "@/features/ui/kbd";
 
 const commands = [
 	{

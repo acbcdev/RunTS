@@ -88,7 +88,9 @@ export function Appearance() {
 						value={side}
 						onChange={(value) => setOption("side", value)}
 						renderLabel={(value) => {
-							const key = Object.entries(SIDES).find(([_, v]) => v === value)?.[0];
+							const key = Object.entries(SIDES).find(
+								([_, v]) => v === value,
+							)?.[0];
 							return key?.toLowerCase() || "";
 						}}
 						className="grid grid-cols-5 gap-2 md:grid-cols-10"
@@ -98,7 +100,9 @@ export function Appearance() {
 					<h3 className="mb-4 text-base font-medium">Border Radius</h3>
 					<SettingButtonGroup
 						options={RADIUS_SIZES}
-						value={RADIUS_SIZES.find((r) => r.size === radius) || RADIUS_SIZES[0]}
+						value={
+							RADIUS_SIZES.find((r) => r.size === radius) || RADIUS_SIZES[0]
+						}
 						onChange={(value) => setOption("radius", value.size)}
 						renderLabel={(value) => value.display}
 						buttonStyle={(value) => ({ borderRadius: `${value.size}rem` })}
@@ -140,7 +144,10 @@ export function Appearance() {
 							</h4>
 							<SettingButtonGroup
 								options={FONT_FAMILIES}
-								value={FONT_FAMILIES.find((f) => f.value === fontFamily) || FONT_FAMILIES[0]}
+								value={
+									FONT_FAMILIES.find((f) => f.value === fontFamily) ||
+									FONT_FAMILIES[0]
+								}
 								onChange={(font) => setOption("fontFamily", font.value)}
 								renderLabel={(font) => font.name}
 								buttonStyle={(font) => ({ fontFamily: font.value })}

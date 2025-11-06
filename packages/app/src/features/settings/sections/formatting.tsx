@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/react/shallow";
-import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
 import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
+import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
 import { Label } from "@/features/ui/label";
 import { TabsContent } from "@/features/ui/tabs";
 import {
@@ -90,7 +90,9 @@ export function Formatting() {
 						<SettingButtonGroup
 							options={AUTO_INDENT_OPTIONS}
 							value={configState.autoIndent}
-							onChange={(option) => configState.updateConfig({ autoIndent: option.value })}
+							onChange={(option) =>
+								configState.updateConfig({ autoIndent: option.value })
+							}
 							renderLabel={(option) => option.label}
 							className="grid grid-cols-8 gap-2"
 						/>
@@ -103,7 +105,9 @@ export function Formatting() {
 							<SettingButtonGroup
 								options={PRINT_WIDTHS}
 								value={configState.printWidth}
-								onChange={(width) => configState.updateConfig({ printWidth: width })}
+								onChange={(width) =>
+									configState.updateConfig({ printWidth: width })
+								}
 								className="grid grid-cols-8 gap-2"
 							/>
 						</div>

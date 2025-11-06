@@ -9,7 +9,9 @@ export interface SettingButtonGroupProps<T> {
 	buttonStyle?: (option: T) => React.CSSProperties;
 }
 
-export function SettingButtonGroup<T extends string | number | { toString(): string }>({
+export function SettingButtonGroup<
+	T extends string | number | { toString(): string },
+>({
 	options,
 	value,
 	onChange,

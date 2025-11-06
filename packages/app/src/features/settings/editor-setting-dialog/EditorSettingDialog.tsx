@@ -1,4 +1,4 @@
-import { BrainCog, Brush, MonitorCog, FileCode2 } from "lucide-react";
+import { BrainCog, Brush, FileCode2, MonitorCog } from "lucide-react";
 import { useModalStore } from "@/features/common/modal/modal";
 import { versionApp } from "@/features/common/utils/const";
 import {

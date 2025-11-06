@@ -12,7 +12,7 @@ import {
 	CommandShortcut,
 } from "@/features/ui/command";
 import { useModalStore } from "../modal/modal";
-import { TOGGLE_COMMAND, isMac } from "../utils/shortcuts";
+import { isMac, TOGGLE_COMMAND } from "../utils/shortcuts";
 import { useCommandItems } from "./useCommandItems";
 import { useCommandSearch } from "./useCommandSearch";
 

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <the useEffect must me only run when debounce> */
 import { AnimatePresence, motion } from "motion/react";
 import { lazy, useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -63,13 +64,11 @@ export function CodeEditor() {
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
 	}, [radius]);
-	// biome-ignore lint/correctness/useExhaustiveDependencies
 	useEffect(() => {
 		const currentTheme = getCurrentTheme();
 		updateChangeTheme(currentTheme);
 	}, [theme]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies
 	useEffect(() => {
 		runCode();
 	}, [debouncedCode]);

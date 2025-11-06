@@ -3,9 +3,9 @@ import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useShallow } from "zustand/react/shallow";
+import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
-import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
 import { Button } from "@/features/ui/button";
 import {
 	Tooltip,

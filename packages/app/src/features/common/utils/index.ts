@@ -1,5 +1,5 @@
 export { MESSAGE_LOG, versionApp } from "./const";
-export { getModifierKey, isMac, isLinux, isWindows } from "./platform";
+export { getModifierKey, isLinux, isMac, isWindows } from "./platform";
 export {
 	NEW_TAB,
 	RUN_CODE,

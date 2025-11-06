@@ -43,7 +43,7 @@ export async function createEncryptedStorage(): Promise<StateStorage> {
         // Decryption failed - data is corrupted or key changed
         console.warn(
           `Failed to decrypt data for key "${name}". Returning null.`,
-          error,
+          error
         );
         // Optionally clear corrupted data
         localStorage.removeItem(name);
