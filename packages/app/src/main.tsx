@@ -7,6 +7,7 @@ Sentry.init({
 	dsn: "https://ef20353dd269062cbb63a57fbd795f59@o4510321214750720.ingest.us.sentry.io/4510321217437696",
 	// Setting this option to true will send default PII data to Sentry.
 	// For example, automatic IP address collection on events
+
 	sendDefaultPii: true,
 });
 

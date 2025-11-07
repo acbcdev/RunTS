@@ -1,4 +1,3 @@
-import * as _Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { decode } from "js-base64";
 import { lazy, Suspense, useEffect } from "react";
