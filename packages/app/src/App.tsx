@@ -1,3 +1,4 @@
+import * as _Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { decode } from "js-base64";
 import { lazy, Suspense, useEffect } from "react";
@@ -18,7 +19,7 @@ const CodeEditor = lazy(
 
 const queryClient = new QueryClient();
 
-function App() {
+export function App() {
 	const addTab = useTabsStore(useShallow((state) => state.addTab));
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 
@@ -64,4 +65,3 @@ function App() {
 		</QueryClientProvider>
 	);
 }
-export default App;
