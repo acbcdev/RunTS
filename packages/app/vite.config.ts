@@ -5,10 +5,6 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 // https://vite.dev/config/
 export default defineConfig({
-  test: {
-    environment: "happy-dom", // Provides browser APIs like crypto, localStorage
-    globals: true,
-  },
   plugins: [
     react(),
     VitePWA({
