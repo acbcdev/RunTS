@@ -5,6 +5,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - 'ai'
   - '@ai-sdk/*'
+  - 'react'
+  - "react-*"
 onlyBuiltDependencies:
   - '@swc/core'
   - '@tailwindcss/oxide'
