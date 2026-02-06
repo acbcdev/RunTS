@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.6.8 – Feb 5, 2026
+
+### Fixes
+
+- **Command Palette:** Fixed theme submenu only showing 10 items instead of the full list. Removed hardcoded per-category limit so all themes and submenu options are now visible when browsing without a search query.
+
 ## Version 1.6.7 – Nov 2, 2025
 
 ### New Features
