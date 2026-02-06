@@ -20,6 +20,30 @@ import { EDITOR_CONFIG } from "../utils/config";
 import { extraLib } from "./extraLib";
 import Loading from "./Loading";
 
+async function formatEditorCode(editor: editor.IStandaloneCodeEditor) {
+	const model = editor.getModel();
+	if (!model) return;
+
+	const code = model.getValue();
+	const configState = useConfigStore.getState();
+
+	const { formatCode } = await import("../utils/prettier-formatter");
+	const formatted = await formatCode(code, {
+		printWidth: configState.printWidth,
+		tabWidth: configState.tabSize,
+		useTabs: !configState.insertSpaces,
+	});
+
+	if (formatted !== code) {
+		editor.executeEdits("prettier-format", [
+			{
+				range: model.getFullModelRange(),
+				text: formatted,
+			},
+		]);
+	}
+}
+
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {
 	tab: Tab;
@@ -227,30 +251,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				monacoInstance.KeyMod.Shift |
 					monacoInstance.KeyMod.Alt |
 					monacoInstance.KeyCode.KeyF,
-				async () => {
-					const model = editor.getModel();
-					if (!model) return;
-
-					const code = model.getValue();
-					const configState = useConfigStore.getState();
-
-					// Dynamically import Prettier to reduce initial bundle size
-					const { formatCode } = await import("../utils/prettier-formatter");
-					const formatted = await formatCode(code, {
-						printWidth: configState.printWidth,
-						tabWidth: configState.tabSize,
-						useTabs: configState.insertSpaces,
-					});
-
-					if (formatted !== code) {
-						editor.executeEdits("prettier-format", [
-							{
-								range: model.getFullModelRange(),
-								text: formatted,
-							},
-						]);
-					}
-				},
+				() => formatEditorCode(editor),
 			);
 			editor.addAction({
 				id: "format-code-prettier",
@@ -260,43 +261,22 @@ export function EditorMain({ tab }: EditorMainProps) {
 						monacoInstance.KeyMod.Alt |
 						monacoInstance.KeyCode.KeyF,
 				],
-				run: async () => {
-					const model = editor.getModel();
-					if (!model) return;
-
-					const code = model.getValue();
-					const configState = useConfigStore.getState();
-
-					// Dynamically import Prettier to reduce initial bundle size
-					const { formatCode } = await import("../utils/prettier-formatter");
-					const formatted = await formatCode(code, {
-						printWidth: configState.printWidth,
-						tabWidth: configState.tabSize,
-						useTabs: configState.insertSpaces,
-					});
-
-					if (formatted !== code) {
-						editor.executeEdits("prettier-format", [
-							{
-								range: model.getFullModelRange(),
-								text: formatted,
-							},
-						]);
-					}
-				},
+				run: () => formatEditorCode(editor),
 			});
+
+			const toggleGenerateCodeWidget = () => {
+				if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
+					setGenerateCodeWidgetOpen(true);
+					generateCodeWidgetRef.current.show(handleGenerateCode);
+				} else {
+					setGenerateCodeWidgetOpen(false);
+					generateCodeWidgetRef.current?.hide();
+				}
+			};
 
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyI,
-				() => {
-					if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
-						setGenerateCodeWidgetOpen(true);
-						generateCodeWidgetRef.current.show(handleGenerateCode);
-					} else {
-						setGenerateCodeWidgetOpen(false);
-						generateCodeWidgetRef.current?.hide();
-					}
-				},
+				toggleGenerateCodeWidget,
 			);
 
 			editor.addAction({
@@ -307,15 +287,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				keybindings: [
 					monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyI,
 				],
-				run: () => {
-					if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
-						setGenerateCodeWidgetOpen(true);
-						generateCodeWidgetRef.current.show(handleGenerateCode);
-					} else {
-						setGenerateCodeWidgetOpen(false);
-						generateCodeWidgetRef.current?.hide();
-					}
-				},
+				run: toggleGenerateCodeWidget,
 			});
 			editor.addCommand(
 				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
