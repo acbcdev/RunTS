@@ -28,7 +28,9 @@ type ProvidersConfig = {
   models: ModelConfigEntry[];
 };
 
-export const PROVIDER_CONFIG = {
+type ProvidersConfigMap = Record<string, ProvidersConfig>;
+
+export const PROVIDER_CONFIG: ProvidersConfigMap = {
   openai: {
     name: "OpenAI",
     apiKeyUrl: "https://platform.openai.com/api-keys",
@@ -132,7 +134,7 @@ export const models = (
     name: modelConfig.name,
     Icon: config.icon,
     active: true,
-  }))
+  })),
 );
 
 // ============================================================================

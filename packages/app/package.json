@@ -17,12 +17,12 @@
     "tauri:build": "tauri build"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "2.0.53",
-    "@ai-sdk/google": "2.0.44",
-    "@ai-sdk/mistral": "2.0.25",
-    "@ai-sdk/openai": "2.0.77",
-    "@babel/plugin-proposal-pipeline-operator": "7.27.1",
-    "@babel/standalone": "7.28.3",
+    "@ai-sdk/anthropic": "3.0.37",
+    "@ai-sdk/google": "3.0.21",
+    "@ai-sdk/mistral": "3.0.18",
+    "@ai-sdk/openai": "3.0.25",
+    "@babel/plugin-proposal-pipeline-operator": "7.28.6",
+    "@babel/standalone": "7.29.1",
     "@hookform/resolvers": "5.2.2",
     "@monaco-editor/react": "4.7.0",
     "@radix-ui/react-collapsible": "1.1.12",
