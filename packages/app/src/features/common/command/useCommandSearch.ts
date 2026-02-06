@@ -26,7 +26,7 @@ export const useCommandSearch = ({
 
 			return Object.entries(groups).map(([category, items]) => ({
 				heading: getCategoryHeading(category),
-				items: items.slice(0, 10), // Limit per category
+				items,
 			}));
 		}
 
