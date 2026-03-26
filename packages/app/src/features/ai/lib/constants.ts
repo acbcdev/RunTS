@@ -36,11 +36,11 @@ export const PROVIDER_CONFIG: ProvidersConfigMap = {
     apiKeyUrl: "https://platform.openai.com/api-keys",
     icon: openai,
     models: [
-      { id: "gpt-5", name: "GPT-5" },
-      { id: "gpt-5-mini", name: "GPT-5 Mini" },
-      { id: "gpt-5-codex", name: "GPT-5 Codex" },
-      { id: "gpt-5-nano", name: "GPT-5 Nano" },
-      { id: "gpt-5-pro", name: "GPT-5 Pro" },
+      { id: "gpt-5.4", name: "GPT-5.4" },
+      { id: "gpt-5.4-mini", name: "GPT-5.4 Mini" },
+      { id: "gpt-5.4-codex", name: "GPT-5.4 Codex" },
+      { id: "gpt-5.4-nano", name: "GPT-5.4 Nano" },
+      { id: "gpt-5.4-pro", name: "GPT-5.4 Pro" },
     ],
   },
   anthropic: {
@@ -48,9 +48,9 @@ export const PROVIDER_CONFIG: ProvidersConfigMap = {
     apiKeyUrl: "https://console.anthropic.com/settings/keys",
     icon: claude,
     models: [
-      { id: "claude-sonnet-4-5", name: "Claude Sonnet 4.5" },
+      { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6" },
       { id: "claude-haiku-4-5", name: "Claude Haiku 4.5" },
-      { id: "claude-opus-4-5", name: "Claude Opus 4.5" },
+      { id: "claude-opus-4-6", name: "Claude Opus 4.6" },
     ],
   },
   google: {
