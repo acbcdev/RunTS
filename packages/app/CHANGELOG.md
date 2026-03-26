@@ -1,5 +1,29 @@
 # Changelog
 
+## Version 1.7.0 – Mar 26, 2026
+
+### New Features
+
+- **Live Tab Names:** Tab names are now derived live from the first line of code. No more `untitled-XXXX.ts` — the tab updates in real time as you edit the first line.
+- **Explicit Tab Renaming:** Double-clicking a tab with a code-derived name opens an empty input to set a custom name. When a custom name is set it takes priority. Clearing it reverts back to the code-derived name.
+- **Smart Duplicate Naming:** Duplicating a tab only adds the `copy-` prefix when the original has an explicit user-set name; otherwise the duplicate also derives its name from code.
+
+### Improvements
+
+- **Code Validation:** Added validation and execution wrapping before running user code for more reliable execution.
+- **Refresh Time Options:** Updated available refresh time intervals in the editor settings.
+
+### Fixes
+
+- **Model IDs:** Corrected model identifiers for OpenAI and Anthropic providers.
+
+### Dependencies
+
+- Updated AI SDK packages to latest versions.
+- Updated Vite to 7.0.8.
+
+---
+
 ## Version 1.6.8 – Feb 5, 2026
 
 ### Fixes

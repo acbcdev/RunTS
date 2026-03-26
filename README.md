@@ -1,98 +1,89 @@
 ![Captura de pantalla en ordenador](/packages/app/public/og.jpg)
 
 <div align='center'>
-   
+
 ### <img src="public/logo.svg" width='35' /> [Runts](https://runts.acbc.dev)
   ***Your TypeScript/JavaScript Playground Editor***
 
 </div>
 <div align="center">
-   
+
 ![](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)
 ![](https://img.shields.io/badge/Maintained%3F-Yes-brightgreen.svg)
 
 </div>
 
-Welcome to **RunTS**! This project is built with **Tauri**, **React**, and **TypeScript** to provide a lightweight yet powerful desktop application experience.
+Welcome to **RunTS**! A lightweight yet powerful TypeScript/JavaScript playground built with **Tauri**, **React**, and **TypeScript**. Write and run code instantly in an isolated worker environment with real-time output.
 
-## 🚀 Project Overview
+## 🚀 Features
 
-Currently, only the **web version** of the application is available. The **Tauri-based desktop application** is under development and will be available in the future. Stay tuned for updates!
+- **Monaco Editor** — the same editor powering VS Code, with full TypeScript support
+- **Live Tab Names** — tab names derive from the first line of your code and update as you type
+- **Multi-tab Editor** — manage multiple files with persistent tab state
+- **Real-time Execution** — runs code in an isolated Web Worker with console output capture and source-mapped line numbers
+- **AI Assistant** — chat with OpenAI, Anthropic, Google, or Mistral models directly inside the editor
+- **Command Palette** — `Cmd+K` for quick access to all editor actions
+- **Themes & Appearance** — custom themes, font settings, and layout options
+- **PWA Support** — installable and works offline
+- **Shared Code URLs** — share code snippets via URL
 
 ## 🛠 Tech Stack
 
-- **Frontend**: [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)
+- **Editor**: [Monaco Editor](https://microsoft.github.io/monaco-editor/)
+- **Frontend**: [React 19](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/)
+- **Desktop**: [Tauri](https://tauri.app/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **AI**: [Vercel AI SDK](https://sdk.vercel.ai/)
+- **Code Transpilation**: [Babel Standalone](https://babeljs.io/)
 
 ## 📁 Project Setup
 
-To get started with this project, follow these steps:
-
 ### Prerequisites
 
-- **Node.js** (v20 or above)
-- **Rust** (Required for compiling Tauri backend, currently only the web version is available, future versions will support Linux, macOS, and Windows)
-- **BUN** (Package manager used in this project)
+- **Node.js** v20 or above
+- **pnpm** v10 or above
+- **Rust** (only required for the Tauri desktop build)
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/acbcdev/RunTS.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd RunTS
-   ```
-3. Install the dependencies:
-   ```bash
-   pnpm install
-   ```
+```bash
+git clone https://github.com/acbcdev/RunTS.git
+cd RunTS
+pnpm install
+```
 
 ### Running the Project
 
-To run the project in development mode:
-
 ```bash
-pnpm dev
+pnpm dev          # Web version (Vite dev server)
+pnpm tauri:dev    # Desktop app with hot reload
 ```
 
-This command will start the application with hot-reloading enabled for easy development.
+### Build
 
-## 📦 Dependencies and DevDependencies
-
-- **Dependencies**
-  - `react`, `react-dom`: `18`
-  - `tauri`: Project framework for building desktop apps (future release).
-  - `vite`: Development server and build tool for fast projects.
-  - `typescript`: Superset of JavaScript for type safety.
-  - `tailwindcss`: Utility-first CSS framework.
-  - `zustand`: State management library for React.
-
-## ⚙️ Configuration
-
-The app includes various configuration options for the frontend and backend, which can be adjusted in the Tauri configuration files found in the `src-tauri/` directory.
-
-## 🎨 UI Elements
-
-The UI components are styled using **Tailwind CSS**, providing a consistent and modern look across all components. Buttons, modals, and other UI elements are crafted for responsiveness and user experience.
+```bash
+pnpm build        # Production web build
+pnpm tauri:build  # Tauri desktop application
+```
 
 ## 🧪 Testing
 
-Testing functionality will be added in future updates. Stay tuned! 🚧
+Tests run with [Vitest](https://vitest.dev/):
+
+```bash
+pnpm test       # Run test suite
+pnpm test:ui    # Open Vitest UI
+```
+
+## ⚙️ Configuration
+
+Editor preferences, theme, AI provider keys, and layout options are all configurable through the settings panel or Command Palette. Desktop-specific settings live in `packages/app/src-tauri/tauri.conf.json`.
 
 ## 🤝 Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
-[guía de contribución](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md)
-If you have a suggestion that would make this project better, please fork the repository and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-Here's a quick guide:
-
-Please check our [contribution guide](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md) for more details on how to get started and follow best practices.
-Happy coding! 🚀
+Contributions are greatly appreciated! Please check the [contribution guide](https://github.com/acbcdev/RunTS/blob/master/CONTRIBUTING.md) before opening a pull request.
 
 ### Contributors
 
