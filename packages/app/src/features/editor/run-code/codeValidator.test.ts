@@ -20,7 +20,7 @@ describe("codeValidator", () => {
 			const result = validateCode(code);
 			expect(result.valid).toBe(false);
 			expect(result.errors).toContain(
-				"Object.getOwnPropertyNames is not allowed"
+				"Object.getOwnPropertyNames is not allowed",
 			);
 		});
 
@@ -36,7 +36,7 @@ describe("codeValidator", () => {
 			const result = validateCode(code);
 			expect(result.valid).toBe(false);
 			expect(result.errors).toContain(
-				"Object.getOwnPropertyDescriptor is not allowed"
+				"Object.getOwnPropertyDescriptor is not allowed",
 			);
 		});
 
@@ -44,7 +44,9 @@ describe("codeValidator", () => {
 			const code = "new Function('return this')()";
 			const result = validateCode(code);
 			expect(result.valid).toBe(false);
-			expect(result.errors).toContain("Dynamic Function creation is not allowed");
+			expect(result.errors).toContain(
+				"Dynamic Function creation is not allowed",
+			);
 		});
 
 		it("should reject eval", () => {
@@ -58,7 +60,9 @@ describe("codeValidator", () => {
 			const code = "importScripts('worker.js')";
 			const result = validateCode(code);
 			expect(result.valid).toBe(false);
-			expect(result.errors).toContain("importScripts is not allowed in user code");
+			expect(result.errors).toContain(
+				"importScripts is not allowed in user code",
+			);
 		});
 
 		it("should reject postMessage to worker scope", () => {
@@ -72,7 +76,9 @@ describe("codeValidator", () => {
 			const code = "self.name = 'test'";
 			const result = validateCode(code);
 			expect(result.valid).toBe(false);
-			expect(result.errors).toContain("Direct access to worker scope is restricted");
+			expect(result.errors).toContain(
+				"Direct access to worker scope is restricted",
+			);
 		});
 
 		it("should allow safe code", () => {
