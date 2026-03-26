@@ -23,7 +23,7 @@ export interface Theme {
 
 export interface Tab {
 	id: string;
-	name: string;
+	name?: string;
 	language: string;
 	code: string;
 	log: string;

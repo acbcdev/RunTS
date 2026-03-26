@@ -29,7 +29,6 @@ export const useTabsStore = create<TabsStore>()(
 				get().tabs.find((tab) => tab.id === get().activeTabId),
 			newTab: (code) => {
 				const id = get().addTab({
-					name: `untitled-${Date.now().toString().slice(-4)}.ts`,
 					language: "typescript",
 					code: code || "",
 					log: "",
@@ -53,7 +52,7 @@ export const useTabsStore = create<TabsStore>()(
 			addTab: (tab) => {
 				const newTab = {
 					...tab,
-					name: tab.name.trim(),
+					name: tab.name?.trim() ?? "",
 					id: nanoid(7),
 					createdAt: Date.now(),
 					updatedAt: Date.now(),

@@ -35,7 +35,7 @@ export const useTabActions = () => {
 		if (!duplicateTab) return;
 
 		addTab({
-			name: `copy-${duplicateTab.name}`,
+			name: duplicateTab.name ? `copy-${duplicateTab.name}` : "",
 			language: duplicateTab.language,
 			code: duplicateTab.code,
 			log: duplicateTab.log,
@@ -44,7 +44,7 @@ export const useTabActions = () => {
 
 	const handleTabNameEdit = (tabId: string, name: string) => {
 		if (!name.trim()) {
-			changeNameTab(tabId, "code.ts");
+			changeNameTab(tabId, "");
 			setEditing(tabId, false);
 			return;
 		}
