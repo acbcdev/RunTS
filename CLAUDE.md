@@ -190,3 +190,17 @@ Scope examples: `app`, `ai`, `editor`, `deps`, `dependencies`
 - **Tab Persistence**: Tabs are persisted to localStorage; restored on app reload
 - **Theme System**: Custom themes can be created and applied to Monaco editor
 - **Shared Code URLs**: App supports loading code via URL query parameter (`?code=base64encoded`)
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (`github.com/acbcdev/RunTS`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default label vocabulary — no custom overrides. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at root. See `docs/agents/domain.md`.
