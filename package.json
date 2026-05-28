@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "app": "pnpm --filter app",
+    "tsc": "pnpm --filter app tsc",
     "landing": "pnpm --filter landing",
     "dev": "pnpm --filter app dev",
     "build": "pnpm --filter app build",
