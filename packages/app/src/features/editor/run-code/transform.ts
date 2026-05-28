@@ -1,12 +1,11 @@
 import * as Babel from "@babel/standalone";
 
 export function transform(code: string, name?: string) {
-	const transpiledCode = Babel.transform(code, {
+	const filename = name ? `${name.replace(/\s+/g, "-")}.ts` : "code.ts";
+	return Babel.transform(code, {
 		presets: ["typescript"],
-		filename: name ?? "code.ts",
-		// plugins: ["injectLogs"],
+		filename,
 		sourceType: "module",
 		retainLines: true,
 	}).code;
-	return transpiledCode;
 }
