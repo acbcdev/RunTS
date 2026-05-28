@@ -1,5 +1,22 @@
 # Changelog
 
+## Version 1.7.1 – May 28, 2026
+
+### Improvements
+
+- **Tab History Refactoring:** Replaced `addTab` with explicit `newTab`/`restoreTab` API; history tracking moved inline for clearer state flow.
+- **Editor Session Seam:** Introduced `useEditorSession` hook to better isolate editor lifecycle concerns.
+
+### Fixes
+
+- **Run Code:** Corrected filename fallback when tab name is undefined.
+
+### Build
+
+- Removed redundant `baseUrl` from tsconfig.
+
+---
+
 ## Version 1.7.0 – Mar 26, 2026
 
 ### New Features
