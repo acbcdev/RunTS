@@ -18,7 +18,7 @@ export const useTabActions = () => {
 	const updateTabCode = useTabsStore(
 		useShallow((state) => state.updateTabCode),
 	);
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
+	const newTab = useTabsStore(useShallow((state) => state.newTab));
 
 	const { handleShare, copyCode, downloadCode } = useHandler();
 
@@ -34,7 +34,7 @@ export const useTabActions = () => {
 		const duplicateTab = tabs.find((tab) => tab.id === tabId);
 		if (!duplicateTab) return;
 
-		addTab({
+		newTab({
 			name: duplicateTab.name ? `copy-${duplicateTab.name}` : "",
 			language: duplicateTab.language,
 			code: duplicateTab.code,

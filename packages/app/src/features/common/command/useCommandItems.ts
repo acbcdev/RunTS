@@ -49,7 +49,7 @@ export const useCommandItems = (): {
 	const activeTabId = useTabsStore((state) => state.activeTabId);
 	const setActiveTab = useTabsStore((state) => state.setActiveTab);
 	const newTab = useTabsStore((state) => state.newTab);
-	const addTab = useTabsStore((state) => state.addTab);
+	const restoreTab = useTabsStore((state) => state.restoreTab);
 
 	const historyTabs = useHistoryTabsStore((state) => state.tabs);
 	const undoClose = useHistoryTabsStore((state) => state.undoClose);
@@ -128,7 +128,7 @@ export const useCommandItems = (): {
 			],
 			action: () => {
 				const tab = undoClose();
-				if (tab) addTab(tab);
+				if (tab) restoreTab(tab);
 			},
 		});
 	}

@@ -17,7 +17,7 @@ import {
 } from "../utils/shortcuts";
 export function useShortcuts() {
 	const toggle = useModalStore((state) => state.toggleModal);
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
+	const restoreTab = useTabsStore(useShallow((state) => state.restoreTab));
 	const undoClose = useHistoryTabsStore(useShallow((state) => state.undoClose));
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 	const toggleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
@@ -29,7 +29,7 @@ export function useShortcuts() {
 		UNDO_CLOSE_TAB,
 		() => {
 			const tab = undoClose();
-			if (tab) addTab(tab);
+			if (tab) restoreTab(tab);
 		},
 		{ preventDefault: true },
 	);
@@ -61,12 +61,12 @@ export function useShortcuts() {
 				if (isModShiftT) {
 					event.preventDefault();
 					const tab = undoClose();
-					if (tab) addTab(tab);
+					if (tab) restoreTab(tab);
 				}
 			};
 
 			document.addEventListener("keydown", handleKeyDown);
 			return () => document.removeEventListener("keydown", handleKeyDown);
 		}
-	}, [newTab, addTab, undoClose]);
+	}, [newTab, restoreTab, undoClose]);
 }

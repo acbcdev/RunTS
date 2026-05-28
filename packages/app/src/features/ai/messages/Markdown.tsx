@@ -43,7 +43,7 @@ const components = {
 										size={"icon"}
 										className="size-7"
 										aria-label="New tab with this code"
-										onClick={() => newTab(code)}
+										onClick={() => newTab({ code })}
 									>
 										<FilePlus2 className="size-4" />
 									</Button>

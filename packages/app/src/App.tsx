@@ -19,8 +19,7 @@ const CodeEditor = lazy(
 const queryClient = new QueryClient();
 
 export function App() {
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
-	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
+	const newTab = useTabsStore(useShallow((state) => state.newTab));
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <this must be run one time>
 	useEffect(() => {
@@ -30,13 +29,12 @@ export function App() {
 		if (code) {
 			try {
 				const decodedCode = decode(code);
-				const id = addTab({
+				newTab({
 					name: "shared.ts",
 					language: "typescript",
 					code: decodedCode,
 					log: "",
 				});
-				setActiveTab(id);
 				toast.success("Code loaded", {
 					description: "The code has been loaded.",
 					duration: 2000,

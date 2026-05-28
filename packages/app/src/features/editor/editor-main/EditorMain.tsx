@@ -100,7 +100,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 
 	const undo = useHistoryTabsStore(useShallow((state) => state.undoClose));
 
-	const addTab = useTabsStore(useShallow((state) => state.addTab));
+	const restoreTab = useTabsStore(useShallow((state) => state.restoreTab));
 
 	const toogleChat = useAIConfigStore(useShallow((state) => state.toggleChat));
 	// useApparenceStore
@@ -210,7 +210,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 					monacoInstance.KeyCode.KeyT,
 				() => {
 					const tab = undo();
-					if (tab) addTab(tab);
+					if (tab) restoreTab(tab);
 				},
 			);
 			editor.addAction({
@@ -225,7 +225,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				],
 				run: () => {
 					const tab = undo();
-					if (tab) addTab(tab);
+					if (tab) restoreTab(tab);
 				},
 			});
 
@@ -355,7 +355,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 		[
 			theme,
 			updateEditor,
-			addTab,
+			restoreTab,
 			newTab,
 			runCode,
 			toggle,
