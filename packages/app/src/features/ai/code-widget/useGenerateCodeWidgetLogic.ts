@@ -1,6 +1,5 @@
 import type { editor } from "monaco-editor";
 import { useState } from "react";
-import { useAIConfigStore } from "../store/aiConfig";
 import { useCodeGeneration } from "./useCodeGeneration";
 
 // Use Monaco's built-in types
@@ -18,12 +17,10 @@ export function useGenerateCodeWidgetLogic(
 	const { generateCode } = useCodeGeneration(editor);
 
 	const handleGenerate = async () => {
-		const selectedModel = useAIConfigStore.getState().selectedModel;
 		setIsLoading(true);
 		try {
 			await generateCode(
 				description,
-				`${selectedModel.provider}/${selectedModel.id}`,
 				(code) => {
 					onGenerate(code);
 					onClose();

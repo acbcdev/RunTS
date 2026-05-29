@@ -1,9 +1,7 @@
-import { generateText } from "ai";
 import type { editor } from "monaco-editor";
 import { toast } from "sonner";
+import { aiGenerate } from "../lib/ai";
 import { cleanCodeResponse } from "../lib/code-utils";
-import { createProvider } from "../lib/providers";
-import { useAIConfigStore } from "../store/aiConfig";
 
 // Use Monaco's built-in types
 type Editor = editor.IStandaloneCodeEditor;
@@ -12,46 +10,11 @@ type Editor = editor.IStandaloneCodeEditor;
 export function useCodeGeneration(editor: Editor) {
 	const generateCode = async (
 		description: string,
-		selectedModel: string,
 		onSuccess: (code: string) => void,
 		onError?: (error: string) => void,
 	) => {
 		if (!description.trim()) {
 			toast.error("Please enter a description", { position: "top-center" });
-			return;
-		}
-
-		if (!selectedModel) {
-			toast.error("Please select a model", { position: "top-center" });
-			return;
-		}
-
-		const apiKeys = useAIConfigStore.getState().apiKeys;
-
-		// Split selectedModel and validate format
-		const parts = selectedModel.split("/");
-		if (parts.length !== 2) {
-			toast.error("Invalid model selection format");
-			return;
-		}
-
-		const [provider, modelId] = parts;
-
-		if (!provider || !modelId) {
-			toast.error("Invalid model selection - missing provider or model ID");
-			return;
-		}
-
-		// Validate that provider is a valid provider type
-		const validProviders = [
-			"openai",
-			"google",
-			"anthropic",
-			"mistral",
-		] as const;
-		type ValidProvider = (typeof validProviders)[number];
-		if (!validProviders.includes(provider as ValidProvider)) {
-			toast.error("Invalid provider selection");
 			return;
 		}
 
@@ -91,19 +54,12 @@ export function useCodeGeneration(editor: Editor) {
 				language +
 				".";
 
-			const { text } = await generateText({
-				model: createProvider(
-					provider as (typeof validProviders)[number],
-					apiKeys[provider as keyof typeof apiKeys],
-				)(modelId),
-				prompt,
-			});
-
-			const cleanCode = cleanCodeResponse(text);
+			const cleanCode = cleanCodeResponse(await aiGenerate(prompt));
 			onSuccess(cleanCode);
 			toast.success("Code generated successfully");
 		} catch (error) {
-			const errorMessage = "Code generation failed";
+			const errorMessage =
+				error instanceof Error ? error.message : "Code generation failed";
 			toast.error(errorMessage);
 			console.error(error);
 			onError?.(errorMessage);

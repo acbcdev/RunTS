@@ -1,20 +1,14 @@
-import {
-	convertToModelMessages,
-	smoothStream,
-	streamText,
-	type UIMessage,
-} from "ai";
+import type { UIMessage } from "ai";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
-import { createProvider } from "../lib/providers";
+import { aiStream } from "../lib/ai";
 import { useAIConfigStore } from "../store/aiConfig";
 import { systemPrompt } from "./prompt";
 
 type statusType = "submitted" | "streaming" | "ready" | "error";
 export function useChat() {
-	const apiKeys = useAIConfigStore((state) => state.apiKeys);
 	const selectedModel = useAIConfigStore((state) => state.selectedModel);
 	const setMessages = useAIConfigStore((state) => state.setMessages);
 	const messages = useAIConfigStore((state) => state.messages);
@@ -66,21 +60,13 @@ export function useChat() {
 			setStatus("submitted");
 
 			if (selectedModel.provider === null || selectedModel.id === null) return;
-			const model = (
-				await createProvider(
-					selectedModel.provider,
-					apiKeys[selectedModel.provider as keyof typeof apiKeys],
-				)
-			)(selectedModel.id);
-			const { textStream } = streamText({
-				messages: await convertToModelMessages(messagesToAI),
+			const { textStream } = await aiStream({
+				messages: messagesToAI,
 				system: systemPrompt(
 					contenxtFile ? currentTab?.code : "",
 					customInstructions,
 				),
-				model,
 				abortSignal: controller.current.signal,
-				experimental_transform: smoothStream(),
 			});
 			setStatus("streaming");
 			const id = Date.now().toString();
