@@ -8,16 +8,6 @@ RunTS is a desktop application for running TypeScript code with integrated AI ch
 
 ## High Priority Features
 
-### Add More AI Provider Models
-
-- **Objective**: Expand beyond current AI providers to include additional models and services
-- **Features**:
-  - Integrate additional AI providers (e.g., Anthropic Claude, Google Gemini, Mistral, etc.)
-  - Support for multiple models per provider
-  - Dynamic model selection in chat interface
-  - Provider-specific configuration options
-- **Estimated Effort**: 2-3 weeks
-
 ### Enhanced AI Configuration
 
 - **Objective**: Improve settings for AI provider management
