@@ -17,10 +17,10 @@
     "tauri:build": "tauri build"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "3.0.64",
-    "@ai-sdk/google": "3.0.53",
-    "@ai-sdk/mistral": "3.0.27",
-    "@ai-sdk/openai": "3.0.48",
+    "@ai-sdk/anthropic": "3.0.81",
+    "@ai-sdk/google": "3.0.80",
+    "@ai-sdk/mistral": "3.0.37",
+    "@ai-sdk/openai": "3.0.66",
     "@babel/plugin-proposal-pipeline-operator": "7.28.6",
     "@babel/standalone": "7.29.1",
     "@hookform/resolvers": "5.2.2",
@@ -93,7 +93,7 @@
     "tw-animate-css": "1.3.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.1",
-    "vite": "7.0.8",
+    "vite": "7.3.3",
     "vite-plugin-pwa": "1.1.0",
     "vitest": "3.2.4",
     "workbox-window": "7.3.0"
