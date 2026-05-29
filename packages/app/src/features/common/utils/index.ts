@@ -9,4 +9,4 @@ export {
 	TOGGLE_CONFIG,
 	UNDO_CLOSE_TAB,
 } from "./shortcuts";
-export { cn, updateChangeTheme } from "./utils";
+export { cn } from "./utils";

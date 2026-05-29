@@ -5,7 +5,6 @@ import { Chat } from "@/features/ai/chat/Chat";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
 import { ReloadPrompt } from "@/features/common/loader/ReloadPrompt";
 import { useShortcuts } from "@/features/common/shortcuts/useShortcuts";
-import { updateChangeTheme } from "@/features/common/utils/utils";
 import {
   SIDES,
   useApparenceStore,
@@ -38,12 +37,12 @@ const SettingsBySide: Record<number, positionSettings> = {
 export function CodeEditor() {
   useShortcuts();
   const { tab } = useEditorSession();
-  const { radius, theme, layout, getCurrentTheme } = useApparenceStore(
+  const { radius, theme, layout, applyTheme } = useApparenceStore(
     useShallow((state) => ({
       radius: state.radius,
       theme: state.theme,
       layout: state.layout,
-      getCurrentTheme: state.getCurrentTheme,
+      applyTheme: state.applyTheme,
     })),
   );
   const side = useApparenceStore(useShallow((state) => state.side));
@@ -55,8 +54,7 @@ export function CodeEditor() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <only runs on theme change>
   useLayoutEffect(() => {
-    const currentTheme = getCurrentTheme();
-    updateChangeTheme(currentTheme);
+    applyTheme();
   }, [theme]);
 
   const direction = useMemo(() => {

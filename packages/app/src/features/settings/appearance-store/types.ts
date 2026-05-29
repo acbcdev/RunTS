@@ -14,6 +14,7 @@ export interface ApparenceStoreStates {
 
 export interface ApparenceStoreActions {
 	getCurrentTheme: () => Theme;
+	applyTheme: () => void;
 	getOption: <T extends keyof ApparenceStoreStates>(
 		key: T,
 	) => ApparenceStoreStates[T];
