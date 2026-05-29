@@ -34,3 +34,5 @@ pnpm-lock.yaml
 bun.lockb
 
 old/
+
+.codegraph/
