@@ -28,6 +28,8 @@ interface AIConfigStore {
 	getProviders: () => typeof models;
 	contextFile: boolean;
 	setContextFile: (contextFile: boolean) => void;
+	customInstructions: string;
+	setCustomInstructions: (customInstructions: string) => void;
 }
 
 export const useAIConfigStore = create<AIConfigStore>()(
@@ -40,6 +42,7 @@ export const useAIConfigStore = create<AIConfigStore>()(
 				mistral: "",
 			},
 			contextFile: true,
+			customInstructions: "",
 			messages: [],
 			showChat: false,
 			selectedModel: {
@@ -48,6 +51,8 @@ export const useAIConfigStore = create<AIConfigStore>()(
 				Icon: undefined,
 			},
 			setContextFile: (contextFile) => set({ contextFile }),
+			setCustomInstructions: (customInstructions) =>
+				set({ customInstructions }),
 			setMessages: (messages) =>
 				set((state) => ({
 					messages:
