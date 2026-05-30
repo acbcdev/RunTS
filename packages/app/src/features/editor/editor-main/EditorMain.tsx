@@ -20,30 +20,6 @@ import { EDITOR_CONFIG } from "../utils/config";
 import { extraLib } from "./extraLib";
 import Loading from "./Loading";
 
-async function formatEditorCode(editor: editor.IStandaloneCodeEditor) {
-	const model = editor.getModel();
-	if (!model) return;
-
-	const code = model.getValue();
-	const configState = useConfigStore.getState();
-
-	const { formatCode } = await import("../utils/prettier-formatter");
-	const formatted = await formatCode(code, {
-		printWidth: configState.printWidth,
-		tabWidth: configState.tabSize,
-		useTabs: !configState.insertSpaces,
-	});
-
-	if (formatted !== code) {
-		editor.executeEdits("prettier-format", [
-			{
-				range: model.getFullModelRange(),
-				text: formatted,
-			},
-		]);
-	}
-}
-
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {
 	tab: Tab;
@@ -185,17 +161,38 @@ export function EditorMain({ tab }: EditorMainProps) {
 				},
 			});
 
-			// Override default format action with Prettier (dynamically loaded)
-			editor.addAction({
-				id: "format-code-prettier",
-				label: "Format Code (Prettier)",
-				keybindings: [
-					monacoInstance.KeyMod.Shift |
-						monacoInstance.KeyMod.Alt |
-						monacoInstance.KeyCode.KeyF,
-				],
-				run: () => formatEditorCode(editor),
-			});
+			// Register Prettier as the document formatter so the built-in
+			// "Format Document" action (and Shift+Alt+F) use it.
+			const formattingProvider: monaco.languages.DocumentFormattingEditProvider =
+				{
+					async provideDocumentFormattingEdits(model) {
+						const code = model.getValue();
+						const configState = useConfigStore.getState();
+
+						const { formatCode } = await import("../utils/prettier-formatter");
+						const formatted = await formatCode(code, {
+							printWidth: configState.printWidth,
+							tabWidth: configState.tabSize,
+							useTabs: !configState.insertSpaces,
+						});
+
+						if (formatted === code) return [];
+						return [
+							{
+								range: model.getFullModelRange(),
+								text: formatted,
+							},
+						];
+					},
+				};
+			monacoInstance.languages.registerDocumentFormattingEditProvider(
+				"typescript",
+				formattingProvider,
+			);
+			monacoInstance.languages.registerDocumentFormattingEditProvider(
+				"javascript",
+				formattingProvider,
+			);
 
 			const toggleGenerateCodeWidget = () => {
 				if (generateCodeWidgetRef.current && !generateCodeWidgetOpen) {
