@@ -6,8 +6,7 @@ import { ajuestLogs } from "./ajuestLogs";
 
 export function useRun() {
 	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
-	// const updateTabLog = useTabsStore(useShallow((state) => state.updateTabLog));
-	const updateTabLog = useTabsStore(useShallow((state) => state.updateTabLog));
+	const updateTab = useTabsStore(useShallow((state) => state.updateTab));
 
 	const updateEditor = useEditorStore(
 		useShallow((state) => state.updateEditor),
@@ -18,7 +17,7 @@ export function useRun() {
 	async function runCode() {
 		if (!activeTab) return;
 		if (activeTab.code.trim() === "") {
-			updateTabLog(activeTab.id, "");
+			updateTab(activeTab.id, { log: "" });
 		}
 		const loading = setTimeout(() => {
 			updateEditor({ running: true });
@@ -34,9 +33,9 @@ export function useRun() {
 			const logs = alignLogs
 				? ajuestLogs(output)
 				: output.map(({ content }) => content).join("\n");
-			updateTabLog(activeTab.id, logs);
+			updateTab(activeTab.id, { log: logs });
 		} catch (error) {
-			updateTabLog(activeTab.id, String(error));
+			updateTab(activeTab.id, { log: String(error) });
 		} finally {
 			clearTimeout(loading);
 			updateEditor({ running: false });

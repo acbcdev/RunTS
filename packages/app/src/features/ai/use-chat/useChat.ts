@@ -24,6 +24,23 @@ export function useChat() {
 	const controller = useRef<AbortController | null>(null);
 	const currentTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
 
+	const patchMessage = (
+		id: string,
+		text: string,
+		state: "streaming" | "done",
+	) => {
+		setMessages((prev) => {
+			const last = prev.at(-1);
+			const part = { type: "text" as const, text, state };
+			if (!last || last.id !== id) {
+				return [...prev, { id, role: "assistant", parts: [part] }];
+			}
+			return prev.map((msg) =>
+				msg.id === id ? { ...msg, parts: [part] } : msg,
+			);
+		});
+	};
+
 	const handleStreamText = async (userContent: string) => {
 		if (selectedModel.provider === null) {
 			toast.error("Please select a model before sending a message.", {
@@ -74,44 +91,11 @@ export function useChat() {
 
 			for await (const chunk of textStream) {
 				accumulatedText += chunk;
-				setMessages((prev) => {
-					const lastMessage = prev.at(-1);
-					if (lastMessage && lastMessage.id !== id) {
-						return [
-							...prev,
-							{
-								id,
-								role: "assistant",
-								parts: [
-									{ type: "text", text: accumulatedText, state: "streaming" },
-								],
-							},
-						];
-					}
-					return prev.map((msg) =>
-						msg.id === id
-							? {
-									...msg,
-									parts: [
-										{ type: "text", text: accumulatedText, state: "streaming" },
-									],
-								}
-							: msg,
-					);
-				});
+				patchMessage(id, accumulatedText, "streaming");
 			}
 
 			// Marcar el mensaje como completado
-			setMessages((prev) =>
-				prev.map((msg) =>
-					msg.id === id
-						? {
-								...msg,
-								parts: [{ type: "text", text: accumulatedText, state: "done" }],
-							}
-						: msg,
-				),
-			);
+			patchMessage(id, accumulatedText, "done");
 		} catch (error) {
 			setStatus("error");
 			setError(String(error));
@@ -145,11 +129,11 @@ export function useChat() {
 		const lastUserIndex = messages.map((m) => m.role).lastIndexOf("user");
 		if (lastUserIndex === -1) return;
 		setError("");
-		const lastUserMessage = messages[lastUserIndex].parts.at(-1);
+		const lastPart = messages[lastUserIndex].parts.at(-1);
 		// Elimina el último mensaje de assistant (si existe)
 		setMessages((prev) => prev.slice(0, lastUserIndex + 1));
-		if (typeof lastUserMessage !== "string") return;
-		handleStreamText(lastUserMessage);
+		if (!lastPart || lastPart.type !== "text") return;
+		handleStreamText(lastPart.text);
 	};
 
 	return {

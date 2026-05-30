@@ -88,15 +88,8 @@ export function EditorMain({ tab }: EditorMainProps) {
 	);
 	// useTabsStore
 	const activeTabId = useTabsStore(useShallow((state) => state.activeTabId));
-	const updateTabCode = useTabsStore(
-		useShallow((state) => state.updateTabCode),
-	);
+	const updateTab = useTabsStore(useShallow((state) => state.updateTab));
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
-	// const moveTab = useTabsStore(useShallow((state) => state.handleTab));
-	// const removeTab = useTabsStore(useShallow((state) => state.removeTab));
-	// const addTabHistory = useHistoryTabsStore(
-	// 	useShallow((state) => state.addTab),
-	// );
 
 	const undo = useHistoryTabsStore(useShallow((state) => state.undoClose));
 
@@ -136,34 +129,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 					noSyntaxValidation: false,
 				},
 			);
-			// editor.addCommand(
-			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.RightArrow,
-			// 	() => {
-			// 		moveTab(1);
-			// 	},
-			// );
-			// editor.addCommand(
-			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.LeftArrow,
-			// 	() => {
-			// 		moveTab(-1);
-			// 	},
-			// );
-			// editor.addCommand(
-			// 	monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyW,
-			// 	() => {
-			// 		const currentActiveTab = getCurrentTab();
-			// 		if (currentActiveTab && currentActiveTab?.code.trim() !== "") {
-			// 			addTabHistory(currentActiveTab);
-			// 			removeTab(currentActiveTab.id);
-			// 		}
-			// 	},
-			// );
-
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyR,
-				runCode,
-			);
-
 			editor.addAction({
 				id: "run-code",
 				label: "Run Code",
@@ -173,10 +138,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 				run: runCode,
 			});
 
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyB,
-				() => toogleChat(),
-			);
 			editor.addAction({
 				id: "show-chat",
 				label: "Show Chat",
@@ -186,12 +147,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 				run: () => toogleChat(),
 			});
 
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd |
-					monacoInstance.KeyMod.Alt |
-					monacoInstance.KeyCode.KeyT,
-				() => newTab(),
-			);
 			editor.addAction({
 				id: "new-tab",
 				label: "New Tab",
@@ -203,16 +158,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 				run: () => newTab(),
 			});
 
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd |
-					monacoInstance.KeyMod.Alt |
-					monacoInstance.KeyMod.Shift |
-					monacoInstance.KeyCode.KeyT,
-				() => {
-					const tab = undo();
-					if (tab) restoreTab(tab);
-				},
-			);
 			editor.addAction({
 				id: "undo-tab-close-action",
 				label: "Undo Tab Close",
@@ -229,12 +174,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 				},
 			});
 
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Comma,
-				() => {
-					toggle("settings");
-				},
-			);
 			editor.addAction({
 				id: "settings",
 				label: "Open Settings",
@@ -247,12 +186,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 			});
 
 			// Override default format action with Prettier (dynamically loaded)
-			editor.addCommand(
-				monacoInstance.KeyMod.Shift |
-					monacoInstance.KeyMod.Alt |
-					monacoInstance.KeyCode.KeyF,
-				() => formatEditorCode(editor),
-			);
 			editor.addAction({
 				id: "format-code-prettier",
 				label: "Format Code (Prettier)",
@@ -274,11 +207,6 @@ export function EditorMain({ tab }: EditorMainProps) {
 				}
 			};
 
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyI,
-				toggleGenerateCodeWidget,
-			);
-
 			editor.addAction({
 				id: "generate-code",
 				label: "Generate Code with AI",
@@ -289,12 +217,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				],
 				run: toggleGenerateCodeWidget,
 			});
-			editor.addCommand(
-				monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KeyK,
-				() => {
-					toggle("commandK");
-				},
-			);
+
 			editor.addCommand(
 				monacoInstance.KeyMod.Alt | monacoInstance.KeyCode.KeyZ,
 				() => {
@@ -409,7 +332,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 				height="100%"
 				defaultLanguage="typescript"
 				value={tab?.code}
-				onChange={(value) => updateTabCode(activeTabId, value || "")}
+				onChange={(value) => updateTab(activeTabId, { code: value || "" })}
 				onMount={handleEditorDidMount}
 				theme={theme}
 				options={{

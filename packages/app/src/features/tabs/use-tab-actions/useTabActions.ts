@@ -12,12 +12,7 @@ export const useTabActions = () => {
 	const setActiveTab = useTabsStore(useShallow((state) => state.setActiveTab));
 	const setEditing = useTabsStore(useShallow((state) => state.setEditing));
 	const removeTab = useTabsStore(useShallow((state) => state.removeTab));
-	const changeNameTab = useTabsStore(
-		useShallow((state) => state.changeNameTab),
-	);
-	const updateTabCode = useTabsStore(
-		useShallow((state) => state.updateTabCode),
-	);
+	const updateTab = useTabsStore(useShallow((state) => state.updateTab));
 	const newTab = useTabsStore(useShallow((state) => state.newTab));
 
 	const { handleShare, copyCode, downloadCode } = useHandler();
@@ -26,7 +21,7 @@ export const useTabActions = () => {
 		const targetTab = tabs.find((tab) => tab.id === tabId);
 		if (!targetTab) return;
 		setActiveTab(tabId);
-		updateTabCode(tabId, targetTab.code || "");
+		updateTab(tabId, { code: targetTab.code || "" });
 		editorRef?.focus();
 	};
 
@@ -44,7 +39,7 @@ export const useTabActions = () => {
 
 	const handleTabNameEdit = (tabId: string, name: string) => {
 		if (!name.trim()) {
-			changeNameTab(tabId, "");
+			updateTab(tabId, { name: "" });
 			setEditing(tabId, false);
 			return;
 		}
@@ -59,7 +54,7 @@ export const useTabActions = () => {
 			finalName = `${finalName.slice(0, 20)}.ts`;
 		}
 
-		changeNameTab(tabId, finalName);
+		updateTab(tabId, { name: finalName });
 		setEditing(tabId, false);
 		toast.success("Tab name changed", { duration: 700 });
 	};
@@ -74,7 +69,7 @@ export const useTabActions = () => {
 			const targetTab = tabs.find((tab) => tab.id === tabId);
 			if (targetTab) {
 				setActiveTab(tabId);
-				updateTabCode(tabId, targetTab.code || "");
+				updateTab(tabId, { code: targetTab.code || "" });
 			}
 		}
 
@@ -90,7 +85,7 @@ export const useTabActions = () => {
 			const targetTab = tabs.find((tab) => tab.id === tabId);
 			if (targetTab) {
 				setActiveTab(tabId);
-				updateTabCode(tabId, targetTab.code || "");
+				updateTab(tabId, { code: targetTab.code || "" });
 			}
 		}
 
@@ -118,6 +113,5 @@ export const useTabActions = () => {
 		handleShareCode: handleShare,
 		handleRemoveTab,
 		setEditing,
-		changeNameTab,
 	};
 };

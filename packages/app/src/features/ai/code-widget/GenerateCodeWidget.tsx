@@ -41,43 +41,19 @@ function GenerateCodeWidgetContent({
 	// Get selected model from global store
 	const selectedModel = useAIConfigStore((state) => state.selectedModel);
 
-	// Auto-focus input when component mounts with better focus handling
+	// Auto-focus input when component mounts
 	useEffect(() => {
-		const focusInput = () => {
-			if (inputRef.current) {
-				inputRef.current.focus();
-				// Ensure focus is maintained
-				setTimeout(() => {
-					if (inputRef.current) {
-						inputRef.current.focus();
-					}
-				}, 100);
-			}
-		};
-
-		focusInput();
+		inputRef.current?.focus();
 	}, []);
 
-	// Get editor dimensions and update on resize
+	// Track editor width, updating on layout changes (resize, panel toggle, etc.)
 	useEffect(() => {
-		const updateWidth = () => {
-			const layoutInfo = editor.getLayoutInfo();
-			setEditorWidth(layoutInfo.width);
-		};
+		const updateWidth = () => setEditorWidth(editor.getLayoutInfo().width);
 
 		updateWidth();
+		const disposable = editor.onDidLayoutChange(updateWidth);
 
-		// Listen for editor layout changes
-		const disposable = editor.onDidChangeModelDecorations(updateWidth);
-
-		// Also listen for window resize
-		const handleResize = () => updateWidth();
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			disposable.dispose();
-			window.removeEventListener("resize", handleResize);
-		};
+		return () => disposable.dispose();
 	}, [editor]);
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
