@@ -19,7 +19,7 @@ export async function formatCode(
 			plugins: [typescriptParser, estreeParser, babelParser],
 			printWidth: options.printWidth,
 			tabWidth: options.tabWidth,
-			useTabs: !options.useTabs,
+			useTabs: options.useTabs,
 			semi: true,
 			singleQuote: false,
 			trailingComma: "all",
