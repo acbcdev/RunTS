@@ -14,9 +14,9 @@
     "test": "pnpm --filter app test",
     "test:ui": "pnpm --filter app test:ui",
     "filter": "pnpm --filter",
-    "format": "pnpm --filter app format",
-    "lint:biome": "pnpm --filter app lint:biome",
-    "check": "pnpm --filter app check",
+    "format": "biome format --write ./packages",
+    "lint:biome": "biome lint --write ./packages",
+    "check": "biome check --write ./packages",
     "tauri:dev": "pnpm --filter app tauri:dev",
     "tauri:build": "pnpm --filter app tauri:build"
   },
@@ -25,6 +25,6 @@
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
-    "happy-dom": "20.0.10"
+    "@biomejs/biome": "2.2.6"
   }
 }

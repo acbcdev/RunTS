@@ -10,15 +10,9 @@
 	],
 	"compilerOptions": {
 		"paths": {
-			"@/*": [
-				"./src/*"
-			],
-			"@features/*": [
-				"./src/features/*"
-			],
-			"@styles/*": [
-				"./src/styles/*"
-			],
+			"@/*": ["./src/*"],
+			"@features/*": ["./src/features/*"],
+			"@styles/*": ["./src/styles/*"]
 		}
 	}
 }
