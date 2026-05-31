@@ -1,13 +1,9 @@
 packages:
-  - 'packages/*'
+  - "packages/*"
 
 minimumReleaseAge: 1440
-minimumReleaseAgeExclude:
-  - 'ai'
-  - '@ai-sdk/*'
-  - 'react'
-  - "react-*"
+
 onlyBuiltDependencies:
-  - '@swc/core'
-  - '@tailwindcss/oxide'
+  - "@swc/core"
+  - "@tailwindcss/oxide"
   - esbuild
