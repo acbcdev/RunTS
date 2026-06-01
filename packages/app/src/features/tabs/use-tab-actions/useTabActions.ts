@@ -2,8 +2,11 @@ import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { useHandler } from "@/features/common/hooks";
 import { useEditorStore } from "@/features/editor/editor-store";
+import { langFromName } from "@/features/editor/language/langFromName";
+import { type LanguageId, REGISTRY } from "@/features/editor/language/registry";
 import type { Tab } from "@/features/editor/types";
 import { useTabsStore } from "../tabs-store";
+import { swapExtension } from "../utils";
 
 export const useTabActions = () => {
 	const editorRef = useEditorStore(useShallow((state) => state.editorRef));
@@ -37,25 +40,24 @@ export const useTabActions = () => {
 	};
 
 	const handleTabNameEdit = (tabId: string, name: string) => {
-		if (!name.trim()) {
-			updateTab(tabId, { name: "" });
-			setEditing(tabId, false);
-			return;
-		}
-
+		// The filename is the single source of truth: respect exactly what the
+		// user types. A known extension selects its language, an unknown/missing
+		// one falls back to plaintext (handled by langFromName), and an empty
+		// input keeps the name empty.
 		const trimmedName = name.trim();
-		const hasValidExtension =
-			trimmedName.endsWith(".ts") || trimmedName.endsWith(".js");
-		const [nameWithoutExtension] = trimmedName.split(/\.$/);
-		let finalName = nameWithoutExtension.replace(/\s+/g, "-");
-
-		if (!hasValidExtension) {
-			finalName = `${finalName.slice(0, 20)}.ts`;
-		}
-
-		updateTab(tabId, { name: finalName });
+		updateTab(tabId, { name: trimmedName });
 		setEditing(tabId, false);
-		toast.success("Tab name changed", { duration: 700 });
+		if (trimmedName) toast.success("Tab name changed", { duration: 700 });
+	};
+
+	const handleConvertLanguage = (tabId: Tab["id"], langId: LanguageId) => {
+		const tab = tabs.find((t) => t.id === tabId);
+		if (!tab) return;
+		// No-op when the tab is already on the target language.
+		if (langFromName(tab.name).id === langId) return;
+		updateTab(tabId, {
+			name: swapExtension(tab.name ?? "", REGISTRY[langId].ext),
+		});
 	};
 
 	const handleStartEditing = (tabId: string) => {
@@ -104,6 +106,7 @@ export const useTabActions = () => {
 		handleActiveTabChange,
 		handleDuplicateTab,
 		handleTabNameEdit,
+		handleConvertLanguage,
 		handleStartEditing,
 		handleActivateAndEdit,
 		handleRenameFromContextMenu,

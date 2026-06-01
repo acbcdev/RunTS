@@ -9,6 +9,7 @@ describe("langFromName", () => {
 		["app.js", "app.js", "javascript"],
 		["notes (no ext)", "notes", "plaintext"],
 		["README.md", "README.md", "markdown"],
+		["notes.txt", "notes.txt", "plaintext"],
 		[".md (dotfile, no name)", ".md", "plaintext"],
 		[
 			"my.config.ts (multi-dot, last segment wins)",
@@ -25,12 +26,16 @@ describe("langFromName", () => {
 	it("returns the full LanguageDef, not just the id", () => {
 		expect(langFromName("main.ts")).toEqual({
 			id: "typescript",
+			label: "TypeScript",
+			ext: "ts",
 			monaco: "typescript",
 			execute: true,
 			panel: "console",
 		});
 		expect(langFromName("notes")).toEqual({
 			id: "plaintext",
+			label: "Text",
+			ext: "txt",
 			monaco: "plaintext",
 			execute: false,
 			panel: "none",
