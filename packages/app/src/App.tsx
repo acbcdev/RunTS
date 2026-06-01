@@ -31,7 +31,6 @@ export function App() {
 				const decodedCode = decode(code);
 				newTab({
 					name: "shared.ts",
-					language: "typescript",
 					code: decodedCode,
 					log: "",
 				});

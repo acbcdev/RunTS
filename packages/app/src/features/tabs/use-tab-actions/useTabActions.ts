@@ -31,7 +31,6 @@ export const useTabActions = () => {
 
 		newTab({
 			name: duplicateTab.name ? `copy-${duplicateTab.name}` : "",
-			language: duplicateTab.language,
 			code: duplicateTab.code,
 			log: duplicateTab.log,
 		});

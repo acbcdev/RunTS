@@ -1,6 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useEditorStore } from "../editor-store";
+import { langFromName } from "../language/langFromName";
 import { runCodeWorker } from "../run-code";
 import { ajuestLogs } from "./ajuestLogs";
 
@@ -16,6 +17,8 @@ export function useRun() {
 
 	async function runCode() {
 		if (!activeTab) return;
+		// The real safety gate: covers run button, hotkey and auto-run session paths.
+		if (!langFromName(activeTab.name).execute) return;
 		if (activeTab.code.trim() === "") {
 			updateTab(activeTab.id, { log: "" });
 		}

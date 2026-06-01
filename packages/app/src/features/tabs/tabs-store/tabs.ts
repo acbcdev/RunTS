@@ -29,7 +29,6 @@ export const useTabsStore = create<TabsStore>()(
 					tabs: [
 						...state.tabs,
 						{
-							language: "typescript",
 							code: "",
 							log: "",
 							...tabData,

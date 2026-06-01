@@ -23,8 +23,9 @@ import Loading from "./Loading";
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 type EditorMainProps = {
 	tab: Tab;
+	language: string;
 };
-export function EditorMain({ tab }: EditorMainProps) {
+export function EditorMain({ tab, language }: EditorMainProps) {
 	const generateCodeWidgetRef = useRef<ReturnType<
 		typeof createGenerateCodeWidget
 	> | null>(null);
@@ -327,7 +328,7 @@ export function EditorMain({ tab }: EditorMainProps) {
 					/>
 				}
 				height="100%"
-				defaultLanguage="typescript"
+				language={language}
 				value={tab?.code}
 				onChange={(value) => updateTab(activeTabId, { code: value || "" })}
 				onMount={handleEditorDidMount}

@@ -112,7 +112,6 @@ export const INITIAL_TABS: Tab[] = [
 	{
 		id: "1",
 		name: "main.ts",
-		language: "typescript",
 		code: DEFAULT_CODE,
 		log: "",
 		editing: false,

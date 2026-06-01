@@ -22,6 +22,7 @@ import {
 	Type,
 	TypeOutline,
 } from "lucide-react";
+import { langFromName } from "@/features/editor/language/langFromName";
 import {
 	SIDES,
 	useApparenceStore,
@@ -95,7 +96,7 @@ export const useCommandItems = (): {
 			category: "tabs",
 			keywords: [
 				tab.name,
-				tab.language,
+				langFromName(tab.name).id,
 				"tab",
 				"archivo",
 				"file",

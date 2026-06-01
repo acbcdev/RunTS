@@ -17,6 +17,7 @@ import { useModalStore } from "@/features/common/modal/modal";
 import { getModifierKey } from "@/features/common/utils/shortcuts";
 import { cn } from "@/features/common/utils/utils";
 import { useApparenceStore } from "@/features/settings/appearance-store/appearance";
+import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { Button } from "@/features/ui/button";
 import { Kbd, KbdGroup } from "@/features/ui/kbd";
 import {
@@ -25,6 +26,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/features/ui/tooltip";
+import { langFromName } from "../language/langFromName";
 import { useRun } from "../use-run/useRun";
 
 type ActionPosition = "start" | "end";
@@ -57,6 +59,10 @@ export const EditorActions = memo<EditorActionsProps>(
 			})),
 		);
 		const toggle = useModalStore((state) => state.toggleModal);
+		const activeTabName = useTabsStore(
+			useShallow((state) => state.getCurrentTab()?.name),
+		);
+		const canRun = langFromName(activeTabName).execute;
 		const { runCode } = useRun();
 		const { handleShare, downloadCode } = useHandler();
 		const { toggleChat, showChat } = useAIConfigStore(
@@ -98,6 +104,7 @@ export const EditorActions = memo<EditorActionsProps>(
 				),
 				position: "start",
 				active: true,
+				disabled: !canRun,
 			},
 			{
 				id: "layout",

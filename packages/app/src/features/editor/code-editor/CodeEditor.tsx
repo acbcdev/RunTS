@@ -9,17 +9,13 @@ import {
 	SIDES,
 	useApparenceStore,
 } from "@/features/settings/appearance-store/appearance";
-import {
-	ResizableHandle,
-	ResizablePanel,
-	ResizablePanelGroup,
-} from "@/features/ui/resizable";
+import { ResizablePanel, ResizablePanelGroup } from "@/features/ui/resizable";
+import { langFromName } from "../language/langFromName";
 import { useEditorSession } from "../use-editor-session";
 
-const EditorMain = lazy(() => import("../editor-main/EditorMain"));
 const EditorTabs = lazy(() => import("@/features/tabs/editor-tabs/EditorTabs"));
 const EditorActions = lazy(() => import("../editor-actions/EditorActions"));
-const Console = lazy(() => import("../console/Console"));
+const EditorLayout = lazy(() => import("../editor-layout/EditorLayout"));
 const EmptyState = lazy(() => import("../editor-main/EmptyState"));
 
 type positionSettings = {
@@ -37,11 +33,10 @@ const SettingsBySide: Record<number, positionSettings> = {
 export function CodeEditor() {
 	useShortcuts();
 	const { tab } = useEditorSession();
-	const { radius, theme, layout, applyTheme } = useApparenceStore(
+	const { radius, theme, applyTheme } = useApparenceStore(
 		useShallow((state) => ({
 			radius: state.radius,
 			theme: state.theme,
-			layout: state.layout,
 			applyTheme: state.applyTheme,
 		})),
 	);
@@ -107,15 +102,7 @@ export function CodeEditor() {
 				<ResizablePanel defaultSize={100}>
 					<EditorTabs />
 					{tab ? (
-						<ResizablePanelGroup direction={layout}>
-							<ResizablePanel defaultSize={60}>
-								<EditorMain tab={tab} />
-							</ResizablePanel>
-							<ResizableHandle withHandle className="w-1" />
-							<ResizablePanel defaultSize={40}>
-								<Console tab={tab} />
-							</ResizablePanel>
-						</ResizablePanelGroup>
+						<EditorLayout tab={tab} lang={langFromName(tab.name)} />
 					) : (
 						<EmptyState />
 					)}
