@@ -1,5 +1,19 @@
 # Changelog
 
+## Version 1.8.0 – May 31, 2026
+
+### New Features
+
+- **Language from Filename:** Tab language is now derived from the filename extension (`.ts`, `.js`, `.md`, `.txt`), falling back to plaintext for unknown or missing extensions. The filename is the single source of truth.
+- **Convert Tab Language:** New "Convert to" submenu in the tab context menu swaps a tab's extension to switch languages.
+- **Markdown Preview Panel:** Live markdown preview rendered in a side panel for `.md` tabs.
+
+### Fixes
+
+- **Markdown Preview:** Gave the preview panel a solid background.
+
+---
+
 ## Version 1.7.1 – May 28, 2026
 
 ### Improvements
