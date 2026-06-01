@@ -3,6 +3,7 @@ import { type LanguageDef, type LanguageId, REGISTRY } from "./registry";
 const EXTENSION_TO_LANGUAGE: Record<string, LanguageId> = {
 	ts: "typescript",
 	js: "javascript",
+	md: "markdown",
 };
 
 /**

@@ -1,4 +1,4 @@
-export type LanguageId = "typescript" | "javascript" | "plaintext";
+export type LanguageId = "typescript" | "javascript" | "markdown" | "plaintext";
 
 export type OutputPanel = "console" | "preview" | "none";
 
@@ -24,6 +24,12 @@ export const REGISTRY: Record<LanguageId, LanguageDef> = {
 		monaco: "javascript",
 		execute: true,
 		panel: "console",
+	},
+	markdown: {
+		id: "markdown",
+		monaco: "markdown",
+		execute: false,
+		panel: "preview",
 	},
 	plaintext: {
 		id: "plaintext",

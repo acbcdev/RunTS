@@ -1,6 +1,9 @@
 import { Editor } from "@monaco-editor/react";
+import "highlight.js/styles/github-dark.css";
 import { Copy, CopyCheck, FilePlus2 } from "lucide-react";
+import { memo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { useShallow } from "zustand/react/shallow";
 import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
@@ -281,16 +284,51 @@ const components = {
 	},
 } satisfies Components;
 
-export function Markdown({ children }: { children: string }) {
+// Preview reuses every shared renderer (headings, tables, lists) but swaps the
+// chat-only Monaco code block for static highlighted <pre><code>. Highlighting
+// comes from rehype-highlight (lowlight / highlight.js) — sync, no WASM.
+const previewComponents = {
+	...components,
+	pre: ({ children }) => (
+		<pre className="my-3 overflow-x-auto rounded-md bg-background p-3 text-sm">
+			{children}
+		</pre>
+	),
+	code: ({ className, children, ...props }) => {
+		const isBlock = /language-|hljs/.test(className || "");
+		return isBlock ? (
+			<code className={className} {...props}>
+				{children}
+			</code>
+		) : (
+			<code className="bg-background/60 text-foreground px-2 py-1 rounded-sm">
+				{children}
+			</code>
+		);
+	},
+} satisfies Components;
+
+type MarkdownProps = {
+	children: string;
+	variant?: "chat" | "preview";
+};
+
+// Memoized so an unchanged (debounced) children string skips a full re-parse.
+export const Markdown = memo(function Markdown({
+	children,
+	variant = "chat",
+}: MarkdownProps) {
+	const isPreview = variant === "preview";
 	return (
 		<ReactMarkdown
 			className="prose text-wrap dark:prose-invert "
-			components={components}
+			components={isPreview ? previewComponents : components}
 			remarkPlugins={[remarkGfm]}
+			rehypePlugins={isPreview ? [rehypeHighlight] : undefined}
 		>
 			{children}
 		</ReactMarkdown>
 	);
-}
+});
 
 export default Markdown;

@@ -8,8 +8,8 @@ describe("langFromName", () => {
 		["main.ts", "main.ts", "typescript"],
 		["app.js", "app.js", "javascript"],
 		["notes (no ext)", "notes", "plaintext"],
-		["README.md", "README.md", "plaintext"],
-		[".md", ".md", "plaintext"],
+		["README.md", "README.md", "markdown"],
+		[".md (dotfile, no name)", ".md", "plaintext"],
 		[
 			"my.config.ts (multi-dot, last segment wins)",
 			"my.config.ts",
