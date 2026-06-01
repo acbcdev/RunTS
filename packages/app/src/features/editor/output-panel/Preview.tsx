@@ -16,7 +16,7 @@ export function Preview({ tab }: PreviewProps) {
 	const code = useDebounce(tab.code, 200);
 
 	return (
-		<div className="h-full overflow-auto p-4">
+		<div className="h-full overflow-auto bg-background p-4">
 			<Markdown variant="preview">{code}</Markdown>
 		</div>
 	);
