@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { ajuestLogs, type ConsoleOutput } from "./ajuestLogs";
+import type { ConsoleOutput } from "../run-code/types";
+import { ajuestLogs } from "./ajuestLogs";
 
 const createMockLog = (line: number, content: string): ConsoleOutput => ({
 	type: "log",

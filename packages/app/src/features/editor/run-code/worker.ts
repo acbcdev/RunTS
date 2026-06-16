@@ -1,7 +1,5 @@
-import { injectLogsIntoCode } from "./addLogsToLines";
-import { validateCode, wrapCodeForExecution } from "./codeValidator";
 import { Formatter } from "./formatter";
-import { transform } from "./transform";
+import { preparePipeline } from "./pipeline";
 import type { ConsoleOutput } from "./types";
 
 self.onmessage = async (event: MessageEvent) => {
@@ -95,15 +93,20 @@ self.onmessage = async (event: MessageEvent) => {
 	};
 
 	try {
-		// console.log(activeTabCode, "activeTabCode");
-		const transpiledCode = transform(activeTabCode, name);
+		const pipeline = preparePipeline(activeTabCode, name, injectLogs);
+		if (!pipeline.ready) {
+			output.push({
+				type: "log",
+				content: pipeline.error,
+				line: 0,
+				column: 0,
+				timestamp: Date.now(),
+			});
+			finishExecution();
+			return;
+		}
 
-		// console.log(transpiledCode);
-		const { code, lines } = injectLogsIntoCode(transpiledCode ?? "", {
-			injectLogs: injectLogs,
-		});
-		// console.log(code);
-		lines.forEach((line, index) => {
+		pipeline.lines.forEach((line, index) => {
 			sourceMap.set(index, { line, column: 0 });
 		});
 		let consolePosition = 0;
@@ -135,21 +138,7 @@ self.onmessage = async (event: MessageEvent) => {
 			return;
 		}
 
-		const validation = validateCode(code ?? "");
-		if (!validation.valid) {
-			output.push({
-				type: "log",
-				content: `Validation Error: ${validation.errors.join("; ")}`,
-				line: 0,
-				column: 0,
-				timestamp: Date.now(),
-			});
-			finishExecution();
-			return;
-		}
-
-		const wrappedCode = wrapCodeForExecution(code ?? "");
-		new Function(wrappedCode)();
+		new Function(pipeline.code)();
 
 		// Check if we're done immediately (no pending async operations)
 		checkIfDone();

@@ -1,10 +1,4 @@
-export interface ConsoleOutput {
-	type: "log";
-	content: string;
-	line: number;
-	column: number;
-	timestamp: number;
-}
+import type { ConsoleOutput } from "../run-code/types";
 
 export function ajuestLogs(logs: ConsoleOutput[]): string {
 	const ajustedOutput = logs.map(({ content, line }, index) => {
