@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { INITIAL_TABS } from "@/features/settings/config-consts/config";
+import { useHistoryTabsStore } from "../history";
 import type { TabsStore } from "./types";
 
 export const useTabsStore = create<TabsStore>()(
@@ -62,6 +63,10 @@ export const useTabsStore = create<TabsStore>()(
 				}));
 			},
 			removeTab: (id) => {
+				const tab = get().tabs.find((t) => t.id === id);
+				if (tab && tab.code.trim() !== "") {
+					useHistoryTabsStore.getState().addTab(tab);
+				}
 				set((state) => {
 					const newTabs = state.tabs.filter((tab) => tab.id !== id);
 					const activeTabsHistory = state.activeTabHistory.filter(
