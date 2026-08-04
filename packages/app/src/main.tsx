@@ -11,6 +11,14 @@ Sentry.init({
 	sendDefaultPii: true,
 });
 
+// Stale deploy: browser holds an old index.html referencing chunk/CSS hashes
+// that no longer exist after a new deploy. Reload once to fetch the fresh one.
+window.addEventListener("vite:preloadError", () => {
+	if (sessionStorage.getItem("vite-reloaded")) return;
+	sessionStorage.setItem("vite-reloaded", "true");
+	window.location.reload();
+});
+
 const container = document.querySelector("#root");
 // biome-ignore lint/style/noNonNullAssertion: <the html has the root>
 const root = createRoot(container!);
