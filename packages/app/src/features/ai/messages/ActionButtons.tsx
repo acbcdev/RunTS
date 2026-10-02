@@ -1,4 +1,4 @@
-import { Copy, CopyCheck } from "lucide-react";
+import { Copy, CopyCheck, RotateCw } from "lucide-react";
 import { useCopyToClipboard } from "@/features/common/hooks/useCopyToClipboard";
 import { Button } from "@/features/ui/button";
 import {
@@ -10,6 +10,7 @@ import {
 
 export function ActionButtons({
 	content,
+	reload,
 }: {
 	content: string;
 	reload: () => void;
@@ -31,14 +32,14 @@ export function ActionButtons({
 					<TooltipContent>Copy to clipboard</TooltipContent>
 				</Tooltip>
 
-				{/* <Tooltip>
-					<TooltipTrigger>
+				<Tooltip>
+					<TooltipTrigger asChild>
 						<Button onClick={reload} size={"icon"} variant={"ghost"}>
 							<RotateCw />
 						</Button>
 					</TooltipTrigger>
-					<TooltipContent>Reload</TooltipContent>
-				</Tooltip> */}
+					<TooltipContent>Regenerate</TooltipContent>
+				</Tooltip>
 			</TooltipProvider>
 		</div>
 	);

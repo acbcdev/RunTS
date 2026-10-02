@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/react/shallow";
 import {
 	Select,
 	SelectContent,
@@ -9,11 +10,11 @@ import { useAIConfigStore } from "../store";
 import type { providers } from "../types";
 
 export function ModelSelect() {
-	const getProviders = useAIConfigStore((state) => state.getProviders);
+	const activeModels = useAIConfigStore(
+		useShallow((state) => state.getProviders()),
+	);
 	const value = useAIConfigStore((state) => state.selectedModel);
 	const changeModel = useAIConfigStore((state) => state.changeModel);
-
-	const activeModels = getProviders();
 
 	return (
 		<Select

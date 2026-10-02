@@ -1,4 +1,6 @@
 import type { UIMessage } from "ai";
+import { Bubble, BubbleContent } from "@/features/ui/bubble";
+import { Message, MessageContent } from "@/features/ui/message";
 import Markdown from "./Markdown";
 
 type MessageUserProps = {
@@ -7,20 +9,19 @@ type MessageUserProps = {
 
 export function MessageUser({ message }: MessageUserProps) {
 	return (
-		<div className="flex justify-end">
-			<div className="rounded-lg px-4 py-1 bg-background/90 text-primary-foreground">
-				{message.parts.map((part) => {
-					if (part.type === "text") {
-						return (
-							<Markdown key={`${message.id}-${part.text.slice(0, 20)}`}>
-								{part.text}
-							</Markdown>
-						);
-					}
-					return null;
-				})}
-			</div>
-		</div>
+		<Message align="end">
+			<MessageContent>
+				<Bubble variant="secondary" align="end">
+					<BubbleContent>
+						{message.parts.map((part, i) =>
+							part.type === "text" ? (
+								<Markdown key={`${message.id}-${i}`}>{part.text}</Markdown>
+							) : null,
+						)}
+					</BubbleContent>
+				</Bubble>
+			</MessageContent>
+		</Message>
 	);
 }
 

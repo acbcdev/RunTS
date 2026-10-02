@@ -7,9 +7,9 @@ import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
 import { NoProvidersView } from "./NoProvidersView";
 export function Chat() {
-	const { getProviders, showChat } = useAIConfigStore(
+	const { hasProviders, showChat } = useAIConfigStore(
 		useShallow((state) => ({
-			getProviders: state.getProviders,
+			hasProviders: state.getProviders().length > 0,
 			showChat: state.showChat,
 		})),
 	);
@@ -29,7 +29,7 @@ export function Chat() {
 		setInput("");
 	};
 
-	if (getProviders().length === 0) {
+	if (!hasProviders) {
 		return <NoProvidersView />;
 	}
 

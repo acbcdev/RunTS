@@ -18,8 +18,8 @@ import type { providers } from "../types";
 
 export function ComboboxSelect() {
 	const [open, setOpen] = useState(false);
-	const getProviders = useAIConfigStore(
-		useShallow((state) => state.getProviders),
+	const activeModels = useAIConfigStore(
+		useShallow((state) => state.getProviders()),
 	);
 
 	const value = useAIConfigStore(useShallow((state) => state.selectedModel));
@@ -29,7 +29,6 @@ export function ComboboxSelect() {
 
 	const currentModel = models.find((model) => model.id === value.id);
 
-	const activeModels = getProviders();
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>

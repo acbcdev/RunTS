@@ -1,12 +1,14 @@
 import type { UIMessage } from "ai";
-import { RefreshCw } from "lucide-react";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import { memo, useRef } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/features/ui/alert";
 import { Button } from "@/features/ui/button";
 import {
 	ChatContainerContent,
 	ChatContainerRoot,
 	ChatContainerScrollAnchor,
 } from "@/features/ui/chat-container";
+import { Marker, MarkerContent } from "@/features/ui/marker";
 import { ScrollButton } from "@/features/ui/scroll-button";
 import Markdown from "./Markdown";
 import MessageAssistant from "./MessageAssistant";
@@ -19,7 +21,12 @@ type PureMessagesProps = {
 	error: string;
 };
 
-function PureMessages({ messages, error, reload }: PureMessagesProps) {
+function PureMessages({
+	messages,
+	isLoading,
+	error,
+	reload,
+}: PureMessagesProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -39,14 +46,31 @@ function PureMessages({ messages, error, reload }: PureMessagesProps) {
 						</div>
 					))}
 
+					{isLoading && messages.at(-1)?.role === "user" && (
+						<Marker role="status">
+							<MarkerContent className="animate-pulse">
+								Thinking...
+							</MarkerContent>
+						</Marker>
+					)}
+
 					{error && (
-						<div className="border border-destructive px-4 py-5 rounded-lg">
-							<Markdown>{error}</Markdown>
-							<Button onClick={reload} className="mt-2">
-								Reload
-								<RefreshCw className="ml-2 h-4 w-4" />
-							</Button>
-						</div>
+						<Alert variant="destructive">
+							<AlertCircle />
+							<AlertTitle>Something went wrong</AlertTitle>
+							<AlertDescription>
+								<Markdown>{error}</Markdown>
+								<Button
+									onClick={reload}
+									variant="outline"
+									size="sm"
+									className="mt-2"
+								>
+									Reload
+									<RefreshCw />
+								</Button>
+							</AlertDescription>
+						</Alert>
 					)}
 
 					<ChatContainerScrollAnchor />
