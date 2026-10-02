@@ -46,13 +46,16 @@ export async function encryptData(
 		encodedData,
 	);
 
-	// Convert to base64 without using Buffer (browser-compatible)
-	const ivBase64 = btoa(String.fromCharCode(...iv));
-	const encryptedBase64 = btoa(
-		String.fromCharCode(...new Uint8Array(encrypted)),
-	);
+	return `${toBase64(iv)}:${toBase64(new Uint8Array(encrypted))}`;
+}
 
-	return `${ivBase64}:${encryptedBase64}`;
+// Chunked: spreading a large array into fromCharCode overflows the stack
+function toBase64(bytes: Uint8Array): string {
+	let binary = "";
+	for (let i = 0; i < bytes.length; i += 0x8000) {
+		binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+	}
+	return btoa(binary);
 }
 
 // Descifrar datos
@@ -92,31 +95,15 @@ export async function decryptData(
 	}
 }
 
-// Generate a deterministic key from browser fingerprint
+const KEY_STORAGE = "aiEncryptionKey";
+
+// Random key created once and reused. A browser fingerprint (UA, screen, timezone)
+// changes over time and makes stored data undecryptable.
+// ponytail: key sits next to the ciphertext, so this is obfuscation, not real secrecy
 export async function getDerivedKey(): Promise<CryptoKey> {
-	// Gather browser/device characteristics for fingerprinting
-	const fingerprint = [
-		navigator.userAgent || "unknown-agent",
-		navigator.language || "en-US",
-		screen.width?.toString() || "0",
-		screen.height?.toString() || "0",
-		new Date().getTimezoneOffset().toString(),
-		// Add more stable characteristics
-		navigator.hardwareConcurrency?.toString() || "0",
-		navigator.maxTouchPoints?.toString() || "0",
-	].join("|");
-
-	// Hash the fingerprint to create key material
-	const encoder = new TextEncoder();
-	const data = encoder.encode(fingerprint);
-	const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-
-	// Import the hash as an AES-GCM key
-	return crypto.subtle.importKey(
-		"raw",
-		hashBuffer,
-		{ name: "AES-GCM" },
-		false, // Not exportable for security
-		["encrypt", "decrypt"],
-	);
+	const saved = localStorage.getItem(KEY_STORAGE);
+	if (saved) return importKey(saved);
+	const key = await generateKey();
+	localStorage.setItem(KEY_STORAGE, await exportKey(key));
+	return key;
 }
