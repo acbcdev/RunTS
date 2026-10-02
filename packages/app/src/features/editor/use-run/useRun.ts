@@ -1,9 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useEditorStore } from "../editor-store";
-import { langFromName } from "../language/langFromName";
-import { runCodeWorker } from "../run-code";
-import { ajuestLogs } from "./ajuestLogs";
+import { runTab } from "../run-code";
 
 export function useRun() {
 	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
@@ -12,33 +10,15 @@ export function useRun() {
 	const updateEditor = useEditorStore(
 		useShallow((state) => state.updateEditor),
 	);
-	const expression = useEditorStore(useShallow((state) => state.expression));
+	const injectLogs = useEditorStore(useShallow((state) => state.expression));
 	const alignLogs = useEditorStore(useShallow((state) => state.alignLogs));
 
 	async function runCode() {
 		if (!activeTab) return;
-		// The real safety gate: covers run button, hotkey and auto-run session paths.
-		if (!langFromName(activeTab.name).execute) return;
-		if (activeTab.code.trim() === "") {
-			updateTab(activeTab.id, { log: "" });
-		}
-		const loading = setTimeout(() => {
-			updateEditor({ running: true });
-		}, 500);
-
+		const loading = setTimeout(() => updateEditor({ running: true }), 500);
 		try {
-			const name = activeTab?.name;
-			const output = await runCodeWorker(activeTab.code, {
-				name,
-				injectLogs: expression,
-			});
-			clearTimeout(loading);
-			const logs = alignLogs
-				? ajuestLogs(output)
-				: output.map(({ content }) => content).join("\n");
-			updateTab(activeTab.id, { log: logs });
-		} catch (error) {
-			updateTab(activeTab.id, { log: String(error) });
+			const log = await runTab(activeTab, { injectLogs, alignLogs });
+			if (log !== null) updateTab(activeTab.id, { log });
 		} finally {
 			clearTimeout(loading);
 			updateEditor({ running: false });
