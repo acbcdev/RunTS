@@ -1,1 +1,1 @@
-export { runCodeWorker } from "./runCode";
+export { runTab } from "./runTab";

@@ -9,6 +9,8 @@ describe("langFromName", () => {
 		["app.js", "app.js", "javascript"],
 		["notes (no ext)", "notes", "plaintext"],
 		["README.md", "README.md", "markdown"],
+		["index.html", "index.html", "html"],
+		["data.json", "data.json", "json"],
 		["notes.txt", "notes.txt", "plaintext"],
 		[".md (dotfile, no name)", ".md", "plaintext"],
 		[

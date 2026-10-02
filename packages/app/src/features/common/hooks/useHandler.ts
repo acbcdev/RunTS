@@ -29,7 +29,8 @@ export function useHandler() {
 		}
 		try {
 			const encodedCode = encode(tab?.code.trim() ?? "");
-			const link = `${url.origin}/?code=${encodedCode}`;
+			const name = tab?.name ? `&name=${encodeURIComponent(tab.name)}` : "";
+			const link = `${url.origin}/?code=${encodedCode}${name}`;
 			navigator.clipboard.writeText(link);
 			toast.success(getLinkCreatedMessage(link.slice(0, 30)));
 		} catch {

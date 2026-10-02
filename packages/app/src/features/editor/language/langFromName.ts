@@ -4,6 +4,8 @@ const EXTENSION_TO_LANGUAGE: Record<string, LanguageId> = {
 	ts: "typescript",
 	js: "javascript",
 	md: "markdown",
+	html: "html",
+	json: "json",
 	txt: "plaintext",
 };
 
