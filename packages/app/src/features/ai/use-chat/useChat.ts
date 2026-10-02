@@ -41,23 +41,26 @@ export function useChat() {
 		});
 	};
 
-	const handleStreamText = async (userContent: string) => {
+	const handleStreamText = async (
+		userContent: string,
+		history: UIMessage[] = messages,
+	) => {
 		if (selectedModel.provider === null) {
 			toast.error("Please select a model before sending a message.", {
 				position: "top-left",
 			});
 			return;
 		}
-		if (userContent.trim() === "clear") {
+		if (userContent.trim() === "/clear") {
 			setMessages([]);
 			setInput("");
 			return;
 		}
 		if (userContent.trim() === "") return;
 		const messagesToAI: UIMessage[] = [
-			...messages,
+			...history,
 			{
-				id: Date.now().toString(),
+				id: crypto.randomUUID(),
 				role: "user",
 				parts: [
 					{
@@ -71,6 +74,9 @@ export function useChat() {
 
 		setMessages(messagesToAI);
 		setInput("");
+		setError("");
+		const id = crypto.randomUUID();
+		let accumulatedText = "";
 		try {
 			const newController = new AbortController();
 			controller.current = newController;
@@ -86,9 +92,6 @@ export function useChat() {
 				abortSignal: controller.current.signal,
 			});
 			setStatus("streaming");
-			const id = Date.now().toString();
-			let accumulatedText = "";
-
 			for await (const chunk of textStream) {
 				accumulatedText += chunk;
 				patchMessage(id, accumulatedText, "streaming");
@@ -97,6 +100,11 @@ export function useChat() {
 			// Marcar el mensaje como completado
 			patchMessage(id, accumulatedText, "done");
 		} catch (error) {
+			if (error instanceof Error && error.name === "AbortError") {
+				// Cortado por el usuario: dejar lo que llegó como mensaje final
+				if (accumulatedText) patchMessage(id, accumulatedText, "done");
+				return;
+			}
 			setStatus("error");
 			setError(String(error));
 			let errorMessage = "Something went wrong";
@@ -108,11 +116,13 @@ export function useChat() {
 				position: "bottom-center",
 				duration: 10000,
 			});
-			if (messages.at(-1)?.role === "user") {
-				setMessages(messages.slice(0, -1));
-			}
+			// Devolver el prompt al input y sacar la pregunta sin respuesta
+			setInput(userContent);
+			setMessages((prev) =>
+				prev.at(-1)?.role === "user" ? prev.slice(0, -1) : prev,
+			);
 		} finally {
-			setStatus("ready");
+			setStatus((prev) => (prev === "error" ? prev : "ready"));
 		}
 	};
 
@@ -128,12 +138,10 @@ export function useChat() {
 	const handleRegenerate = () => {
 		const lastUserIndex = messages.map((m) => m.role).lastIndexOf("user");
 		if (lastUserIndex === -1) return;
-		setError("");
 		const lastPart = messages[lastUserIndex].parts.at(-1);
-		// Elimina el último mensaje de assistant (si existe)
-		setMessages((prev) => prev.slice(0, lastUserIndex + 1));
 		if (!lastPart || lastPart.type !== "text") return;
-		handleStreamText(lastPart.text);
+		// handleStreamText re-agrega el user message, así que pasamos el historial sin él
+		handleStreamText(lastPart.text, messages.slice(0, lastUserIndex));
 	};
 
 	return {
