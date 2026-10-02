@@ -24,13 +24,14 @@ export function App() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <this must be run one time>
 	useEffect(() => {
 		console.log(MESSAGE_LOG);
-		const code = new URLSearchParams(window.location.search).get("code");
+		const params = new URLSearchParams(window.location.search);
+		const code = params.get("code");
 		window.history.replaceState(null, "", "/");
 		if (code) {
 			try {
 				const decodedCode = decode(code);
 				newTab({
-					name: "shared.ts",
+					name: params.get("name") || "shared.ts",
 					code: decodedCode,
 					log: "",
 				});
