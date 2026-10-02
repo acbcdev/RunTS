@@ -25,8 +25,8 @@ export async function createProvider(
 				anthropic(modelId) as unknown as LanguageModel) as ProviderFactory;
 		}
 		case "google": {
-			const { createGoogleGenerativeAI } = await import("@ai-sdk/google");
-			const google = createGoogleGenerativeAI({ apiKey });
+			const { createGoogle } = await import("@ai-sdk/google");
+			const google = createGoogle({ apiKey });
 			return ((modelId: string) =>
 				google(modelId) as unknown as LanguageModel) as ProviderFactory;
 		}

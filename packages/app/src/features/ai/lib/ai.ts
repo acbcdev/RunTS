@@ -51,7 +51,7 @@ export async function aiStream(opts: {
 	return streamText({
 		model,
 		messages: await convertToModelMessages(opts.messages),
-		system: opts.system,
+		instructions: opts.system,
 		abortSignal: opts.abortSignal,
 		experimental_transform: smoothStream(),
 	});
