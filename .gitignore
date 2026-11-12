@@ -36,3 +36,10 @@ bun.lockb
 old/
 
 .codegraph/
+
+# opencode local config (personas, agents) - not worth tracking
+.opencode/
+
+# agent CLI skills - synced locally, not worth tracking
+.agents/
+.claude/
