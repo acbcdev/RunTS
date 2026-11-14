@@ -83,12 +83,12 @@ export function Appearance() {
 				<section>
 					<h3 className="mb-4 text-base font-medium">Actions Position</h3>
 					<SettingButtonGroup
-						options={Object.entries(SIDES).map(([_, value]) => value)}
+						options={Object.values(SIDES)}
 						value={side}
 						onChange={(value) => setOption("side", value)}
 						renderLabel={(value) => {
 							const key = Object.entries(SIDES).find(
-								([_, v]) => v === value,
+								([, v]) => v === value,
 							)?.[0];
 							return key?.toLowerCase() || "";
 						}}
