@@ -90,12 +90,12 @@ export const useCommandItems = (): {
 		const isActive = tab.id === activeTabId;
 		commands.push({
 			id: `tab-${tab.id}`,
-			title: tab.name,
+			title: tab.name ?? "",
 			description: isActive ? "Active tab" : "Switch to this tab",
 			icon: FileText,
 			category: "tabs",
 			keywords: [
-				tab.name,
+				tab.name ?? "",
 				langFromName(tab.name).id,
 				"tab",
 				"archivo",
@@ -117,7 +117,7 @@ export const useCommandItems = (): {
 			icon: RotateCcw,
 			category: "history",
 			keywords: [
-				tab.name,
+				tab.name ?? "",
 				"closed",
 				"cerrado",
 				"restore",

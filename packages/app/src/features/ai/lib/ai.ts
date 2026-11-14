@@ -7,7 +7,6 @@ import {
 	type UIMessage,
 } from "ai";
 import { useAIConfigStore } from "../store/aiConfig";
-import type { providers } from "../types";
 import { createProvider } from "./providers";
 
 // Single seam for every AI call in the app. Provider creation, API-key
@@ -34,7 +33,7 @@ async function resolveModel(): Promise<LanguageModel> {
 	const cacheKey = `${provider}:${apiKey}`;
 	let factory = factoryCache.get(cacheKey);
 	if (!factory) {
-		factory = createProvider(provider as providers, apiKey);
+		factory = createProvider(provider, apiKey);
 		factoryCache.set(cacheKey, factory);
 	}
 
