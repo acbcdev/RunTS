@@ -38,6 +38,45 @@ describe("tabs store removeTab", () => {
 		expect(useHistoryTabsStore.getState().tabs).toEqual([]);
 	});
 
+	it("selects the remaining tab after consecutive closes", () => {
+		useTabsStore.getState().appendTab({ name: "A" });
+		const first = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().appendTab({ name: "B" });
+		const second = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().appendTab({ name: "C" });
+		const third = useTabsStore.getState().getCurrentTab()!;
+
+		useTabsStore.getState().removeTab(third.id);
+		useTabsStore.getState().removeTab(second.id);
+
+		expect(useTabsStore.getState().getCurrentTab()).toEqual(first);
+		expect(useTabsStore.getState().activeTabHistory).toEqual([first.id]);
+	});
+
+	it("keeps the active tab when closing an inactive tab", () => {
+		useTabsStore.getState().appendTab({ name: "A" });
+		const first = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().appendTab({ name: "B" });
+		const second = useTabsStore.getState().getCurrentTab()!;
+
+		useTabsStore.getState().removeTab(first.id);
+
+		expect(useTabsStore.getState().getCurrentTab()).toEqual(second);
+		expect(useTabsStore.getState().activeTabHistory).toEqual([second.id]);
+	});
+
+	it("clears the selection after closing the last tab", () => {
+		useTabsStore.getState().appendTab({ name: "A" });
+		const tab = useTabsStore.getState().getCurrentTab()!;
+
+		useTabsStore.getState().removeTab(tab.id);
+
+		expect(useTabsStore.getState().tabs).toEqual([]);
+		expect(useTabsStore.getState().activeTabId).toBe("");
+		expect(useTabsStore.getState().activeTabHistory).toEqual([]);
+		expect(useTabsStore.getState().getCurrentTab()).toBeUndefined();
+	});
+
 	it("still updates activeTabId after removing the active tab", () => {
 		useTabsStore.getState().appendTab({ ...baseTab, code: "a" });
 		const first = useTabsStore.getState().getCurrentTab();
