@@ -24,7 +24,7 @@ export function useHandler() {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 		const url = new URL(window.location.href);
 		if (tab?.code.trim() === "") {
-			toast.error(EMPTY_CODE_MESSAGES.share);
+			toast.error(EMPTY_CODE_MESSAGES.share.title, EMPTY_CODE_MESSAGES.share);
 			return;
 		}
 		try {
@@ -32,16 +32,17 @@ export function useHandler() {
 			const name = tab?.name ? `&name=${encodeURIComponent(tab.name)}` : "";
 			const link = `${url.origin}/?code=${encodedCode}${name}`;
 			navigator.clipboard.writeText(link);
-			toast.success(getLinkCreatedMessage(link.slice(0, 30)));
+			const message = getLinkCreatedMessage(link.slice(0, 30));
+			toast.success(message.title, message);
 		} catch {
-			toast.error(LINK_MESSAGES.createError);
+			toast.error(LINK_MESSAGES.createError.title, LINK_MESSAGES.createError);
 		}
 	};
 
 	const copyCode = (tabId?: Tab["id"]) => {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 		if (tab?.code.trim() === "") {
-			toast.error(EMPTY_CODE_MESSAGES.copy);
+			toast.error(EMPTY_CODE_MESSAGES.copy.title, EMPTY_CODE_MESSAGES.copy);
 			return;
 		}
 
@@ -51,14 +52,17 @@ export function useHandler() {
 			navigator.clipboard.writeText(tab?.code ?? "");
 		}
 
-		toast.success(CODE_ACTIONS.copySuccess);
+		toast.success(CODE_ACTIONS.copySuccess.title, CODE_ACTIONS.copySuccess);
 	};
 
 	const downloadCode = (tabId?: Tab["id"]) => {
 		const tab = tabId ? getTab(tabId) : getCurrentTab();
 
 		if (!tab || tab?.code.trim() === "") {
-			toast.error(EMPTY_CODE_MESSAGES.download);
+			toast.error(
+				EMPTY_CODE_MESSAGES.download.title,
+				EMPTY_CODE_MESSAGES.download,
+			);
 			return;
 		}
 
@@ -68,7 +72,8 @@ export function useHandler() {
 				defaultPath: tab?.name || "code.ts",
 			}).then((path) => {
 				if (path) {
-					toast.success(getDownloadMessage(path));
+					const message = getDownloadMessage(path);
+					toast.success(message.title, message);
 				}
 			});
 		} else {
@@ -83,7 +88,10 @@ export function useHandler() {
 			a.click();
 			document.body.removeChild(a);
 			URL.revokeObjectURL(url);
-			toast.success(CODE_ACTIONS.downloadSuccess);
+			toast.success(
+				CODE_ACTIONS.downloadSuccess.title,
+				CODE_ACTIONS.downloadSuccess,
+			);
 		}
 	};
 

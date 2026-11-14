@@ -66,7 +66,7 @@ pnpm tauri:dev    # Desktop app with hot reload
 ### Compilación
 
 ```bash
-pnpm build        # Production web build
+pnpm build        # Check referenced TypeScript projects and build for production
 pnpm tauri:build  # Tauri desktop application
 ```
 
