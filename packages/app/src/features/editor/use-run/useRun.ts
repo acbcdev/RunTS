@@ -1,28 +1,51 @@
-import { useShallow } from "zustand/react/shallow";
 import { useTabsStore } from "@/features/tabs/tabs-store/tabs";
 import { useEditorStore } from "../editor-store";
+import { langFromName } from "../language/langFromName";
 import { runTab } from "../run-code";
 
-export function useRun() {
-	const activeTab = useTabsStore(useShallow((state) => state.getCurrentTab()));
-	const updateTab = useTabsStore(useShallow((state) => state.updateTab));
+const latestRuns = new Map<string, object>();
+let indicatorRun: object | undefined;
 
-	const updateEditor = useEditorStore(
-		useShallow((state) => state.updateEditor),
-	);
-	const injectLogs = useEditorStore(useShallow((state) => state.expression));
-	const alignLogs = useEditorStore(useShallow((state) => state.alignLogs));
-
-	async function runCode() {
-		if (!activeTab) return;
-		const loading = setTimeout(() => updateEditor({ running: true }), 500);
-		try {
-			const log = await runTab(activeTab, { injectLogs, alignLogs });
-			if (log !== null) updateTab(activeTab.id, { log });
-		} finally {
-			clearTimeout(loading);
-			updateEditor({ running: false });
+export async function runCode() {
+	const tab = useTabsStore.getState().getCurrentTab();
+	if (!tab) return;
+	const run = {};
+	latestRuns.set(tab.id, run);
+	indicatorRun = run;
+	useEditorStore.getState().updateEditor({ running: false });
+	let valid = true;
+	const unsubscribe = useTabsStore.subscribe((state) => {
+		const current = state.getTab(tab.id);
+		if (valid && (!current || !langFromName(current.name).execute)) {
+			valid = false;
+			if (indicatorRun === run) {
+				indicatorRun = undefined;
+				useEditorStore.getState().updateEditor({ running: false });
+			}
+		}
+	});
+	const loading = setTimeout(() => {
+		if (valid && indicatorRun === run) {
+			useEditorStore.getState().updateEditor({ running: true });
+		}
+	}, 500);
+	try {
+		const { expression: injectLogs, alignLogs } = useEditorStore.getState();
+		const log = await runTab(tab, { injectLogs, alignLogs });
+		if (valid && latestRuns.get(tab.id) === run && log !== null) {
+			useTabsStore.getState().updateTab(tab.id, { log });
+		}
+	} finally {
+		unsubscribe();
+		clearTimeout(loading);
+		if (latestRuns.get(tab.id) === run) latestRuns.delete(tab.id);
+		if (indicatorRun === run) {
+			indicatorRun = undefined;
+			useEditorStore.getState().updateEditor({ running: false });
 		}
 	}
+}
+
+export function useRun() {
 	return { runCode };
 }
