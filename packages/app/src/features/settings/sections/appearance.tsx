@@ -99,9 +99,8 @@ export function Appearance() {
 					<h3 className="mb-4 text-base font-medium">Border Radius</h3>
 					<SettingButtonGroup
 						options={RADIUS_SIZES}
-						value={
-							RADIUS_SIZES.find((r) => r.size === radius) || RADIUS_SIZES[0]
-						}
+						value={radius}
+						onValue={(value) => value.size}
 						onChange={(value) => setOption("radius", value.size)}
 						renderLabel={(value) => value.display}
 						buttonStyle={(value) => ({ borderRadius: `${value.size}rem` })}
@@ -143,10 +142,8 @@ export function Appearance() {
 							</h4>
 							<SettingButtonGroup
 								options={FONT_FAMILIES}
-								value={
-									FONT_FAMILIES.find((f) => f.value === fontFamily) ||
-									FONT_FAMILIES[0]
-								}
+								value={fontFamily}
+								onValue={(font) => font.value}
 								onChange={(font) => setOption("fontFamily", font.value)}
 								renderLabel={(font) => font.name}
 								buttonStyle={(font) => ({ fontFamily: font.value })}
