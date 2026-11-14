@@ -20,8 +20,10 @@ function ScrollButton({
 
 	return (
 		<Button
+			aria-label="Scroll to bottom"
 			variant={variant}
 			size={size}
+			disabled={isAtBottom}
 			className={cn(
 				"h-10 w-10 rounded-full transition-all duration-150 ease-out",
 				!isAtBottom

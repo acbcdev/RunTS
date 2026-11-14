@@ -51,6 +51,7 @@ export function Prompt({
 			className="w-full max-w-(--breakpoint-md)  "
 		>
 			<PromptInputTextarea
+				aria-label="Message"
 				className="max-h-32 dark:bg-transparent"
 				placeholder="Ask me anything..."
 			/>
@@ -60,6 +61,8 @@ export function Prompt({
 					<ComboboxSelect />
 					<Button
 						variant={"currentFile"}
+						aria-label="Include current tab as context"
+						aria-pressed={contextFile}
 						type="button"
 						// size={"sm"}
 						className={`${!contextFile && "border-dashed"} `}
@@ -80,6 +83,7 @@ export function Prompt({
 				>
 					<Button
 						variant="default"
+						aria-label={isLoading ? "Stop generation" : "Send message"}
 						size="icon"
 						className="h-8 w-8 rounded-full"
 						onClick={isLoading ? stop : handleSubmit}

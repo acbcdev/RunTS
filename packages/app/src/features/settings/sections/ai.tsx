@@ -42,6 +42,7 @@ export function AI() {
 											<Tooltip>
 												<TooltipTrigger asChild>
 													<a
+														aria-label={`Get ${name} API key`}
 														href={url}
 														target="_blank"
 														rel="noreferrer"
@@ -76,6 +77,7 @@ export function AI() {
 						</span>
 					</div>
 					<Textarea
+						aria-label="Custom Instructions"
 						className="min-h-22"
 						placeholder="e.g. Respond in Spanish. Be terse and avoid long explanations."
 						value={customInstructions}

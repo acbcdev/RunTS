@@ -59,48 +59,56 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 	};
 
 	return (
-		<button
-			type="button"
-			aria-selected={isActive}
-			role="tab"
-			className={cn(
-				"border-r transition-colors focus:ring-0 focus:outline-1 focus:-outline-offset-1 focus:outline-ring",
-				isActive ? "bg-border/80" : "",
-			)}
-			onClick={handleTabClick}
+		<TabContextMenu
+			currentLanguage={langFromName(tab.name).id}
+			onRename={handleRenameFromMenu}
+			onDuplicate={() => handleDuplicateTab(tab.id)}
+			onConvert={(langId) => handleConvertLanguage(tab.id, langId)}
+			onCopy={() => handleCopyCode(tab.id)}
+			onDownload={() => handleDownloadCode(tab.id)}
+			onShare={() => handleShareCode(tab.id)}
+			onDelete={() => handleRemoveTab(tab.id)}
 		>
-			<TabContextMenu
-				currentLanguage={langFromName(tab.name).id}
-				onRename={handleRenameFromMenu}
-				onDuplicate={() => handleDuplicateTab(tab.id)}
-				onConvert={(langId) => handleConvertLanguage(tab.id, langId)}
-				onCopy={() => handleCopyCode(tab.id)}
-				onDownload={() => handleDownloadCode(tab.id)}
-				onShare={() => handleShareCode(tab.id)}
-				onDelete={() => handleRemoveTab(tab.id)}
+			<div
+				className={cn(
+					"group/tab flex items-center gap-x-1 border-r px-3 py-1.5 transition-colors",
+					isActive && "bg-border/80",
+				)}
 			>
-				<div className="group/tab flex items-center gap-x-1 px-3 py-1.5">
+				{tab.editing ? (
 					<TabName
 						tab={tab}
 						isActive={isActive}
 						onFinishEditing={handleFinishEditing}
 						onStartEditing={handleStartEditingTab}
 					/>
-					{tabs.length > 1 && (
-						<Button
-							variant="ghost"
-							size="icon"
-							aria-label="Close tab"
-							className="h-5 w-5  p-0 rounded-full transition-all duration-200 -outline-offset-2"
-							onClick={handleCloseTab}
-							tabIndex={0}
-							asChild
-						>
-							<X className="size-3" />
-						</Button>
-					)}
-				</div>
-			</TabContextMenu>
-		</button>
+				) : (
+					<button
+						type="button"
+						aria-pressed={isActive}
+						onClick={handleTabClick}
+						className="focus:outline-1 focus:outline-ring"
+					>
+						<TabName
+							tab={tab}
+							isActive={isActive}
+							onFinishEditing={handleFinishEditing}
+							onStartEditing={handleStartEditingTab}
+						/>
+					</button>
+				)}
+				{tabs.length > 1 && (
+					<Button
+						variant="ghost"
+						size="icon"
+						aria-label={`Close ${tab.name || "tab"}`}
+						className="h-5 w-5 p-0 rounded-full transition-all duration-200 -outline-offset-2"
+						onClick={handleCloseTab}
+					>
+						<X className="size-3" />
+					</Button>
+				)}
+			</div>
+		</TabContextMenu>
 	);
 }

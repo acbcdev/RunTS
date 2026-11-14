@@ -1,7 +1,7 @@
 "use client";
 
 import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
+import { motion, useAnimation, useReducedMotion } from "motion/react";
 import type { HTMLAttributes } from "react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import { cn } from "../lib/cn";
@@ -42,13 +42,15 @@ const MessageCircleIcon = forwardRef<
 	MessageCircleIconProps
 >(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
 	const controls = useAnimation();
+	const reducedMotion = useReducedMotion();
 	const isControlledRef = useRef(false);
 
 	useImperativeHandle(ref, () => {
 		isControlledRef.current = true;
 
 		return {
-			startAnimation: () => controls.start("animate"),
+			startAnimation: () =>
+				controls.start(reducedMotion ? "normal" : "animate"),
 			stopAnimation: () => controls.start("normal"),
 		};
 	});
@@ -56,12 +58,12 @@ const MessageCircleIcon = forwardRef<
 	const handleMouseEnter = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			if (!isControlledRef.current) {
-				controls.start("animate");
+				if (!reducedMotion) controls.start("animate");
 			} else {
 				onMouseEnter?.(e);
 			}
 		},
-		[controls, onMouseEnter],
+		[controls, onMouseEnter, reducedMotion],
 	);
 
 	const handleMouseLeave = useCallback(
