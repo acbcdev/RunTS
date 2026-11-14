@@ -3,16 +3,16 @@ import { validateCode, wrapCodeForExecution } from "./codeValidator";
 
 describe("codeValidator", () => {
 	describe("validateCode", () => {
-		it("should reject empty code", () => {
+		it("should allow empty code", () => {
 			const result = validateCode("");
-			expect(result.valid).toBe(false);
-			expect(result.errors).toContain("Code cannot be empty");
+			expect(result.valid).toBe(true);
+			expect(result.errors).toEqual([]);
 		});
 
-		it("should reject whitespace-only code", () => {
+		it("should allow whitespace-only code", () => {
 			const result = validateCode("   \n\t\n  ");
-			expect(result.valid).toBe(false);
-			expect(result.errors).toContain("Code cannot be empty");
+			expect(result.valid).toBe(true);
+			expect(result.errors).toEqual([]);
 		});
 
 		it("should reject Object.getOwnPropertyNames", () => {

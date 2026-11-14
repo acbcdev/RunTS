@@ -5,10 +5,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build",
+		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"test": "vitest",
+		"test": "vitest run",
 		"test:ui": "vitest --ui",
 		"tauri:dev": "tauri dev",
 		"tauri:build": "tauri build"

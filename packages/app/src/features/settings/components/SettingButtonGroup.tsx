@@ -25,9 +25,9 @@ export function SettingButtonGroup<
 		<div className={className}>
 			{options.map((option) => (
 				<Button
-					key={String(option)}
+					key={onValue?.(option) ?? String(option)}
 					variant={
-						value === (onValue?.(option) || option)
+						value === (onValue?.(option) ?? option)
 							? "borderSettings"
 							: "outline"
 					}

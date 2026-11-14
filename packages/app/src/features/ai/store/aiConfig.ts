@@ -60,7 +60,7 @@ export const useAIConfigStore = create<AIConfigStore>()(
 							? messages(state.messages)
 							: messages,
 				})),
-			setApiKeys: (key: string, provider: string) =>
+			setApiKeys: (key: string, provider: providers) =>
 				set((state) => ({
 					apiKeys: {
 						...state.apiKeys,
@@ -89,7 +89,7 @@ export const useAIConfigStore = create<AIConfigStore>()(
 			},
 			getProviders: () => {
 				const apiKeys = get().apiKeys;
-				return models.filter((model) => apiKeys[model.provider as providers]);
+				return models.filter((model) => apiKeys[model.provider]);
 			},
 		}),
 		{
