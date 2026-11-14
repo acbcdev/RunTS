@@ -13,10 +13,10 @@ export const useHistoryTabsStore = create<HistoryTabsStore>()(
 					tabs: state.tabs.filter((tab) => tab.id !== tabId),
 				})),
 			undoClose: () => {
-				const lastClosedTab = get().tabs.pop();
+				const lastClosedTab = get().tabs.at(-1);
 				if (lastClosedTab) {
 					set((state) => ({
-						tabs: state.tabs.filter((tab) => tab.id !== lastClosedTab.id),
+						tabs: state.tabs.slice(0, -1),
 					}));
 				}
 				return lastClosedTab;

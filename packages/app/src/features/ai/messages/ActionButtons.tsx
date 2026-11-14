@@ -22,6 +22,7 @@ export function ActionButtons({
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button
+							aria-label="Copy to clipboard"
 							onClick={() => copy(content)}
 							size={"icon"}
 							variant={"ghost"}
@@ -34,7 +35,12 @@ export function ActionButtons({
 
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<Button onClick={reload} size={"icon"} variant={"ghost"}>
+						<Button
+							aria-label="Regenerate"
+							onClick={reload}
+							size={"icon"}
+							variant={"ghost"}
+						>
 							<RotateCw />
 						</Button>
 					</TooltipTrigger>

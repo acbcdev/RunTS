@@ -88,7 +88,15 @@ function PromptInput({
 						"bg-background/80 cursor-text rounded-xl p-2 shadow-xs",
 						className,
 					)}
-					onClick={() => textareaRef.current?.focus()}
+					onClick={(event) => {
+						if (
+							!(event.target as HTMLElement).closest(
+								"button, input, textarea, [role=combobox]",
+							)
+						) {
+							textareaRef.current?.focus();
+						}
+					}}
 				>
 					{children}
 				</div>
@@ -137,7 +145,7 @@ function PromptInputTextarea({
 			onChange={(e) => setValue(e.target.value)}
 			onKeyDown={handleKeyDown}
 			className={cn(
-				"min-h-[44px] w-full resize-none border-none shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+				"min-h-[44px] w-full resize-none border-none shadow-none focus-visible:ring-1 focus-visible:ring-ring",
 				className,
 			)}
 			rows={1}

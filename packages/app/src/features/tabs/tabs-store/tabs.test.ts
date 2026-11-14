@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { langFromName } from "@/features/editor/language/langFromName";
 import { useHistoryTabsStore } from "../history";
 import { useTabsStore } from "./tabs";
 
@@ -29,7 +30,7 @@ describe("tabs store removeTab", () => {
 	});
 
 	it("does not send the removed tab to history when code is empty", () => {
-		useTabsStore.getState().appendTab({ ...baseTab, code: "" });
+		useTabsStore.getState().appendTab({ ...baseTab, code: "  " });
 		const tab = useTabsStore.getState().getCurrentTab();
 		if (!tab) throw new Error("tab not created");
 
@@ -88,5 +89,73 @@ describe("tabs store removeTab", () => {
 
 		expect(useTabsStore.getState().activeTabId).toBe(first.id);
 		expect(useTabsStore.getState().tabs).toEqual([first]);
+	});
+});
+
+describe("closed tab history", () => {
+	beforeEach(() => {
+		useTabsStore.setState({ tabs: [], activeTabId: "", activeTabHistory: [] });
+		useHistoryTabsStore.setState({ tabs: [] });
+	});
+
+	it("restores successive closes without changing earlier history snapshots", () => {
+		useTabsStore.getState().appendTab({ name: "", code: "first" });
+		const first = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().appendTab({ name: "second.js", code: "second" });
+		const second = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().removeTab(first.id);
+		useTabsStore.getState().removeTab(second.id);
+		const snapshot = useHistoryTabsStore.getState().tabs;
+
+		const restoredSecond = useHistoryTabsStore.getState().undoClose()!;
+		useTabsStore.getState().restoreTab(restoredSecond);
+		expect(useTabsStore.getState().getCurrentTab()).toMatchObject({
+			name: "second.js",
+			code: "second",
+		});
+		expect(langFromName(useTabsStore.getState().getCurrentTab()!.name).id).toBe(
+			"javascript",
+		);
+		const restoredFirst = useHistoryTabsStore.getState().undoClose()!;
+		useTabsStore.getState().restoreTab(restoredFirst);
+
+		expect(useTabsStore.getState().getCurrentTab()).toMatchObject({
+			name: "",
+			code: "first",
+		});
+		expect(langFromName(useTabsStore.getState().getCurrentTab()!.name).id).toBe(
+			"typescript",
+		);
+		expect(useHistoryTabsStore.getState().tabs).toEqual([]);
+		expect(snapshot).toEqual([first, second]);
+	});
+});
+
+describe("tab navigation", () => {
+	beforeEach(() => {
+		useTabsStore.setState({ tabs: [], activeTabId: "", activeTabHistory: [] });
+	});
+
+	it("handles zero and one tab in both directions", () => {
+		useTabsStore.getState().handleTab(-1);
+		useTabsStore.getState().handleTab(1);
+		expect(useTabsStore.getState().getCurrentTab()).toBeUndefined();
+		useTabsStore.getState().appendTab({ code: "work" });
+		const tab = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().handleTab(-1);
+		useTabsStore.getState().handleTab(1);
+		expect(useTabsStore.getState().getCurrentTab()).toEqual(tab);
+		expect(langFromName(tab.name).id).toBe("typescript");
+	});
+
+	it("wraps in both directions", () => {
+		useTabsStore.getState().appendTab({ name: "first" });
+		const first = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().appendTab({ name: "second" });
+		const second = useTabsStore.getState().getCurrentTab()!;
+		useTabsStore.getState().handleTab(1);
+		expect(useTabsStore.getState().getCurrentTab()).toEqual(first);
+		useTabsStore.getState().handleTab(-1);
+		expect(useTabsStore.getState().getCurrentTab()).toEqual(second);
 	});
 });
