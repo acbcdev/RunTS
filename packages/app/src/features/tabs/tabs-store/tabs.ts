@@ -97,10 +97,17 @@ export const useTabsStore = create<TabsStore>()(
 					const index = state.tabs.findIndex(
 						(tab) => tab.id === state.activeTabId,
 					);
-					if (index === -1) return { ...state };
-					const newIndex = (index + dir) % state.tabs.length;
-					get().setActiveTab(state.tabs[newIndex].id);
-					return state;
+					if (index === -1) return state;
+					const newIndex =
+						(index + dir + state.tabs.length) % state.tabs.length;
+					const activeTabId = state.tabs[newIndex].id;
+					return {
+						activeTabId,
+						activeTabHistory: [
+							activeTabId,
+							...state.activeTabHistory.slice(0, 10),
+						],
+					};
 				});
 			},
 		}),
