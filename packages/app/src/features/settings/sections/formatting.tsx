@@ -1,8 +1,7 @@
-import { useShallow } from "zustand/react/shallow";
-import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
-import { SettingSwitch } from "@/features/settings/components/SettingSwitch";
-import { Label } from "@/features/ui/label";
 import { TabsContent } from "@/features/ui/tabs";
+import { SettingButtonGroup } from "../components/SettingButtonGroup";
+import { SettingSwitch } from "../components/SettingSwitch";
+import { SettingsSection } from "../components/SettingsSection";
 import {
 	AUTO_INDENT_OPTIONS,
 	PRINT_WIDTHS,
@@ -10,111 +9,84 @@ import {
 } from "../config-consts/config";
 import { useConfigStore } from "../config-store/config";
 
+const indentGlyphs = {
+	none: "—",
+	keep: "↳",
+	brackets: "{}",
+	advanced: "≡",
+	full: "✦",
+};
+
 export function Formatting() {
-	const configState = useConfigStore(
-		useShallow((state) => ({
-			tabSize: state.tabSize,
-			insertSpaces: state.insertSpaces,
-			formatOnPaste: state.formatOnPaste,
-			formatOnType: state.formatOnType,
-			autoIndent: state.autoIndent,
-			printWidth: state.printWidth,
-			updateConfig: state.updateConfig,
-		})),
-	);
-
+	const {
+		tabSize,
+		insertSpaces,
+		formatOnPaste,
+		formatOnType,
+		autoIndent,
+		printWidth,
+		updateConfig,
+	} = useConfigStore();
 	return (
-		<TabsContent value="formatting" className="p-6 m-0">
-			<div className="space-y-8">
-				<section>
-					<h3 className="mb-4 text-base font-medium">Indentation</h3>
-					<div className="space-y-4">
-						<div className="space-y-2">
-							<Label className="text-sm font-medium">Tab Size</Label>
-							<SettingButtonGroup
-								options={TAB_SIZES}
-								value={configState.tabSize}
-								onChange={(size) => configState.updateConfig({ tabSize: size })}
-								renderLabel={(size) => `${size} spaces`}
-								className="grid grid-cols-8 gap-2"
-							/>
-						</div>
-						<SettingSwitch
-							label="Insert Spaces"
-							description="Use spaces instead of tabs for indentation"
-							value={configState.insertSpaces}
-							callback={() =>
-								configState.updateConfig({
-									insertSpaces: !configState.insertSpaces,
-								})
-							}
-						/>
-					</div>
-				</section>
-
-				<section>
-					<h3 className="mb-4 text-base font-medium">Auto-Formatting</h3>
-					<div className="space-y-4">
-						<SettingSwitch
-							label="Format On Paste"
-							description="Automatically format code when pasting"
-							value={configState.formatOnPaste}
-							callback={() =>
-								configState.updateConfig({
-									formatOnPaste: !configState.formatOnPaste,
-								})
-							}
-						/>
-						<SettingSwitch
-							label="Format On Type"
-							description="Automatically format code as you type"
-							value={configState.formatOnType}
-							callback={() =>
-								configState.updateConfig({
-									formatOnType: !configState.formatOnType,
-								})
-							}
-						/>
-					</div>
-				</section>
-
-				<section>
-					<h3 className="mb-4 text-base font-medium  ">Advanced</h3>
-					<div className="space-y-4">
-						<div>
-							<Label className="text-sm font-medium">Auto Format</Label>
-							<p className="text-sm font-medium opacity-60">
-								Controls how aggressive auto-formatting is
-							</p>
-						</div>
-						<SettingButtonGroup
-							options={[...AUTO_INDENT_OPTIONS]}
-							value={configState.autoIndent}
-							onChange={(option) =>
-								configState.updateConfig({ autoIndent: option.value })
-							}
-							onValue={(v) => v.value}
-							renderLabel={(option) => option.label}
-							className="grid grid-cols-8 gap-2"
-						/>
-
-						<div className="space-y-2">
-							<Label className="text-sm font-medium">Print Width</Label>
-							<p className="text-sm font-medium opacity-60">
-								Maximum line length for code formatting (Prettier)
-							</p>
-							<SettingButtonGroup
-								options={[...PRINT_WIDTHS]}
-								value={configState.printWidth}
-								onChange={(width) =>
-									configState.updateConfig({ printWidth: width })
-								}
-								className="grid grid-cols-8 gap-2"
-							/>
-						</div>
-					</div>
-				</section>
-			</div>
+		<TabsContent value="formatting" className="m-0 flex flex-col gap-7">
+			<SettingsSection title="Indentation">
+				<SettingButtonGroup
+					label="Tab size"
+					description="Width of each indentation level."
+					options={TAB_SIZES}
+					value={tabSize}
+					onChange={(size) => updateConfig({ tabSize: size })}
+					renderLabel={(size) => `${size} spaces`}
+					renderPreview={(size) => (
+						<span className="text-2xl tabular-nums">{size}</span>
+					)}
+				/>
+				<SettingSwitch
+					label="Insert Spaces"
+					description="Use spaces instead of tab characters."
+					value={insertSpaces}
+					callback={() => updateConfig({ insertSpaces: !insertSpaces })}
+				/>
+			</SettingsSection>
+			<SettingsSection title="Auto-formatting">
+				<SettingSwitch
+					label="Format On Paste"
+					description="Format pasted code automatically."
+					value={formatOnPaste}
+					callback={() => updateConfig({ formatOnPaste: !formatOnPaste })}
+				/>
+				<SettingSwitch
+					label="Format On Type"
+					description="Format code as you type."
+					value={formatOnType}
+					callback={() => updateConfig({ formatOnType: !formatOnType })}
+				/>
+			</SettingsSection>
+			<SettingsSection title="Advanced">
+				<SettingButtonGroup
+					label="Auto indentation"
+					description="Adjust indentation when typing and pasting."
+					options={AUTO_INDENT_OPTIONS}
+					value={autoIndent}
+					onValue={(option) => option.value}
+					onChange={(option) => updateConfig({ autoIndent: option.value })}
+					renderLabel={(option) => option.label}
+					renderPreview={(option) => (
+						<span className="text-2xl">{indentGlyphs[option.value]}</span>
+					)}
+				/>
+				<SettingButtonGroup
+					label="Print width"
+					description="Preferred line length for Prettier."
+					options={PRINT_WIDTHS}
+					value={printWidth}
+					onChange={(width) => updateConfig({ printWidth: width })}
+					renderLabel={(width) => `${width} columns`}
+					renderPreview={(width) => (
+						<span className="text-2xl tabular-nums">{width}</span>
+					)}
+				/>
+			</SettingsSection>
 		</TabsContent>
 	);
 }

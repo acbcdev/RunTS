@@ -1,5 +1,6 @@
-import { Label } from "@/features/ui/label";
-import { Switch } from "@/features/ui/switch";
+import { Check } from "lucide-react";
+import { useId } from "react";
+import { cn } from "@/features/common/utils/utils";
 
 export interface SettingSwitchProps {
 	label: string;
@@ -14,13 +15,28 @@ export function SettingSwitch({
 	value,
 	callback,
 }: SettingSwitchProps) {
+	const id = useId();
 	return (
-		<Label className="flex border items-center justify-between p-3 md:gap-x-4 rounded-lg">
-			<div className="space-y-1">
-				<h3 className="font-bold">{label}</h3>
-				<p className="text-sm font-medium opacity-60">{description}</p>
-			</div>
-			<Switch checked={value} onCheckedChange={callback} />
-		</Label>
+		<label className="flex cursor-pointer items-center justify-between gap-5 rounded-xl border px-4 py-3.5 hover:bg-foreground/3 has-checked:bg-header has-checked:shadow-[inset_0_1px_4px_#0003]">
+			<span className="flex min-w-0 flex-col gap-1">
+				<span className="text-xs">{label}</span>
+				<span id={id} className="text-[10px] text-foreground/65">
+					{description}
+				</span>
+			</span>
+			<input
+				type="checkbox"
+				className="peer sr-only"
+				checked={value}
+				onChange={callback}
+				aria-describedby={id}
+			/>
+			<span
+				aria-hidden="true"
+				className="grid size-[17px] shrink-0 place-items-center rounded-full border border-foreground/60 peer-checked:border-foreground peer-checked:bg-foreground peer-checked:text-background peer-focus-visible:outline-2 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-foreground"
+			>
+				<Check className={cn("size-3", !value && "invisible")} />
+			</span>
+		</label>
 	);
 }
