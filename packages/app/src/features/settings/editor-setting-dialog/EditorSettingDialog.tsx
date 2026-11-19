@@ -1,10 +1,10 @@
 import {
 	BrainCog,
 	Brush,
-	Check,
 	ExternalLink,
 	FileCode2,
 	MonitorCog,
+	RotateCcw,
 } from "lucide-react";
 import { useState } from "react";
 import { useModalStore } from "@/features/common/modal/modal";
@@ -13,7 +13,6 @@ import { useEditorStore } from "@/features/editor/editor-store/editor";
 import { Button } from "@/features/ui/button";
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
@@ -137,6 +136,17 @@ export function EditorSettingsDialog() {
 								</a>
 							))}
 						</nav>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={resetPreferences}
+							aria-label="Reset preferences"
+							title="Reset preferences"
+							className="justify-center px-2 sm:justify-start sm:px-3"
+						>
+							<RotateCcw aria-hidden="true" data-icon="inline-start" />
+							<span className="hidden sm:inline">Reset preferences</span>
+						</Button>
 					</div>
 					<div
 						key={active}
@@ -159,22 +169,6 @@ export function EditorSettingsDialog() {
 						<AI />
 					</div>
 				</Tabs>
-				<footer className="flex shrink-0 items-center gap-3 border-t px-4 py-3 sm:px-6">
-					<small className="mr-auto flex items-center gap-1.5 text-[10px] text-foreground/65">
-						<Check aria-hidden="true" className="size-3 text-success" />
-						<span className="hidden sm:inline">
-							Changes saved automatically
-						</span>
-					</small>
-					<Button variant="ghost" size="sm" onClick={resetPreferences}>
-						Reset preferences
-					</Button>
-					<DialogClose asChild>
-						<Button variant="outline" size="sm" className="px-6">
-							Done
-						</Button>
-					</DialogClose>
-				</footer>
 			</DialogContent>
 		</Dialog>
 	);
