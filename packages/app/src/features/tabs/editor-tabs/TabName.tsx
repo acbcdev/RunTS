@@ -96,7 +96,7 @@ export const TabName = ({
 				onKeyDown={handleKeyDown}
 				onChange={(e) => setInputValue(e.target.value)}
 				onBlur={handleBlur}
-				className="border-none bg-transparent rounded-none outline-none m-0 w-fit max-w-32 h-full p-0 focus-visible:ring-0"
+				className="border-none bg-transparent rounded-none outline-none m-0 field-sizing-content min-w-8 max-w-32 h-full p-0 text-inherit leading-[inherit] transition-[width] duration-150 focus-visible:ring-0"
 			/>
 		);
 	}
