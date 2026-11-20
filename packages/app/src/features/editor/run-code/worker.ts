@@ -1,157 +1,62 @@
-import { Formatter } from "./formatter";
+import { captureConsole } from "./captureConsole";
 import { preparePipeline } from "./pipeline";
-import type { ConsoleOutput } from "./types";
 
 self.onmessage = async (event: MessageEvent) => {
 	const { activeTabCode, name, injectLogs } = event.data;
-	let output: ConsoleOutput[] = [];
-	let outputLimitReached = false; // Bandera para limitar el output
-
-	const sourceMap = new Map<number, { line: number; column: number }>();
-
-	const originalConsole = {
-		log: self.console.log,
-		error: self.console.error,
-		info: self.console.info,
-		warn: self.console.warn,
-	};
-
-	// Track pending async operations
-	const pendingTimeouts = new Set<number>();
+	const capture = captureConsole();
+	const originalConsole = self.console;
 	const originalSetTimeout = self.setTimeout;
 	const originalClearTimeout = self.clearTimeout;
-
-	// Override setTimeout to track pending operations
-	const selfTyped = self as unknown as {
-		setTimeout: (
-			callback: (...args: unknown[]) => void,
-			delay?: number,
-			...args: unknown[]
-		) => number;
-		clearTimeout: (id?: number) => void;
+	const pending = new Set<number>();
+	let executing = true;
+	let finished = false;
+	const finish = () => {
+		if (executing || pending.size || finished) return;
+		finished = true;
+		self.console = originalConsole;
+		self.setTimeout = originalSetTimeout;
+		self.clearTimeout = originalClearTimeout;
+		self.postMessage(capture.getOutput());
 	};
-
-	selfTyped.setTimeout = (
+	self.console = capture.console as Console;
+	self.setTimeout = ((
 		callback: (...args: unknown[]) => void,
 		delay?: number,
 		...args: unknown[]
 	) => {
 		const id = originalSetTimeout(() => {
-			pendingTimeouts.delete(id);
-			callback(...args);
-			checkIfDone();
+			pending.delete(id);
+			try {
+				callback(...args);
+			} catch (error) {
+				capture.reportError(error);
+			} finally {
+				finish();
+			}
 		}, delay);
-		pendingTimeouts.add(id);
+		pending.add(id);
 		return id;
-	};
-
-	// Override clearTimeout to stop tracking cancelled timeouts
-	selfTyped.clearTimeout = (id?: number) => {
+	}) as typeof setTimeout;
+	self.clearTimeout = ((id?: number) => {
 		if (id !== undefined) {
-			pendingTimeouts.delete(id);
+			pending.delete(id);
 			originalClearTimeout(id);
 		}
-	};
-
-	const checkOutputLimit = () => {
-		if (output.length >= 4000) {
-			if (!outputLimitReached) {
-				output.push({
-					type: "log",
-					content:
-						"Output limit reached: No more logs will be recorded. max 4000",
-					line: 0,
-					column: 0,
-					timestamp: Date.now(),
-				});
-				outputLimitReached = true;
-			}
-			finishExecution();
-			return true; // Indica que se alcanzó el límite
-		}
-		return false; // No se alcanzó el límite
-	};
-
-	const finishExecution = () => {
-		// Restore original setTimeout/clearTimeout
-		self.setTimeout = originalSetTimeout;
-		self.clearTimeout = originalClearTimeout;
-		// Restore original console methods
-		self.console.log = originalConsole.log;
-		self.console.error = originalConsole.error;
-		self.console.info = originalConsole.info;
-		self.console.warn = originalConsole.warn;
-		// Send result
-		self.postMessage(output);
-	};
-
-	const checkIfDone = () => {
-		// If no pending timeouts and not output limit reached, we're done
-		if (pendingTimeouts.size === 0 && !outputLimitReached) {
-			finishExecution();
-		}
-	};
-
+		finish();
+	}) as typeof clearTimeout;
 	try {
 		const pipeline = preparePipeline(activeTabCode, name, injectLogs);
-		if (!pipeline.ready) {
-			output.push({
-				type: "log",
-				content: pipeline.error,
-				line: 0,
-				column: 0,
-				timestamp: Date.now(),
-			});
-			finishExecution();
-			return;
-		}
-
-		pipeline.lines.forEach((line, index) => {
-			sourceMap.set(index, { line, column: 0 });
-		});
-		let consolePosition = 0;
-
-		self.console.clear = () => {
-			output = [];
-		};
-		const log = (...args: unknown[]) => {
-			if (!checkOutputLimit()) {
-				const position = sourceMap.get(consolePosition);
-				output.push({
-					type: "log",
-					content: args.map((arg) => Formatter(arg)).join(" "),
-					line: position?.line || 0,
-					column: position?.column || 0,
-					timestamp: Date.now(),
-				});
-				consolePosition++;
-			}
-		};
-
-		self.console.log = log;
-		self.console.error = log;
-		self.console.info = log;
-		self.console.warn = log;
-
-		if (outputLimitReached) {
-			finishExecution();
-			return;
-		}
-
-		new Function(pipeline.code)();
-
-		// Check if we're done immediately (no pending async operations)
-		checkIfDone();
+		if (pipeline.ready) {
+			await new Function(
+				"console",
+				pipeline.binding,
+				`return (async () => {\n${pipeline.code}\n})();`,
+			)(capture.console, capture.at);
+		} else capture.reportError(pipeline.error);
 	} catch (error) {
-		if (!outputLimitReached) {
-			output.push({
-				type: "log",
-				content: `Runtime Error: ${error ?? "Unknown error"}`,
-				line: 0,
-				column: 0,
-				timestamp: Date.now(),
-			});
-		}
-		finishExecution();
+		capture.reportError(error);
+	} finally {
+		executing = false;
+		finish();
 	}
 };

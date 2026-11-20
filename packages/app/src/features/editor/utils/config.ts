@@ -15,7 +15,8 @@ export const EDITOR_CONFIG = {
 	"semanticHighlighting.enabled": true,
 	fontLigatures: true,
 	fixedOverflowWidgets: true,
-	glyphMargin: true,
+	glyphMargin: false,
+	lineDecorationsWidth: 6,
 	guides: {
 		bracketPairs: true,
 		indentation: true,

@@ -3,6 +3,9 @@ import { alignLogLines } from "./alignLogLines";
 import type { ConsoleOutput } from "./types";
 
 const createMockLog = (line: number, content: string): ConsoleOutput => ({
+	id: line,
+	values: [{ type: "string", text: content }],
+	depth: 0,
 	type: "log",
 	content,
 	line,

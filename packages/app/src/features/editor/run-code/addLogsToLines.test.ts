@@ -16,7 +16,7 @@ console.log("third");
       `;
 
 			const result = injectLogsIntoCode(code, { injectLogs: false });
-			expect(result.lines).toEqual([4, 6, 8, 10]);
+			expect(result.lines).toEqual([2, 4, 6, 8]);
 			expect(result.code).toBe(code);
 		});
 
@@ -50,7 +50,7 @@ console.log("second");
       `;
 
 			const result = injectLogsIntoCode(code, { injectLogs: false });
-			expect(result.lines).toEqual([4]);
+			expect(result.lines).toEqual([2]);
 			expect(result.code).toBe(code);
 		});
 
@@ -62,7 +62,7 @@ console.log("test");
       `;
 
 			const result = injectLogsIntoCode(code, { injectLogs: false });
-			expect(result.lines).toEqual([7]);
+			expect(result.lines).toEqual([3]);
 		});
 
 		it("should handle multiple console.log statements", () => {
@@ -73,7 +73,7 @@ console.log("three");
       `;
 
 			const result = injectLogsIntoCode(code, { injectLogs: false });
-			expect(result.lines).toEqual([4, 5, 6]);
+			expect(result.lines).toEqual([2, 3, 4]);
 		});
 	});
 
@@ -83,7 +83,7 @@ console.log("three");
 				const code = `Math.max(1, 2, 3);`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toBe("console.log(Math.max(1, 2, 3));");
+				expect(result.code).toBe("((__v) => __v !== undefined && console.log(__v))(Math.max(1, 2, 3));");
 				expect(result.lines).toEqual([1]);
 			});
 
@@ -94,8 +94,8 @@ obj.method();
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain('console.log(parseInt("42"));');
-				expect(result.code).toContain("console.log(obj.method());");
+				expect(result.code).toContain('((__v) => __v !== undefined && console.log(__v))(parseInt("42"));');
+				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(obj.method());");
 				expect(result.lines.length).toBe(2);
 			});
 
@@ -106,8 +106,8 @@ Math.floor(5);
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain("console.log(Math.random())");
-				expect(result.code).toContain("console.log(Math.floor(5));");
+				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.random())");
+				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.floor(5));");
 			});
 
 			it("should inject console.log for arithmetic expressions", () => {
@@ -178,7 +178,7 @@ undefined;
 });`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain("console.log(({ a: 1, b: 2 }));");
+				expect(result.code).toBe(`console.log(${code.slice(0, -1)});`);
 			});
 
 			it("should inject console.log for array expressions", () => {
@@ -203,7 +203,7 @@ undefined;
 ];`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain("console.log([ 1, 2, 3 ]);");
+				expect(result.code).toBe(`console.log(${code.slice(0, -1)});`);
 			});
 		});
 
@@ -218,7 +218,7 @@ console.log("another existing");
 				const result = injectLogsIntoCode(code, { injectLogs: true });
 				expect(result.code).toContain('console.log("existing log");');
 				expect(result.code).toContain('console.log("another existing");');
-				expect(result.code).toContain("console.log(Math.random());");
+				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.random());");
 			});
 
 			it("should count existing console.log lines correctly", () => {
@@ -229,9 +229,7 @@ console.log("second");
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.lines).toContain(1); // existing log
-				expect(result.lines).toContain(3); // injected log
-				expect(result.lines).toContain(4); // existing log
+				expect(result.lines).toEqual([2, 3, 4]);
 			});
 		});
 
@@ -296,7 +294,7 @@ const y = "
 				const code = `Promise.resolve("done");`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toBe('console.log(Promise.resolve("done"));');
+				expect(result.code).toBe('((__v) => __v !== undefined && console.log(__v))(Promise.resolve("done"));');
 			});
 
 			it("should handle await expressions", () => {
@@ -371,7 +369,7 @@ new MyClass();
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.lines).toEqual([5]);
+				expect(result.lines).toEqual([3]);
 			});
 		});
 
@@ -383,9 +381,7 @@ new MyClass();
 });`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain(
-					'console.log(({ data: [1, 2, { nested: "value" }], func: function() { return "test"; } }));',
-				);
+				expect(result.code).toBe(`console.log(${code.slice(0, -1)});`);
 			});
 
 			it("should handle mixed expressions", () => {
@@ -413,10 +409,10 @@ Math.max(...[1, 2, 3, 4, 5]);
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
 				expect(result.code).toContain(
-					'console.log(fetch("/api", { method: "POST", body: JSON.stringify({ data: [1, 2, 3] }) }));',
+					'((__v) => __v !== undefined && console.log(__v))(fetch("/api", { method: "POST", body: JSON.stringify({ data: [1, 2, 3] }) }));',
 				);
 				expect(result.code).toContain(
-					"console.log(Math.max(...[1, 2, 3, 4, 5]));",
+					"((__v) => __v !== undefined && console.log(__v))(Math.max(...[1, 2, 3, 4, 5]));",
 				);
 			});
 		});
@@ -438,9 +434,7 @@ var z = true;
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toBe(`const x = 42;
-let y = "hello";
-var z = true;`);
+				expect(result.code).toBe(code);
 				expect(result.lines).toEqual([]);
 			});
 		});
@@ -454,7 +448,7 @@ const x = 42;
       `;
 
 			const result = injectLogsIntoCode(code);
-			expect(result.lines).toEqual([4]);
+			expect(result.lines).toEqual([2]);
 			expect(result.code).toBe(code);
 		});
 	});

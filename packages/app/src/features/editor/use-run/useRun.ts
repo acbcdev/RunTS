@@ -17,8 +17,12 @@ export function useRun() {
 		if (!activeTab) return;
 		const loading = setTimeout(() => updateEditor({ running: true }), 500);
 		try {
-			const log = await runTab(activeTab, { injectLogs, alignLogs });
-			if (log !== null) updateTab(activeTab.id, { log });
+			const result = await runTab(activeTab, { injectLogs, alignLogs });
+			if (
+				result !== null &&
+				useTabsStore.getState().getTab(activeTab.id)?.code === activeTab.code
+			)
+				updateTab(activeTab.id, result);
 		} finally {
 			clearTimeout(loading);
 			updateEditor({ running: false });

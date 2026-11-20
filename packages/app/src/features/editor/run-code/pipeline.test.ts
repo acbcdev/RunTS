@@ -7,7 +7,7 @@ describe("preparePipeline", () => {
 		expect(result.ready).toBe(true);
 		if (!result.ready) return;
 		expect(result.code).toContain("try {");
-		expect(result.code).toContain("console.log('hi');");
+		expect(result.code).toContain(".log('hi');");
 		expect(result.lines).toEqual([1]);
 	});
 
@@ -22,7 +22,7 @@ describe("preparePipeline", () => {
 		const result = preparePipeline("1 + 1;", "test", true);
 		expect(result.ready).toBe(true);
 		if (!result.ready) return;
-		expect(result.code).toContain("console.log(1 + 1)");
+		expect(result.code).toContain(".log(1 + 1)");
 	});
 
 	it("stops at validation and never reaches wrap when code is dangerous", () => {

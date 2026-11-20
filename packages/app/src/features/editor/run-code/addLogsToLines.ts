@@ -13,17 +13,11 @@ type ReplacementPoint = {
 	type: Expression["type"];
 };
 
-function countLines(str: string): number {
-	return str.split("\n").length;
-}
-
 export function injectLogsIntoCode(
 	code: string,
 	options: InjectLogsIntoCodeOptions = { injectLogs: false },
 ): { code: string; lines: number[] } {
-	const numsOfToTrim = countLines(code);
-	const trimmedCode = code.trim();
-	const diference = numsOfToTrim - countLines(trimmedCode);
+	if (!code.trim()) return { code: "", lines: [] };
 
 	const logLines: number[] = [];
 
@@ -36,8 +30,8 @@ export function injectLogsIntoCode(
 			});
 			simple(ast, {
 				ExpressionStatement(node) {
-					if (node.loc && isConsoleLogCall(node.expression)) {
-						logLines.push(node.loc.start.line + diference);
+					if (node.loc && isConsoleCall(node.expression)) {
+						logLines.push(node.loc.start.line);
 					}
 				},
 			});
@@ -48,7 +42,7 @@ export function injectLogsIntoCode(
 	}
 
 	try {
-		const ast = parse(trimmedCode, {
+		const ast = parse(code, {
 			ecmaVersion: "latest",
 			sourceType: "module",
 			locations: true,
@@ -64,13 +58,13 @@ export function injectLogsIntoCode(
 				const parent = ancestors[ancestors.length - 2];
 				if (parent && parent.type !== "Program") return;
 
-				if (isConsoleLogCall(node.expression)) {
+				if (isConsoleCall(node.expression)) {
 					logLines.push(node.loc.start.line);
 					return;
 				}
 
 				const [start, end] = node.expression.range ?? [];
-				const exprText = trimmedCode.slice(start, end);
+				const exprText = code.slice(start, end);
 
 				replacements.push({
 					start: node.range[0],
@@ -79,46 +73,43 @@ export function injectLogsIntoCode(
 					line: node.loc.start.line,
 					type: node.expression.type,
 				});
-				logLines.push(node.loc.start.line + diference);
+				logLines.push(node.loc.start.line);
 			},
 		});
 
-		let newCode = trimmedCode;
+		let newCode = code;
 		replacements.sort((a, b) => b.start - a.start);
 
 		for (const { start, end, expr, type } of replacements) {
-			let finalExpr = expr.replace(/\s*\n\s*/g, " ");
+			let finalExpr = expr;
 			if (type === "ObjectExpression") {
 				finalExpr = `(${finalExpr})`;
 			}
 
-			const originalStatement = trimmedCode.slice(start, end);
+			const originalStatement = code.slice(start, end);
 			const hasSemicolon = originalStatement.trim().endsWith(";");
 
-			const replacementText = `console.log(${finalExpr})${
-				hasSemicolon ? ";" : ""
-			}`;
+			// Calls returning undefined (forEach, void fns) would log a stray "undefined"
+			const replacementText =
+				type === "CallExpression"
+					? `((__v) => __v !== undefined && console.log(__v))(${finalExpr})${hasSemicolon ? ";" : ""}`
+					: `console.log(${finalExpr})${hasSemicolon ? ";" : ""}`;
 			newCode = newCode.slice(0, start) + replacementText + newCode.slice(end);
 		}
 
 		return { code: newCode, lines: logLines.sort((a, b) => a - b) };
 	} catch (error) {
 		console.error("Error parsing or transforming code:", error);
-		return { code: trimmedCode, lines: logLines };
+		return { code, lines: logLines };
 	}
 }
 
-function isConsoleLogCall(
-	expression: ExpressionStatement["expression"],
-): boolean {
+function isConsoleCall(expression: ExpressionStatement["expression"]): boolean {
 	if (expression.type !== "CallExpression") return false;
 
 	const callee = expression.callee;
-	return (
-		callee.type === "MemberExpression" &&
-		callee.object.type === "Identifier" &&
-		callee.object.name === "console" &&
-		callee.property.type === "Identifier" &&
-		callee.property.name === "log"
-	);
+	if (callee.type !== "MemberExpression") return false;
+	const target = callee.object;
+	return (target.type === "Identifier" && target.name === "console") ||
+		(target.type === "MemberExpression" && target.object.type === "Identifier" && ["self", "globalThis"].includes(target.object.name) && target.property.type === "Identifier" && target.property.name === "console");
 }

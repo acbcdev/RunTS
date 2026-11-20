@@ -1,9 +1,10 @@
 import { injectLogsIntoCode } from "./addLogsToLines";
 import { validateCode, wrapCodeForExecution } from "./codeValidator";
+import { instrumentConsole } from "./instrumentConsole";
 import { transform } from "./transform";
 
 export type PipelineResult =
-	| { ready: true; code: string; lines: number[] }
+	| { ready: true; code: string; binding: string; lines: number[] }
 	| { ready: false; error: string };
 
 /**
@@ -30,5 +31,11 @@ export function preparePipeline(
 		};
 	}
 
-	return { ready: true, code: wrapCodeForExecution(code), lines };
+	const instrumented = instrumentConsole(code);
+	return {
+		ready: true,
+		code: wrapCodeForExecution(instrumented.code),
+		binding: instrumented.binding,
+		lines,
+	};
 }

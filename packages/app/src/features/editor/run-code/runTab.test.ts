@@ -3,6 +3,9 @@ import { runTab } from "./runTab";
 import type { ConsoleOutput } from "./types";
 
 const log = (line: number, content: string): ConsoleOutput => ({
+	id: line,
+	values: [{ type: "string", text: content }],
+	depth: 0,
 	type: "log",
 	content,
 	line,
@@ -29,7 +32,10 @@ describe("runTab", () => {
 
 	it("joins output flat when alignLogs is off", async () => {
 		const spawn = vi.fn().mockResolvedValue([log(1, "a"), log(3, "b")]);
-		expect(await runTab({ name: "a.ts", code: "" }, opts, spawn)).toBe("a\nb");
+		expect(await runTab({ name: "a.ts", code: "" }, opts, spawn)).toEqual({
+			log: "a\nb",
+			consoleOutput: [log(1, "a"), log(3, "b")],
+		});
 	});
 
 	it("aligns output to source lines when alignLogs is on", async () => {
@@ -40,13 +46,13 @@ describe("runTab", () => {
 				{ ...opts, alignLogs: true },
 				spawn,
 			),
-		).toBe("a\n\nb");
+		).toEqual({ log: "a\n\nb", consoleOutput: [log(1, "a"), log(3, "b")] });
 	});
 
 	it("turns worker failures into the log text", async () => {
 		const spawn = vi.fn().mockRejectedValue(new Error("timeout"));
-		expect(await runTab({ name: "a.ts", code: "" }, opts, spawn)).toBe(
-			"Error: timeout",
-		);
+		const result = await runTab({ name: "a.ts", code: "" }, opts, spawn);
+		expect(result?.log).toBe("Error: timeout");
+		expect(result?.consoleOutput[0].type).toBe("error");
 	});
 });
