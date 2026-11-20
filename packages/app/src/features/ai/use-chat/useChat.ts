@@ -152,6 +152,7 @@ export function useChat() {
 		isLoading: status === "submitted" || status === "streaming",
 		handleSubmit,
 		stop: handleStop,
+		send: handleStreamText,
 		reload: handleRegenerate,
 		error,
 		status,

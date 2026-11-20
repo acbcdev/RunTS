@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { Messages } from "../messages";
 import { Prompt } from "../prompt";
@@ -7,12 +8,15 @@ import { ChatHeader } from "./ChatHeader";
 import { EmptyChatView } from "./EmptyChatView";
 import { NoProvidersView } from "./NoProvidersView";
 export function Chat() {
-	const { hasProviders, showChat } = useAIConfigStore(
-		useShallow((state) => ({
-			hasProviders: state.getProviders().length > 0,
-			showChat: state.showChat,
-		})),
-	);
+	const { hasProviders, showChat, contextFile, providerName } =
+		useAIConfigStore(
+			useShallow((state) => ({
+				hasProviders: state.getProviders().length > 0,
+				showChat: state.showChat,
+				contextFile: state.contextFile,
+				providerName: state.selectedModel.provider,
+			})),
+		);
 	const {
 		input,
 		messages,
@@ -22,8 +26,15 @@ export function Chat() {
 		handleSubmit,
 		stop,
 		reload,
+		send,
 		error,
 	} = useChat();
+	useEffect(() => {
+		if (!isLoading) return;
+		const onKey = (event: KeyboardEvent) => event.key === "Escape" && stop();
+		document.addEventListener("keydown", onKey);
+		return () => document.removeEventListener("keydown", onKey);
+	}, [isLoading, stop]);
 	const handleNewChat = () => {
 		setMessages([]);
 		setInput("");
@@ -44,7 +55,7 @@ export function Chat() {
 		>
 			<ChatHeader onNewChat={handleNewChat} />
 			{isEmpty ? (
-				<EmptyChatView />
+				<EmptyChatView onPick={send} />
 			) : (
 				<Messages
 					messages={messages}
@@ -61,6 +72,12 @@ export function Chat() {
 					onSubmit={handleSubmit}
 					stop={stop}
 				/>
+				<p className="flex justify-between font-mono text-[10px] text-muted-foreground">
+					<span>
+						{providerName ?? "no model"} · ctx {contextFile ? "on" : "off"}
+					</span>
+					<span>{isLoading ? "esc stop" : "↵ send"}</span>
+				</p>
 			</section>
 		</aside>
 	);
