@@ -1,8 +1,11 @@
 import type { Monaco } from "@monaco-editor/react";
+import { shikiToMonaco } from "@shikijs/monaco";
 import { Code2 } from "lucide-react";
 import type { editor } from "monaco-editor";
 import * as monaco from "monaco-editor";
 import { lazy, useCallback, useEffect, useRef, useState } from "react";
+import { createHighlighterCore } from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 import { useShallow } from "zustand/react/shallow";
 import { createGenerateCodeWidget } from "@/features/ai/code-widget";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
@@ -86,9 +89,36 @@ export function EditorMain({ tab, language }: EditorMainProps) {
 	const handleEditorDidMount = useCallback(
 		async (editor: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
 			// Define all themes
-			for (const [key, value] of Object.entries(themes)) {
-				monacoInstance.editor.defineTheme(key, value.monaco);
-			}
+			// TextMate highlighting (same grammars as VS Code) via shiki
+			const highlighter = await createHighlighterCore({
+				themes: Object.entries(themes).map(([key, v]) => ({
+					...v.shiki,
+					name: key,
+				})),
+				langs: [
+					import("shiki/langs/typescript.mjs"),
+					import("shiki/langs/javascript.mjs"),
+					import("shiki/langs/json.mjs"),
+				],
+				engine: createJavaScriptRegexEngine(),
+			});
+			// Monarch is registered as a lazy factory that resolves after us and
+			// would overwrite setTokensProvider. Replacing the factory first drops
+			// its pending result, then the provider is set directly.
+			const { languages } = monacoInstance;
+			shikiToMonaco(highlighter, {
+				...monacoInstance,
+				languages: {
+					...languages,
+					getLanguages: () => languages.getLanguages(),
+					setTokensProvider: (id: string, provider: never) => {
+						languages.registerTokensProviderFactory(id, {
+							create: async () => provider,
+						});
+						return languages.setTokensProvider(id, provider);
+					},
+				},
+			} as unknown as Monaco);
 
 			monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions(
 				{
@@ -317,7 +347,11 @@ export function EditorMain({ tab, language }: EditorMainProps) {
 	}, []);
 
 	return (
-		<div className="relative h-full" translate="no">
+		<div
+			className="relative h-full pl-4"
+			style={{ backgroundColor: themes[theme]?.ui.background }}
+			translate="no"
+		>
 			{running && <Loader className="absolute z-10 right-6 top-2" />}
 			<MonacoEditor
 				loading={

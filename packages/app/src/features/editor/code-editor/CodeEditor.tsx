@@ -1,15 +1,19 @@
-import { AnimatePresence, motion } from "motion/react";
-import { lazy, useEffect, useLayoutEffect, useMemo } from "react";
+import { lazy, useEffect, useId, useLayoutEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { Chat } from "@/features/ai/chat/Chat";
 import { useAIConfigStore } from "@/features/ai/store/aiConfig";
+import { useResizePanelSizes } from "@/features/common/hooks/useResizePanelSizes";
 import { ReloadPrompt } from "@/features/common/loader/ReloadPrompt";
 import { useShortcuts } from "@/features/common/shortcuts/useShortcuts";
 import {
 	SIDES,
 	useApparenceStore,
 } from "@/features/settings/appearance-store/appearance";
-import { ResizablePanel, ResizablePanelGroup } from "@/features/ui/resizable";
+import {
+	ResizableHandle,
+	ResizablePanel,
+	ResizablePanelGroup,
+} from "@/features/ui/resizable";
 import { langFromName } from "../language/langFromName";
 import { useEditorSession } from "../use-editor-session";
 
@@ -17,6 +21,8 @@ const EditorTabs = lazy(() => import("@/features/tabs/editor-tabs/EditorTabs"));
 const EditorActions = lazy(() => import("../editor-actions/EditorActions"));
 const EditorLayout = lazy(() => import("../editor-layout/EditorLayout"));
 const EmptyState = lazy(() => import("../editor-main/EmptyState"));
+
+const CHAT_MIN_SIZE = { width: 480, height: 0 };
 
 type positionSettings = {
 	tooltip: "left" | "right" | "top" | "bottom";
@@ -42,6 +48,12 @@ export function CodeEditor() {
 	);
 	const side = useApparenceStore(useShallow((state) => state.side));
 	const showChat = useAIConfigStore(useShallow((state) => state.showChat));
+	const workspaceId = useId();
+	const { width: chatMinSize } = useResizePanelSizes(
+		workspaceId,
+		CHAT_MIN_SIZE,
+		showChat,
+	);
 
 	useEffect(() => {
 		document.documentElement.style.setProperty("--radius", `${radius}rem`);
@@ -65,7 +77,7 @@ export function CodeEditor() {
 
 	return (
 		<main
-			className={`flex h-screen bg-background/85 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
+			className={`flex h-screen overflow-auto bg-background/85 ${side < SIDES.TOP ? "flex-row" : "flex-col"}`}
 			translate="no"
 		>
 			<EditorActions
@@ -74,32 +86,35 @@ export function CodeEditor() {
 				tooltipSide={tooltipSide}
 			/>
 
-			<ResizablePanelGroup direction="horizontal">
-				<AnimatePresence mode="wait">
-					{showChat && (
-						<motion.div
-							key="chat"
-							initial={{ opacity: 0, x: -300, width: 0, scaleX: 0.5 }}
-							animate={{
-								opacity: 1,
-								scaleX: 1,
-								x: 0,
-								width: "auto",
-							}}
-							exit={{
-								x: -300,
-								width: 0,
-								opacity: 0,
-								scaleX: 0.5,
-							}}
-							transition={{ duration: 0.2, ease: "easeInOut" }}
+			<ResizablePanelGroup
+				id={workspaceId}
+				direction="horizontal"
+				className={showChat ? "min-w-[720px]" : "min-w-0"}
+			>
+				{showChat && (
+					<>
+						<ResizablePanel
+							id={`${workspaceId}-chat`}
+							order={1}
+							defaultSize={40}
+							minSize={chatMinSize}
 						>
 							<Chat />
-						</motion.div>
-					)}
-				</AnimatePresence>
+						</ResizablePanel>
+						<ResizableHandle
+							id={`resize-handle-${workspaceId}`}
+							aria-label="Resize chat panel"
+							className="w-2"
+						/>
+					</>
+				)}
 
-				<ResizablePanel defaultSize={100}>
+				<ResizablePanel
+					id={`${workspaceId}-editor`}
+					order={2}
+					defaultSize={60}
+					minSize={showChat ? 20 : 0}
+				>
 					<EditorTabs />
 					{tab ? (
 						<EditorLayout tab={tab} lang={langFromName(tab.name)} />

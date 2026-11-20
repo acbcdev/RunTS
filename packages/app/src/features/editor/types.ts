@@ -1,5 +1,8 @@
 // EditorState.ts
+
 import type { editor } from "monaco-editor";
+import type { ThemeRegistrationRaw } from "shiki";
+import type { ConsoleOutput } from "./run-code/types";
 
 export interface Theme {
 	name: string;
@@ -19,6 +22,8 @@ export interface Theme {
 		info: string;
 	};
 	monaco: editor.IStandaloneThemeData;
+	// settings is optional: shiki falls back to tokenColors only when it is undefined
+	shiki: Omit<ThemeRegistrationRaw, "settings">;
 }
 
 export interface Tab {
@@ -26,6 +31,7 @@ export interface Tab {
 	name?: string;
 	code: string;
 	log: string;
+	consoleOutput?: ConsoleOutput[];
 	editing?: boolean;
 	createdAt: number;
 	updatedAt: number;

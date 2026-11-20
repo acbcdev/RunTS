@@ -3,6 +3,7 @@ import { useLayoutEffect, useState } from "react";
 export const useResizePanelSizes = (
 	id: string,
 	pixels: { width: number; height: number },
+	enabled = true,
 ) => {
 	const [panelSizes, setPanelSizes] = useState({
 		width: 0,
@@ -10,6 +11,8 @@ export const useResizePanelSizes = (
 	});
 
 	useLayoutEffect(() => {
+		if (!enabled) return;
+
 		const panelGroup = document.querySelector<HTMLElement>(
 			`[data-panel-group-id="${id}"]`,
 		);
@@ -50,6 +53,6 @@ export const useResizePanelSizes = (
 			}
 			observer.disconnect();
 		};
-	}, [id, pixels]);
+	}, [id, pixels, enabled]);
 	return panelSizes;
 };
