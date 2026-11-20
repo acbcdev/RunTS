@@ -39,7 +39,7 @@ export function Chat() {
 		<aside
 			data-state={showChat}
 			className={
-				"relative flex bg-border/10 border-r flex-col h-full w-dvw lg:w-[65ch] chat rounded-none shadow-none"
+				"relative flex bg-border/10 flex-col h-full w-full min-w-0 chat rounded-none shadow-none"
 			}
 		>
 			<ChatHeader onNewChat={handleNewChat} />
