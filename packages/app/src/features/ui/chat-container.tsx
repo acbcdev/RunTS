@@ -1,4 +1,5 @@
 import { StickToBottom } from "use-stick-to-bottom";
+import { useReducedMotion } from "@/features/common/hooks/useReducedMotion";
 import { cn } from "../lib/cn";
 
 export type ChatContainerRootProps = {
@@ -21,10 +22,11 @@ function ChatContainerRoot({
 	className,
 	...props
 }: ChatContainerRootProps) {
+	const reduceMotion = useReducedMotion();
 	return (
 		<StickToBottom
 			className={cn("flex overflow-y-auto", className)}
-			resize="smooth"
+			resize={reduceMotion ? "instant" : "smooth"}
 			initial="instant"
 			role="log"
 			{...props}

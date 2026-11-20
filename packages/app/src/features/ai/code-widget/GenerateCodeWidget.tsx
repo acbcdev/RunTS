@@ -97,7 +97,7 @@ function GenerateCodeWidgetContent({
 						title={isLoading ? "Generating..." : "Generate code (Enter)"}
 					>
 						{isLoading ? (
-							<Loader2 className="size-3 animate-spin" />
+							<Loader2 className="size-3 animate-spin motion-reduce:animate-pulse" />
 						) : (
 							<Send className="size-3" />
 						)}

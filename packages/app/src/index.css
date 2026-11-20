@@ -7,6 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	--radius-lg: var(--radius);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-sm: calc(var(--radius) - 4px);
@@ -148,7 +149,7 @@ textarea::-webkit-scrollbar-thumb {
 
 /* Resizable handle styling */
 [data-panel-resize-handle-enabled] {
-	transition: all 0.15s ease;
+	transition: background-color 150ms ease;
 	background-color: transparent;
 }
 
@@ -162,6 +163,10 @@ textarea::-webkit-scrollbar-thumb {
 		"liga" 1,
 		"calt" 1;
 	/* Enable ligatures */
+}
+
+.console-source-highlight {
+	background-color: color-mix(in srgb, var(--info) 16%, transparent);
 }
 
 body {
@@ -186,6 +191,24 @@ pre {
 
 .elastic {
 	transition-timing-function: cubic-bezier(0.37, 1.83, 0.53, 1.64);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-slot="dialog-content"],
+	[data-slot="tooltip-content"],
+	[data-slot="select-content"],
+	[data-slot="popover-content"],
+	[data-slot="context-menu-content"],
+	[data-slot="context-menu-sub-content"] {
+		--tw-enter-scale: 1;
+		--tw-exit-scale: 1;
+		--tw-enter-translate-x: 0;
+		--tw-enter-translate-y: 0;
+		--tw-exit-translate-x: 0;
+		--tw-exit-translate-y: 0;
+		--tw-enter-rotate: 0;
+		--tw-exit-rotate: 0;
+	}
 }
 
 /* From Uiverse.io by mrhyddenn */

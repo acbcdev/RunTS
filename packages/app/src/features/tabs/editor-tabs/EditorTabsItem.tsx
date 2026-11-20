@@ -91,7 +91,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 							variant="ghost"
 							size="icon"
 							aria-label="Close tab"
-							className="h-5 w-5  p-0 rounded-full transition-all duration-200 -outline-offset-2"
+							className="h-5 w-5  p-0 rounded-full transition-colors duration-200 -outline-offset-2"
 							onClick={handleCloseTab}
 							tabIndex={0}
 							asChild
