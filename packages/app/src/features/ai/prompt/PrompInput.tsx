@@ -50,6 +50,23 @@ export function Prompt({
 			onSubmit={handleSubmit}
 			className="w-full max-w-(--breakpoint-md)  "
 		>
+			<div className="flex px-2 pt-2">
+				<Button
+					variant={"currentFile"}
+					type="button"
+					// size={"sm"}
+					className={`${!contextFile && "border-dashed"} `}
+					onClick={() => setContextFile(!contextFile)}
+				>
+					<span
+						className={`${!contextFile && "line-through"} hidden md:inline-block`}
+					>
+						{currentFile}
+					</span>
+					{/* <span className="text-muted ">Current Tab</span>{" "} */}
+					{contextFile ? <Eye /> : <EyeOff />}
+				</Button>
+			</div>
 			<PromptInputTextarea
 				className="max-h-32 dark:bg-transparent"
 				placeholder="Ask me anything..."
@@ -58,21 +75,6 @@ export function Prompt({
 			<PromptInputActions className="flex items-center justify-between gap-2 pt-2">
 				<div className="flex items-center gap-2">
 					<ComboboxSelect />
-					<Button
-						variant={"currentFile"}
-						type="button"
-						// size={"sm"}
-						className={`${!contextFile && "border-dashed"} `}
-						onClick={() => setContextFile(!contextFile)}
-					>
-						<span
-							className={`${!contextFile && "line-through"} hidden md:inline-block`}
-						>
-							{currentFile}
-						</span>
-						{/* <span className="text-muted ">Current Tab</span>{" "} */}
-						{contextFile ? <Eye /> : <EyeOff />}
-					</Button>
 				</div>
 
 				<PromptInputAction
