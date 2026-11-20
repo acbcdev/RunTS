@@ -17,6 +17,13 @@ export type ThemeProps = {
 		success: string;
 		info: string;
 	};
+	/** Per-theme overrides merged over the generated workbench colors. */
+	colors?: Record<string, string>;
+	/** Extra TextMate rules appended after the generated ones (win on equal specificity). */
+	tokenColors?: {
+		scope: string[];
+		settings: { foreground?: string; fontStyle?: string };
+	}[];
 	monaco: {
 		comment: string;
 		keyword: string;

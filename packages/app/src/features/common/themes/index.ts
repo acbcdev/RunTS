@@ -2,34 +2,105 @@ import type { Theme } from "@/features/editor/types";
 import { createTheme } from "./lib";
 
 export const themes: Record<string, Theme> = {
+	// One Dark Pro (Binaryify) palette
 	oneDark: createTheme({
-		name: "One Dark",
+		name: "One Dark Pro",
 		ui: {
 			background: "#282c34",
 			foreground: "#abb2bf",
 			border: "#3e4451",
-			accent: "#c372fc",
+			accent: "#528bff",
 			selection: "#3e4451",
 			header: "#21252b",
-			hover: "#323842",
+			hover: "#2c313a",
 			muted: "#5c6370",
-			success: "#a3be8c",
-			warning: "#ffcc66",
-			error: "#f07178",
-			info: "#5ccfe6",
+			success: "#98c379",
+			warning: "#e5c07b",
+			error: "#e06c75",
+			info: "#61afef",
 		},
+		colors: {
+			"editor.lineHighlightBackground": "#2c313c",
+			"editorLineNumber.foreground": "#495162",
+			"editorLineNumber.activeForeground": "#737984",
+			"editorIndentGuide.background1": "#3b4048",
+			"editorIndentGuide.activeBackground1": "#c8c8c859",
+			"editorWhitespace.foreground": "#3b4048",
+			"editorBracketMatch.background": "#515a6b",
+			"editorBracketMatch.border": "#515a6b",
+			"editor.findMatchBackground": "#42557b",
+			"editor.findMatchHighlightBackground": "#314365",
+			"editor.selectionHighlightBackground": "#3e445180",
+			"editor.wordHighlightBackground": "#3e445180",
+			"editorSuggestWidget.selectedBackground": "#2c313a",
+		},
+		tokenColors: [
+			{
+				scope: ["comment", "punctuation.definition.comment"],
+				settings: { foreground: "#7f848e", fontStyle: "italic" },
+			},
+			{
+				scope: ["constant.language", "support.constant", "constant.other"],
+				settings: { foreground: "#d19a66" },
+			},
+			{
+				scope: [
+					"meta.definition.variable",
+					"variable.other.readwrite",
+					"variable.language.this",
+				],
+				settings: { foreground: "#e06c75" },
+			},
+			{
+				// const declarations are yellow in One Dark Pro; let/var and usages stay red
+				scope: ["variable.other.constant"],
+				settings: { foreground: "#e5c07b" },
+			},
+			{
+				scope: ["variable.parameter", "meta.parameters variable"],
+				settings: { foreground: "#e06c75", fontStyle: "italic" },
+			},
+			{
+				scope: [
+					"keyword.operator.type",
+					"keyword.operator.optional",
+					"punctuation.separator",
+					"punctuation.definition.typeparameters",
+					"punctuation.definition.parameters",
+				],
+				settings: { foreground: "#abb2bf" },
+			},
+			{
+				scope: [
+					"variable.other.object",
+					"support.class.console",
+					"support.constant.math",
+					"support.variable.dom",
+					"support.variable.object",
+				],
+				settings: { foreground: "#e5c07b" },
+			},
+			{
+				scope: ["keyword.operator.expression", "keyword.operator.new"],
+				settings: { foreground: "#c678dd" },
+			},
+			{
+				scope: ["keyword.operator.assignment", "storage.type.function.arrow"],
+				settings: { foreground: "#56b6c2" },
+			},
+		],
 		monaco: {
-			comment: "#5c6773",
-			keyword: "#c371db",
-			string: "#769463",
-			number: "#b88a5f",
-			operator: "#8dc6e6",
-			function: "#8fbcbb",
-			variable: "#d08770",
-			type: "#ebcb8b",
-			BracketHighlight1: "#d1985e",
-			BracketHighlight2: "#c678c7",
-			BracketHighlight3: "#54b6c2",
+			comment: "#7f848e",
+			keyword: "#c678dd",
+			string: "#98c379",
+			number: "#d19a66",
+			operator: "#56b6c2",
+			function: "#61afef",
+			variable: "#e06c75",
+			type: "#e5c07b",
+			BracketHighlight1: "#d19a66",
+			BracketHighlight2: "#c678dd",
+			BracketHighlight3: "#56b6c2",
 		},
 	}),
 	vsDark: createTheme({
@@ -394,9 +465,8 @@ export const themes: Record<string, Theme> = {
 		},
 	}),
 
-	synthwave84Theme: {
+	synthwave84Theme: createTheme({
 		name: "SynthWave '84",
-		value: "synthwave84",
 		ui: {
 			background: "#2b213a",
 			foreground: "#ffffff",
@@ -412,33 +482,16 @@ export const themes: Record<string, Theme> = {
 			info: "#00f6ff",
 		},
 		monaco: {
-			base: "vs-dark",
-			inherit: true,
-			rules: [
-				{ token: "comment", foreground: "6272a4", fontStyle: "italic" },
-				{ token: "keyword", foreground: "ff79c6" },
-				{ token: "string", foreground: "f1fa8c" },
-				{ token: "number", foreground: "bd93f9" },
-				{ token: "operator", foreground: "ffb86c" },
-				{ token: "function", foreground: "8be9fd" },
-				{ token: "variable", foreground: "50fa7b" },
-				{ token: "type", foreground: "50fa7b" },
-			],
-			colors: {
-				"editor.background": "#2b213a",
-				"editor.foreground": "#ffffff",
-				"editorLineNumber.foreground": "#6272a4",
-				"editorCursor.foreground": "#ff79c6",
-				"editor.selectionBackground": "#44475a",
-				"editor.wordHighlightBackground": "#44475a",
-				"editorIndentGuide.background": "#44475a",
-				"editorBracketMatch.background": "#44475a",
-				"editorBracketMatch.border": "#50fa7b",
-				"editor.lineHighlightBackground": "#44475a",
-				"editor.lineHighlightBorder": "#44475a",
-			},
+			comment: "#6272a4",
+			keyword: "#ff79c6",
+			string: "#f1fa8c",
+			number: "#bd93f9",
+			operator: "#ffb86c",
+			function: "#8be9fd",
+			variable: "#50fa7b",
+			type: "#50fa7b",
 		},
-	},
+	}),
 	monokaiPro: createTheme({
 		name: "Monokai Pro",
 		ui: {
@@ -607,7 +660,7 @@ export const themes: Record<string, Theme> = {
 		},
 		monaco: {
 			comment: "#a0a0a0",
-			keyword: "#1347e5",
+			keyword: "#4f7bff",
 			string: "#00bc7c",
 			number: "#fd9900",
 			operator: "#ff1f56",
