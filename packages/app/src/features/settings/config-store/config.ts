@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import type { ConfigEditor, ConfigEditorState } from "./types";
 
 const DEFAULT_CONFIG: ConfigEditorState = {
+	consoleMode: "inline",
 	updates: true,
 	wordWrap: true,
 	lineNumbers: true,

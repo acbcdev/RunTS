@@ -5,6 +5,7 @@ import {
 	Cog,
 	Columns3CogIcon,
 	Command,
+	SquareTerminal,
 	FileText,
 	LetterText,
 	PanelBottom,
@@ -42,6 +43,8 @@ import { themes } from "../themes";
 import { getModifierKey } from "../utils/shortcuts";
 import type { CommandOption, CommandOptionChild } from "./types";
 
+const CONSOLE_MODES = ["inline", "inspector", "by-source"] as const;
+
 export const useCommandItems = (): {
 	commands: CommandOption[];
 	subCommands: Record<string, CommandOptionChild[]>;
@@ -62,6 +65,7 @@ export const useCommandItems = (): {
 		minimap: state.minimap,
 		whiteSpace: state.whiteSpace,
 		lineRenderer: state.lineRenderer,
+		consoleMode: state.consoleMode,
 	}));
 	const setConfigValue = useConfigStore((state) => state.setConfigValue);
 	const toggle = useModalStore((state) => state.toggleModal);
@@ -261,6 +265,18 @@ export const useCommandItems = (): {
 			category: "config" as const,
 			keywords: [mode, "render", "renderizado", "mode", "modo"],
 			action: () => setConfigValue("lineRenderer", mode),
+			preventDefault: true,
+		})),
+		"console-mode": CONSOLE_MODES.map((mode) => ({
+			id: `console-mode-${mode}`,
+			parentId: "console-mode",
+			title: mode,
+			description: `Switch to ${mode} console`,
+			icon: ChevronRight,
+			isSelected: mode === config.consoleMode,
+			category: "config" as const,
+			keywords: [mode, "console", "consola", "output", "mode", "modo"],
+			action: () => setConfigValue("consoleMode", mode),
 			preventDefault: true,
 		})),
 	};
@@ -524,6 +540,29 @@ export const useCommandItems = (): {
 			preventDefault: true,
 			route: "Render Line",
 			children: "render-line",
+		},
+		{
+			id: "console-mode",
+			title: "Console Mode",
+			description: `Current: ${config.consoleMode}`,
+			icon: SquareTerminal,
+			category: "config",
+			keywords: [
+				"console",
+				"consola",
+				"output",
+				"mode",
+				"modo",
+				"inline",
+				"inspector",
+				"by-source",
+				"config",
+				"settings",
+			],
+			action: () => {},
+			preventDefault: true,
+			route: "Console Mode",
+			children: "console-mode",
 		},
 	];
 

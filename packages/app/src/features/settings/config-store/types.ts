@@ -1,5 +1,7 @@
 import type { lineRendererEditor } from "@/features/editor/types";
 
+export type ConsoleMode = "inline" | "inspector" | "by-source";
+
 export type ConfigEditorActions = {
 	updateConfig: (updates: Partial<ConfigEditorState>) => void;
 	setConfigValue: <K extends keyof ConfigEditorState>(
@@ -18,6 +20,7 @@ export type ConfigEditorActions = {
 export type ConfigEditor = ConfigEditorState & ConfigEditorActions;
 
 export type ConfigEditorState = {
+	consoleMode: ConsoleMode;
 	wordWrap: boolean;
 	hideUndefined: boolean;
 	lineNumbers: boolean;

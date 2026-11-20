@@ -36,6 +36,7 @@ export const useTabActions = () => {
 			name: duplicateTab.name ? `copy-${duplicateTab.name}` : "",
 			code: duplicateTab.code,
 			log: duplicateTab.log,
+			consoleOutput: duplicateTab.consoleOutput,
 		});
 	};
 

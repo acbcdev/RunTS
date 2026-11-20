@@ -1,3 +1,4 @@
+import { AlignLeft, ListTree, PanelsLeftBottom } from "lucide-react";
 import { useId } from "react";
 import { useEditorStore } from "@/features/editor/editor-store/editor";
 import { SettingButtonGroup } from "@/features/settings/components/SettingButtonGroup";
@@ -21,6 +22,17 @@ import { useConfigStore } from "../config-store/config";
 
 const lineLabels = { none: "Off", gutter: "Gutter", line: "Line", all: "Both" };
 const lineGlyphs = { none: "—", gutter: "▏", line: "━", all: "▕━" };
+const consoleModes = ["inline", "inspector", "by-source"] as const;
+const consoleLabels = {
+	inline: "Inline",
+	inspector: "Inspector",
+	"by-source": "By source",
+};
+const consoleIcons = {
+	inline: AlignLeft,
+	inspector: PanelsLeftBottom,
+	"by-source": ListTree,
+};
 
 export function Editor() {
 	const { expression, alignLogs, updateEditor } = useEditorStore();
@@ -88,18 +100,34 @@ export function Editor() {
 					</Select>
 				</div>
 			</SettingsSection>
+			<SettingsSection title="Console">
+				<SettingButtonGroup
+					label="Console mode"
+					description="Read results inline, inspect individual events, or group them by source line."
+					options={consoleModes}
+					value={config.consoleMode}
+					onChange={(consoleMode) =>
+						config.setConfigValue("consoleMode", consoleMode)
+					}
+					renderLabel={(value) => consoleLabels[value]}
+					renderPreview={(value) => {
+						const Icon = consoleIcons[value];
+						return <Icon className="size-5" />;
+					}}
+				/>
+				<SettingSwitch
+					label="Sync scrolling"
+					description="Keep the inline console and editor at the same source line while scrolling."
+					value={alignLogs}
+					callback={() => updateEditor({ alignLogs: !alignLogs })}
+				/>
+			</SettingsSection>
 			<SettingsSection title="Advanced">
 				<SettingSwitch
 					label="Expression Runner"
 					description="Show expression results without console.log()."
 					value={expression}
 					callback={() => updateEditor({ expression: !expression })}
-				/>
-				<SettingSwitch
-					label="Align Logs"
-					description="Align output with its source line."
-					value={alignLogs}
-					callback={() => updateEditor({ alignLogs: !alignLogs })}
 				/>
 			</SettingsSection>
 		</TabsContent>

@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import type { Theme } from "@/features/editor/types";
+import { cn } from "@/features/lib/cn";
 
 export function ThemeCard({
 	theme,
@@ -81,7 +82,12 @@ export function ThemeCard({
 							: undefined
 					}
 				>
-					{selected && <Check className="size-3" />}
+					<Check
+						className={cn(
+							"size-3 transition-opacity duration-150 ease-out",
+							selected ? "opacity-100" : "opacity-0",
+						)}
+					/>
 				</span>
 			</span>
 			<span
