@@ -1,0 +1,8 @@
+{
+	"extends": "../../tsconfig.app.json",
+	"compilerOptions": {
+		"types": ["vite/client"],
+		"tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.console-prototype.tsbuildinfo"
+	},
+	"include": ["./**/*.ts", "./**/*.tsx"]
+}
