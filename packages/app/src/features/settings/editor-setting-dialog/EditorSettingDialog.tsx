@@ -80,7 +80,7 @@ export function EditorSettingsDialog() {
 			open={open}
 			onOpenChange={(value) => setModalValue("settings", value)}
 		>
-			<DialogContent className="flex h-[min(730px,calc(100dvh-32px))] max-w-[calc(100vw-24px)] flex-col gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[1030px]">
+			<DialogContent className="flex h-[min(730px,calc(100dvh-32px))] max-w-[calc(100vw-24px)] flex-col gap-0 overflow-hidden rounded-xl p-0 sm:max-w-[1030px]">
 				<DialogHeader className="shrink-0 border-b px-6 py-5 text-left">
 					<DialogTitle>
 						Settings{" "}
