@@ -17,12 +17,6 @@ importers:
       '@ai-sdk/anthropic':
         specifier: 4.0.102
         version: 4.0.102(zod@4.1.11)
-      '@ai-sdk/google':
-        specifier: 4.0.117
-        version: 4.0.117(zod@4.1.11)
-      '@ai-sdk/mistral':
-        specifier: 4.0.84
-        version: 4.0.84(zod@4.1.11)
       '@ai-sdk/openai':
         specifier: 4.0.114
         version: 4.0.114(zod@4.1.11)
@@ -275,22 +269,6 @@ packages:
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
-
-  '@ai-sdk/google@4.0.117':
-    resolution: {integrity: sha512-Pi6WRjB3PnRdzPtyI/qjCYdXLD8nBLQ9gjZgKBTZcGcnOkDAaBkiQSUQ1SW5Q01D94zkWVEOwmgbL/vyK65Lyw==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      zod: ^3.25.76 || ^4.1.8
-
-  '@ai-sdk/mistral@4.0.84':
-    resolution: {integrity: sha512-g+MbLqaHeg5MO1UuSGFsDNUGMTXaMB2CCKSPAh3MX5MHx+WU4ucMkL+7ZbPNOryLAJGf7NDl2YucoXNto/tEAQ==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      livekit-client: ^2.23.0
-      zod: ^3.25.76 || ^4.1.8
-    peerDependenciesMeta:
-      livekit-client:
-        optional: true
 
   '@ai-sdk/openai@4.0.114':
     resolution: {integrity: sha512-HceWOUPej4zSYvjZhICQVoQWzwXP3SyJY8GN/P0a+dqJaUMdn3NQMEW6KyhbS+/ltAgR6MauW9KgDx8NDbFe3g==}
@@ -4460,18 +4438,6 @@ snapshots:
       '@ai-sdk/provider': 4.0.21
       '@ai-sdk/provider-utils': 5.0.53(zod@4.1.11)
       '@vercel/oidc': 3.2.0
-      zod: 4.1.11
-
-  '@ai-sdk/google@4.0.117(zod@4.1.11)':
-    dependencies:
-      '@ai-sdk/provider': 4.0.37
-      '@ai-sdk/provider-utils': 5.0.79(zod@4.1.11)
-      zod: 4.1.11
-
-  '@ai-sdk/mistral@4.0.84(zod@4.1.11)':
-    dependencies:
-      '@ai-sdk/provider': 4.0.37
-      '@ai-sdk/provider-utils': 5.0.79(zod@4.1.11)
       zod: 4.1.11
 
   '@ai-sdk/openai@4.0.114(zod@4.1.11)':

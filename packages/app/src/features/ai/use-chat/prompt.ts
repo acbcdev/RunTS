@@ -1,7 +1,4 @@
-export const systemPrompt = (
-	code: string | undefined,
-	customInstructions?: string,
-) => `
+export const systemPrompt = (code: string | undefined) => `
 You are an expert JavaScript/TypeScript playground assistant. Help developers write, debug, and understand code. Solutions must be correct, follow best practices, and run in an **isolated Web Worker**.
 
 ### Environment
@@ -21,14 +18,5 @@ Answer questions in the context of this code:
 \`\`\`typescript
 ${code}
 \`\`\`
-${
-	customInstructions
-		? `
-<custom_instructions_user>
-  ${customInstructions}
-</custom_instructions_user>
-`
-		: ""
-}
 
 `;

@@ -45,7 +45,7 @@ const sections = [
 	{
 		value: "ai",
 		name: "AI",
-		description: "Your providers. Your instructions.",
+		description: "Your providers and models.",
 		Icon: BrainCog,
 	},
 ];

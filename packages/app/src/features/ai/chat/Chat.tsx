@@ -11,10 +11,12 @@ export function Chat() {
 	const { hasProviders, showChat, contextFile, providerName } =
 		useAIConfigStore(
 			useShallow((state) => ({
-				hasProviders: state.getProviders().length > 0,
+				hasProviders: state.providers.some((p) => p.models.length > 0),
 				showChat: state.showChat,
 				contextFile: state.contextFile,
-				providerName: state.selectedModel.provider,
+				providerName: state.providers.find(
+					(p) => p.id === state.selectedModel.providerId,
+				)?.name,
 			})),
 		);
 	const {
