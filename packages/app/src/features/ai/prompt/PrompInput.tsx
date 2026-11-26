@@ -85,6 +85,7 @@ export function Prompt({
 				>
 					<Button
 						variant="default"
+						aria-label={isLoading ? "Stop generation" : "Send message"}
 						size="icon"
 						className="h-8 w-8 rounded-full"
 						onClick={isLoading ? stop : handleSubmit}

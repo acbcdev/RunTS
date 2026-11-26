@@ -93,6 +93,13 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 							aria-label={`Close ${tab.name || "tab"}`}
 							className="h-5 w-5  p-0 rounded-full transition-colors duration-200 -outline-offset-2"
 							onClick={handleCloseTab}
+							onKeyDown={(e) => {
+								if (e.key !== "Enter" && e.key !== " ") return;
+								e.preventDefault();
+								e.stopPropagation();
+								handleRemoveTab(tab.id);
+							}}
+							role="button"
 							tabIndex={0}
 							asChild
 						>
