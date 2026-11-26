@@ -9,35 +9,31 @@ import {
 import { useAIConfigStore } from "../store/aiConfig";
 import { createProvider } from "./providers";
 
-// Single seam for every AI call in the app. Provider creation, API-key
-// lookup, model resolution and error normalisation live here — callers
-// (chat, code-gen, completions) consume one interface, not four SDKs.
+// Single seam for every AI call in the app. Provider creation, model
+// resolution and error normalisation live here — callers (chat, code-gen)
+// consume one interface, not several SDKs.
 
 type ProviderFactory = (modelId: string) => LanguageModel;
 
-// Cache provider factories by provider+key so we don't re-import the SDK
-// and re-instantiate the client on every keystroke / call.
+// Cache factories per connection so we don't re-import the SDK and
+// re-instantiate the client on every call.
 const factoryCache = new Map<string, Promise<ProviderFactory>>();
 
 async function resolveModel(): Promise<LanguageModel> {
-	const { provider, id } = useAIConfigStore.getState().selectedModel;
-	if (!provider || !id) {
+	const { providers, selectedModel } = useAIConfigStore.getState();
+	const config = providers.find((p) => p.id === selectedModel.providerId);
+	if (!config || !selectedModel.id) {
 		throw new Error("No model selected");
 	}
 
-	const apiKey = useAIConfigStore.getState().apiKeys[provider];
-	if (!apiKey) {
-		throw new Error(`No API key configured for ${provider}`);
-	}
-
-	const cacheKey = `${provider}:${apiKey}`;
+	const cacheKey = `${config.kind}:${config.baseURL}:${config.apiKey}`;
 	let factory = factoryCache.get(cacheKey);
 	if (!factory) {
-		factory = createProvider(provider, apiKey);
+		factory = createProvider(config);
 		factoryCache.set(cacheKey, factory);
 	}
 
-	return (await factory)(id);
+	return (await factory)(selectedModel.id);
 }
 
 /** Stream a chat completion for the current model. */

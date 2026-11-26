@@ -15,9 +15,6 @@ export function useChat() {
 	const contenxtFile = useAIConfigStore(
 		useShallow((state) => state.contextFile),
 	);
-	const customInstructions = useAIConfigStore(
-		(state) => state.customInstructions,
-	);
 	const [status, setStatus] = useState<statusType>("ready");
 	const [input, setInput] = useState("");
 	const [error, setError] = useState("");
@@ -45,7 +42,7 @@ export function useChat() {
 		userContent: string,
 		history: UIMessage[] = messages,
 	) => {
-		if (selectedModel.provider === null) {
+		if (!selectedModel.providerId || !selectedModel.id) {
 			toast.error("Please select a model before sending a message.", {
 				position: "top-left",
 			});
@@ -82,13 +79,9 @@ export function useChat() {
 			controller.current = newController;
 			setStatus("submitted");
 
-			if (selectedModel.provider === null || selectedModel.id === null) return;
 			const { textStream } = await aiStream({
 				messages: messagesToAI,
-				system: systemPrompt(
-					contenxtFile ? currentTab?.code : "",
-					customInstructions,
-				),
+				system: systemPrompt(contenxtFile ? currentTab?.code : ""),
 				abortSignal: controller.current.signal,
 			});
 			setStatus("streaming");

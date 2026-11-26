@@ -1,43 +1,28 @@
 import type { LanguageModel } from "ai";
-import type { providers } from "../types";
+import type { ProviderConfig } from "./constants";
 
-// Type for a provider factory function that creates LanguageModels
 type ProviderFactory = (modelId: string) => LanguageModel;
 
-// Dynamically import AI SDK providers to reduce initial bundle size
-// Each provider will be loaded only when selected by the user
+// SDKs are imported lazily so they stay out of the initial bundle.
 export async function createProvider(
-	provider: providers,
-	apiKey: string,
+	config: ProviderConfig,
 ): Promise<ProviderFactory> {
-	switch (provider) {
-		case "openai": {
-			const { createOpenAI } = await import("@ai-sdk/openai");
-			const openai = createOpenAI({ apiKey });
-			// The provider object is callable to create language models
-			return ((modelId: string) =>
-				openai(modelId) as unknown as LanguageModel) as ProviderFactory;
-		}
-		case "anthropic": {
-			const { createAnthropic } = await import("@ai-sdk/anthropic");
-			const anthropic = createAnthropic({ apiKey });
-			return ((modelId: string) =>
-				anthropic(modelId) as unknown as LanguageModel) as ProviderFactory;
-		}
-		case "google": {
-			const { createGoogle } = await import("@ai-sdk/google");
-			const google = createGoogle({ apiKey });
-			return ((modelId: string) =>
-				google(modelId) as unknown as LanguageModel) as ProviderFactory;
-		}
-		case "mistral": {
-			const { createMistral } = await import("@ai-sdk/mistral");
-			const mistral = createMistral({ apiKey });
-			return ((modelId: string) =>
-				mistral(modelId) as unknown as LanguageModel) as ProviderFactory;
-		}
-		default: {
-			throw new Error(`Unknown provider: ${provider}`);
-		}
+	if (config.kind === "anthropic") {
+		const { createAnthropic } = await import("@ai-sdk/anthropic");
+		const anthropic = createAnthropic({
+			apiKey: config.apiKey,
+			baseURL: config.baseURL,
+			headers: { "anthropic-dangerous-direct-browser-access": "true" },
+		});
+		return (modelId) => anthropic(modelId) as unknown as LanguageModel;
 	}
+	const { createOpenAI } = await import("@ai-sdk/openai");
+	const openai = createOpenAI({
+		baseURL: config.baseURL,
+		// Local servers ignore the key, but the SDK requires one.
+		apiKey: config.apiKey || "none",
+	});
+	// .chat() → /chat/completions. The default (Responses API) only exists on OpenAI.
+	// Cast: SDK packages pin different @ai-sdk/provider versions.
+	return (modelId) => openai.chat(modelId) as unknown as LanguageModel;
 }

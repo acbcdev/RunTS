@@ -15,7 +15,15 @@ import { useConfigStore } from "../config-store/config";
 import { exportSettings, importSettings } from "./profile";
 
 it("round-trips settings without leaking API keys", () => {
-	useAIConfigStore.getState().setApiKeys("sk-secret", "openai");
+	useAIConfigStore.getState().saveProvider({
+		id: "openai",
+		kind: "openai-compatible",
+		preset: "openai",
+		name: "OpenAI",
+		baseURL: "",
+		apiKey: "sk-secret",
+		models: [],
+	});
 	useConfigStore.getState().setConfigValue("tabSize", 4);
 	const profile = exportSettings();
 	expect(JSON.stringify(profile)).not.toContain("sk-secret");
@@ -29,12 +37,14 @@ it("ignores unknown keys, wrong types and unknown themes", () => {
 	importSettings({
 		config: { tabSize: "8", evil: true },
 		appearance: { theme: "nope", fontSize: 14 },
-		ai: { apiKeys: { openai: "stolen" } },
+		ai: { providers: [{ id: "x", apiKey: "stolen" }] },
 	});
 	expect(useConfigStore.getState().tabSize).not.toBe("8");
 	expect(useConfigStore.getState()).not.toHaveProperty("evil");
 	expect(useApparenceStore.getState().theme).toBe("oneDark");
 	expect(useApparenceStore.getState().fontSize).toBe(14);
-	expect(useAIConfigStore.getState().apiKeys.openai).not.toBe("stolen");
+	expect(JSON.stringify(useAIConfigStore.getState().providers)).not.toContain(
+		"stolen",
+	);
 	expect(() => importSettings("garbage")).toThrow();
 });

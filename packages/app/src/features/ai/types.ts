@@ -1,13 +1,5 @@
-// Re-export all types from constants for backward compatibility
 export type {
-	AnthropicModel,
-	GeminiModel,
-	GoogleModel,
-	MistralModel,
-	model,
-	OpenAIModel,
-	Provider,
-	ProviderName,
-	providers,
-	SupportedModel,
+	PresetId,
+	ProviderConfig,
+	ProviderKind,
 } from "./lib/constants";

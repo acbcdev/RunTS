@@ -1,5 +1,4 @@
 export { Chat, ChatHeader, EmptyChatView, NoProvidersView } from "./chat";
-export { getProviderForModel } from "./lib";
 export {
 	ActionButtons,
 	Markdown,

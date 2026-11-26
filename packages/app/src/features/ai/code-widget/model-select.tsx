@@ -1,4 +1,3 @@
-import { useShallow } from "zustand/react/shallow";
 import {
 	Select,
 	SelectContent,
@@ -6,25 +5,22 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/features/ui/select";
-import { useAIConfigStore } from "../store";
-import type { providers } from "../types";
+import { useAIConfigStore, visibleModels } from "../store/aiConfig";
 
 export function ModelSelect() {
-	const activeModels = useAIConfigStore(
-		useShallow((state) => state.getProviders()),
-	);
+	const providers = useAIConfigStore((state) => state.providers);
 	const value = useAIConfigStore((state) => state.selectedModel);
 	const changeModel = useAIConfigStore((state) => state.changeModel);
 
 	return (
 		<Select
-			value={`${value.provider}/${value.id}`}
-			onValueChange={(selectedValue) => {
-				const [provider, modelId] = selectedValue.split("/");
+			value={value.providerId ? `${value.providerId}/${value.id}` : undefined}
+			onValueChange={(selected) => {
+				// Model ids can contain "/" (OpenRouter), so split on the first one only.
+				const slash = selected.indexOf("/");
 				changeModel({
-					id: modelId,
-					provider: provider as providers,
-					Icon: undefined, // We'll handle icons later if needed
+					providerId: selected.slice(0, slash),
+					id: selected.slice(slash + 1),
 				});
 			}}
 		>
@@ -32,9 +28,12 @@ export function ModelSelect() {
 				<SelectValue placeholder="Model" />
 			</SelectTrigger>
 			<SelectContent>
-				{activeModels.map((model) => (
-					<SelectItem key={model.id} value={`${model.provider}/${model.id}`}>
-						{model.name}
+				{visibleModels(providers).map((m) => (
+					<SelectItem
+						key={`${m.providerId}/${m.id}`}
+						value={`${m.providerId}/${m.id}`}
+					>
+						{m.id}
 					</SelectItem>
 				))}
 			</SelectContent>

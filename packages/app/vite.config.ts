@@ -84,8 +84,6 @@ export default defineConfig({
 					"ai-core": ["ai"],
 					"ai-openai": ["@ai-sdk/openai"],
 					"ai-anthropic": ["@ai-sdk/anthropic"],
-					"ai-google": ["@ai-sdk/google"],
-					"ai-mistral": ["@ai-sdk/mistral"],
 
 					// React Markdown
 					markdown: ["react-markdown", "remark-gfm"],
