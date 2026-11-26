@@ -1,12 +1,15 @@
 import {
 	BrainCog,
 	Brush,
+	Download,
 	ExternalLink,
 	FileCode2,
 	MonitorCog,
 	RotateCcw,
+	Upload,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useModalStore } from "@/features/common/modal/modal";
 import { versionApp } from "@/features/common/utils/const";
 import { useEditorStore } from "@/features/editor/editor-store/editor";
@@ -22,6 +25,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/features/ui/tabs";
 import { useApparenceStore } from "../appearance-store/appearance";
 import { useConfigStore } from "../config-store/config";
 import { AI, Appearance, Editor, Formatting } from "../sections";
+import { exportSettings, importSettings } from "../settings-profile/profile";
 
 const sections = [
 	{
@@ -68,6 +72,28 @@ function resetPreferences() {
 	useConfigStore.getState().resetConfig();
 	const { expression, alignLogs } = useEditorStore.getInitialState();
 	useEditorStore.getState().updateEditor({ expression, alignLogs });
+}
+
+// ponytail: anchor download; Tauri's save() dialog alone doesn't write files.
+function downloadSettings() {
+	const blob = new Blob([JSON.stringify(exportSettings(), null, 2)], {
+		type: "application/json",
+	});
+	const a = document.createElement("a");
+	a.href = URL.createObjectURL(blob);
+	a.download = "runts-settings.json";
+	a.click();
+	URL.revokeObjectURL(a.href);
+}
+
+async function uploadSettings(file?: File) {
+	if (!file) return;
+	try {
+		importSettings(JSON.parse(await file.text()));
+		toast.success("Settings imported");
+	} catch {
+		toast.error("Invalid settings file");
+	}
 }
 
 export function EditorSettingsDialog() {
@@ -136,6 +162,39 @@ export function EditorSettingsDialog() {
 								</a>
 							))}
 						</nav>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={downloadSettings}
+							aria-label="Export settings"
+							title="Export settings"
+							className="justify-center px-2 sm:justify-start sm:px-3"
+						>
+							<Download aria-hidden="true" data-icon="inline-start" />
+							<span className="hidden sm:inline">Export settings</span>
+						</Button>
+						<Button
+							asChild
+							variant="ghost"
+							size="sm"
+							title="Import settings"
+							className="cursor-pointer justify-center px-2 sm:justify-start sm:px-3"
+						>
+							<label>
+								<Upload aria-hidden="true" data-icon="inline-start" />
+								<span className="hidden sm:inline">Import settings</span>
+								<input
+									type="file"
+									accept="application/json,.json"
+									aria-label="Import settings"
+									className="sr-only"
+									onChange={(event) => {
+										uploadSettings(event.target.files?.[0]);
+										event.target.value = "";
+									}}
+								/>
+							</label>
+						</Button>
 						<Button
 							variant="ghost"
 							size="sm"
