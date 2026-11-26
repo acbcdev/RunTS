@@ -9,6 +9,21 @@ import type {
 	sides,
 } from "./types";
 
+const lum = (hex: string) => {
+	const [r, g, b] = [1, 3, 5]
+		.map((i) => Number.parseInt(hex.slice(i, i + 2), 16) / 255)
+		.map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const contrast = (a: string, b: string) => {
+	const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+	return (hi + 0.05) / (lo + 0.05);
+};
+/** Readable text on `bg`: prefer theme colors, fall back to black/white. */
+const onColor = (bg: string, ...prefer: string[]) =>
+	[...prefer, "#000000", "#ffffff"].find((c) => contrast(c, bg) >= 4.5) ??
+	(contrast("#000000", bg) > contrast("#ffffff", bg) ? "#000000" : "#ffffff");
+
 const applyThemeToDOM = (currentTheme: Theme) => {
 	const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 	metaThemeColor?.setAttribute("content", currentTheme.ui.header);
@@ -42,7 +57,11 @@ const applyThemeToDOM = (currentTheme: Theme) => {
 	);
 	document.documentElement.style.setProperty(
 		"--primary-foreground",
-		currentTheme.ui.foreground,
+		onColor(
+			currentTheme.ui.accent,
+			currentTheme.ui.foreground,
+			currentTheme.ui.background,
+		),
 	);
 	document.documentElement.style.setProperty(
 		"--secondary",
@@ -50,7 +69,11 @@ const applyThemeToDOM = (currentTheme: Theme) => {
 	);
 	document.documentElement.style.setProperty(
 		"--secondary-foreground",
-		currentTheme.ui.foreground,
+		onColor(
+			currentTheme.ui.muted,
+			currentTheme.ui.foreground,
+			currentTheme.ui.background,
+		),
 	);
 	document.documentElement.style.setProperty("--muted", currentTheme.ui.muted);
 	document.documentElement.style.setProperty(
@@ -63,7 +86,11 @@ const applyThemeToDOM = (currentTheme: Theme) => {
 	);
 	document.documentElement.style.setProperty(
 		"--accent-foreground",
-		currentTheme.ui.foreground,
+		onColor(
+			currentTheme.ui.accent,
+			currentTheme.ui.foreground,
+			currentTheme.ui.background,
+		),
 	);
 	document.documentElement.style.setProperty(
 		"--destructive",
@@ -71,7 +98,11 @@ const applyThemeToDOM = (currentTheme: Theme) => {
 	);
 	document.documentElement.style.setProperty(
 		"--destructive-foreground",
-		currentTheme.ui.foreground,
+		onColor(
+			currentTheme.ui.error,
+			currentTheme.ui.foreground,
+			currentTheme.ui.background,
+		),
 	);
 	document.documentElement.style.setProperty(
 		"--border",
@@ -91,6 +122,16 @@ const applyThemeToDOM = (currentTheme: Theme) => {
 		"--success",
 		currentTheme.ui.success,
 	);
+	for (const k of ["success", "info"] as const) {
+		document.documentElement.style.setProperty(
+			`--${k}-foreground`,
+			onColor(
+				currentTheme.ui[k],
+				currentTheme.ui.foreground,
+				currentTheme.ui.background,
+			),
+		);
+	}
 };
 
 export const SIDES: Record<sidePositions, sides> = {

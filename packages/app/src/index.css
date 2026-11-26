@@ -16,6 +16,8 @@
 	--color-foreground: var(--foreground);
 	--color-success: var(--success);
 	--color-info: var(--info);
+	--color-success-foreground: var(--success-foreground);
+	--color-info-foreground: var(--info-foreground);
 	--color-card: var(--card);
 	--color-card-foreground: var(--card-foreground);
 
