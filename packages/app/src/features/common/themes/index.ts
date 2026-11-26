@@ -120,7 +120,7 @@ export const themes: Record<string, Theme> = {
 			info: "#75beff",
 		},
 		monaco: {
-			comment: "#5c6773",
+			comment: "#616b77",
 			keyword: "#007acc",
 			string: "#89d185",
 			number: "#b5cea8",
@@ -166,7 +166,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#002b36",
 			foreground: "#83a4a6",
-			border: "#073642",
+			border: "#113f4a",
 			accent: "#268bd2",
 			selection: "#073642",
 			header: "#002b36",
@@ -182,9 +182,9 @@ export const themes: Record<string, Theme> = {
 			keyword: "#268bd2",
 			string: "#859900",
 			number: "#2aa198",
-			operator: "#6c71c4",
+			operator: "#6d74c2",
 			function: "#b58900",
-			variable: "#cb4b16",
+			variable: "#b7643e",
 			type: "#93a1a1",
 			BracketHighlight1: "#d1985e",
 			BracketHighlight2: "#c678c7",
@@ -240,7 +240,7 @@ export const themes: Record<string, Theme> = {
 			info: "#81a1c1",
 		},
 		monaco: {
-			comment: "#616e88",
+			comment: "#727e96",
 			keyword: "#81a1c1",
 			string: "#a3be8c",
 			number: "#b48ead",
@@ -288,7 +288,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#0D1117",
 			foreground: "#C9D1D9",
-			border: "#21262D",
+			border: "#282d34",
 			accent: "#58A6FF",
 			selection: "#3382FF",
 			header: "#010409",
@@ -318,7 +318,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#1a1b26",
 			foreground: "#c0caf5",
-			border: "#24283b",
+			border: "#2d3246",
 			accent: "#7aa2f7",
 			selection: "#33467c",
 			header: "#1f2335",
@@ -330,7 +330,7 @@ export const themes: Record<string, Theme> = {
 			info: "#7dcfff",
 		},
 		monaco: {
-			comment: "#565f89",
+			comment: "#5c658f",
 			keyword: "#bb9af7",
 			string: "#9ece6a",
 			number: "#ff9e64",
@@ -360,7 +360,7 @@ export const themes: Record<string, Theme> = {
 			info: "#5ccfe6",
 		},
 		monaco: {
-			comment: "#5c6773",
+			comment: "#656f7a",
 			keyword: "#ffa759",
 			string: "#bae67e",
 			number: "#ffd580",
@@ -378,7 +378,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#0F1419", // Fondo principal oscuro
 			foreground: "#E6E1CF", // Texto principal
-			border: "#1E253088", // Sin bordes visibles
+			border: "#262d3688", // Sin bordes visibles
 			accent: "#FFCC66", // Color de acento (amarillo suave)
 			selection: "#1E2530", // Fondo de selección
 			header: "#1A1F2A", // Fondo del encabezado oscuro
@@ -408,7 +408,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#1e1e2e",
 			foreground: "#d9e0ee",
-			border: "#302d41",
+			border: "#373448",
 			accent: "#f5c2e7",
 			selection: "#45475a",
 			header: "#24273a",
@@ -439,7 +439,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#171717",
 			foreground: "#9d9d9d",
-			border: "#262c29",
+			border: "#2b312e",
 			accent: "#3dcd8c",
 			selection: "#9d9d9d22",
 			header: "#171717",
@@ -677,7 +677,7 @@ export const themes: Record<string, Theme> = {
 		ui: {
 			background: "#292D3E",
 			foreground: "#A6ACCD",
-			border: "#383D52",
+			border: "#3a3f54",
 			accent: "#C792EA",
 			selection: "#444267",
 			header: "#1B1E2B",
@@ -689,7 +689,7 @@ export const themes: Record<string, Theme> = {
 			info: "#89DDFF",
 		},
 		monaco: {
-			comment: "#676E95",
+			comment: "#6d749b",
 			keyword: "#C792EA",
 			string: "#C3E88D",
 			number: "#F78C6C",
