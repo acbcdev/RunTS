@@ -69,8 +69,10 @@ describe("structured console execution", () => {
 	});
 
 	it("preserves worker console calls when expression logging is enabled", async () => {
-		const output = await execute(`const self = { console };\nself.console.warn("worker warning");`);
-		expect(output.map(entry => entry.type)).toEqual(["warn"]);
+		const output = await execute(
+			`const self = { console };\nself.console.warn("worker warning");`,
+		);
+		expect(output.map((entry) => entry.type)).toEqual(["warn"]);
 		expect(output[0].line).toBe(2);
 	});
 	it("times labels, removes ended timers, and preserves the caller's line", async () => {

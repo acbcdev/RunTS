@@ -90,7 +90,7 @@ export function EditorTabsItem({ tab }: EditorTabsItemProps) {
 						<Button
 							variant="ghost"
 							size="icon"
-							aria-label="Close tab"
+							aria-label={`Close ${tab.name || "tab"}`}
 							className="h-5 w-5  p-0 rounded-full transition-colors duration-200 -outline-offset-2"
 							onClick={handleCloseTab}
 							tabIndex={0}

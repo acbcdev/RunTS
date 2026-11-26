@@ -64,7 +64,7 @@ pnpm tauri:dev    # Desktop app with hot reload
 ### Build
 
 ```bash
-pnpm build        # Production web build
+pnpm build        # Check referenced TypeScript projects and build for production
 pnpm tauri:build  # Tauri desktop application
 ```
 
@@ -75,6 +75,15 @@ Tests run with [Vitest](https://vitest.dev/):
 ```bash
 pnpm test       # Run test suite
 pnpm test:ui    # Open Vitest UI
+pnpm tsc        # Check referenced TypeScript projects
+pnpm lint       # Check ESLint without changing files
+pnpm lint:fix   # Apply ESLint fixes
+pnpm format     # Check formatting without changing files
+pnpm format:fix # Apply formatting fixes
+pnpm lint:biome # Check Biome lint without changing files
+pnpm lint:biome:fix # Apply Biome lint fixes
+pnpm check      # Check Biome rules without changing files
+pnpm check:fix  # Apply Biome fixes
 ```
 
 ## ⚙️ Configuration

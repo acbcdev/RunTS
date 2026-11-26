@@ -3,14 +3,23 @@ import {
 	createEncryptedStorage,
 	createEncryptedStorageSync,
 } from "./encryptedStorage";
+import { installTestStorage } from "./testStorage";
 
 describe("Encrypted Storage Adapter", () => {
+	installTestStorage();
 	beforeEach(() => {
 		localStorage.clear();
 		vi.clearAllMocks();
 	});
 
 	describe("setItem / getItem Integration", () => {
+		it("reads data after a new adapter initializes with the saved key", async () => {
+			const first = await createEncryptedStorage();
+			await first.setItem("persisted", "saved value");
+			const second = await createEncryptedStorage();
+			expect(await second.getItem("persisted")).toBe("saved value");
+		});
+
 		it("should encrypt on setItem and decrypt on getItem", async () => {
 			const storage = await createEncryptedStorage();
 			const testData = JSON.stringify({
@@ -298,6 +307,7 @@ describe("Encrypted Storage Adapter", () => {
 });
 
 describe("Encrypted Storage Sync Wrapper", () => {
+	installTestStorage();
 	beforeEach(() => {
 		localStorage.clear();
 		vi.clearAllMocks();

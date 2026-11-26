@@ -8,7 +8,7 @@ import { decryptData, encryptData, getDerivedKey } from "./crypt";
  * @returns StateStorage object compatible with Zustand persist middleware
  */
 export async function createEncryptedStorage(): Promise<StateStorage> {
-	// Generate encryption key from browser fingerprint
+	// Reuse the persisted random encryption key
 	const cryptoKey = await getDerivedKey();
 
 	return {

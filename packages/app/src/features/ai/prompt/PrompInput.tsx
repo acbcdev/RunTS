@@ -53,6 +53,8 @@ export function Prompt({
 			<div className="flex px-2 pt-2">
 				<Button
 					variant={"currentFile"}
+					aria-label="Include current tab as context"
+					aria-pressed={contextFile}
 					type="button"
 					// size={"sm"}
 					className={`${!contextFile && "border-dashed"} `}
@@ -68,6 +70,7 @@ export function Prompt({
 				</Button>
 			</div>
 			<PromptInputTextarea
+				aria-label="Message"
 				className="max-h-32 dark:bg-transparent"
 				placeholder="Ask me anything..."
 			/>

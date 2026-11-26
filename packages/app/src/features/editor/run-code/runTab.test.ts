@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { preparePipeline } from "./pipeline";
 import { runTab } from "./runTab";
 import type { ConsoleOutput } from "./types";
 
@@ -16,6 +17,29 @@ const log = (line: number, content: string): ConsoleOutput => ({
 const opts = { injectLogs: true, alignLogs: false };
 
 describe("runTab", () => {
+	it.each(["", "   \n\t  "])(
+		"returns empty output for executable blank code",
+		async (code) => {
+			const spawn: typeof import("./runCode").runCodeWorker = async (
+				source,
+				options,
+			) => {
+				const pipeline = preparePipeline(
+					source,
+					options.name,
+					options.injectLogs ?? false,
+				);
+				if (!pipeline.ready) throw new Error(pipeline.error);
+				new Function(pipeline.code)();
+				return [];
+			};
+			expect(await runTab({ name: "a.ts", code }, opts, spawn)).toEqual({
+				log: "",
+				consoleOutput: [],
+			});
+		},
+	);
+
 	it("skips non-executable languages without spawning", async () => {
 		const spawn = vi.fn();
 		expect(await runTab({ name: "notes.md", code: "x" }, opts, spawn)).toBe(

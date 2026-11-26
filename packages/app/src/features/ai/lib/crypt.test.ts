@@ -7,8 +7,10 @@ import {
 	getDerivedKey,
 	importKey,
 } from "./crypt";
+import { installTestStorage } from "./testStorage";
 
 describe("Encryption Functions - Critical Paths", () => {
+	installTestStorage();
 	describe("Key Generation & Management", () => {
 		it("should generate valid AES-GCM 256-bit key", async () => {
 			const key = await generateKey();
@@ -45,8 +47,8 @@ describe("Encryption Functions - Critical Paths", () => {
 		});
 	});
 
-	describe("Browser Fingerprint Derivation", () => {
-		it("should generate consistent key from same fingerprint", async () => {
+	describe("Persisted Random Key", () => {
+		it("should reuse the persisted key", async () => {
 			const key1 = await getDerivedKey();
 			const key2 = await getDerivedKey();
 
@@ -58,14 +60,14 @@ describe("Encryption Functions - Critical Paths", () => {
 			expect(decrypted).toBe(testData);
 		});
 
-		it("should generate valid AES-GCM key from fingerprint", async () => {
+		it("should generate a valid AES-GCM key", async () => {
 			const key = await getDerivedKey();
 			expect(key.type).toBe("secret");
 			expect(key.algorithm.name).toBe("AES-GCM");
 		});
 
-		it("should handle missing navigator properties gracefully", async () => {
-			// Even with limited navigator, should generate a key
+		it("should create a key without browser fingerprint properties", async () => {
+			// No browser fingerprint is needed to create the key
 			const key = await getDerivedKey();
 			expect(key).toBeDefined();
 			expect(key.algorithm.name).toBe("AES-GCM");
@@ -255,9 +257,9 @@ describe("Encryption Functions - Critical Paths", () => {
 			const encrypted = await encryptData("test", key);
 
 			const [iv, ciphertext] = encrypted.split(":");
-			// Flip last character in ciphertext
+			// Flip the first character so decoded bytes necessarily change
 			const tamperedCiphertext =
-				ciphertext.slice(0, -1) + (ciphertext.slice(-1) === "A" ? "B" : "A");
+				(ciphertext[0] === "A" ? "B" : "A") + ciphertext.slice(1);
 			const tampered = `${iv}:${tamperedCiphertext}`;
 
 			await expect(decryptData(tampered, key)).rejects.toThrow(
@@ -270,8 +272,8 @@ describe("Encryption Functions - Critical Paths", () => {
 			const encrypted = await encryptData("test", key);
 
 			const [iv, ciphertext] = encrypted.split(":");
-			// Flip last character in IV
-			const tamperedIV = iv.slice(0, -1) + (iv.slice(-1) === "A" ? "B" : "A");
+			// Flip the first character so decoded bytes necessarily change
+			const tamperedIV = (iv[0] === "A" ? "B" : "A") + iv.slice(1);
 			const tampered = `${tamperedIV}:${ciphertext}`;
 
 			await expect(decryptData(tampered, key)).rejects.toThrow(

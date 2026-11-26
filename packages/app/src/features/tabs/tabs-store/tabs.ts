@@ -69,15 +69,15 @@ export const useTabsStore = create<TabsStore>()(
 				}
 				set((state) => {
 					const newTabs = state.tabs.filter((tab) => tab.id !== id);
-					const activeTabsHistory = state.activeTabHistory.filter(
-						(tabId) => tabId !== id,
+					const activeTabHistory = state.activeTabHistory.filter((tabId) =>
+						newTabs.some((tab) => tab.id === tabId),
 					);
 					return {
 						tabs: newTabs,
-						activeTabsHistory,
+						activeTabHistory,
 						activeTabId:
 							id === state.activeTabId
-								? activeTabsHistory[0] || newTabs[0]?.id
+								? activeTabHistory[0] || newTabs[0]?.id || ""
 								: state.activeTabId,
 					};
 				});
@@ -97,10 +97,17 @@ export const useTabsStore = create<TabsStore>()(
 					const index = state.tabs.findIndex(
 						(tab) => tab.id === state.activeTabId,
 					);
-					if (index === -1) return { ...state };
-					const newIndex = (index + dir) % state.tabs.length;
-					get().setActiveTab(state.tabs[newIndex].id);
-					return state;
+					if (index === -1) return state;
+					const newIndex =
+						(index + dir + state.tabs.length) % state.tabs.length;
+					const activeTabId = state.tabs[newIndex].id;
+					return {
+						activeTabId,
+						activeTabHistory: [
+							activeTabId,
+							...state.activeTabHistory.slice(0, 10),
+						],
+					};
 				});
 			},
 		}),

@@ -110,6 +110,12 @@ function isConsoleCall(expression: ExpressionStatement["expression"]): boolean {
 	const callee = expression.callee;
 	if (callee.type !== "MemberExpression") return false;
 	const target = callee.object;
-	return (target.type === "Identifier" && target.name === "console") ||
-		(target.type === "MemberExpression" && target.object.type === "Identifier" && ["self", "globalThis"].includes(target.object.name) && target.property.type === "Identifier" && target.property.name === "console");
+	return (
+		(target.type === "Identifier" && target.name === "console") ||
+		(target.type === "MemberExpression" &&
+			target.object.type === "Identifier" &&
+			["self", "globalThis"].includes(target.object.name) &&
+			target.property.type === "Identifier" &&
+			target.property.name === "console")
+	);
 }

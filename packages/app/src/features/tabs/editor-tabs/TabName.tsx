@@ -91,6 +91,7 @@ export const TabName = ({
 	if (tab.editing) {
 		return (
 			<input
+				aria-label="Tab name"
 				ref={inputRef}
 				value={inputValue}
 				onKeyDown={handleKeyDown}

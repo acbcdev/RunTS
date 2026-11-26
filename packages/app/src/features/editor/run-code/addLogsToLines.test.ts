@@ -83,7 +83,9 @@ console.log("three");
 				const code = `Math.max(1, 2, 3);`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toBe("((__v) => __v !== undefined && console.log(__v))(Math.max(1, 2, 3));");
+				expect(result.code).toBe(
+					"((__v) => __v !== undefined && console.log(__v))(Math.max(1, 2, 3));",
+				);
 				expect(result.lines).toEqual([1]);
 			});
 
@@ -94,8 +96,12 @@ obj.method();
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain('((__v) => __v !== undefined && console.log(__v))(parseInt("42"));');
-				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(obj.method());");
+				expect(result.code).toContain(
+					'((__v) => __v !== undefined && console.log(__v))(parseInt("42"));',
+				);
+				expect(result.code).toContain(
+					"((__v) => __v !== undefined && console.log(__v))(obj.method());",
+				);
 				expect(result.lines.length).toBe(2);
 			});
 
@@ -106,8 +112,12 @@ Math.floor(5);
         `;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.random())");
-				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.floor(5));");
+				expect(result.code).toContain(
+					"((__v) => __v !== undefined && console.log(__v))(Math.random())",
+				);
+				expect(result.code).toContain(
+					"((__v) => __v !== undefined && console.log(__v))(Math.floor(5));",
+				);
 			});
 
 			it("should inject console.log for arithmetic expressions", () => {
@@ -218,7 +228,9 @@ console.log("another existing");
 				const result = injectLogsIntoCode(code, { injectLogs: true });
 				expect(result.code).toContain('console.log("existing log");');
 				expect(result.code).toContain('console.log("another existing");');
-				expect(result.code).toContain("((__v) => __v !== undefined && console.log(__v))(Math.random());");
+				expect(result.code).toContain(
+					"((__v) => __v !== undefined && console.log(__v))(Math.random());",
+				);
 			});
 
 			it("should count existing console.log lines correctly", () => {
@@ -294,7 +306,9 @@ const y = "
 				const code = `Promise.resolve("done");`;
 
 				const result = injectLogsIntoCode(code, { injectLogs: true });
-				expect(result.code).toBe('((__v) => __v !== undefined && console.log(__v))(Promise.resolve("done"));');
+				expect(result.code).toBe(
+					'((__v) => __v !== undefined && console.log(__v))(Promise.resolve("done"));',
+				);
 			});
 
 			it("should handle await expressions", () => {
